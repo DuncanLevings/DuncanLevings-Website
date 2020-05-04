@@ -7,16 +7,13 @@ function App() ***REMOVED***
     <div className="App">
       <header className="App-header">
         <img src=***REMOVED***logo***REMOVED*** className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
         <a
           className="App-link"
           href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          start of my web site
         </a>
       </header>
     </div>
