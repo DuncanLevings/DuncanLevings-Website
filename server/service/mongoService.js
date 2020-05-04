@@ -12,6 +12,7 @@ const mongoose = require("mongoose");
 
 mongoose.connect(mongoDB, ***REMOVED***
     useCreateIndex: true,
+    replicaSet: "duncanlevings-shard-0",
     connectTimeoutMS: 864000000
 ***REMOVED***);
 
