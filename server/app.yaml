@@ -14,6 +14,6 @@ manual_scaling:
   instances: 1
   
 # update with Redis instance network name
-network:
-  name: default
+# network:
+#   name: default
 # [END app_yaml]

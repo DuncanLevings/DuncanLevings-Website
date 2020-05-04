@@ -32,10 +32,15 @@ app.use(
     store: new MongoStore(***REMOVED*** mongooseConnection: mongoose.connection ***REMOVED***)
   ***REMOVED***)
 );
-app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+// app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+// must be last router
+app.use(express.static(path.join(__dirname, 'client/build')));
+app.get("*", (req, res) => ***REMOVED***
+  res.sendfile(path.join(__dirname, "client/build/index.html"));
+***REMOVED***);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) ***REMOVED***
