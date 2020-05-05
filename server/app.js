@@ -9,6 +9,7 @@ const mongoose = require('mongoose');
 const session = require("express-session");
 const MongoStore = require("connect-mongo")(session);
 const mongoService = require("./service/mongoService");
+const redisService = require("./service/redisService");
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
