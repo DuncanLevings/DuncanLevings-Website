@@ -1,0 +1,23 @@
+***REMOVED***
+  "usesTypeScript": false,
+  "usesCssModule": true,
+  "cssPreprocessor": "css",
+  "testLibrary": "None",
+  "component": ***REMOVED***
+    "customTemplates": ***REMOVED***
+      "component": "templates/component/component.js"
+    ***REMOVED***,
+    "path": "src/components",
+    "withStyle": true,
+    "withTest": false,
+    "withStory": false,
+    "withLazy": true
+  ***REMOVED***,
+  "page": ***REMOVED***
+    "path": "src/pages",
+    "withStyle": true,
+    "withTest": false,
+    "withStory": false,
+    "withLazy": true
+  ***REMOVED***
+***REMOVED***
