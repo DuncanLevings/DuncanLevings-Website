@@ -1,0 +1,6 @@
+***REMOVED***
+    "compilerOptions": ***REMOVED***
+      "baseUrl": "src"
+    ***REMOVED***,
+    "include": ["src"]
+  ***REMOVED***

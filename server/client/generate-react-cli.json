@@ -5,7 +5,8 @@
   "testLibrary": "None",
   "component": ***REMOVED***
     "customTemplates": ***REMOVED***
-      "component": "templates/component/component.js"
+      "component": "templates/component/component.js",
+      "lazy":  "templates/component/lazy.js"
     ***REMOVED***,
     "path": "src/components",
     "withStyle": true,
