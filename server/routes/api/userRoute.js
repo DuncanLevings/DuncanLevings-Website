@@ -19,7 +19,7 @@ router.post("/register", auth.optional, (req, res) => ***REMOVED***
     .catch(err => res.status(422).json(err.message));
 ***REMOVED***);
 
-router.post("/login", auth.optional, (req, res, next) => ***REMOVED***
+router.post("/login", auth.optional, (req, res) => ***REMOVED***
   if (!req.body.name)
     return res.status(422).json("name is required!")
 
@@ -29,17 +29,16 @@ router.post("/login", auth.optional, (req, res, next) => ***REMOVED***
   passport.authenticate("local", 
     ***REMOVED*** session: false ***REMOVED***, 
     (err, user, info) => ***REMOVED***
-      if (err) return next(err);
-
+      if (err) return res.status(422).json(err);
       if (!user)
         return res.status(422).json("name or password is incorrect!");
 
       req.logIn(user, err => ***REMOVED***
-        if (err) return next(err);
+        if (err) return res.status(422).json(err);
 
         return res.json(***REMOVED*** user: user.toAuthJSON() ***REMOVED***);
       ***REMOVED***);
-  ***REMOVED***)(req, res, next);
+  ***REMOVED***)(req, res);
 ***REMOVED***);
 
 module.exports = router;
