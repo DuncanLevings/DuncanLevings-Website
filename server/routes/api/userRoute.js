@@ -1,3 +1,11 @@
+/*
+ * Author: Duncan Levings
+ * 
+ * Copyright (c) 2020 DuncanLevings
+ */
+
+ "use strict";
+
 var express = require('express');
 const passport = require('passport');
 const auth = require("../auth");
@@ -28,7 +36,7 @@ router.post("/login", auth.optional, (req, res, next) => ***REMOVED***
 
       req.logIn(user, err => ***REMOVED***
         if (err) return next(err);
-        
+
         return res.json(***REMOVED*** user: user.toAuthJSON() ***REMOVED***);
       ***REMOVED***);
   ***REMOVED***)(req, res, next);

@@ -4,7 +4,7 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-"use strict"
+"use strict";
 
 const mongoose = require("mongoose");
 const passport = require("passport");

@@ -4,7 +4,7 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-"use strict"
+"use strict";
 
 const ***REMOVED*** mongoDB, mongoDBLocal ***REMOVED*** = require("../config.json");
 const mongoose = require("mongoose");
