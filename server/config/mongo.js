@@ -6,10 +6,15 @@
 
 "use strict"
 
-const ***REMOVED*** mongoDB ***REMOVED*** = require("../config.json");
+const ***REMOVED*** mongoDB, mongoDBLocal ***REMOVED*** = require("../config.json");
 const mongoose = require("mongoose");
 
-mongoose.connect(mongoDB, ***REMOVED***
+let connString = mongoDB;
+if (process.env.NODE_ENV !== 'production') ***REMOVED***
+    connString = mongoDBLocal
+***REMOVED***
+
+mongoose.connect(connString, ***REMOVED***
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,

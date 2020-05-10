@@ -4,16 +4,34 @@ const auth = require("../auth");
 const userService = require("../../service/userService");
 var router = express.Router();
 
-router.post("/register", (req, res) => ***REMOVED***
-  console.log("HERE")
-  const ***REMOVED*** body: ***REMOVED*** user ***REMOVED*** ***REMOVED*** = req;
-  
+router.post("/register", auth.optional, (req, res) => ***REMOVED***
   userService
-    .registerUser(user.name, user.password)
-    .then(user => ***REMOVED***
+    .registerUser(req.body.name, req.body.password)
+    .then(user => res.status(200).send(user))
+    .catch(err => res.status(422).json(err.message));
+***REMOVED***);
 
-    ***REMOVED***)
-    .catch(err => res.status(422).json(err));
+router.post("/login", auth.optional, (req, res, next) => ***REMOVED***
+  if (!req.body.name)
+    return res.status(422).json("name is required!")
+
+  if (!req.body.password)
+    return res.status(422).json("password is required!")
+
+  passport.authenticate("local", 
+    ***REMOVED*** session: false ***REMOVED***, 
+    (err, user, info) => ***REMOVED***
+      if (err) return next(err);
+
+      if (!user)
+        return res.status(422).json("name or password is incorrect!");
+
+      req.logIn(user, err => ***REMOVED***
+        if (err) return next(err);
+        
+        return res.json(***REMOVED*** user: user.toAuthJSON() ***REMOVED***);
+      ***REMOVED***);
+  ***REMOVED***)(req, res, next);
 ***REMOVED***);
 
 module.exports = router;
