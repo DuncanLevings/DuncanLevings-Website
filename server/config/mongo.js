@@ -1,11 +1,10 @@
 /*
- * Filename: c:\Users\Duncan\Documents\personal_website\server\service\mongoService
- * Path: c:\Users\Duncan\Documents\personal_website\server
- * Created Date: Monday, May 4th 2020, 4:13:49 pm
  * Author: Duncan Levings
  * 
  * Copyright (c) 2020 DuncanLevings
  */
+
+"use strict"
 
 const ***REMOVED*** mongoDB ***REMOVED*** = require("../config.json");
 const mongoose = require("mongoose");

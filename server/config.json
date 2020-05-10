@@ -1,3 +1,4 @@
 ***REMOVED***
-    "mongoDB": "mongodb+srv://admin:admin@duncanlevings-nww3q.gcp.mongodb.net/test?retryWrites=true&w=majority"
+    "mongoDB": "mongodb+srv://admin:admin@duncanlevings-nww3q.gcp.mongodb.net/test?retryWrites=true&w=majority",
+    "secret": "admin"
 ***REMOVED***

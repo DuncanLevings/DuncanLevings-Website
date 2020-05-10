@@ -18,13 +18,17 @@
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "^4.17.1",
+    "express-jwt": "^5.3.3",
     "express-session": "^1.17.1",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.12",
     "morgan": "^1.10.0",
     "node-addon-api": "^3.0.0",
     "node-pre-gyp": "^0.14.0",
+    "passport": "^0.4.1",
+    "passport-local": "^1.0.0",
     "redis": "^3.0.2"
   ***REMOVED***,
   "nodemonConfig": ***REMOVED***

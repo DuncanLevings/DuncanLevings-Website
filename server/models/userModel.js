@@ -11,9 +11,11 @@
 
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const ***REMOVED*** secret ***REMOVED*** = require("../config.json");
 
 const userSchema = new mongoose.Schema(***REMOVED***
-    userName: ***REMOVED*** type: String, required: true ***REMOVED***,
+    name: ***REMOVED*** type: String, required: true ***REMOVED***,
     password: ***REMOVED*** type: String, required: true ***REMOVED***,
     isAdmin: ***REMOVED*** type: Boolean, required: true, default: false ***REMOVED***
 ***REMOVED***);
@@ -54,12 +56,32 @@ userSchema.pre("update", function (next) ***REMOVED***
     ***REMOVED***);
 ***REMOVED***);
 
-// compare password against hashed password
-userSchema.methods.comparePassword = function (password, cb) ***REMOVED***
+// validate password against hashed password
+userSchema.methods.validatePassword = function (password, cb) ***REMOVED***
     bcrypt.compare(password, this.password, (err, isMatch) => ***REMOVED***
         if (err) return cb(err);
         cb(null, isMatch);
     ***REMOVED***);
+***REMOVED***;
+
+userSchema.methods.generateJWT = function () ***REMOVED***
+    const today = new Date();
+    const expirationDate = new Date(today);
+    expirationDate.setDate(today.getDate() + 30);
+
+    return jwt.sign(***REMOVED***
+        id: this._id,
+        isAdmin: this.isAdmin,
+        exp: parseInt(expirationDate.getTime() / 1000, 10),
+    ***REMOVED***, secret);
+***REMOVED***
+
+userSchema.methods.toAuthJSON = function () ***REMOVED***
+    return ***REMOVED***
+        _id: this._id,
+        isAdmin: this.isAdmin,
+        token: this.generateJWT(),
+    ***REMOVED***;
 ***REMOVED***;
 
 userSchema.set("toJSON", ***REMOVED*** virtuals: true ***REMOVED***);

@@ -1,3 +1,11 @@
+/*
+ * Author: Duncan Levings
+ * 
+ * Copyright (c) 2020 DuncanLevings
+ */
+
+"use strict"
+
 var createError = require('http-errors');
 var express = require('express');
 const cors = require("cors");
@@ -7,12 +15,12 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
 const session = require("express-session");
+const passport = require("passport");
 const MongoStore = require("connect-mongo")(session);
-const mongoService = require("./service/mongoService");
-const redisService = require("./service/redisService");
-
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+const ***REMOVED*** secret ***REMOVED*** = require("./config.json");
+require("./config/mongo");
+require("./config/redis");
+require("./config/passport");
 
 var app = express();
 
@@ -27,20 +35,23 @@ app.use(express.urlencoded(***REMOVED*** extended: false ***REMOVED***));
 app.use(cookieParser());
 app.use(
   session(***REMOVED***
-    secret: "admin",
+    secret: secret,
     resave: false,
     saveUninitialized: false,
+    cookie: ***REMOVED*** maxAge: 60000 ***REMOVED***,
     store: new MongoStore(***REMOVED*** mongooseConnection: mongoose.connection ***REMOVED***)
   ***REMOVED***)
 );
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.static(path.join(__dirname, "public")));
 
-// app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use(require('./routes'));
 
 // must be last router
 app.use(express.static(path.join(__dirname, 'client/build')));
 app.get("*", (req, res) => ***REMOVED***
-  res.sendfile(path.join(__dirname, "client/build/index.html"));
+  res.sendFile(path.join(__dirname, "client/build/index.html"));
 ***REMOVED***);
 
 // catch 404 and forward to error handler
