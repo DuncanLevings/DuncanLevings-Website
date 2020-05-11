@@ -15,7 +15,8 @@ const jwt = require("jsonwebtoken");
 const ***REMOVED*** secret ***REMOVED*** = require("../config.json");
 
 const userSchema = new mongoose.Schema(***REMOVED***
-    name: ***REMOVED*** type: String, required: true ***REMOVED***,
+    email: ***REMOVED*** type: String, required: true ***REMOVED***,
+    username: ***REMOVED*** type: String, required: true ***REMOVED***,
     password: ***REMOVED*** type: String, required: true ***REMOVED***,
     isAdmin: ***REMOVED*** type: Boolean, required: true, default: false ***REMOVED***
 ***REMOVED***);
@@ -71,6 +72,8 @@ userSchema.methods.generateJWT = function () ***REMOVED***
 
     return jwt.sign(***REMOVED***
         id: this._id,
+        email: this.email,
+        username: this.username,
         isAdmin: this.isAdmin,
         exp: parseInt(expirationDate.getTime() / 1000, 10),
     ***REMOVED***, secret);
@@ -79,6 +82,8 @@ userSchema.methods.generateJWT = function () ***REMOVED***
 userSchema.methods.toAuthJSON = function () ***REMOVED***
     return ***REMOVED***
         _id: this._id,
+        email: this.email,
+        username: this.username,
         isAdmin: this.isAdmin,
         token: this.generateJWT(),
     ***REMOVED***;

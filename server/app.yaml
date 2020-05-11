@@ -1,5 +1,6 @@
 # [START app_yaml]
 runtime: nodejs12
+
 # update with Redis instance details
 env_variables:
   REDISHOST: "10.0.1.19"
@@ -10,10 +11,11 @@ resources:
   cpu: 1
   memory_gb: 0.5
 
-manual_scaling:
-  instances: 1
+automatic_scaling:
+  max_instances: 1
+  min_instances: 0
   
 # update with Redis instance network name
-# network:
-#   name: default
+network:
+  name: default
 # [END app_yaml]

@@ -13,15 +13,15 @@ const LocalStrategy = require("passport-local");
 const ***REMOVED*** User ***REMOVED*** = require("./mongo");
 
 passport.use(new LocalStrategy(***REMOVED***
-    usernameField: "name",
+    usernameField: "email",
     passwordField: "password",
-***REMOVED***, (name, password, cb) => ***REMOVED***
-    User.findOne(***REMOVED*** name ***REMOVED***)
+***REMOVED***, (email, password, cb) => ***REMOVED***
+    User.findOne(***REMOVED*** email: email ***REMOVED***)
         .then((user) => ***REMOVED***
             if (!user) return cb(null, false);
             user.validatePassword(password, (err, valid) => ***REMOVED***
                 if (valid) return cb(null, user);
-                return cb(***REMOVED*** errors: "name or password is incorrect!" ***REMOVED***, false);
+                return cb(***REMOVED*** errors: "email or password is incorrect!" ***REMOVED***, false);
             ***REMOVED***);
         ***REMOVED***).catch(cb);
 ***REMOVED***));
