@@ -13,6 +13,7 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const ***REMOVED*** secret ***REMOVED*** = require("../config.json");
+const ***REMOVED*** ACCESS_TOKEN_TTL ***REMOVED*** = require("../consts");
 
 const userSchema = new mongoose.Schema(***REMOVED***
     email: ***REMOVED*** type: String, required: true ***REMOVED***,
@@ -66,17 +67,12 @@ userSchema.methods.validatePassword = function (password, cb) ***REMOVED***
 ***REMOVED***;
 
 userSchema.methods.generateJWT = function () ***REMOVED***
-    const today = new Date();
-    const expirationDate = new Date(today);
-    expirationDate.setDate(today.getDate() + 30);
-
     return jwt.sign(***REMOVED***
         id: this._id,
         email: this.email,
         username: this.username,
         isAdmin: this.isAdmin,
-        exp: parseInt(expirationDate.getTime() / 1000, 10),
-    ***REMOVED***, secret);
+    ***REMOVED***, secret, ***REMOVED*** expiresIn: ACCESS_TOKEN_TTL ***REMOVED***);
 ***REMOVED***
 
 userSchema.methods.toAuthJSON = function () ***REMOVED***
@@ -84,8 +80,7 @@ userSchema.methods.toAuthJSON = function () ***REMOVED***
         _id: this._id,
         email: this.email,
         username: this.username,
-        isAdmin: this.isAdmin,
-        token: this.generateJWT(),
+        isAdmin: this.isAdmin
     ***REMOVED***;
 ***REMOVED***;
 
