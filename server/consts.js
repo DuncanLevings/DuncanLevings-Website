@@ -1,0 +1,1 @@
+module.exports.ACCESS_TOKEN_TTL = 15 * (60 * 1000); // 15 min
