@@ -27,7 +27,9 @@ db.once('open', () => console.log('connected to the database'));
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const ***REMOVED*** User ***REMOVED*** = require("../models/userModel");
+const ***REMOVED*** Token ***REMOVED*** = require("../models/tokenModel");
 
 module.exports = ***REMOVED***
-    User
+    User,
+    Token
 ***REMOVED***

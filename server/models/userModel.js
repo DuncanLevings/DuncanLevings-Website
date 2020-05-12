@@ -69,8 +69,6 @@ userSchema.methods.validatePassword = function (password, cb) ***REMOVED***
 userSchema.methods.generateJWT = function () ***REMOVED***
     return jwt.sign(***REMOVED***
         id: this._id,
-        email: this.email,
-        username: this.username,
         isAdmin: this.isAdmin,
     ***REMOVED***, secret, ***REMOVED*** expiresIn: ACCESS_TOKEN_TTL ***REMOVED***);
 ***REMOVED***

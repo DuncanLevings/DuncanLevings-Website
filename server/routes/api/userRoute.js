@@ -9,11 +9,13 @@
 var express = require('express');
 const passport = require('passport');
 const auth = require("../auth");
-const ***REMOVED*** ACCESS_TOKEN_TTL ***REMOVED*** = require("../../consts");
+const ***REMOVED*** ACCESS_TOKEN_TTL, REMEMBER_TOKEN_TTL ***REMOVED*** = require("../../consts");
 const userService = require("../../service/userService");
+const utils = require("../../service/utils");
 var router = express.Router();
 
-router.get("/", auth, (req, res) => ***REMOVED***
+// returns user as well as checking if the user has valid access_token
+router.get("/", auth.user, (req, res) => ***REMOVED***
   if (!req.user) return res.status(422).send("User not found");
 
   userService
@@ -46,16 +48,40 @@ router.post("/login", (req, res) => ***REMOVED***
       req.logIn(user, err => ***REMOVED***
         if (err) return res.status(422).json(err);
 
-        res.cookie('access_token', user.generateJWT(), ***REMOVED***
+        const token = user.generateJWT();
+
+        res.cookie('access_token', token, ***REMOVED***
           maxAge: ACCESS_TOKEN_TTL,
           httpOnly: true,
           secure: process.env.NODE_ENV === 'production' ? true : false,
           sameSite: true,
         ***REMOVED***);
         
+        if (req.body.remember_me) ***REMOVED***
+          const token = utils.randomString(64);
+          userService.saveRememberMeToken(token, user._id, err => ***REMOVED***
+            if (err) return res.status(400).send(err);
+            res.cookie("remember_me", token, ***REMOVED***
+              path: "/",
+              httpOnly: true,
+              secure: process.env.NODE_ENV === 'production' ? true : false,
+              sameSite: true,
+              maxAge: REMEMBER_TOKEN_TTL
+            ***REMOVED***);
+          ***REMOVED***);
+        ***REMOVED***
+        
         return res.json(***REMOVED*** user: user.toAuthJSON() ***REMOVED***);
       ***REMOVED***);
     ***REMOVED***)(req, res);
+***REMOVED***);
+
+router.get("/logout", (req, res) => ***REMOVED***
+  userService.clearOldToken(req.cookies.remember_me);
+  res.clearCookie("access_token");
+  res.clearCookie("remember_me");
+  req.logout();
+  res.redirect("/")
 ***REMOVED***);
 
 module.exports = router;

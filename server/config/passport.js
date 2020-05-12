@@ -8,30 +8,34 @@
 
 const mongoose = require("mongoose");
 const passport = require("passport");
-const LocalStrategy = require("passport-local");
-
-const ***REMOVED*** User ***REMOVED*** = require("./mongo");
+const LocalStrategy = require("passport-local").Strategy;
+const RememberMeStrategy = require("passport-remember-me").Strategy;
+const userService = require("../service/userService");
+const utils = require("../service/utils");
 
 passport.use(new LocalStrategy(***REMOVED***
     usernameField: "email",
     passwordField: "password",
-***REMOVED***, (email, password, cb) => ***REMOVED***
-    User.findOne(***REMOVED*** email: email ***REMOVED***)
-        .then((user) => ***REMOVED***
-            if (!user) return cb(null, false);
-            user.validatePassword(password, (err, valid) => ***REMOVED***
-                if (valid) return cb(null, user);
-                return cb(***REMOVED*** errors: "email or password is incorrect!" ***REMOVED***, false);
-            ***REMOVED***);
-        ***REMOVED***).catch(cb);
-***REMOVED***));
+***REMOVED***, userService.authenticate));
 
-passport.serializeUser((user, cb) => ***REMOVED***
-    cb(null, user);
-***REMOVED***);
+passport.use(new RememberMeStrategy(
+    function(token, done) ***REMOVED***
+        userService.consumeRememberMeToken(token, function (err, uid) ***REMOVED***
+            if (err) ***REMOVED*** return done(err); ***REMOVED***
+            if (!uid) ***REMOVED*** return done(null, false); ***REMOVED***
+            return done(null, uid);
+        ***REMOVED***);
+    ***REMOVED***,
+    function(uid, done) ***REMOVED***
+        var token = utils.randomString(64);
+        userService.saveRememberMeToken(token, uid, function (err) ***REMOVED***
+            if (err) ***REMOVED*** return done(err); ***REMOVED***
+            return done(null, token);
+        ***REMOVED***);
+    ***REMOVED***
+));
 
-passport.deserializeUser((id, cb) => ***REMOVED***
-    User.findById(id, (err, user) => ***REMOVED***
-        cb(err, user);
-    ***REMOVED***)
-***REMOVED***);
+
+passport.serializeUser(userService.serializeUser);
+
+passport.deserializeUser(userService.deserializeUser);
