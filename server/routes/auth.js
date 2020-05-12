@@ -9,17 +9,13 @@ const ***REMOVED*** secret ***REMOVED*** = require("../config.json");
 
 const checkAccess = (isAdmin = false) => ***REMOVED***
   return (req, res, next) => ***REMOVED***
+    // return res.status(401).send("Unauthorized: No token provided");
     const token = req.cookies.access_token;
-    const refresh = req.cookies.refresh_token;
     if (!token) ***REMOVED***
-      if (refresh) ***REMOVED***
-        // find user where refresh token = code
-        // issue new access token
-      ***REMOVED***
       res.status(401).send("Unauthorized: No token provided");
     ***REMOVED*** else ***REMOVED***
       jwt.verify(token, secret, function (err, decoded) ***REMOVED***
-        console.log(decoded)
+        // console.log(decoded)
 
         if (isAdmin)
           if (!decoded.isAdmin) ***REMOVED***

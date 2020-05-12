@@ -14,6 +14,22 @@ const userService = require("../../service/userService");
 const utils = require("../../service/utils");
 var router = express.Router();
 
+router.get("/refresh-token", (req, res) => ***REMOVED***
+  const remember_me = req.cookies.remember_me;
+  if (remember_me) ***REMOVED***
+    userService
+      .getUserByToken(remember_me)
+      .then((user) => ***REMOVED***
+        const token = user.generateJWT();
+        _generateCookie(res, "access_token", token, ACCESS_TOKEN_TTL);
+        res.status(200).send("acces_token refreshed");
+      ***REMOVED***)
+      .catch(() => res.redirect("/logout"));
+  ***REMOVED*** else ***REMOVED***
+    res.redirect("/logout");
+  ***REMOVED***
+***REMOVED***);
+
 // returns user as well as checking if the user has valid access_token
 router.get("/", auth.user, (req, res) => ***REMOVED***
   if (!req.user) return res.status(422).send("User not found");
@@ -29,6 +45,7 @@ router.post("/register", (req, res) => ***REMOVED***
     .registerUser(req.body.email, req.body.username, req.body.password)
     .then(user => res.status(200).send(user))
     .catch(err => res.status(422).json(err.message));
+  //auth new user?
 ***REMOVED***);
 
 router.post("/login", (req, res) => ***REMOVED***
@@ -50,24 +67,13 @@ router.post("/login", (req, res) => ***REMOVED***
 
         const token = user.generateJWT();
 
-        res.cookie('access_token', token, ***REMOVED***
-          maxAge: ACCESS_TOKEN_TTL,
-          httpOnly: true,
-          secure: process.env.NODE_ENV === 'production' ? true : false,
-          sameSite: true,
-        ***REMOVED***);
+        _generateCookie(res, "access_token", token, ACCESS_TOKEN_TTL);
         
         if (req.body.remember_me) ***REMOVED***
           const token = utils.randomString(64);
           userService.saveRememberMeToken(token, user._id, err => ***REMOVED***
             if (err) return res.status(400).send(err);
-            res.cookie("remember_me", token, ***REMOVED***
-              path: "/",
-              httpOnly: true,
-              secure: process.env.NODE_ENV === 'production' ? true : false,
-              sameSite: true,
-              maxAge: REMEMBER_TOKEN_TTL
-            ***REMOVED***);
+            _generateCookie(res, "remember_me", token, REMEMBER_TOKEN_TTL);
           ***REMOVED***);
         ***REMOVED***
         
@@ -83,5 +89,14 @@ router.get("/logout", (req, res) => ***REMOVED***
   req.logout();
   res.redirect("/")
 ***REMOVED***);
+
+const _generateCookie = (res, cookie, data, maxAge) => ***REMOVED***
+  res.cookie(cookie, data, ***REMOVED***
+    maxAge: maxAge,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production' ? true : false,
+    sameSite: true,
+  ***REMOVED***);
+***REMOVED***
 
 module.exports = router;

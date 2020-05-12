@@ -30,6 +30,16 @@ const getUser = async (id) => ***REMOVED***
     return (***REMOVED*** user: user.toAuthJSON() ***REMOVED***);
 ***REMOVED***
 
+const getUserByToken = async (token) => ***REMOVED***
+    const tkn = await Token.findOne(***REMOVED*** "payload.token": token ***REMOVED***);
+    if (!tkn) throw Error("Token not found!");
+
+    const user = await User.findById(tkn.payload.uid);
+    if (!user) throw Error("User not found!");
+
+    return user;
+***REMOVED***
+
 const registerUser = async (email, username, password) => ***REMOVED***
 
     if (await User.findOne(***REMOVED*** email: email ***REMOVED***))
@@ -105,6 +115,7 @@ class UserBuilder ***REMOVED***
 module.exports = ***REMOVED*** 
     authenticate, 
     getUser, 
+    getUserByToken,
     registerUser,
     consumeRememberMeToken,
     saveRememberMeToken,
