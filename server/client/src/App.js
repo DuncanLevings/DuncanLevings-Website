@@ -1,8 +1,8 @@
 import React from 'react';
-import NavBarMain from './components/navbar/navbarMain/navbarMain.lazy';
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Router from './Router';
+import NavBarMain from './components/navbar/navbarMain/navbarMain.lazy';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.css';
 
 function App() ***REMOVED***
   return (

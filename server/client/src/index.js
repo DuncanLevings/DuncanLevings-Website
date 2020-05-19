@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import App from 'App';
 import ***REMOVED*** BrowserRouter as Router ***REMOVED*** from "react-router-dom";
-import * as serviceWorker from './serviceWorker';
-import "./interceptors";
-import './index.css';
+import * as serviceWorker from 'serviceWorker';
+import 'index.css';
 
 ReactDOM.render(
   <React.StrictMode>

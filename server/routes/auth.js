@@ -12,7 +12,7 @@ const checkAccess = (isAdmin = false) => ***REMOVED***
     // return res.status(401).send("Unauthorized: No token provided");
     const token = req.cookies.access_token;
     if (!token) ***REMOVED***
-      res.status(401).send("Unauthorized: No token provided");
+      return res.status(401).send("Unauthorized: No token provided");
     ***REMOVED*** else ***REMOVED***
       jwt.verify(token, secret, function (err, decoded) ***REMOVED***
         // console.log(decoded)

@@ -22,17 +22,17 @@ router.get("/refresh-token", (req, res) => ***REMOVED***
       .then((user) => ***REMOVED***
         const token = user.generateJWT();
         _generateCookie(res, "access_token", token, ACCESS_TOKEN_TTL);
-        res.status(200).send("acces_token refreshed");
+        res.status(200).send("access_token refreshed");
       ***REMOVED***)
-      .catch(() => res.redirect("/logout"));
+      .catch((err) => res.status(400).send(err));
   ***REMOVED*** else ***REMOVED***
-    res.redirect("/logout");
+    res.status(400).send("No remember me token!");
   ***REMOVED***
 ***REMOVED***);
 
 // returns user as well as checking if the user has valid access_token
 router.get("/", auth.user, (req, res) => ***REMOVED***
-  if (!req.user) return res.status(422).send("User not found");
+  if (!req.user) return res.status(400).send("User not found");
 
   userService
     .getUser(req.user.id)
@@ -44,26 +44,26 @@ router.post("/register", (req, res) => ***REMOVED***
   userService
     .registerUser(req.body.email, req.body.username, req.body.password)
     .then(user => res.status(200).send(user))
-    .catch(err => res.status(422).json(err.message));
+    .catch(err => res.status(400).json(err.message));
   //auth new user?
 ***REMOVED***);
 
 router.post("/login", (req, res) => ***REMOVED***
   if (!req.body.email)
-    return res.status(422).json("Email is required!")
+    return res.status(400).json("Email is required!")
 
   if (!req.body.password)
-    return res.status(422).json("Password is required!")
+    return res.status(400).json("Password is required!")
 
   passport.authenticate("local",
     ***REMOVED*** session: false ***REMOVED***,
     (err, user, info) => ***REMOVED***
-      if (err) return res.status(422).json(err);
+      if (err) return res.status(400).json(err);
       if (!user)
-        return res.status(422).json("email or password is incorrect!");
+        return res.status(400).json("email or password is incorrect!");
 
       req.logIn(user, err => ***REMOVED***
-        if (err) return res.status(422).json(err);
+        if (err) return res.status(400).json(err);
 
         const token = user.generateJWT();
 
@@ -87,7 +87,7 @@ router.get("/logout", (req, res) => ***REMOVED***
   res.clearCookie("access_token");
   res.clearCookie("remember_me");
   req.logout();
-  res.redirect("/")
+  res.sendStatus(200);
 ***REMOVED***);
 
 const _generateCookie = (res, cookie, data, maxAge) => ***REMOVED***

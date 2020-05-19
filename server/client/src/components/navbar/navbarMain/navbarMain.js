@@ -6,7 +6,10 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './navbarMain.module.css';
+import ***REMOVED*** Button ***REMOVED*** from 'react-bootstrap';
+import ***REMOVED*** withRouter ***REMOVED*** from "react-router";
+import api from 'interceptors';
+import './navbarMain.css';
 
 class navbarMain extends React.Component ***REMOVED***
     constructor() ***REMOVED***
@@ -18,9 +21,17 @@ class navbarMain extends React.Component ***REMOVED***
 
     ***REMOVED***
 
+    login = () => ***REMOVED***
+        this.props.history.push("/login");
+    ***REMOVED***
+
+    logout = () => ***REMOVED***
+        api.get("/api/users/logout").then(() => this.props.history.push("/"));
+    ***REMOVED***
+
     render() ***REMOVED***
         return (
-            <div className=***REMOVED***styles.navbarMain***REMOVED***>
+            <div>
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <a className="navbar-brand" href="/">Navbar</a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,7 +44,8 @@ class navbarMain extends React.Component ***REMOVED***
                                 <a className="nav-link" href="home">Home <span className="sr-only">(current)</span></a>
                             </li>
                         </ul>
-                        <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Login</button>
+                        <Button variant="primary" type="submit" className="btn float-right mr-1" onClick=***REMOVED***this.login***REMOVED***>Login</Button>
+                        <Button variant="primary" type="submit" className="btn float-right" onClick=***REMOVED***this.logout***REMOVED***>Logout</Button>
                     </div>
                 </nav>
             </div>
@@ -45,4 +57,4 @@ navbarMain.propTypes = ***REMOVED******REMOVED***;
 
 navbarMain.defaultProps = ***REMOVED******REMOVED***;
 
-export default navbarMain;
+export default withRouter(navbarMain);
