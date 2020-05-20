@@ -11,8 +11,9 @@ import Login from 'components/navbar/Login/Login.lazy';
 
 const Router = (props) => (
     <Switch>
-        <Route exact path='/' component=***REMOVED***Home***REMOVED*** />
-        <Route path='/login' component=***REMOVED***Login***REMOVED*** />
+        <Route exact path='/home' component=***REMOVED***Home***REMOVED*** />
+        ***REMOVED***/* redirect to home if already logged in */***REMOVED***
+        <Route exact path='/login' component=***REMOVED***Login***REMOVED*** /> 
     </Switch>
 )
 export default Router;

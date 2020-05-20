@@ -1,6 +1,6 @@
 ***REMOVED***
   "usesTypeScript": false,
-  "usesCssModule": true,
+  "usesCssModule": false,
   "cssPreprocessor": "css",
   "testLibrary": "None",
   "component": ***REMOVED***

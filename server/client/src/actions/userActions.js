@@ -1,0 +1,36 @@
+/*
+ * Filename: c:\Users\Duncan\Documents\personal_website\server\client\src\actions\userActions.js
+ * Path: c:\Users\Duncan\Documents\personal_website\server\client
+ * Created Date: Wednesday, May 20th 2020, 3:29:10 pm
+ * Author: Duncan Levings
+ * 
+ * Copyright (c) 2020 DuncanLevings
+ */
+
+import * as actionTypes from 'actionTypes/userActionTypes';
+
+// GET USER
+
+export function getUser() ***REMOVED***
+    return ***REMOVED*** type: actionTypes.GET_USER ***REMOVED***;
+***REMOVED***
+
+export function getUserSuccess(user) ***REMOVED***
+    return ***REMOVED*** type: actionTypes.GET_USER_SUCCESS, payload: user ***REMOVED***;
+***REMOVED***
+
+// LOGIN USER
+
+export function loginUser(authData) ***REMOVED***
+    return ***REMOVED*** type: actionTypes.LOGIN_USER, payload: authData ***REMOVED***;
+***REMOVED***
+
+export function loginUserSuccess(user) ***REMOVED***
+    return ***REMOVED*** type: actionTypes.LOGIN_USER_SUCCESS, payload: user ***REMOVED***;
+***REMOVED***
+
+// ERROR
+
+export function userError(error) ***REMOVED***
+    return ***REMOVED*** type: actionTypes.ERROR, payload: error ***REMOVED***;
+***REMOVED***

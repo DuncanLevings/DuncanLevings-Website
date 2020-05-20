@@ -5,12 +5,13 @@
  */
 
 import React from 'react';
-import ***REMOVED*** withRouter ***REMOVED*** from "react-router";
-import ***REMOVED*** Form, InputGroup, FormControl, Button ***REMOVED*** from 'react-bootstrap'
+import ***REMOVED*** connect ***REMOVED*** from 'react-redux';
+import ***REMOVED*** bindActionCreators ***REMOVED*** from 'redux';
+import ***REMOVED*** loginUser ***REMOVED*** from 'actions/userActions';
+import ***REMOVED*** Form, InputGroup, FormControl, Button, Spinner ***REMOVED*** from 'react-bootstrap'
 import ***REMOVED*** FaUser, FaKey ***REMOVED*** from 'react-icons/fa';
 import ***REMOVED*** Formik ***REMOVED*** from 'formik';
 import * as yup from 'yup';
-import api from 'interceptors';
 import PropTypes from 'prop-types';
 import './Login.css';
 
@@ -28,32 +29,18 @@ const validationSchema = yup.object().shape(***REMOVED***
 class Login extends React.Component ***REMOVED***
     constructor() ***REMOVED***
         super();
-        this.state = ***REMOVED***
-            isSubmitting: false,
-            errors: ""
-        ***REMOVED***
+        this.state = ***REMOVED******REMOVED***
     ***REMOVED***
 
     componentDidMount() ***REMOVED***
-    //     api.get("/api/users")
-    //     .then((data) => ***REMOVED***
-    //        console.log(data);
-    //    ***REMOVED***).catch(err => console.log(err.response.data));
     ***REMOVED***
 
     login = values => ***REMOVED***
-        this.setState(***REMOVED***isSubmitting: true***REMOVED***);
-        api.post("/api/users/login", values)
-        .then((res) => ***REMOVED***
-            this.props.history.push('/');
-        ***REMOVED***)
-        .catch((err) => ***REMOVED***
-            this.setState(***REMOVED***errors: err.response.data, isSubmitting: false***REMOVED***);
-        ***REMOVED***);
+        this.props.loginUser(values);
     ***REMOVED***
 
     render() ***REMOVED***
-        const ***REMOVED*** isSubmitting, errors ***REMOVED*** = this.state;
+        const ***REMOVED*** isFetching, error ***REMOVED*** = this.props.userReducer;
         return (
             <div className="container">
                 <div className="d-flex justify-content-center h-100">
@@ -63,7 +50,7 @@ class Login extends React.Component ***REMOVED***
                         </div>
                         <div className="card-body">
                             <div className="card-errors">
-                                ***REMOVED***errors***REMOVED***
+                                ***REMOVED***error***REMOVED***
                             </div>
                             <Formik
                                 validationSchema=***REMOVED***validationSchema***REMOVED***
@@ -138,7 +125,7 @@ class Login extends React.Component ***REMOVED***
                                         variant="primary" 
                                         type="submit" 
                                         className="btn float-right login_btn" 
-                                        disabled=***REMOVED***isSubmitting***REMOVED***>Submit</Button>
+                                        disabled=***REMOVED***isFetching***REMOVED***>Submit</Button>
                                 </Form>
                             )***REMOVED***
                             </Formik>
@@ -158,8 +145,17 @@ class Login extends React.Component ***REMOVED***
     ***REMOVED***
 ***REMOVED***
 
-Login.propTypes = ***REMOVED******REMOVED***;
+Login.propTypes = ***REMOVED***
+    loginUser: PropTypes.func,
+    userReducer: PropTypes.object
+***REMOVED***;
 
-Login.defaultProps = ***REMOVED******REMOVED***;
+const mapStateToProps = state => ***REMOVED***
+    return ***REMOVED***
+        userReducer: state.userReducer
+    ***REMOVED***;
+***REMOVED***
 
-export default withRouter(Login);
+const mapDispatchToProps = dispatch => bindActionCreators(***REMOVED*** loginUser ***REMOVED***, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

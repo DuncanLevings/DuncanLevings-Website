@@ -26,7 +26,10 @@ const errorHandler = (error) => ***REMOVED***
                 console.log(res.data);
                 return axios(error.config);
             ***REMOVED***)
-            .catch((err) => console.log(err.response.data)) //logout?
+            .catch((err) => ***REMOVED***
+                console.log(err.response.data);
+                axiosInstance.get("/api/users/logout");
+            ***REMOVED***);
         ***REMOVED***
     ***REMOVED***
     return Promise.reject(***REMOVED*** ...error ***REMOVED***);

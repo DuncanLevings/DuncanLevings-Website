@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './Home.module.css';
+import './Home.css';
 
 class Home extends React.Component ***REMOVED***
     constructor() ***REMOVED***
@@ -20,7 +20,7 @@ class Home extends React.Component ***REMOVED***
 
     render() ***REMOVED***
         return (
-            <div className=***REMOVED***styles.Home***REMOVED***>
+            <div className="Home">
                 <h1>Home component</h1>
             </div>
         );

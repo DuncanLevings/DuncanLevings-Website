@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './TemplateName.module.css';
+import styles from './TemplateName.css';
 
 class TemplateName extends React.Component ***REMOVED***
     constructor() ***REMOVED***
@@ -20,7 +20,7 @@ class TemplateName extends React.Component ***REMOVED***
 
     render() ***REMOVED***
         return (
-            <div className=***REMOVED***styles.TemplateName***REMOVED***>
+            <div>
                 <h1>TemplateName component</h1>
             </div>
         );

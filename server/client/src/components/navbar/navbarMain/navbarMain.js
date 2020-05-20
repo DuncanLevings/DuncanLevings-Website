@@ -8,7 +8,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import ***REMOVED*** Button ***REMOVED*** from 'react-bootstrap';
 import ***REMOVED*** withRouter ***REMOVED*** from "react-router";
-import api from 'interceptors';
+import ***REMOVED*** Link ***REMOVED*** from 'react-router-dom';
+import api from 'api/Instance';
 import './navbarMain.css';
 
 class navbarMain extends React.Component ***REMOVED***
@@ -33,15 +34,12 @@ class navbarMain extends React.Component ***REMOVED***
         return (
             <div>
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                    <a className="navbar-brand" href="/">Navbar</a>
-                    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
+                    <Link className="navbar-brand" to=***REMOVED***"/"***REMOVED***>Navbar</Link>
 
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item active">
-                                <a className="nav-link" href="home">Home <span className="sr-only">(current)</span></a>
+                                <Link className="nav-link" to=***REMOVED***"/home"***REMOVED***>Home</Link>
                             </li>
                         </ul>
                         <Button variant="primary" type="submit" className="btn float-right mr-1" onClick=***REMOVED***this.login***REMOVED***>Login</Button>
