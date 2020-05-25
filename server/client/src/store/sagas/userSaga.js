@@ -32,7 +32,7 @@ function* loginUser(loginAction) ***REMOVED***
     try ***REMOVED***
         const user = yield call(loginAPI, loginAction.payload);
         yield put(actionCreators.loginUserSuccess(user));
-        yield put(push(RS.DASH));
+        yield put(push(loginAction.redirect));
     ***REMOVED*** catch (error) ***REMOVED***
         yield put(actionCreators.userError(error.response.data))
     ***REMOVED***

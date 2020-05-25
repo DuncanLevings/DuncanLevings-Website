@@ -23,10 +23,9 @@ class RSDash extends React.Component ***REMOVED***
         const ***REMOVED*** isFetching, user ***REMOVED*** = this.props.userReducer;
         return (
             <div className="RSDash">
-                <h1>RSDash component</h1>
                 ***REMOVED***isFetching || !user ?
                     <Spinner variant="light"/>
-                : <h6>Weclome ***REMOVED***user.username***REMOVED***</h6>***REMOVED***
+                : <h1>Weclome ***REMOVED***user.username***REMOVED***</h1>***REMOVED***
             </div>
         );
     ***REMOVED***

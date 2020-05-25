@@ -6,6 +6,8 @@
 
 import React from 'react';
 import './ResumeHome.css';
+import ***REMOVED*** RUNESCAPE_ROOT ***REMOVED*** from 'constants/routeConstants';
+import ***REMOVED*** Link ***REMOVED*** from 'react-router-dom';
 
 class ResumeHome extends React.Component ***REMOVED***
     constructor(props) ***REMOVED***
@@ -21,6 +23,7 @@ class ResumeHome extends React.Component ***REMOVED***
         return (
             <div className="ResumeHome">
                 <h1>ResumeHome component</h1>
+                <Link className="nav-link" to=***REMOVED***RUNESCAPE_ROOT***REMOVED***>Runescape Tools</Link>
             </div>
         );
     ***REMOVED***

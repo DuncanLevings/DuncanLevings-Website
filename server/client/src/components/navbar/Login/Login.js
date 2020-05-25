@@ -9,6 +9,7 @@ import ***REMOVED*** withRouter ***REMOVED*** from 'react-router-dom';
 import ***REMOVED*** connect ***REMOVED*** from 'react-redux';
 import ***REMOVED*** bindActionCreators ***REMOVED*** from 'redux';
 import ***REMOVED*** loginUser ***REMOVED*** from 'store/actions/userActions';
+import ***REMOVED*** RS ***REMOVED*** from 'constants/routeConstants';
 import ***REMOVED*** Form, InputGroup, FormControl, Button ***REMOVED*** from 'react-bootstrap'
 import ***REMOVED*** FaUser, FaKey ***REMOVED*** from 'react-icons/fa';
 import ***REMOVED*** Formik ***REMOVED*** from 'formik';
@@ -37,7 +38,8 @@ class Login extends React.Component ***REMOVED***
     ***REMOVED***
 
     login = values => ***REMOVED***
-        this.props.loginUser(values);
+        const ***REMOVED*** from ***REMOVED*** = this.props.location.state || ***REMOVED*** from: ***REMOVED*** pathname: RS.DASH ***REMOVED*** ***REMOVED***;
+        this.props.loginUser(values, from);
     ***REMOVED***
 
     render() ***REMOVED***

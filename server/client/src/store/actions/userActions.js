@@ -21,8 +21,8 @@ export function getUserSuccess(user) ***REMOVED***
 
 // LOGIN USER
 
-export function loginUser(authData) ***REMOVED***
-    return ***REMOVED*** type: actionTypes.LOGIN_USER, payload: authData ***REMOVED***;
+export function loginUser(authData, from) ***REMOVED***
+    return ***REMOVED*** type: actionTypes.LOGIN_USER, payload: authData, redirect: from ***REMOVED***;
 ***REMOVED***
 
 export function loginUserSuccess(user) ***REMOVED***

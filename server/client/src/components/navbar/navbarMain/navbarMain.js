@@ -32,6 +32,7 @@ class navbarMain extends React.Component ***REMOVED***
     ***REMOVED***
 
     render() ***REMOVED***
+        const ***REMOVED*** isAuthenticated ***REMOVED*** = this.props.userReducer;
         return (
             <div>
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -43,8 +44,8 @@ class navbarMain extends React.Component ***REMOVED***
                                 <Link className="nav-link" to=***REMOVED***RUNESCAPE_ROOT***REMOVED***>Home</Link>
                             </li>
                         </ul>
-                        <Button variant="primary" type="submit" className="btn float-right mr-1" onClick=***REMOVED***this.login***REMOVED***>Login</Button>
-                        <Button variant="primary" type="submit" className="btn float-right" onClick=***REMOVED***this.logout***REMOVED***>Logout</Button>
+                        <Button variant="primary" type="submit" className="btn float-right mr-1" onClick=***REMOVED***this.login***REMOVED*** hidden=***REMOVED***isAuthenticated***REMOVED***>Login</Button>
+                        <Button variant="primary" type="submit" className="btn float-right" onClick=***REMOVED***this.logout***REMOVED*** hidden=***REMOVED***!isAuthenticated***REMOVED***>Logout</Button>
                     </div>
                 </nav>
             </div>
@@ -53,9 +54,16 @@ class navbarMain extends React.Component ***REMOVED***
 ***REMOVED***
 
 navbarMain.propTypes = ***REMOVED***
-    logoutUser: PropTypes.func
+    logoutUser: PropTypes.func,
+    userReducer: PropTypes.object
 ***REMOVED***;
+
+const mapStateToProps = state => ***REMOVED***
+    return ***REMOVED***
+        userReducer: state.userReducer
+    ***REMOVED***;
+***REMOVED***
 
 const mapDispatchToProps = dispatch => bindActionCreators(***REMOVED*** logoutUser ***REMOVED***, dispatch);
 
-export default withRouter(connect(null, mapDispatchToProps)(navbarMain));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(navbarMain));
