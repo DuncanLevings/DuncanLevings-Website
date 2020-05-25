@@ -10,7 +10,7 @@
 import axios from 'axios';
 import ***REMOVED*** URL ***REMOVED*** from "config.js"
 import store from 'store';
-import ***REMOVED*** getUser, logoutUser ***REMOVED*** from 'actions/userActions';
+import ***REMOVED*** getUser, logoutUser ***REMOVED*** from 'store/actions/userActions';
 
 const axiosInstance = axios.create(***REMOVED***
     baseURL: URL
@@ -25,7 +25,7 @@ const errorHandler = (error) => ***REMOVED***
         if (error.response.status === 401 && !error.config._retry) ***REMOVED***
             error.config._retry = true;
             axiosInstance.get("/api/users/refresh-token").then(() => ***REMOVED***
-                store.dispatch(getUser())
+                store.dispatch(getUser());
                 return axios(error.config);
             ***REMOVED***)
             .catch(() => ***REMOVED***

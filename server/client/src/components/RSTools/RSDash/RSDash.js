@@ -6,11 +6,9 @@
 
 import React from 'react';
 import ***REMOVED*** connect ***REMOVED*** from 'react-redux';
-import ***REMOVED*** bindActionCreators ***REMOVED*** from 'redux';
-import ***REMOVED*** getUser ***REMOVED*** from 'actions/userActions';
-import PropTypes from 'prop-types';
-import styles from './RSDash.css';
 import ***REMOVED*** Spinner ***REMOVED*** from 'react-bootstrap';
+import PropTypes from 'prop-types';
+import './RSDash.css';
 
 class RSDash extends React.Component ***REMOVED***
     constructor(props) ***REMOVED***
@@ -19,7 +17,6 @@ class RSDash extends React.Component ***REMOVED***
     ***REMOVED***
 
     componentDidMount() ***REMOVED***
-        this.props.getUser();
     ***REMOVED***
 
     render() ***REMOVED***
@@ -28,7 +25,7 @@ class RSDash extends React.Component ***REMOVED***
             <div className="RSDash">
                 <h1>RSDash component</h1>
                 ***REMOVED***isFetching || !user ?
-                    <Spinner />
+                    <Spinner variant="light"/>
                 : <h6>Weclome ***REMOVED***user.username***REMOVED***</h6>***REMOVED***
             </div>
         );
@@ -36,7 +33,6 @@ class RSDash extends React.Component ***REMOVED***
 ***REMOVED***
 
 RSDash.propTypes = ***REMOVED***
-    getUser: PropTypes.func,
     userReducer: PropTypes.object
 ***REMOVED***;
 
@@ -46,6 +42,4 @@ const mapStateToProps = state => ***REMOVED***
     ***REMOVED***;
 ***REMOVED***
 
-const mapDispatchToProps = dispatch => bindActionCreators(***REMOVED*** getUser ***REMOVED***, dispatch);
-
-export default connect(mapStateToProps, mapDispatchToProps)(RSDash);
+export default connect(mapStateToProps, null)(RSDash);

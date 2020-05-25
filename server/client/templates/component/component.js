@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './TemplateName.css';
+import './TemplateName.css';
 
 class TemplateName extends React.Component ***REMOVED***
     constructor(props) ***REMOVED***

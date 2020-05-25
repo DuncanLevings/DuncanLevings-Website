@@ -7,7 +7,7 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-import * as actionTypes from 'actionTypes/userActionTypes';
+import * as actionTypes from 'store/actionTypes/userActionTypes';
 
 // GET USER
 
@@ -43,4 +43,8 @@ export function logoutUserSuccess() ***REMOVED***
 
 export function userError(error) ***REMOVED***
     return ***REMOVED*** type: actionTypes.ERROR, payload: error ***REMOVED***;
+***REMOVED***
+
+export function clearAuthorization() ***REMOVED***
+    return (***REMOVED*** type: actionTypes.CLEAR_AUTHORIZATION ***REMOVED***);
 ***REMOVED***

@@ -7,12 +7,14 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-import * as actionTypes from 'actionTypes/userActionTypes';
+import * as actionTypes from 'store/actionTypes/userActionTypes';
 
 const intialState = ***REMOVED***
     user: null,
     error: "",
-    isFetching: false
+    isAuthenticated: true,
+    isFetching: false, // loading state
+    isLogin: false // loading state
 ***REMOVED***;
 
 export default (state = intialState, action) => ***REMOVED***
@@ -25,18 +27,18 @@ export default (state = intialState, action) => ***REMOVED***
         case actionTypes.LOGIN_USER:
             return ***REMOVED***
                 ...state,
-                isFetching: true
+                isLogin: true
             ***REMOVED***; 
         case actionTypes.LOGOUT_USER:
             return ***REMOVED***
-                ...state,
-                isFetching: true
+                ...state
             ***REMOVED***; 
         case actionTypes.GET_USER_SUCCESS:
             return ***REMOVED***
                 ...state,
                 user: action.payload,
                 error: "",
+                isAuthenticated: true,
                 isFetching: false
             ***REMOVED***;
         case actionTypes.LOGIN_USER_SUCCESS:
@@ -44,20 +46,22 @@ export default (state = intialState, action) => ***REMOVED***
                 ...state,
                 user: action.payload,
                 error: "",
-                isFetching: false
+                isAuthenticated: true,
+                isLogin: false
             ***REMOVED***;
         case actionTypes.LOGOUT_USER_SUCCESS:
             return ***REMOVED***
                 ...state,
                 user: null,
                 error: "",
-                isFetching: false
+                isAuthenticated: false
             ***REMOVED***;
         case actionTypes.ERROR:
             return ***REMOVED***
                 ...state,
                 error: action.payload,
-                isFetching: false
+                isFetching: false,
+                isLogin: false
             ***REMOVED***;
         default:
             return state;

@@ -18,6 +18,7 @@ const session = require("express-session");
 const passport = require("passport");
 const MongoStore = require("connect-mongo")(session);
 const ***REMOVED*** secret ***REMOVED*** = require("./config.json");
+const ***REMOVED*** CONNECT_TTL ***REMOVED*** = require("./consts");
 require("./config/mongo");
 require("./config/redis");
 require("./config/passport");
@@ -38,7 +39,7 @@ app.use(
     secret: secret,
     resave: false,
     saveUninitialized: false,
-    cookie: ***REMOVED*** maxAge: 60000 ***REMOVED***,
+    cookie: ***REMOVED*** maxAge: CONNECT_TTL ***REMOVED***,
     store: new MongoStore(***REMOVED*** mongooseConnection: mongoose.connection ***REMOVED***)
   ***REMOVED***)
 );

@@ -16,7 +16,7 @@ var router = express.Router();
 
 // returns user as well as checking if the user has valid access_token
 router.get("/", auth.user, (req, res) => ***REMOVED***
-  if (!req.user) return res.status(400).send("User not found");
+  if (!req.user) return res.status(400).send("Login required!");
 
   userService
     .getUser(req.user.id)
@@ -52,6 +52,7 @@ router.post("/login", (req, res) => ***REMOVED***
         const token = user.generateJWT();
 
         _generateCookie(res, "access_token", token, ACCESS_TOKEN_TTL);
+        _clearRememberMe(req, res);
         
         if (req.body.remember_me) ***REMOVED***
           const token = utils.randomString(64);
@@ -67,9 +68,8 @@ router.post("/login", (req, res) => ***REMOVED***
 ***REMOVED***);
 
 router.get("/logout", (req, res) => ***REMOVED***
-  userService.clearOldToken(req.cookies.remember_me);
+  _clearRememberMe(req, res);
   res.clearCookie("access_token");
-  res.clearCookie("remember_me");
   req.logout();
   res.sendStatus(200);
 ***REMOVED***);
@@ -97,6 +97,13 @@ const _generateCookie = (res, cookie, data, maxAge) => ***REMOVED***
     secure: process.env.NODE_ENV === 'production' ? true : false,
     sameSite: true,
   ***REMOVED***);
+***REMOVED***
+
+const _clearRememberMe = (req, res) => ***REMOVED***
+  if (req.cookies.remember_me) ***REMOVED***
+    userService.clearOldToken(req.cookies.remember_me);
+    res.clearCookie("remember_me");
+  ***REMOVED***
 ***REMOVED***
 
 module.exports = router;

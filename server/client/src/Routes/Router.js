@@ -4,8 +4,8 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-import React, ***REMOVED*** Component ***REMOVED*** from 'react';
-import ***REMOVED*** Switch, Route, Redirect ***REMOVED*** from 'react-router-dom';
+import React from 'react';
+import ***REMOVED*** Switch, Route ***REMOVED*** from 'react-router-dom';
 import ResumeRouter from 'Routes/ResumeRoutes';
 import RSRouter from 'Routes/RunescapeRoutes';
 import ***REMOVED*** RESUME_ROOT, RUNESCAPE_ROOT ***REMOVED*** from 'constants/routeConstants';

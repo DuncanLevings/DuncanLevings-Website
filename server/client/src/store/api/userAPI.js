@@ -7,13 +7,13 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-import api from 'api/Instance';
+import api from 'store/api/Instance';
 
 export function getUserAPI() ***REMOVED***
     return api.request(***REMOVED***
         method: 'get',
         url: '/api/users'
-      ***REMOVED***).then(res => res.data.user );;
+      ***REMOVED***).then(res => res.data.user );
 ***REMOVED***
 
 export function loginAPI(authData) ***REMOVED***

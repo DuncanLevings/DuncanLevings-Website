@@ -7,11 +7,16 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-import React, ***REMOVED*** Component ***REMOVED*** from 'react';
-import ***REMOVED*** Switch, Route, Redirect ***REMOVED*** from 'react-router-dom';
+import React from 'react';
+import ***REMOVED*** Switch, Route , withRouter ***REMOVED*** from 'react-router-dom';
+import ***REMOVED*** connect ***REMOVED*** from 'react-redux';
+import ***REMOVED*** bindActionCreators ***REMOVED*** from 'redux';
+import ***REMOVED*** getUser ***REMOVED*** from 'store/actions/userActions';
 import ***REMOVED*** RS ***REMOVED*** from 'constants/routeConstants';
+import PrivateRoute from './PrivateRoute';
 import RSDash from 'components/RSTools/RSDash/RSDash.lazy';
 import Login from 'components/navbar/Login/Login.lazy';
+import PropTypes from 'prop-types';
 
 class RSRouter extends React.Component ***REMOVED***
     constructor(props) ***REMOVED***
@@ -20,17 +25,23 @@ class RSRouter extends React.Component ***REMOVED***
     ***REMOVED***
 
     componentDidMount() ***REMOVED***
-        console.log("HERE")
+        this.props.getUser();
     ***REMOVED***
 
     render() ***REMOVED***
         return (
             <Switch>
                 <Route path=***REMOVED***RS.LOGIN***REMOVED*** component=***REMOVED***Login***REMOVED*** /> 
-                <Route path=***REMOVED***RS.DASH***REMOVED*** component=***REMOVED***RSDash***REMOVED*** />
+                <PrivateRoute path=***REMOVED***RS.DASH***REMOVED*** component=***REMOVED***RSDash***REMOVED*** />
             </Switch>
         );
     ***REMOVED***
 ***REMOVED***
 
-export default RSRouter;
+Login.propTypes = ***REMOVED***
+    getUser: PropTypes.func
+***REMOVED***;
+
+const mapDispatchToProps = dispatch => bindActionCreators(***REMOVED*** getUser ***REMOVED***, dispatch);
+
+export default withRouter(connect(null, mapDispatchToProps)(RSRouter));

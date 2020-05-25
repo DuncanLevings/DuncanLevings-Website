@@ -5,10 +5,11 @@
  */
 
 import React from 'react';
+import ***REMOVED*** withRouter ***REMOVED*** from 'react-router-dom';
 import ***REMOVED*** connect ***REMOVED*** from 'react-redux';
 import ***REMOVED*** bindActionCreators ***REMOVED*** from 'redux';
-import ***REMOVED*** loginUser ***REMOVED*** from 'actions/userActions';
-import ***REMOVED*** Form, InputGroup, FormControl, Button, Spinner ***REMOVED*** from 'react-bootstrap'
+import ***REMOVED*** loginUser ***REMOVED*** from 'store/actions/userActions';
+import ***REMOVED*** Form, InputGroup, FormControl, Button ***REMOVED*** from 'react-bootstrap'
 import ***REMOVED*** FaUser, FaKey ***REMOVED*** from 'react-icons/fa';
 import ***REMOVED*** Formik ***REMOVED*** from 'formik';
 import * as yup from 'yup';
@@ -40,7 +41,7 @@ class Login extends React.Component ***REMOVED***
     ***REMOVED***
 
     render() ***REMOVED***
-        const ***REMOVED*** isFetching, error ***REMOVED*** = this.props.userReducer;
+        const ***REMOVED*** isLogin, error ***REMOVED*** = this.props.userReducer;
         return (
             <div className="container">
                 <div className="d-flex justify-content-center h-100">
@@ -125,17 +126,17 @@ class Login extends React.Component ***REMOVED***
                                         variant="primary" 
                                         type="submit" 
                                         className="btn float-right login_btn" 
-                                        disabled=***REMOVED***isFetching***REMOVED***>Submit</Button>
+                                        disabled=***REMOVED***isLogin***REMOVED***>Submit</Button>
                                 </Form>
                             )***REMOVED***
                             </Formik>
                         </div>
                         <div className="card-footer">
                             <div className="d-flex justify-content-center links">
-                                Don't have an account?<a href="#">Sign Up</a>
+                                Don't have an account?<a href="/">Sign Up</a>
                             </div>
                             <div className="d-flex justify-content-center">
-                                <a href="#">Forgot your password?</a>
+                                <a href="/">Forgot your password?</a>
                             </div>
                         </div>
                     </div>
@@ -158,4 +159,4 @@ const mapStateToProps = state => ***REMOVED***
 
 const mapDispatchToProps = dispatch => bindActionCreators(***REMOVED*** loginUser ***REMOVED***, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

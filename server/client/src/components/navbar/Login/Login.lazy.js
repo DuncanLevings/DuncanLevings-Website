@@ -6,7 +6,7 @@ const LazyLogin = lazy(() => import('./Login'));
 
 const Login = props => (
   <ErrorBoundary>
-    <Suspense fallback=***REMOVED***<div className="loading"><Spinner animation="border" /></div>***REMOVED***>
+    <Suspense fallback=***REMOVED***<div className="loading"><Spinner animation="border" variant="light" /></div>***REMOVED***>
       <LazyLogin ***REMOVED***...props***REMOVED*** />
     </Suspense>
   </ErrorBoundary>

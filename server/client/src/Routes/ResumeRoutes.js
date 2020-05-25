@@ -7,8 +7,8 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-import React, ***REMOVED*** Component ***REMOVED*** from 'react';
-import ***REMOVED*** Switch, Route, Redirect ***REMOVED*** from 'react-router-dom';
+import React from 'react';
+import ***REMOVED*** Switch, Route ***REMOVED*** from 'react-router-dom';
 import ***REMOVED*** RESUME ***REMOVED*** from 'constants/routeConstants';
 import ResumeHome from 'components/Resume/ResumeHome/ResumeHome.lazy';
 

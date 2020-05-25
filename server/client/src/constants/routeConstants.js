@@ -10,7 +10,7 @@
 //RESUME ROUTES
 export const RESUME_ROOT = '/';
 
-const HOME = RESUME_ROOT + '/';
+const HOME = RESUME_ROOT;
 
 export const RESUME = ***REMOVED***
     HOME
@@ -19,7 +19,7 @@ export const RESUME = ***REMOVED***
 //RUNESCAPE ROUTES
 export const RUNESCAPE_ROOT = '/rs-tools'
 
-const DASH = RUNESCAPE_ROOT + '/';
+const DASH = RUNESCAPE_ROOT;
 const LOGIN = RUNESCAPE_ROOT + '/login';
 
 export const RS = ***REMOVED***

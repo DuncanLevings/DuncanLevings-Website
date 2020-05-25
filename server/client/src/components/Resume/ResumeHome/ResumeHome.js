@@ -5,8 +5,7 @@
  */
 
 import React from 'react';
-import PropTypes from 'prop-types';
-import styles from './ResumeHome.css';
+import './ResumeHome.css';
 
 class ResumeHome extends React.Component ***REMOVED***
     constructor(props) ***REMOVED***
@@ -26,9 +25,5 @@ class ResumeHome extends React.Component ***REMOVED***
         );
     ***REMOVED***
 ***REMOVED***
-
-ResumeHome.propTypes = ***REMOVED******REMOVED***;
-
-ResumeHome.defaultProps = ***REMOVED******REMOVED***;
 
 export default ResumeHome;

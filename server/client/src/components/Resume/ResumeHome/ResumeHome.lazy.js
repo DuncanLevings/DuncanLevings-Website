@@ -6,7 +6,7 @@ const LazyResumeHome = lazy(() => import('./ResumeHome'));
 
 const ResumeHome = props => (
   <ErrorBoundary>
-    <Suspense fallback=***REMOVED***<div className="loading"><Spinner animation="border" /></div>***REMOVED***>
+    <Suspense fallback=***REMOVED***<div className="loading"><Spinner animation="border" variant="light" /></div>***REMOVED***>
       <LazyResumeHome ***REMOVED***...props***REMOVED*** />
     </Suspense>
   </ErrorBoundary>

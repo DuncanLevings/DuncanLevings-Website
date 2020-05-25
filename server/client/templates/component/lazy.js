@@ -6,7 +6,7 @@ const LazyTemplateName = lazy(() => import('./TemplateName'));
 
 const TemplateName = props => (
   <ErrorBoundary>
-    <Suspense fallback=***REMOVED***<div className="loading"><Spinner animation="border" /></div>***REMOVED***>
+    <Suspense fallback=***REMOVED***<div className="loading"><Spinner animation="border" variant="light" /></div>***REMOVED***>
       <LazyTemplateName ***REMOVED***...props***REMOVED*** />
     </Suspense>
   </ErrorBoundary>

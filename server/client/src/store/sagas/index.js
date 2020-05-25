@@ -8,7 +8,7 @@
  */
 
 import ***REMOVED*** all ***REMOVED*** from 'redux-saga/effects';
-import ***REMOVED*** getUserWatcher, loginUserWatcher, logoutUserWatcher ***REMOVED*** from 'sagas/userSaga';
+import ***REMOVED*** getUserWatcher, loginUserWatcher, logoutUserWatcher ***REMOVED*** from 'store/sagas/userSaga';
 
 export default function* rootSaga() ***REMOVED***
     yield all([

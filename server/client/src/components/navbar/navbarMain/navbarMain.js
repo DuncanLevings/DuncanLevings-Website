@@ -11,7 +11,7 @@ import ***REMOVED*** bindActionCreators ***REMOVED*** from 'redux';
 import ***REMOVED*** Button ***REMOVED*** from 'react-bootstrap';
 import ***REMOVED*** Link, withRouter ***REMOVED*** from 'react-router-dom';
 import ***REMOVED*** RESUME_ROOT, RUNESCAPE_ROOT, RS ***REMOVED*** from 'constants/routeConstants';
-import ***REMOVED*** logoutUser ***REMOVED*** from 'actions/userActions';
+import ***REMOVED*** logoutUser ***REMOVED*** from 'store/actions/userActions';
 import './navbarMain.css';
 
 class navbarMain extends React.Component ***REMOVED***

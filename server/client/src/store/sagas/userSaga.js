@@ -10,16 +10,21 @@
 import ***REMOVED*** call, takeLatest, put ***REMOVED*** from 'redux-saga/effects';
 import ***REMOVED*** push ***REMOVED*** from 'connected-react-router';
 import ***REMOVED*** RS ***REMOVED*** from 'constants/routeConstants';
-import ***REMOVED*** getUserAPI, loginAPI, logoutAPI ***REMOVED*** from 'api/userAPI';
-import * as actionTypes from 'actionTypes/userActionTypes'
-import * as actionCreators from 'actions/userActions';
+import ***REMOVED*** getUserAPI, loginAPI, logoutAPI ***REMOVED*** from 'store/api/userAPI';
+import * as actionTypes from 'store/actionTypes/userActionTypes'
+import * as actionCreators from 'store/actions/userActions';
 
 function* getUser() ***REMOVED***
     try ***REMOVED***
         const user = yield call(getUserAPI);
         yield put(actionCreators.getUserSuccess(user));
     ***REMOVED*** catch (error) ***REMOVED***
-        yield put(actionCreators.userError(error.response.data))
+        if (error.response.status === 401) ***REMOVED***
+            yield put(actionCreators.userError());
+        ***REMOVED***
+        else ***REMOVED***
+            yield put(actionCreators.userError(error.response.data));
+        ***REMOVED***
     ***REMOVED***
 ***REMOVED***
 
