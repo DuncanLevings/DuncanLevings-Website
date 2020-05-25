@@ -1,5 +1,5 @@
 import React from 'react';
-import Router from 'Router';
+import Router from 'Routes/Router';
 import NavBarMain from 'components/navbar/navbarMain/navbarMain.lazy';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'App.css';

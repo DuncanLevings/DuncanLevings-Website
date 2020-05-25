@@ -19,7 +19,7 @@ class ErrorBoundary extends React.Component ***REMOVED***
     render() ***REMOVED***
       if (this.state.hasError) ***REMOVED***
         // You can render any custom fallback UI
-        return <h1>Something went wrong.</h1>;
+        return <h1 style=***REMOVED******REMOVED***color: "white"***REMOVED******REMOVED***>Something went wrong.</h1>;
       ***REMOVED***
   
       return this.props.children; 

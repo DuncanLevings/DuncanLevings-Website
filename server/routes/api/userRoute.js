@@ -14,22 +14,6 @@ const userService = require("../../service/userService");
 const utils = require("../../service/utils");
 var router = express.Router();
 
-router.get("/refresh-token", (req, res) => ***REMOVED***
-  const remember_me = req.cookies.remember_me;
-  if (remember_me) ***REMOVED***
-    userService
-      .getUserByToken(remember_me)
-      .then((user) => ***REMOVED***
-        const token = user.generateJWT();
-        _generateCookie(res, "access_token", token, ACCESS_TOKEN_TTL);
-        res.status(200).send("access_token refreshed");
-      ***REMOVED***)
-      .catch((err) => res.status(400).send(err));
-  ***REMOVED*** else ***REMOVED***
-    res.status(400).send("No remember me token!");
-  ***REMOVED***
-***REMOVED***);
-
 // returns user as well as checking if the user has valid access_token
 router.get("/", auth.user, (req, res) => ***REMOVED***
   if (!req.user) return res.status(400).send("User not found");
@@ -88,6 +72,22 @@ router.get("/logout", (req, res) => ***REMOVED***
   res.clearCookie("remember_me");
   req.logout();
   res.sendStatus(200);
+***REMOVED***);
+
+router.get("/refresh-token", (req, res) => ***REMOVED***
+  const remember_me = req.cookies.remember_me;
+  if (remember_me) ***REMOVED***
+    userService
+      .getUserByToken(remember_me)
+      .then((user) => ***REMOVED***
+        const token = user.generateJWT();
+        _generateCookie(res, "access_token", token, ACCESS_TOKEN_TTL);
+        res.status(200).send("access_token refreshed");
+      ***REMOVED***)
+      .catch((err) => res.status(400).send(err));
+  ***REMOVED*** else ***REMOVED***
+    res.status(400).send("No remember me token!");
+  ***REMOVED***
 ***REMOVED***);
 
 const _generateCookie = (res, cookie, data, maxAge) => ***REMOVED***

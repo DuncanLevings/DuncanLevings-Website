@@ -6,9 +6,9 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import styles from './TemplateName.css';
+import styles from './ResumeHome.css';
 
-class TemplateName extends React.Component ***REMOVED***
+class ResumeHome extends React.Component ***REMOVED***
     constructor(props) ***REMOVED***
         super(props);
         this.state = ***REMOVED******REMOVED***
@@ -20,15 +20,15 @@ class TemplateName extends React.Component ***REMOVED***
 
     render() ***REMOVED***
         return (
-            <div className="TemplateName">
-                <h1>TemplateName component</h1>
+            <div className="ResumeHome">
+                <h1>ResumeHome component</h1>
             </div>
         );
     ***REMOVED***
 ***REMOVED***
 
-TemplateName.propTypes = ***REMOVED******REMOVED***;
+ResumeHome.propTypes = ***REMOVED******REMOVED***;
 
-TemplateName.defaultProps = ***REMOVED******REMOVED***;
+ResumeHome.defaultProps = ***REMOVED******REMOVED***;
 
-export default TemplateName;
+export default ResumeHome;

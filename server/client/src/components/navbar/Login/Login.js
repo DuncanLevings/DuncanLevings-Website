@@ -27,8 +27,8 @@ const validationSchema = yup.object().shape(***REMOVED***
   ***REMOVED***);
 
 class Login extends React.Component ***REMOVED***
-    constructor() ***REMOVED***
-        super();
+    constructor(props) ***REMOVED***
+        super(props);
         this.state = ***REMOVED******REMOVED***
     ***REMOVED***
 

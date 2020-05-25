@@ -19,7 +19,7 @@ const authenticate = async (email, password, cb) => ***REMOVED***
             if (!user) return cb(null, false);
             user.validatePassword(password, (err, valid) => ***REMOVED***
                 if (valid) return cb(null, user);
-                return cb(***REMOVED*** errors: "email or password is incorrect!" ***REMOVED***, false);
+                return cb("email or password is incorrect!", false);
             ***REMOVED***);
         ***REMOVED***).catch(cb);
 ***REMOVED***

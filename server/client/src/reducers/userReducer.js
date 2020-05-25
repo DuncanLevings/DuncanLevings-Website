@@ -27,6 +27,11 @@ export default (state = intialState, action) => ***REMOVED***
                 ...state,
                 isFetching: true
             ***REMOVED***; 
+        case actionTypes.LOGOUT_USER:
+            return ***REMOVED***
+                ...state,
+                isFetching: true
+            ***REMOVED***; 
         case actionTypes.GET_USER_SUCCESS:
             return ***REMOVED***
                 ...state,
@@ -38,6 +43,13 @@ export default (state = intialState, action) => ***REMOVED***
             return ***REMOVED***
                 ...state,
                 user: action.payload,
+                error: "",
+                isFetching: false
+            ***REMOVED***;
+        case actionTypes.LOGOUT_USER_SUCCESS:
+            return ***REMOVED***
+                ...state,
+                user: null,
                 error: "",
                 isFetching: false
             ***REMOVED***;

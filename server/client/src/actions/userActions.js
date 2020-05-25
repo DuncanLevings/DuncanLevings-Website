@@ -29,6 +29,16 @@ export function loginUserSuccess(user) ***REMOVED***
     return ***REMOVED*** type: actionTypes.LOGIN_USER_SUCCESS, payload: user ***REMOVED***;
 ***REMOVED***
 
+// LOGOUT USER
+
+export function logoutUser() ***REMOVED***
+    return ***REMOVED*** type: actionTypes.LOGOUT_USER ***REMOVED***;
+***REMOVED***
+
+export function logoutUserSuccess() ***REMOVED***
+    return ***REMOVED*** type: actionTypes.LOGOUT_USER_SUCCESS ***REMOVED***;
+***REMOVED***
+
 // ERROR
 
 export function userError(error) ***REMOVED***

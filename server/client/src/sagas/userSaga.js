@@ -9,7 +9,8 @@
 
 import ***REMOVED*** call, takeLatest, put ***REMOVED*** from 'redux-saga/effects';
 import ***REMOVED*** push ***REMOVED*** from 'connected-react-router';
-import ***REMOVED*** getUserAPI, loginAPI ***REMOVED*** from 'api/userAPI';
+import ***REMOVED*** RS ***REMOVED*** from 'constants/routeConstants';
+import ***REMOVED*** getUserAPI, loginAPI, logoutAPI ***REMOVED*** from 'api/userAPI';
 import * as actionTypes from 'actionTypes/userActionTypes'
 import * as actionCreators from 'actions/userActions';
 
@@ -26,7 +27,17 @@ function* loginUser(loginAction) ***REMOVED***
     try ***REMOVED***
         const user = yield call(loginAPI, loginAction.payload);
         yield put(actionCreators.loginUserSuccess(user));
-        yield put(push('/home'));
+        yield put(push(RS.DASH));
+    ***REMOVED*** catch (error) ***REMOVED***
+        yield put(actionCreators.userError(error.response.data))
+    ***REMOVED***
+***REMOVED***
+
+function* logoutUser() ***REMOVED***
+    try ***REMOVED***
+        yield call(logoutAPI);
+        yield put(actionCreators.logoutUserSuccess());
+        yield put(push(RS.LOGIN));
     ***REMOVED*** catch (error) ***REMOVED***
         yield put(actionCreators.userError(error.response.data))
     ***REMOVED***
@@ -38,4 +49,8 @@ export function* getUserWatcher() ***REMOVED***
 
 export function* loginUserWatcher() ***REMOVED***
     yield takeLatest(actionTypes.LOGIN_USER, loginUser);
+***REMOVED***
+
+export function* logoutUserWatcher() ***REMOVED***
+    yield takeLatest(actionTypes.LOGOUT_USER, logoutUser);
 ***REMOVED***

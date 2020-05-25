@@ -4,15 +4,17 @@
   "cssPreprocessor": "css",
   "testLibrary": "None",
   "component": ***REMOVED***
-    "customTemplates": ***REMOVED***
-      "component": "templates/component/component.js",
-      "lazy":  "templates/component/lazy.js"
-    ***REMOVED***,
-    "path": "src/components",
-    "withStyle": true,
-    "withTest": false,
-    "withStory": false,
-    "withLazy": true
+    "default": ***REMOVED***
+      "customTemplates": ***REMOVED***
+        "component": "templates/component/component.js",
+        "lazy": "templates/component/lazy.js"
+      ***REMOVED***,
+      "path": "src/components",
+      "withStyle": true,
+      "withTest": false,
+      "withStory": false,
+      "withLazy": true
+    ***REMOVED***
   ***REMOVED***,
   "page": ***REMOVED***
     "path": "src/pages",

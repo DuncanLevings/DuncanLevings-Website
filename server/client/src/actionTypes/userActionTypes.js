@@ -11,6 +11,9 @@ export const GET_USER = 'GET_USER';
 export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
 
 export const LOGIN_USER = 'LOGIN_USER';
-export const LOGIN_USER_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
+
+export const LOGOUT_USER = 'LOGOUT_USER';
+export const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS'
 
 export const ERROR = 'USER_ERROR';
