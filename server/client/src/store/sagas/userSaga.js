@@ -7,7 +7,7 @@
 import ***REMOVED*** call, takeLatest, put ***REMOVED*** from 'redux-saga/effects';
 import ***REMOVED*** push ***REMOVED*** from 'connected-react-router';
 import ***REMOVED*** RS ***REMOVED*** from 'constants/routeConstants';
-import ***REMOVED*** getUserAPI, loginAPI, logoutAPI ***REMOVED*** from 'store/api/userAPI';
+import ***REMOVED*** getUserAPI, loginAPI, logoutAPI, signUpAPI ***REMOVED*** from 'store/api/userAPI';
 import * as actionTypes from 'store/actionTypes/userActionTypes'
 import * as actionCreators from 'store/actions/userActions';
 
@@ -45,6 +45,16 @@ function* logoutUser() ***REMOVED***
     ***REMOVED***
 ***REMOVED***
 
+function* signupUser(signupAction) ***REMOVED***
+    try ***REMOVED***
+        yield call(signUpAPI, signupAction.payload);
+        yield put(actionCreators.signupUserSuccess());
+        yield put(push(RS.LOGIN));
+    ***REMOVED*** catch (error) ***REMOVED***
+        yield put(actionCreators.userError(error.response.data))
+    ***REMOVED***
+***REMOVED***
+
 export function* getUserWatcher() ***REMOVED***
     yield takeLatest(actionTypes.GET_USER, getUser);
 ***REMOVED***
@@ -55,4 +65,8 @@ export function* loginUserWatcher() ***REMOVED***
 
 export function* logoutUserWatcher() ***REMOVED***
     yield takeLatest(actionTypes.LOGOUT_USER, logoutUser);
+***REMOVED***
+
+export function* signupUserWatcher() ***REMOVED***
+    yield takeLatest(actionTypes.SIGNUP_USER, signupUser);
 ***REMOVED***

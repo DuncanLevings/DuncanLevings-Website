@@ -18,8 +18,12 @@ export const RUNESCAPE_ROOT = '/rs-tools'
 
 const DASH = RUNESCAPE_ROOT;
 const LOGIN = RUNESCAPE_ROOT + '/login';
+const SIGNUP = RUNESCAPE_ROOT + '/sign-up';
+const FORGOTPASS = RUNESCAPE_ROOT + '/forgot-pasword';
 
 export const RS = ***REMOVED***
     DASH,
-    LOGIN
+    LOGIN,
+    SIGNUP,
+    FORGOTPASS
 ***REMOVED***

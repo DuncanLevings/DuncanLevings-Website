@@ -41,18 +41,16 @@ const getUserByToken = async (token) => ***REMOVED***
 ***REMOVED***
 
 const registerUser = async (email, username, password) => ***REMOVED***
-
     if (await User.findOne(***REMOVED*** email: email ***REMOVED***))
-        throw Error("Email already exists!");
-    
+        throw Error("An account with that E-mail is already registered!");
+
     const user = new User(
         new UserBuilder()
             .withEmail(email)
             .withUserName(username)
             .withPassword(password));
-    
-    await user.save();
-    return (***REMOVED*** user: user.toAuthJSON() ***REMOVED***)
+
+    return await user.save();
 ***REMOVED***
 
 const consumeRememberMeToken = (token, fn) => ***REMOVED***

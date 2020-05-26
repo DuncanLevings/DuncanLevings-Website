@@ -36,6 +36,16 @@ export function logoutUserSuccess() ***REMOVED***
     return ***REMOVED*** type: actionTypes.LOGOUT_USER_SUCCESS ***REMOVED***;
 ***REMOVED***
 
+// SIGNUP USER
+
+export function signupUser(authData) ***REMOVED***
+    return ***REMOVED*** type: actionTypes.SIGNUP_USER, payload: authData ***REMOVED***;
+***REMOVED***
+
+export function signupUserSuccess() ***REMOVED***
+    return ***REMOVED*** type: actionTypes.SIGNUP_USER_SUCCESS ***REMOVED***;
+***REMOVED***
+
 // ERROR
 
 export function userError(error) ***REMOVED***

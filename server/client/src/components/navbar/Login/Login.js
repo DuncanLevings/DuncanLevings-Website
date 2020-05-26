@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import ***REMOVED*** withRouter ***REMOVED*** from 'react-router-dom';
+import ***REMOVED*** withRouter, Link ***REMOVED*** from 'react-router-dom';
 import ***REMOVED*** connect ***REMOVED*** from 'react-redux';
 import ***REMOVED*** bindActionCreators ***REMOVED*** from 'redux';
 import ***REMOVED*** loginUser ***REMOVED*** from 'store/actions/userActions';
@@ -80,7 +80,7 @@ class Login extends React.Component ***REMOVED***
                                             <FormControl
                                                 type="email"
                                                 name="email"
-                                                placeholder="Email"
+                                                placeholder="E-mail address"
                                                 aria-label="Email"
                                                 aria-describedby="Email"
                                                 value=***REMOVED***values.email***REMOVED***
@@ -135,10 +135,10 @@ class Login extends React.Component ***REMOVED***
                         </div>
                         <div className="card-footer">
                             <div className="d-flex justify-content-center links">
-                                Don't have an account?<a href="/">Sign Up</a>
+                                Don't have an account?<Link to=***REMOVED***RS.SIGNUP***REMOVED***>Sign Up</Link>
                             </div>
                             <div className="d-flex justify-content-center">
-                                <a href="/">Forgot your password?</a>
+                                <Link to=***REMOVED***RS.FORGOTPASS***REMOVED***>Forgot your password?</Link>
                             </div>
                         </div>
                     </div>

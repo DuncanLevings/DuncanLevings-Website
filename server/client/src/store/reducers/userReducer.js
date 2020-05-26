@@ -11,7 +11,8 @@ const intialState = ***REMOVED***
     error: "",
     isAuthenticated: true,
     isFetching: false, // loading state
-    isLogin: false // loading state
+    isLogin: false, // loading state
+    isSignup: false // loading state
 ***REMOVED***;
 
 export default (state = intialState, action) => ***REMOVED***
@@ -29,6 +30,11 @@ export default (state = intialState, action) => ***REMOVED***
         case actionTypes.LOGOUT_USER:
             return ***REMOVED***
                 ...state
+            ***REMOVED***; 
+        case actionTypes.SIGNUP_USER:
+            return ***REMOVED***
+                ...state,
+                isSignup: true
             ***REMOVED***; 
         case actionTypes.GET_USER_SUCCESS:
             return ***REMOVED***
@@ -53,12 +59,19 @@ export default (state = intialState, action) => ***REMOVED***
                 error: "",
                 isAuthenticated: false
             ***REMOVED***;
+        case actionTypes.SIGNUP_USER_SUCCESS:
+            return ***REMOVED***
+                ...state,
+                error: "",
+                isSignup: false
+            ***REMOVED***;
         case actionTypes.ERROR:
             return ***REMOVED***
                 ...state,
                 error: action.payload,
                 isFetching: false,
-                isLogin: false
+                isLogin: false,
+                isSignup: false
             ***REMOVED***;
         default:
             return state;

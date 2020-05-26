@@ -17,7 +17,7 @@ const mongoose = require('mongoose');
 const session = require("express-session");
 const passport = require("passport");
 const MongoStore = require("connect-mongo")(session);
-const ***REMOVED*** secret ***REMOVED*** = require("./config.json");
+const ***REMOVED*** secret, sessionName, accessCookie ***REMOVED*** = require("./config.json");
 const ***REMOVED*** CONNECT_TTL ***REMOVED*** = require("./consts");
 require("./config/mongo");
 require("./config/redis");
@@ -25,8 +25,23 @@ require("./config/passport");
 
 var app = express();
 
+var sessionOptions = ***REMOVED***
+  name: sessionName,
+  secret: secret,
+  resave: false,
+  saveUninitialized: false,
+  rolling: true,
+  store: new MongoStore(***REMOVED*** mongooseConnection: mongoose.connection ***REMOVED***),
+  cookie: ***REMOVED*** 
+    httpOnly: true, 
+    maxAge: CONNECT_TTL 
+  ***REMOVED***,
+  unset: 'destroy'
+***REMOVED***
+
 if (process.env.PRODUCTION || process.env.DEVELOPMENT) ***REMOVED***
   app.enable('trust proxy');
+  sessionOptions.cookie.secure = true
 ***REMOVED***
 
 // view engine setup
@@ -38,20 +53,19 @@ app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded(***REMOVED*** extended: false ***REMOVED***));
 app.use(cookieParser());
-app.use(
-  session(***REMOVED***
-    secret: secret,
-    resave: false,
-    saveUninitialized: false,
-    store: new MongoStore(***REMOVED*** mongooseConnection: mongoose.connection ***REMOVED***),
-    cookie: ***REMOVED*** maxAge: 60000 ***REMOVED***,
-    unset: 'destroy'
-  ***REMOVED***)
-);
+app.use(session(sessionOptions));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.authenticate('remember-me'));
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use((req, res, next) => ***REMOVED***
+  if (!req.cookies[sessionName] && !req.user) ***REMOVED***
+    res.clearCookie(sessionName);
+    res.clearCookie(accessCookie);      
+  ***REMOVED***
+  next();
+***REMOVED***);
 
 app.use(require('./routes'));
 
