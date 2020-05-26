@@ -1,7 +1,4 @@
 /*
- * Filename: c:\Users\Duncan\Documents\personal_website\server\models\userModel.js
- * Path: c:\Users\Duncan\Documents\personal_website\server
- * Created Date: Tuesday, May 5th 2020, 3:18:46 pm
  * Author: Duncan Levings
  * 
  * Copyright (c) 2020 DuncanLevings

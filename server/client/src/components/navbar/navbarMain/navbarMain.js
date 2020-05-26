@@ -10,7 +10,7 @@ import ***REMOVED*** connect ***REMOVED*** from 'react-redux';
 import ***REMOVED*** bindActionCreators ***REMOVED*** from 'redux';
 import ***REMOVED*** Button ***REMOVED*** from 'react-bootstrap';
 import ***REMOVED*** Link, withRouter ***REMOVED*** from 'react-router-dom';
-import ***REMOVED*** RESUME_ROOT, RUNESCAPE_ROOT, RS ***REMOVED*** from 'constants/routeConstants';
+import ***REMOVED*** RESUME_ROOT, RUNESCAPE_ROOT ***REMOVED*** from 'constants/routeConstants';
 import ***REMOVED*** logoutUser ***REMOVED*** from 'store/actions/userActions';
 import './navbarMain.css';
 
@@ -21,10 +21,6 @@ class navbarMain extends React.Component ***REMOVED***
     ***REMOVED***
 
     componentDidMount() ***REMOVED***
-    ***REMOVED***
-
-    login = () => ***REMOVED***
-        this.props.history.push(RS.LOGIN);
     ***REMOVED***
 
     logout = () => ***REMOVED***
@@ -41,10 +37,9 @@ class navbarMain extends React.Component ***REMOVED***
                     <div className="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul className="navbar-nav mr-auto">
                             <li className="nav-item active">
-                                <Link className="nav-link" to=***REMOVED***RUNESCAPE_ROOT***REMOVED***>Home</Link>
+                                <Link className="nav-link" to=***REMOVED***RUNESCAPE_ROOT***REMOVED*** hidden=***REMOVED***!isAuthenticated***REMOVED***>Home</Link>
                             </li>
                         </ul>
-                        <Button variant="primary" type="submit" className="btn float-right mr-1" onClick=***REMOVED***this.login***REMOVED*** hidden=***REMOVED***isAuthenticated***REMOVED***>Login</Button>
                         <Button variant="primary" type="submit" className="btn float-right" onClick=***REMOVED***this.logout***REMOVED*** hidden=***REMOVED***!isAuthenticated***REMOVED***>Logout</Button>
                     </div>
                 </nav>

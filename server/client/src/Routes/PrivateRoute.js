@@ -1,7 +1,4 @@
 /*
- * Filename: c:\Users\Duncan\Documents\personal_website\server\client\src\Routes\PrivateRoute.js
- * Path: c:\Users\Duncan\Documents\personal_website\server\client
- * Created Date: Monday, May 25th 2020, 2:57:42 pm
  * Author: Duncan Levings
  * 
  * Copyright (c) 2020 DuncanLevings

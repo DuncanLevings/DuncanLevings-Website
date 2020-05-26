@@ -1,7 +1,4 @@
 /*
- * Filename: c:\Users\Duncan\Documents\personal_website\server\client\src\interceptors.js
- * Path: c:\Users\Duncan\Documents\personal_website\server\client
- * Created Date: Tuesday, May 12th 2020, 4:45:40 pm
  * Author: Duncan Levings
  * 
  * Copyright (c) 2020 DuncanLevings

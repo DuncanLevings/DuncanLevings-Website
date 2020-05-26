@@ -1,7 +1,4 @@
 /*
- * Filename: c:\Users\Duncan\Documents\personal_website\server\models\tokenModel.js
- * Path: c:\Users\Duncan\Documents\personal_website\server
- * Created Date: Tuesday, May 12th 2020, 2:52:05 pm
  * Author: Duncan Levings
  * 
  * Copyright (c) 2020 DuncanLevings

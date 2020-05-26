@@ -1,7 +1,4 @@
 /*
- * Filename: c:\Users\Duncan\Documents\personal_website\server\client\src\index.js
- * Path: c:\Users\Duncan\Documents\personal_website\server\client
- * Created Date: Wednesday, May 20th 2020, 2:04:00 pm
  * Author: Duncan Levings
  * 
  * Copyright (c) 2020 DuncanLevings
