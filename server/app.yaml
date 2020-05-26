@@ -35,9 +35,9 @@ automatic_scaling:
   min_instances: 0
   max_instances: 1
 
-vpc_access_connector:
- name: 'projects/duncanlevings/locations/us-east4/connectors/dlconnector'
+# vpc_access_connector:
+#  name: 'projects/duncanlevings/locations/us-east4/connectors/dlconnector'
 
-network:
-  name: default
+# network:
+#   name: default
 # [END app_yaml]

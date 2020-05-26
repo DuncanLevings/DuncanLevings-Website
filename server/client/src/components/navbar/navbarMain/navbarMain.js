@@ -12,7 +12,7 @@ import ***REMOVED*** Button ***REMOVED*** from 'react-bootstrap';
 import ***REMOVED*** Link, withRouter ***REMOVED*** from 'react-router-dom';
 import ***REMOVED*** RESUME_ROOT, RUNESCAPE_ROOT ***REMOVED*** from 'constants/routeConstants';
 import ***REMOVED*** logoutUser ***REMOVED*** from 'store/actions/userActions';
-import './navbarMain.css';
+import './navbarMain.scss';
 
 class navbarMain extends React.Component ***REMOVED***
     constructor(props) ***REMOVED***

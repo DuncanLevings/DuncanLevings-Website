@@ -20,7 +20,7 @@ const MongoStore = require("connect-mongo")(session);
 const ***REMOVED*** secret, sessionName, accessCookie ***REMOVED*** = require("./config.json");
 const ***REMOVED*** CONNECT_TTL ***REMOVED*** = require("./consts");
 require("./config/mongo");
-require("./config/redis");
+// require("./config/redis");
 require("./config/passport");
 
 var app = express();

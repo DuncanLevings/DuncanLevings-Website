@@ -6,7 +6,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
-import './TemplateName.css';
+import './TemplateName.scss';
 
 class TemplateName extends React.Component ***REMOVED***
     constructor(props) ***REMOVED***

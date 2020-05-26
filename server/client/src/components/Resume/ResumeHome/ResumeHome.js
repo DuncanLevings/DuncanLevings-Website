@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import './ResumeHome.css';
+import './ResumeHome.scss';
 import ***REMOVED*** RUNESCAPE_ROOT ***REMOVED*** from 'constants/routeConstants';
 import ***REMOVED*** Link ***REMOVED*** from 'react-router-dom';
 

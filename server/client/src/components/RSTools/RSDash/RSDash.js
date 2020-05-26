@@ -8,7 +8,7 @@ import React from 'react';
 import ***REMOVED*** connect ***REMOVED*** from 'react-redux';
 import ***REMOVED*** Spinner, Container, CardColumns, Card ***REMOVED*** from 'react-bootstrap';
 import PropTypes from 'prop-types';
-import './RSDash.css';
+import './RSDash.scss';
 
 class RSDash extends React.Component ***REMOVED***
     constructor(props) ***REMOVED***
@@ -38,19 +38,6 @@ class RSDash extends React.Component ***REMOVED***
                             </Card.Text>
                         </Card.Body>
                     </Card>
-                    <Card className="p-3">
-                        <blockquote className="blockquote mb-0 card-body">
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere
-                                erat a ante.
-                            </p>
-                            <footer className="blockquote-footer">
-                                <small className="text-muted">
-                                    Someone famous in <cite title="Source Title">Source Title</cite>
-                                </small>
-                            </footer>
-                        </blockquote>
-                    </Card>
                     <Card>
                         <Card.Body>
                             <Card.Title>Card title</Card.Title>
@@ -62,19 +49,6 @@ class RSDash extends React.Component ***REMOVED***
                             <small className="text-muted">Last updated 3 mins ago</small>
                         </Card.Footer>
                     </Card>
-                    <Card bg="primary" text="white" className="text-center p-3">
-                        <blockquote className="blockquote mb-0 card-body">
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere
-                                erat a ante.
-                            </p>
-                            <footer className="blockquote-footer">
-                                <small className="text-muted">
-                                    Someone famous in <cite title="Source Title">Source Title</cite>
-                                </small>
-                            </footer>
-                        </blockquote>
-                    </Card>
                     <Card className="text-center">
                         <Card.Body>
                             <Card.Title>Card title</Card.Title>
@@ -85,19 +59,6 @@ class RSDash extends React.Component ***REMOVED***
                                 <small className="text-muted">Last updated 3 mins ago</small>
                             </Card.Text>
                         </Card.Body>
-                    </Card>
-                    <Card className="text-right">
-                        <blockquote className="blockquote mb-0 card-body">
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere
-                                erat a ante.
-                            </p>
-                            <footer className="blockquote-footer">
-                                <small className="text-muted">
-                                    Someone famous in <cite title="Source Title">Source Title</cite>
-                                </small>
-                            </footer>
-                        </blockquote>
                     </Card>
                     <Card>
                         <Card.Body>
