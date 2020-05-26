@@ -23,7 +23,7 @@
 runtime: nodejs12
 
 env_variables:
-  REDISHOST: "10.0.1.19"
+  REDISHOST: "10.8.0.0"
   REDISPORT: "6379"
   PRODUCTION: 1
 
@@ -35,9 +35,9 @@ automatic_scaling:
   min_instances: 0
   max_instances: 1
 
-# vpc_access_connector:
-#  name: "projects/testingrm2/locations/us-central1/connectors/redis-memory-store2"
+vpc_access_connector:
+ name: 'projects/duncanlevings/locations/us-east4/connectors/dlconnector'
 
-# network:
-#   name: default
+network:
+  name: default
 # [END app_yaml]

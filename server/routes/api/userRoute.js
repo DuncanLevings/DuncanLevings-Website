@@ -69,6 +69,7 @@ router.post("/login", (req, res) => ***REMOVED***
 router.get("/logout", (req, res) => ***REMOVED***
   _clearRememberMe(req, res);
   res.clearCookie("access_token");
+  req.session.destroy();
   req.logout();
   res.sendStatus(200);
 ***REMOVED***);

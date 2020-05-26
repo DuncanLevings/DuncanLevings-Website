@@ -43,7 +43,9 @@ app.use(
     secret: secret,
     resave: false,
     saveUninitialized: false,
-    store: new MongoStore(***REMOVED*** mongooseConnection: mongoose.connection ***REMOVED***)
+    store: new MongoStore(***REMOVED*** mongooseConnection: mongoose.connection ***REMOVED***),
+    cookie: ***REMOVED*** maxAge: 60000 ***REMOVED***,
+    unset: 'destroy'
   ***REMOVED***)
 );
 app.use(passport.initialize());

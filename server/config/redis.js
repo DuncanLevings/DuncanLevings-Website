@@ -1,7 +1,7 @@
 const redis = require("async-redis");
 
 const GLOBAL_REDIS_CLIENT = process.env.PRODUCTION
-    ? redis.createClient(***REMOVED*** host: "10.0.1.19" ***REMOVED***)
+    ? redis.createClient(***REMOVED*** host: "10.8.0.0" ***REMOVED***)
     : redis.createClient();
 
 GLOBAL_REDIS_CLIENT.on('connect', function() ***REMOVED***
