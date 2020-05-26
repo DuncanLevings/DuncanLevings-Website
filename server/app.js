@@ -25,6 +25,10 @@ require("./config/passport");
 
 var app = express();
 
+if (process.env.PRODUCTION || process.env.DEVELOPMENT) ***REMOVED***
+  app.enable('trust proxy');
+***REMOVED***
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -39,7 +43,6 @@ app.use(
     secret: secret,
     resave: false,
     saveUninitialized: false,
-    cookie: ***REMOVED*** maxAge: CONNECT_TTL ***REMOVED***,
     store: new MongoStore(***REMOVED*** mongooseConnection: mongoose.connection ***REMOVED***)
   ***REMOVED***)
 );

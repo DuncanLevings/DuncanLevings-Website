@@ -1,7 +1,27 @@
 # [START app_yaml]
+#FLEX
+# runtime: nodejs
+# env: flex
+
+# env_variables:
+#   REDISHOST: "10.0.1.19"
+#   REDISPORT: "6379"
+#   PRODUCTION: 1
+
+# resources:
+#   cpu: 1
+#   memory_gb: 0.5
+
+# automatic_scaling:
+#   min_num_instances: 1
+#   max_num_instances: 1
+
+# network:
+#   name: default
+
+#STANDARD
 runtime: nodejs12
 
-# update with Redis instance details
 env_variables:
   REDISHOST: "10.0.1.19"
   REDISPORT: "6379"
@@ -12,10 +32,12 @@ resources:
   memory_gb: 0.5
 
 automatic_scaling:
-  max_instances: 1
   min_instances: 0
-  
-# update with Redis instance network name
-network:
-  name: default
+  max_instances: 1
+
+# vpc_access_connector:
+#  name: "projects/testingrm2/locations/us-central1/connectors/redis-memory-store2"
+
+# network:
+#   name: default
 # [END app_yaml]

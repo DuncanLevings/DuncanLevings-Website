@@ -40,7 +40,6 @@ router.post("/login", (req, res) => ***REMOVED***
     return res.status(400).json("Password is required!")
 
   passport.authenticate("local",
-    ***REMOVED*** session: false ***REMOVED***,
     (err, user, info) => ***REMOVED***
       if (err) return res.status(400).json(err);
       if (!user)
@@ -53,7 +52,7 @@ router.post("/login", (req, res) => ***REMOVED***
 
         _generateCookie(res, "access_token", token, ACCESS_TOKEN_TTL);
         _clearRememberMe(req, res);
-        
+
         if (req.body.remember_me) ***REMOVED***
           const token = utils.randomString(64);
           userService.saveRememberMeToken(token, user._id, err => ***REMOVED***
@@ -95,7 +94,7 @@ const _generateCookie = (res, cookie, data, maxAge) => ***REMOVED***
     maxAge: maxAge,
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production' ? true : false,
-    sameSite: true,
+    sameSite: true
   ***REMOVED***);
 ***REMOVED***
 
