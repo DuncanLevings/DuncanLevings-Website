@@ -1,29 +1,29 @@
 import React from 'react';
 
-class ErrorBoundary extends React.Component ***REMOVED***
-    constructor(props) ***REMOVED***
+class ErrorBoundary extends React.Component {
+    constructor(props) {
       super(props);
-      this.state = ***REMOVED*** hasError: false ***REMOVED***;
-    ***REMOVED***
+      this.state = { hasError: false };
+    }
   
-    static getDerivedStateFromError(error) ***REMOVED***
+    static getDerivedStateFromError(error) {
       // Update state so the next render will show the fallback UI.
-      return ***REMOVED*** hasError: true ***REMOVED***;
-    ***REMOVED***
+      return { hasError: true };
+    }
   
-    componentDidCatch(error, errorInfo) ***REMOVED***
+    componentDidCatch(error, errorInfo) {
       // You can also log the error to an error reporting service
     //   logErrorToMyService(error, errorInfo);
-    ***REMOVED***
+    }
   
-    render() ***REMOVED***
-      if (this.state.hasError) ***REMOVED***
+    render() {
+      if (this.state.hasError) {
         // You can render any custom fallback UI
-        return <h1 style=***REMOVED******REMOVED***color: "white"***REMOVED******REMOVED***>Something went wrong.</h1>;
-      ***REMOVED***
+        return <h1 style={{color: "white"}}>Something went wrong.</h1>;
+      }
   
       return this.props.children; 
-    ***REMOVED***
-  ***REMOVED***
+    }
+  }
 
 export default ErrorBoundary;

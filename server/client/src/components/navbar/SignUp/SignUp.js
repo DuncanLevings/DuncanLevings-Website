@@ -5,18 +5,18 @@
  */
 
 import React from 'react';
-import ***REMOVED*** withRouter ***REMOVED*** from 'react-router-dom';
-import ***REMOVED*** connect ***REMOVED*** from 'react-redux';
-import ***REMOVED*** bindActionCreators ***REMOVED*** from 'redux';
-import ***REMOVED*** signupUser ***REMOVED*** from 'store/actions/userActions';
-import ***REMOVED*** Form, InputGroup, FormControl, Button ***REMOVED*** from 'react-bootstrap'
-import ***REMOVED*** FaUser, FaKey, FaEnvelope ***REMOVED*** from 'react-icons/fa';
-import ***REMOVED*** Formik ***REMOVED*** from 'formik';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { signupUser } from 'store/actions/userActions';
+import { Form, InputGroup, FormControl, Button } from 'react-bootstrap'
+import { FaUser, FaKey, FaEnvelope } from 'react-icons/fa';
+import { Formik } from 'formik';
 import * as yup from 'yup';
 import PropTypes from 'prop-types';
 import './SignUp.scss';
 
-const validationSchema = yup.object().shape(***REMOVED***
+const validationSchema = yup.object().shape({
     username: yup.string()
         .min(2, "*Username must be at least 2 characters")
         .max(30, "*Username must be less than 30 characters")
@@ -32,24 +32,24 @@ const validationSchema = yup.object().shape(***REMOVED***
     confirmPassword: yup.string()
         .oneOf([yup.ref("password"), null], "Passwords must match")
         .required("*Must confirm password")
-  ***REMOVED***);
+  });
 
-class SignUp extends React.Component ***REMOVED***
-    constructor(props) ***REMOVED***
+class SignUp extends React.Component {
+    constructor(props) {
         super(props);
-        this.state = ***REMOVED******REMOVED***
-    ***REMOVED***
+        this.state = {}
+    }
 
-    componentDidMount() ***REMOVED***
+    componentDidMount() {
 
-    ***REMOVED***
+    }
 
-    signUp = values => ***REMOVED***
+    signUp = values => {
         this.props.signupUser(values);
-    ***REMOVED***
+    }
 
-    render() ***REMOVED***
-        const ***REMOVED*** isSignup, error ***REMOVED*** = this.props.userReducer;
+    render() {
+        const { isSignup, error } = this.props.userReducer;
         return (
             <div className="login">
                 <div className="container">
@@ -60,26 +60,26 @@ class SignUp extends React.Component ***REMOVED***
                             </div>
                             <div className="card-body">
                                 <div className="card-errors">
-                                    ***REMOVED***error***REMOVED***
+                                    {error}
                                 </div>
                                 <Formik
-                                    validationSchema=***REMOVED***validationSchema***REMOVED***
-                                    onSubmit=***REMOVED***this.signUp***REMOVED***
-                                    initialValues=***REMOVED******REMOVED***
+                                    validationSchema={validationSchema}
+                                    onSubmit={this.signUp}
+                                    initialValues={{
                                         username: '',
                                         email: '',
                                         password: '',
                                         confirmPassword: ''
-                                    ***REMOVED******REMOVED***
+                                    }}
                                     >
-                                    ***REMOVED***(***REMOVED***
+                                    {({
                                         handleSubmit,
                                         handleChange,
                                         values,
                                         touched,
                                         errors
-                                    ***REMOVED***) => (
-                                    <Form noValidate onSubmit=***REMOVED***handleSubmit***REMOVED***>
+                                    }) => (
+                                    <Form noValidate onSubmit={handleSubmit}>
                                         <Form.Group controlId="formUsername">
                                             <InputGroup>
                                                 <InputGroup.Prepend>
@@ -90,13 +90,13 @@ class SignUp extends React.Component ***REMOVED***
                                                     placeholder="Username"
                                                     aria-label="Username"
                                                     aria-describedby="Username"
-                                                    value=***REMOVED***values.username***REMOVED***
-                                                    onChange=***REMOVED***handleChange***REMOVED***
-                                                    isInvalid=***REMOVED***touched.username && !!errors.username***REMOVED***
+                                                    value={values.username}
+                                                    onChange={handleChange}
+                                                    isInvalid={touched.username && !!errors.username}
                                                     autoFocus
                                                 />
                                                 <Form.Control.Feedback type="invalid">
-                                                    ***REMOVED***errors.username***REMOVED***
+                                                    {errors.username}
                                                 </Form.Control.Feedback>
                                             </InputGroup>
                                         </Form.Group>
@@ -111,12 +111,12 @@ class SignUp extends React.Component ***REMOVED***
                                                     placeholder="E-mail address"
                                                     aria-label="Email"
                                                     aria-describedby="Email"
-                                                    value=***REMOVED***values.email***REMOVED***
-                                                    onChange=***REMOVED***handleChange***REMOVED***
-                                                    isInvalid=***REMOVED***touched.email && !!errors.email***REMOVED***
+                                                    value={values.email}
+                                                    onChange={handleChange}
+                                                    isInvalid={touched.email && !!errors.email}
                                                 />
                                                 <Form.Control.Feedback type="invalid">
-                                                    ***REMOVED***errors.email***REMOVED***
+                                                    {errors.email}
                                                 </Form.Control.Feedback>
                                             </InputGroup>
                                         </Form.Group>
@@ -131,12 +131,12 @@ class SignUp extends React.Component ***REMOVED***
                                                     placeholder="Password"
                                                     aria-label="Password"
                                                     aria-describedby="basic-addon1"
-                                                    value=***REMOVED***values.password***REMOVED***
-                                                    onChange=***REMOVED***handleChange***REMOVED***
-                                                    isInvalid=***REMOVED***touched.password && !!errors.password***REMOVED***
+                                                    value={values.password}
+                                                    onChange={handleChange}
+                                                    isInvalid={touched.password && !!errors.password}
                                                 />
                                                 <Form.Control.Feedback type="invalid">
-                                                    ***REMOVED***errors.password***REMOVED***
+                                                    {errors.password}
                                                 </Form.Control.Feedback>
                                             </InputGroup>
                                         </Form.Group>
@@ -151,12 +151,12 @@ class SignUp extends React.Component ***REMOVED***
                                                     placeholder="Confirm password"
                                                     aria-label="Confirm password"
                                                     aria-describedby="basic-addon1"
-                                                    value=***REMOVED***values.confirmPassword***REMOVED***
-                                                    onChange=***REMOVED***handleChange***REMOVED***
-                                                    isInvalid=***REMOVED***touched.confirmPassword && !!errors.confirmPassword***REMOVED***
+                                                    value={values.confirmPassword}
+                                                    onChange={handleChange}
+                                                    isInvalid={touched.confirmPassword && !!errors.confirmPassword}
                                                 />
                                                 <Form.Control.Feedback type="invalid">
-                                                    ***REMOVED***errors.confirmPassword***REMOVED***
+                                                    {errors.confirmPassword}
                                                 </Form.Control.Feedback>
                                             </InputGroup>
                                         </Form.Group>
@@ -164,9 +164,9 @@ class SignUp extends React.Component ***REMOVED***
                                             variant="primary" 
                                             type="submit" 
                                             className="btn float-right login_btn" 
-                                            disabled=***REMOVED***isSignup***REMOVED***>Submit</Button>
+                                            disabled={isSignup}>Submit</Button>
                                     </Form>
-                                )***REMOVED***
+                                )}
                                 </Formik>
                             </div>
                         </div>
@@ -174,21 +174,21 @@ class SignUp extends React.Component ***REMOVED***
                 </div>
             </div>
         );
-    ***REMOVED***
-***REMOVED***
+    }
+}
 
-SignUp.propTypes = ***REMOVED***
+SignUp.propTypes = {
     signupUser: PropTypes.func,
     userReducer: PropTypes.object
-***REMOVED***;
+};
 
-const mapStateToProps = state => ***REMOVED***
-    return ***REMOVED***
+const mapStateToProps = state => {
+    return {
         userReducer: state.userReducer
-    ***REMOVED***;
-***REMOVED***
+    };
+}
 
-const mapDispatchToProps = dispatch => bindActionCreators(***REMOVED*** signupUser ***REMOVED***, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ signupUser }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(SignUp));
 

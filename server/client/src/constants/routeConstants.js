@@ -9,9 +9,9 @@ export const RESUME_ROOT = '/';
 
 const HOME = RESUME_ROOT;
 
-export const RESUME = ***REMOVED***
+export const RESUME = {
     HOME
-***REMOVED***
+}
 
 //RUNESCAPE ROUTES
 export const RUNESCAPE_ROOT = '/rs-tools'
@@ -21,9 +21,9 @@ const LOGIN = RUNESCAPE_ROOT + '/login';
 const SIGNUP = RUNESCAPE_ROOT + '/sign-up';
 const FORGOTPASS = RUNESCAPE_ROOT + '/forgot-pasword';
 
-export const RS = ***REMOVED***
+export const RS = {
     DASH,
     LOGIN,
     SIGNUP,
     FORGOTPASS
-***REMOVED***
+}

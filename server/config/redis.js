@@ -1,15 +1,15 @@
 // const redis = require("async-redis");
 
 // const GLOBAL_REDIS_CLIENT = process.env.PRODUCTION
-//     ? redis.createClient(***REMOVED*** host: "10.8.0.0" ***REMOVED***)
+//     ? redis.createClient({ host: "10.8.0.0" })
 //     : redis.createClient();
 
-// GLOBAL_REDIS_CLIENT.on('connect', function() ***REMOVED***
+// GLOBAL_REDIS_CLIENT.on('connect', function() {
 //     console.log('Redis client connected');
-// ***REMOVED***);
+// });
 
-// GLOBAL_REDIS_CLIENT.on('error', function (err) ***REMOVED***
+// GLOBAL_REDIS_CLIENT.on('error', function (err) {
 //     console.log('Something went wrong ' + err);
-// ***REMOVED***);
+// });
 
 // module.exports = GLOBAL_REDIS_CLIENT;

@@ -6,32 +6,32 @@
 
 import api from 'store/api/Instance';
 
-export function getUserAPI() ***REMOVED***
-  return api.request(***REMOVED***
+export function getUserAPI() {
+  return api.request({
     method: 'get',
     url: '/api/users'
-  ***REMOVED***).then(res => res.data.user);
-***REMOVED***
+  }).then(res => res.data.user);
+}
 
-export function loginAPI(authData) ***REMOVED***
-  return api.request(***REMOVED***
+export function loginAPI(authData) {
+  return api.request({
     method: 'post',
     url: '/api/users/login',
     data: authData
-  ***REMOVED***).then(res => res.data.user);
-***REMOVED***
+  }).then(res => res.data.user);
+}
 
-export function logoutAPI() ***REMOVED***
-  return api.request(***REMOVED***
+export function logoutAPI() {
+  return api.request({
     method: 'get',
     url: '/api/users/logout'
-  ***REMOVED***);
-***REMOVED***
+  });
+}
 
-export function signUpAPI(authData) ***REMOVED***
-  return api.request(***REMOVED***
+export function signUpAPI(authData) {
+  return api.request({
     method: 'post',
     url: '/api/users/register',
     data: authData
-  ***REMOVED***);
-***REMOVED***
+  });
+}

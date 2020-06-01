@@ -8,10 +8,10 @@
 
 const mongoose = require("mongoose");
 
-const tokenSchema = new mongoose.Schema(***REMOVED***
-  payload: ***REMOVED*** type: mongoose.Schema.Types.Mixed, required: true ***REMOVED***
-***REMOVED***);
+const tokenSchema = new mongoose.Schema({
+  payload: { type: mongoose.Schema.Types.Mixed, required: true }
+});
 
 const Token = mongoose.model("Token", tokenSchema, "Tokens");
 
-module.exports = ***REMOVED*** Token ***REMOVED***;
+module.exports = { Token };

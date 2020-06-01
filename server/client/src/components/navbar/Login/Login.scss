@@ -1,91 +1,91 @@
-.login ***REMOVED***
-    html, body ***REMOVED***
+.login {
+    html, body {
         height: 100%;
         background-color: #282c34;
         font-family: 'sans-serif', sans-serif;
-    ***REMOVED***
+    }
     
-    .container***REMOVED***
+    .container{
         margin-top: 100px;
         height: 100%;
         align-content: center;
-    ***REMOVED***
+    }
     
-    .card***REMOVED***
+    .card{
     height: auto;
     margin-top: auto;
     margin-bottom: auto;
     width: 400px;
     background-color: rgba(0,0,0,0.5) !important;
-    ***REMOVED***
+    }
     
-    .social_icon span***REMOVED***
+    .social_icon span{
     font-size: 60px;
     margin-left: 10px;
     color: #FFC312;
-    ***REMOVED***
+    }
     
-    .social_icon span:hover***REMOVED***
+    .social_icon span:hover{
     color: white;
     cursor: pointer;
-    ***REMOVED***
+    }
     
-    .card-header h3***REMOVED***
+    .card-header h3{
     color: white;
-    ***REMOVED***
+    }
     
-    .social_icon***REMOVED***
+    .social_icon{
     position: absolute;
     right: 20px;
     top: -45px;
-    ***REMOVED***
+    }
     
-    .input-group-prepend span***REMOVED***
+    .input-group-prepend span{
     width: 50px;
     background-color: #FFC312;
     color: black;
     border:0 !important;
-    ***REMOVED***
+    }
     
-    input:focus***REMOVED***
+    input:focus{
     outline: 0 0 0 0  !important;
     box-shadow: 0 0 0 0 !important;
     
-    ***REMOVED***
+    }
     
-    .remember***REMOVED***
+    .remember{
     color: white;
-    ***REMOVED***
+    }
     
     .remember input
-    ***REMOVED***
+    {
     width: 20px;
     height: 20px;
     margin-left: 15px;
     margin-right: 5px;
-    ***REMOVED***
+    }
     
-    .login_btn***REMOVED***
+    .login_btn{
     color: black;
     background-color: #FFC312;
     width: 100px;
-    ***REMOVED***
+    }
     
-    .login_btn:hover***REMOVED***
+    .login_btn:hover{
     color: black;
     background-color: white;
-    ***REMOVED***
+    }
     
-    .links***REMOVED***
+    .links{
     color: white;
-    ***REMOVED***
+    }
     
-    .links a***REMOVED***
+    .links a{
     margin-left: 4px;
-    ***REMOVED***
+    }
     
-    .card-errors ***REMOVED***
+    .card-errors {
         color: red;
         text-align: center;
-    ***REMOVED***
-***REMOVED***
+    }
+}

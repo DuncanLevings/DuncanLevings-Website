@@ -4,69 +4,69 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-import ***REMOVED*** call, takeLatest, put ***REMOVED*** from 'redux-saga/effects';
-import ***REMOVED*** push ***REMOVED*** from 'connected-react-router';
-import ***REMOVED*** RS ***REMOVED*** from 'constants/routeConstants';
-import ***REMOVED*** getUserAPI, loginAPI, logoutAPI, signUpAPI ***REMOVED*** from 'store/api/userAPI';
+import { call, takeLatest, put } from 'redux-saga/effects';
+import { push } from 'connected-react-router';
+import { RS } from 'constants/routeConstants';
+import { getUserAPI, loginAPI, logoutAPI, signUpAPI } from 'store/api/userAPI';
 import * as actionTypes from 'store/actionTypes/userActionTypes'
 import * as actionCreators from 'store/actions/userActions';
 
-function* getUser() ***REMOVED***
-    try ***REMOVED***
+function* getUser() {
+    try {
         const user = yield call(getUserAPI);
         yield put(actionCreators.getUserSuccess(user));
-    ***REMOVED*** catch (error) ***REMOVED***
-        if (error.response.status === 401) ***REMOVED***
+    } catch (error) {
+        if (error.response.status === 401) {
             yield put(actionCreators.userError());
-        ***REMOVED***
-        else ***REMOVED***
+        }
+        else {
             yield put(actionCreators.userError(error.response.data));
-        ***REMOVED***
-    ***REMOVED***
-***REMOVED***
+        }
+    }
+}
 
-function* loginUser(loginAction) ***REMOVED***
-    try ***REMOVED***
+function* loginUser(loginAction) {
+    try {
         const user = yield call(loginAPI, loginAction.payload);
         yield put(actionCreators.loginUserSuccess(user));
         yield put(push(loginAction.redirect));
-    ***REMOVED*** catch (error) ***REMOVED***
+    } catch (error) {
         yield put(actionCreators.userError(error.response.data))
-    ***REMOVED***
-***REMOVED***
+    }
+}
 
-function* logoutUser() ***REMOVED***
-    try ***REMOVED***
+function* logoutUser() {
+    try {
         yield call(logoutAPI);
         yield put(actionCreators.logoutUserSuccess());
         yield put(push(RS.LOGIN));
-    ***REMOVED*** catch (error) ***REMOVED***
+    } catch (error) {
         yield put(actionCreators.userError(error.response.data))
-    ***REMOVED***
-***REMOVED***
+    }
+}
 
-function* signupUser(signupAction) ***REMOVED***
-    try ***REMOVED***
+function* signupUser(signupAction) {
+    try {
         yield call(signUpAPI, signupAction.payload);
         yield put(actionCreators.signupUserSuccess());
         yield put(push(RS.LOGIN));
-    ***REMOVED*** catch (error) ***REMOVED***
+    } catch (error) {
         yield put(actionCreators.userError(error.response.data))
-    ***REMOVED***
-***REMOVED***
+    }
+}
 
-export function* getUserWatcher() ***REMOVED***
+export function* getUserWatcher() {
     yield takeLatest(actionTypes.GET_USER, getUser);
-***REMOVED***
+}
 
-export function* loginUserWatcher() ***REMOVED***
+export function* loginUserWatcher() {
     yield takeLatest(actionTypes.LOGIN_USER, loginUser);
-***REMOVED***
+}
 
-export function* logoutUserWatcher() ***REMOVED***
+export function* logoutUserWatcher() {
     yield takeLatest(actionTypes.LOGOUT_USER, logoutUser);
-***REMOVED***
+}
 
-export function* signupUserWatcher() ***REMOVED***
+export function* signupUserWatcher() {
     yield takeLatest(actionTypes.SIGNUP_USER, signupUser);
-***REMOVED***
+}

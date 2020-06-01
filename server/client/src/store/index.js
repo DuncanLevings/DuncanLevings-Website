@@ -4,9 +4,9 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-import ***REMOVED***applyMiddleware, compose, createStore***REMOVED*** from 'redux';
-import ***REMOVED*** routerMiddleware ***REMOVED*** from 'connected-react-router'
-import ***REMOVED*** createBrowserHistory ***REMOVED*** from 'history'
+import {applyMiddleware, compose, createStore} from 'redux';
+import { routerMiddleware } from 'connected-react-router'
+import { createBrowserHistory } from 'history'
 import createSagaMiddleware from 'redux-saga';
 import createRootReducer from 'store/reducers';
 import rootSaga from 'store/sagas'
@@ -18,7 +18,7 @@ const store = createStore(
   createRootReducer(history),
   compose(
     applyMiddleware(sagaMiddleware, routerMiddleware(history)),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() && window.__REDUX_DEVTOOLS_EXTENSION__(***REMOVED*** trace: true, traceLimit: 25 ***REMOVED***)
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() && window.__REDUX_DEVTOOLS_EXTENSION__({ trace: true, traceLimit: 25 })
   )
 );
 

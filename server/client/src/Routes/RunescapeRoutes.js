@@ -5,11 +5,11 @@
  */
 
 import React from 'react';
-import ***REMOVED*** Switch, Route , withRouter ***REMOVED*** from 'react-router-dom';
-import ***REMOVED*** connect ***REMOVED*** from 'react-redux';
-import ***REMOVED*** bindActionCreators ***REMOVED*** from 'redux';
-import ***REMOVED*** getUser ***REMOVED*** from 'store/actions/userActions';
-import ***REMOVED*** RS ***REMOVED*** from 'constants/routeConstants';
+import { Switch, Route , withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { getUser } from 'store/actions/userActions';
+import { RS } from 'constants/routeConstants';
 import PrivateRoute from './PrivateRoute';
 import NavBarMain from 'components/navbar/navbarMain/navbarMain.lazy';
 import Login from 'components/navbar/Login/Login.lazy';
@@ -18,35 +18,35 @@ import ForgotPassword from 'components/navbar/ForgotPassword/ForgotPassword.lazy
 import RSDash from 'components/RSTools/RSDash/RSDash.lazy';
 import PropTypes from 'prop-types';
 
-class RSRouter extends React.Component ***REMOVED***
-    constructor(props) ***REMOVED***
+class RSRouter extends React.Component {
+    constructor(props) {
         super(props);
-        this.state = ***REMOVED******REMOVED***
-    ***REMOVED***
+        this.state = {}
+    }
 
-    componentDidMount() ***REMOVED***
+    componentDidMount() {
         this.props.getUser();
-    ***REMOVED***
+    }
 
-    render() ***REMOVED***
+    render() {
         return (
             <div className="RSTools">
                 <NavBarMain />
                 <Switch>
-                    <Route exact path=***REMOVED***RS.LOGIN***REMOVED*** component=***REMOVED***Login***REMOVED*** /> 
-                    <Route exact path=***REMOVED***RS.SIGNUP***REMOVED*** component=***REMOVED***SignUp***REMOVED*** /> 
-                    <Route exact path=***REMOVED***RS.FORGOTPASS***REMOVED*** component=***REMOVED***ForgotPassword***REMOVED*** /> 
-                    <PrivateRoute exact path=***REMOVED***RS.DASH***REMOVED*** component=***REMOVED***RSDash***REMOVED*** />
+                    <Route exact path={RS.LOGIN} component={Login} /> 
+                    <Route exact path={RS.SIGNUP} component={SignUp} /> 
+                    <Route exact path={RS.FORGOTPASS} component={ForgotPassword} /> 
+                    <PrivateRoute exact path={RS.DASH} component={RSDash} />
                 </Switch>
             </div>
         );
-    ***REMOVED***
-***REMOVED***
+    }
+}
 
-Login.propTypes = ***REMOVED***
+Login.propTypes = {
     getUser: PropTypes.func
-***REMOVED***;
+};
 
-const mapDispatchToProps = dispatch => bindActionCreators(***REMOVED*** getUser ***REMOVED***, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ getUser }, dispatch);
 
 export default withRouter(connect(null, mapDispatchToProps)(RSRouter));

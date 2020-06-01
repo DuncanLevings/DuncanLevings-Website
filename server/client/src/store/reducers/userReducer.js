@@ -6,74 +6,74 @@
 
 import * as actionTypes from 'store/actionTypes/userActionTypes';
 
-const intialState = ***REMOVED***
+const intialState = {
     user: null,
     error: "",
     isAuthenticated: true,
     isFetching: false, // loading state
     isLogin: false, // loading state
     isSignup: false // loading state
-***REMOVED***;
+};
 
-export default (state = intialState, action) => ***REMOVED***
-    switch (action.type) ***REMOVED***
+export default (state = intialState, action) => {
+    switch (action.type) {
         case actionTypes.GET_USER:
-            return ***REMOVED***
+            return {
                 ...state,
                 isFetching: true
-            ***REMOVED***;
+            };
         case actionTypes.LOGIN_USER:
-            return ***REMOVED***
+            return {
                 ...state,
                 isLogin: true
-            ***REMOVED***; 
+            }; 
         case actionTypes.LOGOUT_USER:
-            return ***REMOVED***
+            return {
                 ...state
-            ***REMOVED***; 
+            }; 
         case actionTypes.SIGNUP_USER:
-            return ***REMOVED***
+            return {
                 ...state,
                 isSignup: true
-            ***REMOVED***; 
+            }; 
         case actionTypes.GET_USER_SUCCESS:
-            return ***REMOVED***
+            return {
                 ...state,
                 user: action.payload,
                 error: "",
                 isAuthenticated: true,
                 isFetching: false
-            ***REMOVED***;
+            };
         case actionTypes.LOGIN_USER_SUCCESS:
-            return ***REMOVED***
+            return {
                 ...state,
                 user: action.payload,
                 error: "",
                 isAuthenticated: true,
                 isLogin: false
-            ***REMOVED***;
+            };
         case actionTypes.LOGOUT_USER_SUCCESS:
-            return ***REMOVED***
+            return {
                 ...state,
                 user: null,
                 error: "",
                 isAuthenticated: false
-            ***REMOVED***;
+            };
         case actionTypes.SIGNUP_USER_SUCCESS:
-            return ***REMOVED***
+            return {
                 ...state,
                 error: "",
                 isSignup: false
-            ***REMOVED***;
+            };
         case actionTypes.ERROR:
-            return ***REMOVED***
+            return {
                 ...state,
                 error: action.payload,
                 isFetching: false,
                 isLogin: false,
                 isSignup: false
-            ***REMOVED***;
+            };
         default:
             return state;
-    ***REMOVED***
-***REMOVED***
+    }
+}

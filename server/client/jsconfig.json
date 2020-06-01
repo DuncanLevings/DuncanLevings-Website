@@ -1,6 +1,6 @@
-***REMOVED***
-    "compilerOptions": ***REMOVED***
+{
+    "compilerOptions": {
       "baseUrl": "src"
-    ***REMOVED***,
+    },
     "include": ["src"]
-  ***REMOVED***
+  }

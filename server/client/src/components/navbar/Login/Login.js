@@ -5,19 +5,19 @@
  */
 
 import React from 'react';
-import ***REMOVED*** withRouter, Link ***REMOVED*** from 'react-router-dom';
-import ***REMOVED*** connect ***REMOVED*** from 'react-redux';
-import ***REMOVED*** bindActionCreators ***REMOVED*** from 'redux';
-import ***REMOVED*** loginUser ***REMOVED*** from 'store/actions/userActions';
-import ***REMOVED*** RS ***REMOVED*** from 'constants/routeConstants';
-import ***REMOVED*** Form, InputGroup, FormControl, Button ***REMOVED*** from 'react-bootstrap'
-import ***REMOVED*** FaUser, FaKey ***REMOVED*** from 'react-icons/fa';
-import ***REMOVED*** Formik ***REMOVED*** from 'formik';
+import { withRouter, Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { loginUser } from 'store/actions/userActions';
+import { RS } from 'constants/routeConstants';
+import { Form, InputGroup, FormControl, Button } from 'react-bootstrap'
+import { FaUser, FaKey } from 'react-icons/fa';
+import { Formik } from 'formik';
 import * as yup from 'yup';
 import PropTypes from 'prop-types';
 import './Login.scss';
 
-const validationSchema = yup.object().shape(***REMOVED***
+const validationSchema = yup.object().shape({
     email: yup.string()
         .email("Must be a valid email address")
         .max(100, "*Email must be less than 100 characters")
@@ -26,24 +26,24 @@ const validationSchema = yup.object().shape(***REMOVED***
         .min(4, "*Password must be at least 4 characters")
         .max(100, "*Password must be less than 100 characters")
         .required("*Password is required")
-  ***REMOVED***);
+  });
 
-class Login extends React.Component ***REMOVED***
-    constructor(props) ***REMOVED***
+class Login extends React.Component {
+    constructor(props) {
         super(props);
-        this.state = ***REMOVED******REMOVED***
-    ***REMOVED***
+        this.state = {}
+    }
 
-    componentDidMount() ***REMOVED***
-    ***REMOVED***
+    componentDidMount() {
+    }
 
-    login = values => ***REMOVED***
-        const ***REMOVED*** from ***REMOVED*** = this.props.location.state || ***REMOVED*** from: ***REMOVED*** pathname: RS.DASH ***REMOVED*** ***REMOVED***;
+    login = values => {
+        const { from } = this.props.location.state || { from: { pathname: RS.DASH } };
         this.props.loginUser(values, from);
-    ***REMOVED***
+    }
 
-    render() ***REMOVED***
-        const ***REMOVED*** isLogin, error ***REMOVED*** = this.props.userReducer;
+    render() {
+        const { isLogin, error } = this.props.userReducer;
         return (
             <div className="login">
                 <div className="container">
@@ -54,25 +54,25 @@ class Login extends React.Component ***REMOVED***
                             </div>
                             <div className="card-body">
                                 <div className="card-errors">
-                                    ***REMOVED***error***REMOVED***
+                                    {error}
                                 </div>
                                 <Formik
-                                    validationSchema=***REMOVED***validationSchema***REMOVED***
-                                    onSubmit=***REMOVED***this.login***REMOVED***
-                                    initialValues=***REMOVED******REMOVED***
+                                    validationSchema={validationSchema}
+                                    onSubmit={this.login}
+                                    initialValues={{
                                         email: '',
                                         password: '',
                                         remember_me: false
-                                    ***REMOVED******REMOVED***
+                                    }}
                                     >
-                                    ***REMOVED***(***REMOVED***
+                                    {({
                                         handleSubmit,
                                         handleChange,
                                         values,
                                         touched,
                                         errors
-                                    ***REMOVED***) => (
-                                    <Form noValidate onSubmit=***REMOVED***handleSubmit***REMOVED***>
+                                    }) => (
+                                    <Form noValidate onSubmit={handleSubmit}>
                                         <Form.Group controlId="formEmail">
                                             <InputGroup>
                                                 <InputGroup.Prepend>
@@ -84,13 +84,13 @@ class Login extends React.Component ***REMOVED***
                                                     placeholder="E-mail address"
                                                     aria-label="Email"
                                                     aria-describedby="Email"
-                                                    value=***REMOVED***values.email***REMOVED***
-                                                    onChange=***REMOVED***handleChange***REMOVED***
-                                                    isInvalid=***REMOVED***touched.email && !!errors.email***REMOVED***
+                                                    value={values.email}
+                                                    onChange={handleChange}
+                                                    isInvalid={touched.email && !!errors.email}
                                                     autoFocus
                                                 />
                                                 <Form.Control.Feedback type="invalid">
-                                                    ***REMOVED***errors.email***REMOVED***
+                                                    {errors.email}
                                                 </Form.Control.Feedback>
                                             </InputGroup>
                                         </Form.Group>
@@ -105,12 +105,12 @@ class Login extends React.Component ***REMOVED***
                                                     placeholder="Password"
                                                     aria-label="Password"
                                                     aria-describedby="basic-addon1"
-                                                    value=***REMOVED***values.password***REMOVED***
-                                                    onChange=***REMOVED***handleChange***REMOVED***
-                                                    isInvalid=***REMOVED***touched.password && !!errors.password***REMOVED***
+                                                    value={values.password}
+                                                    onChange={handleChange}
+                                                    isInvalid={touched.password && !!errors.password}
                                                 />
                                                 <Form.Control.Feedback type="invalid">
-                                                    ***REMOVED***errors.password***REMOVED***
+                                                    {errors.password}
                                                 </Form.Control.Feedback>
                                             </InputGroup>
                                         </Form.Group>
@@ -120,8 +120,8 @@ class Login extends React.Component ***REMOVED***
                                                     name="remember_me"
                                                     label="Remember Me"
                                                     className="remember"
-                                                    value=***REMOVED***values.remember_me***REMOVED***
-                                                    onChange=***REMOVED***handleChange***REMOVED***
+                                                    value={values.remember_me}
+                                                    onChange={handleChange}
                                                     inline
                                                 />
                                         </Form.Group>
@@ -129,17 +129,17 @@ class Login extends React.Component ***REMOVED***
                                             variant="primary" 
                                             type="submit" 
                                             className="btn float-right login_btn" 
-                                            disabled=***REMOVED***isLogin***REMOVED***>Submit</Button>
+                                            disabled={isLogin}>Submit</Button>
                                     </Form>
-                                )***REMOVED***
+                                )}
                                 </Formik>
                             </div>
                             <div className="card-footer">
                                 <div className="d-flex justify-content-center links">
-                                    Don't have an account?<Link to=***REMOVED***RS.SIGNUP***REMOVED***>Sign Up</Link>
+                                    Don't have an account?<Link to={RS.SIGNUP}>Sign Up</Link>
                                 </div>
                                 <div className="d-flex justify-content-center">
-                                    <Link to=***REMOVED***RS.FORGOTPASS***REMOVED***>Forgot your password?</Link>
+                                    <Link to={RS.FORGOTPASS}>Forgot your password?</Link>
                                 </div>
                             </div>
                         </div>
@@ -147,20 +147,20 @@ class Login extends React.Component ***REMOVED***
                 </div>
             </div>
         );
-    ***REMOVED***
-***REMOVED***
+    }
+}
 
-Login.propTypes = ***REMOVED***
+Login.propTypes = {
     loginUser: PropTypes.func,
     userReducer: PropTypes.object
-***REMOVED***;
+};
 
-const mapStateToProps = state => ***REMOVED***
-    return ***REMOVED***
+const mapStateToProps = state => {
+    return {
         userReducer: state.userReducer
-    ***REMOVED***;
-***REMOVED***
+    };
+}
 
-const mapDispatchToProps = dispatch => bindActionCreators(***REMOVED*** loginUser ***REMOVED***, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ loginUser }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Login));

@@ -5,36 +5,36 @@
  */
 
 import axios from 'axios';
-import ***REMOVED*** URL ***REMOVED*** from "config.js"
+import { URL } from "config.js"
 import store from 'store';
-import ***REMOVED*** getUser, logoutUser ***REMOVED*** from 'store/actions/userActions';
+import { getUser, logoutUser } from 'store/actions/userActions';
 
-const axiosInstance = axios.create(***REMOVED***
+const axiosInstance = axios.create({
     baseURL: URL
-***REMOVED***);
+});
 
-const isHandlerEnabled = (config=***REMOVED******REMOVED***) => ***REMOVED***
+const isHandlerEnabled = (config={}) => {
     return config.hasOwnProperty('handlerEnabled') && !config.handlerEnabled ? false : true
-***REMOVED***
+}
 
-const errorHandler = (error) => ***REMOVED***
-    if (isHandlerEnabled(error.config)) ***REMOVED***
-        if (error.response.status === 401 && !error.config._retry) ***REMOVED***
+const errorHandler = (error) => {
+    if (isHandlerEnabled(error.config)) {
+        if (error.response.status === 401 && !error.config._retry) {
             error.config._retry = true;
-            axiosInstance.get("/api/users/refresh-token").then(() => ***REMOVED***
+            axiosInstance.get("/api/users/refresh-token").then(() => {
                 store.dispatch(getUser());
                 return axios(error.config);
-            ***REMOVED***)
-            .catch(() => ***REMOVED***
+            })
+            .catch(() => {
                 store.dispatch(logoutUser());
-            ***REMOVED***);
-        ***REMOVED***
-    ***REMOVED***
-    return Promise.reject(***REMOVED*** ...error ***REMOVED***);
-***REMOVED***
+            });
+        }
+    }
+    return Promise.reject({ ...error });
+}
 
 axiosInstance.interceptors.response.use(
-    response => ***REMOVED*** return response; ***REMOVED***,
+    response => { return response; },
     error => errorHandler(error)
 );
 

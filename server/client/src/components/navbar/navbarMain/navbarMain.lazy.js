@@ -1,12 +1,12 @@
-import React, ***REMOVED*** lazy, Suspense ***REMOVED*** from 'react';
+import React, { lazy, Suspense } from 'react';
 import ErrorBoundary from 'errors/ErrorBoundary';
 
 const LazynavbarMain = lazy(() => import('./navbarMain'));
 
 const navbarMain = props => (
   <ErrorBoundary>
-    <Suspense fallback=***REMOVED***<div>Loading...</div>***REMOVED***>
-      <LazynavbarMain ***REMOVED***...props***REMOVED*** />
+    <Suspense fallback={<div>Loading...</div>}>
+      <LazynavbarMain {...props} />
     </Suspense>
   </ErrorBoundary>
 );

@@ -4,14 +4,14 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-import ***REMOVED*** all ***REMOVED*** from 'redux-saga/effects';
-import ***REMOVED*** getUserWatcher, loginUserWatcher, logoutUserWatcher, signupUserWatcher ***REMOVED*** from 'store/sagas/userSaga';
+import { all } from 'redux-saga/effects';
+import { getUserWatcher, loginUserWatcher, logoutUserWatcher, signupUserWatcher } from 'store/sagas/userSaga';
 
-export default function* rootSaga() ***REMOVED***
+export default function* rootSaga() {
     yield all([
       getUserWatcher(),
       loginUserWatcher(),
       logoutUserWatcher(),
       signupUserWatcher()
     ]);
-  ***REMOVED***
+  }

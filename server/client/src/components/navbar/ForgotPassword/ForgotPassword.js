@@ -5,36 +5,36 @@
  */
 
 import React from 'react';
-// import ***REMOVED*** RS ***REMOVED*** from 'constants/routeConstants';
-import ***REMOVED*** Form, InputGroup, FormControl, Button ***REMOVED*** from 'react-bootstrap'
-import ***REMOVED*** Formik ***REMOVED*** from 'formik';
-import ***REMOVED*** FaEnvelope ***REMOVED*** from 'react-icons/fa';
+// import { RS } from 'constants/routeConstants';
+import { Form, InputGroup, FormControl, Button } from 'react-bootstrap'
+import { Formik } from 'formik';
+import { FaEnvelope } from 'react-icons/fa';
 import * as yup from 'yup';
 // import PropTypes from 'prop-types';
 import './ForgotPassword.scss';
 
-const validationSchema = yup.object().shape(***REMOVED***
+const validationSchema = yup.object().shape({
     email: yup.string()
         .email("Must be a valid email address")
         .max(100, "*Email must be less than 100 characters")
         .required("*Email is required")
-  ***REMOVED***);
+  });
 
-class ForgotPassword extends React.Component ***REMOVED***
-    constructor(props) ***REMOVED***
+class ForgotPassword extends React.Component {
+    constructor(props) {
         super(props);
-        this.state = ***REMOVED******REMOVED***
-    ***REMOVED***
+        this.state = {}
+    }
 
-    componentDidMount() ***REMOVED***
+    componentDidMount() {
 
-    ***REMOVED***
+    }
 
-    sendReset = values => ***REMOVED***
+    sendReset = values => {
         console.log("sending email not implemented yet...");
-    ***REMOVED***
+    }
 
-    render() ***REMOVED***
+    render() {
         return (
             <div className="login">
                 <div className="container">
@@ -45,20 +45,20 @@ class ForgotPassword extends React.Component ***REMOVED***
                             </div>
                             <div className="card-body">
                                 <Formik
-                                    validationSchema=***REMOVED***validationSchema***REMOVED***
-                                    onSubmit=***REMOVED***this.sendReset***REMOVED***
-                                    initialValues=***REMOVED******REMOVED***
+                                    validationSchema={validationSchema}
+                                    onSubmit={this.sendReset}
+                                    initialValues={{
                                         email: ''
-                                    ***REMOVED******REMOVED***
+                                    }}
                                     >
-                                    ***REMOVED***(***REMOVED***
+                                    {({
                                         handleSubmit,
                                         handleChange,
                                         values,
                                         touched,
                                         errors
-                                    ***REMOVED***) => (
-                                    <Form noValidate onSubmit=***REMOVED***handleSubmit***REMOVED***>
+                                    }) => (
+                                    <Form noValidate onSubmit={handleSubmit}>
                                         <Form.Group controlId="formEmail">
                                             <InputGroup>
                                                 <InputGroup.Prepend>
@@ -70,13 +70,13 @@ class ForgotPassword extends React.Component ***REMOVED***
                                                     placeholder="E-mail address"
                                                     aria-label="Email"
                                                     aria-describedby="Email"
-                                                    value=***REMOVED***values.email***REMOVED***
-                                                    onChange=***REMOVED***handleChange***REMOVED***
-                                                    isInvalid=***REMOVED***touched.email && !!errors.email***REMOVED***
+                                                    value={values.email}
+                                                    onChange={handleChange}
+                                                    isInvalid={touched.email && !!errors.email}
                                                     autoFocus
                                                 />
                                                 <Form.Control.Feedback type="invalid">
-                                                    ***REMOVED***errors.email***REMOVED***
+                                                    {errors.email}
                                                 </Form.Control.Feedback>
                                             </InputGroup>
                                         </Form.Group>
@@ -87,7 +87,7 @@ class ForgotPassword extends React.Component ***REMOVED***
                                                 Submit
                                         </Button>
                                     </Form>
-                                )***REMOVED***
+                                )}
                                 </Formik>
                             </div>
                         </div>
@@ -95,11 +95,11 @@ class ForgotPassword extends React.Component ***REMOVED***
                 </div>
             </div>
         );
-    ***REMOVED***
-***REMOVED***
+    }
+}
 
-// ForgotPassword.propTypes = ***REMOVED******REMOVED***;
+// ForgotPassword.propTypes = {};
 
-// ForgotPassword.defaultProps = ***REMOVED******REMOVED***;
+// ForgotPassword.defaultProps = {};
 
 export default ForgotPassword;

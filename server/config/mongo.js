@@ -6,30 +6,30 @@
 
 "use strict";
 
-const ***REMOVED*** mongoDB, mongoDBLocal ***REMOVED*** = require("../config.json");
+const { mongoDB, mongoDBLocal } = require("../config/config.json");
 const mongoose = require("mongoose");
 
 let connString = mongoDB;
-if (process.env.NODE_ENV !== 'production') ***REMOVED***
+if (process.env.NODE_ENV !== 'production') {
     connString = mongoDBLocal
-***REMOVED***
+}
 
-mongoose.connect(connString, ***REMOVED***
+mongoose.connect(connString, {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
     replicaSet: "duncanlevings-shard-0",
     connectTimeoutMS: 864000000
-***REMOVED***);
+});
 
 let db = mongoose.connection;
 db.once('open', () => console.log('connected to the database'));
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-const ***REMOVED*** User ***REMOVED*** = require("../models/userModel");
-const ***REMOVED*** Token ***REMOVED*** = require("../models/tokenModel");
+const { User } = require("../models/userModel");
+const { Token } = require("../models/tokenModel");
 
-module.exports = ***REMOVED***
+module.exports = {
     User,
     Token
-***REMOVED***
+}

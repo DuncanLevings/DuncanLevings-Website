@@ -8,27 +8,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import './TemplateName.scss';
 
-class TemplateName extends React.Component ***REMOVED***
-    constructor(props) ***REMOVED***
+class TemplateName extends React.Component {
+    constructor(props) {
         super(props);
-        this.state = ***REMOVED******REMOVED***
-    ***REMOVED***
+        this.state = {}
+    }
 
-    componentDidMount() ***REMOVED***
+    componentDidMount() {
 
-    ***REMOVED***
+    }
 
-    render() ***REMOVED***
+    render() {
         return (
             <div className="TemplateName">
                 <h1>TemplateName component</h1>
             </div>
         );
-    ***REMOVED***
-***REMOVED***
+    }
+}
 
-TemplateName.propTypes = ***REMOVED******REMOVED***;
+TemplateName.propTypes = {};
 
-TemplateName.defaultProps = ***REMOVED******REMOVED***;
+TemplateName.defaultProps = {};
 
 export default TemplateName;

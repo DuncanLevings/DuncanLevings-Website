@@ -6,27 +6,27 @@
 
 import React from 'react';
 import './ResumeHome.scss';
-import ***REMOVED*** RUNESCAPE_ROOT ***REMOVED*** from 'constants/routeConstants';
-import ***REMOVED*** Link ***REMOVED*** from 'react-router-dom';
+import { RUNESCAPE_ROOT } from 'constants/routeConstants';
+import { Link } from 'react-router-dom';
 
-class ResumeHome extends React.Component ***REMOVED***
-    constructor(props) ***REMOVED***
+class ResumeHome extends React.Component {
+    constructor(props) {
         super(props);
-        this.state = ***REMOVED******REMOVED***
-    ***REMOVED***
+        this.state = {}
+    }
 
-    componentDidMount() ***REMOVED***
+    componentDidMount() {
 
-    ***REMOVED***
+    }
 
-    render() ***REMOVED***
+    render() {
         return (
             <div className="ResumeHome">
                 <h1>ResumeHome component</h1>
-                <Link className="nav-link" to=***REMOVED***RUNESCAPE_ROOT***REMOVED***>Runescape Tools</Link>
+                <Link className="nav-link" to={RUNESCAPE_ROOT}>Runescape Tools</Link>
             </div>
         );
-    ***REMOVED***
-***REMOVED***
+    }
+}
 
 export default ResumeHome;

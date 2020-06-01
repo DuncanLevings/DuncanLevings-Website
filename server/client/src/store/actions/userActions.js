@@ -8,50 +8,50 @@ import * as actionTypes from 'store/actionTypes/userActionTypes';
 
 // GET USER
 
-export function getUser() ***REMOVED***
-    return ***REMOVED*** type: actionTypes.GET_USER ***REMOVED***;
-***REMOVED***
+export function getUser() {
+    return { type: actionTypes.GET_USER };
+}
 
-export function getUserSuccess(user) ***REMOVED***
-    return ***REMOVED*** type: actionTypes.GET_USER_SUCCESS, payload: user ***REMOVED***;
-***REMOVED***
+export function getUserSuccess(user) {
+    return { type: actionTypes.GET_USER_SUCCESS, payload: user };
+}
 
 // LOGIN USER
 
-export function loginUser(authData, from) ***REMOVED***
-    return ***REMOVED*** type: actionTypes.LOGIN_USER, payload: authData, redirect: from ***REMOVED***;
-***REMOVED***
+export function loginUser(authData, from) {
+    return { type: actionTypes.LOGIN_USER, payload: authData, redirect: from };
+}
 
-export function loginUserSuccess(user) ***REMOVED***
-    return ***REMOVED*** type: actionTypes.LOGIN_USER_SUCCESS, payload: user ***REMOVED***;
-***REMOVED***
+export function loginUserSuccess(user) {
+    return { type: actionTypes.LOGIN_USER_SUCCESS, payload: user };
+}
 
 // LOGOUT USER
 
-export function logoutUser() ***REMOVED***
-    return ***REMOVED*** type: actionTypes.LOGOUT_USER ***REMOVED***;
-***REMOVED***
+export function logoutUser() {
+    return { type: actionTypes.LOGOUT_USER };
+}
 
-export function logoutUserSuccess() ***REMOVED***
-    return ***REMOVED*** type: actionTypes.LOGOUT_USER_SUCCESS ***REMOVED***;
-***REMOVED***
+export function logoutUserSuccess() {
+    return { type: actionTypes.LOGOUT_USER_SUCCESS };
+}
 
 // SIGNUP USER
 
-export function signupUser(authData) ***REMOVED***
-    return ***REMOVED*** type: actionTypes.SIGNUP_USER, payload: authData ***REMOVED***;
-***REMOVED***
+export function signupUser(authData) {
+    return { type: actionTypes.SIGNUP_USER, payload: authData };
+}
 
-export function signupUserSuccess() ***REMOVED***
-    return ***REMOVED*** type: actionTypes.SIGNUP_USER_SUCCESS ***REMOVED***;
-***REMOVED***
+export function signupUserSuccess() {
+    return { type: actionTypes.SIGNUP_USER_SUCCESS };
+}
 
 // ERROR
 
-export function userError(error) ***REMOVED***
-    return ***REMOVED*** type: actionTypes.ERROR, payload: error ***REMOVED***;
-***REMOVED***
+export function userError(error) {
+    return { type: actionTypes.ERROR, payload: error };
+}
 
-export function clearAuthorization() ***REMOVED***
-    return (***REMOVED*** type: actionTypes.CLEAR_AUTHORIZATION ***REMOVED***);
-***REMOVED***
+export function clearAuthorization() {
+    return ({ type: actionTypes.CLEAR_AUTHORIZATION });
+}

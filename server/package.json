@@ -1,12 +1,12 @@
-***REMOVED***
+{
   "name": "server",
   "version": "0.0.0",
   "private": true,
-  "scripts": ***REMOVED***
+  "scripts": {
     "build": "cd ./client && npm install && npm run build && cd ../",
     "start": "node ./bin/www"
-  ***REMOVED***,
-  "dependencies": ***REMOVED***
+  },
+  "dependencies": {
     "async-redis": "^1.1.7",
     "axios": "^0.19.2",
     "bcrypt": "^4.0.1",
@@ -31,10 +31,10 @@
     "passport-local": "^1.0.0",
     "passport-remember-me": "0.0.1",
     "redis": "^3.0.2"
-  ***REMOVED***,
-  "nodemonConfig": ***REMOVED***
+  },
+  "nodemonConfig": {
     "ignore": [
       "/client/*"
     ]
-  ***REMOVED***
-***REMOVED***
+  }
+}

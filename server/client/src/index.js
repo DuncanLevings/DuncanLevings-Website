@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from 'App';
-import ***REMOVED*** Provider ***REMOVED*** from 'react-redux'
-import ***REMOVED*** ConnectedRouter ***REMOVED*** from 'connected-react-router'
+import { Provider } from 'react-redux'
+import { ConnectedRouter } from 'connected-react-router'
 import * as serviceWorker from 'serviceWorker';
-import store, ***REMOVED*** history ***REMOVED*** from 'store';
+import store, { history } from 'store';
 import 'index.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store=***REMOVED***store***REMOVED***>
-      <ConnectedRouter history=***REMOVED***history***REMOVED***>
+    <Provider store={store}>
+      <ConnectedRouter history={history}>
         <App />
       </ConnectedRouter>
     </Provider>

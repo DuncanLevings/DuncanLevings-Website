@@ -3,12 +3,12 @@ import Router from 'Routes/Router';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'App.css';
 
-function App() ***REMOVED***
+function App() {
   return (
     <div className="App">
       <Router />
     </div>
   );
-***REMOVED***
+}
 
 export default App;

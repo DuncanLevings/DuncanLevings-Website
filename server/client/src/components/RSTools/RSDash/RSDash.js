@@ -5,28 +5,28 @@
  */
 
 import React from 'react';
-import ***REMOVED*** connect ***REMOVED*** from 'react-redux';
-import ***REMOVED*** Spinner, Container, CardColumns, Card ***REMOVED*** from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { Spinner, Container, CardColumns, Card } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import './RSDash.scss';
 
-class RSDash extends React.Component ***REMOVED***
-    constructor(props) ***REMOVED***
+class RSDash extends React.Component {
+    constructor(props) {
         super(props);
-        this.state = ***REMOVED******REMOVED***
-    ***REMOVED***
+        this.state = {}
+    }
 
-    componentDidMount() ***REMOVED***
-    ***REMOVED***
+    componentDidMount() {
+    }
 
-    render() ***REMOVED***
-        const ***REMOVED*** isFetching, user ***REMOVED*** = this.props.userReducer;
+    render() {
+        const { isFetching, user } = this.props.userReducer;
         return (
             <Container>
                 <div className="RSDash">
-                    ***REMOVED***isFetching || !user ?
+                    {isFetching || !user ?
                         <Spinner variant="light" />
-                        : <h1>Weclome ***REMOVED***user.username***REMOVED***</h1>***REMOVED***
+                        : <h1>Weclome {user.username}</h1>}
                 </div>
                 <CardColumns>
                     <Card>
@@ -42,7 +42,7 @@ class RSDash extends React.Component ***REMOVED***
                         <Card.Body>
                             <Card.Title>Card title</Card.Title>
                             <Card.Text>
-                                This card has supporting text below as a natural lead-in to additional content.***REMOVED***' '***REMOVED***
+                                This card has supporting text below as a natural lead-in to additional content.{' '}
                             </Card.Text>
                         </Card.Body>
                         <Card.Footer>
@@ -53,7 +53,7 @@ class RSDash extends React.Component ***REMOVED***
                         <Card.Body>
                             <Card.Title>Card title</Card.Title>
                             <Card.Text>
-                                This card has supporting text below as a natural lead-in to additional content.***REMOVED***' '***REMOVED***
+                                This card has supporting text below as a natural lead-in to additional content.{' '}
                             </Card.Text>
                             <Card.Text>
                                 <small className="text-muted">Last updated 3 mins ago</small>
@@ -76,17 +76,17 @@ class RSDash extends React.Component ***REMOVED***
                 </CardColumns>
             </Container>
         );
-    ***REMOVED***
-***REMOVED***
+    }
+}
 
-RSDash.propTypes = ***REMOVED***
+RSDash.propTypes = {
     userReducer: PropTypes.object
-***REMOVED***;
+};
 
-const mapStateToProps = state => ***REMOVED***
-    return ***REMOVED***
+const mapStateToProps = state => {
+    return {
         userReducer: state.userReducer
-    ***REMOVED***;
-***REMOVED***
+    };
+}
 
 export default connect(mapStateToProps, null)(RSDash);

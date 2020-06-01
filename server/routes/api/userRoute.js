@@ -9,30 +9,31 @@
 var express = require('express');
 const passport = require('passport');
 const auth = require("../auth");
-const ***REMOVED*** accessCookie, rememberCookie ***REMOVED*** = require("../../config.json");
-const ***REMOVED*** ACCESS_TOKEN_TTL, REMEMBER_TOKEN_TTL ***REMOVED*** = require("../../consts");
+const { accessCookie, rememberCookie } = require("../../config/config.json");
+const { ACCESS_TOKEN_TTL, REMEMBER_TOKEN_TTL } = require("../../constants/config_consts");
+const { USER_ROUTES } = require("../../constants/route_consts/user_route_consts");
 const userService = require("../../service/userService");
 const utils = require("../../service/utils");
 var router = express.Router();
 
 // returns user as well as checking if the user has valid access_token
-router.get("/", auth.user, (req, res) => ***REMOVED***
+router.get(USER_ROUTES.ROOT, auth.user, (req, res) => {
   if (!req.user) return res.status(400).send("Login required!");
 
   userService
     .getUser(req.user.id)
     .then(user => res.status(200).send(user))
     .catch(err => res.status(400).send(err.message));
-***REMOVED***);
+});
 
-router.post("/register", (req, res) => ***REMOVED***
+router.post(USER_ROUTES.REGISTER, (req, res) => {
   userService
     .registerUser(req.body.email, req.body.username, req.body.password)
     .then(() => res.sendStatus(200))
     .catch(err => res.status(400).json(err.message));
-***REMOVED***);
+});
 
-router.post("/login", (req, res) => ***REMOVED***
+router.post(USER_ROUTES.LOGIN, (req, res) => {
   if (!req.body.email)
     return res.status(400).json("Email is required!")
 
@@ -40,12 +41,12 @@ router.post("/login", (req, res) => ***REMOVED***
     return res.status(400).json("Password is required!")
 
   passport.authenticate("local",
-    (err, user, info) => ***REMOVED***
+    (err, user, info) => {
       if (err) return res.status(400).json(err);
       if (!user)
         return res.status(400).json("email or password is incorrect!");
 
-      req.logIn(user, err => ***REMOVED***
+      req.logIn(user, err => {
         if (err) return res.status(400).json(err);
 
         const token = user.generateJWT();
@@ -53,57 +54,57 @@ router.post("/login", (req, res) => ***REMOVED***
         _generateCookie(res, accessCookie, token, ACCESS_TOKEN_TTL);
         _clearRememberMe(req, res);
 
-        if (req.body.remember_me) ***REMOVED***
+        if (req.body.remember_me) {
           const token = utils.randomString(64);
-          userService.saveRememberMeToken(token, user._id, err => ***REMOVED***
+          userService.saveRememberMeToken(token, user._id, err => {
             if (err) return res.status(400).send(err);
             _generateCookie(res, rememberCookie, token, REMEMBER_TOKEN_TTL);
-          ***REMOVED***);
-        ***REMOVED***
+          });
+        }
         
-        return res.json(***REMOVED*** user: user.toAuthJSON() ***REMOVED***);
-      ***REMOVED***);
-    ***REMOVED***)(req, res);
-***REMOVED***);
+        return res.json({ user: user.toAuthJSON() });
+      });
+    })(req, res);
+});
 
-router.get("/logout", (req, res) => ***REMOVED***
+router.get(USER_ROUTES.LOGOUT, (req, res) => {
   _clearRememberMe(req, res);
   res.clearCookie(accessCookie);
   req.session.destroy();
   req.logout();
   res.sendStatus(200);
-***REMOVED***);
+});
 
-router.get("/refresh-token", (req, res) => ***REMOVED***
+router.get(USER_ROUTES.REFRESH_TOKEN, (req, res) => {
   const remember_me = req.cookies[rememberCookie];
-  if (remember_me) ***REMOVED***
+  if (remember_me) {
     userService
       .getUserByToken(remember_me)
-      .then((user) => ***REMOVED***
+      .then((user) => {
         const token = user.generateJWT();
         _generateCookie(res, accessCookie, token, ACCESS_TOKEN_TTL);
         res.status(200).send("access refreshed");
-      ***REMOVED***)
+      })
       .catch((err) => res.status(400).send(err));
-  ***REMOVED*** else ***REMOVED***
+  } else {
     res.status(400).send("No remember me token!");
-  ***REMOVED***
-***REMOVED***);
+  }
+});
 
-const _generateCookie = (res, cookie, data, maxAge) => ***REMOVED***
-  res.cookie(cookie, data, ***REMOVED***
+const _generateCookie = (res, cookie, data, maxAge) => {
+  res.cookie(cookie, data, {
     maxAge: maxAge,
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production' ? true : false,
     sameSite: true
-  ***REMOVED***);
-***REMOVED***
+  });
+}
 
-const _clearRememberMe = (req, res) => ***REMOVED***
-  if (req.cookies[rememberCookie]) ***REMOVED***
+const _clearRememberMe = (req, res) => {
+  if (req.cookies[rememberCookie]) {
     userService.clearOldToken(req.cookies[rememberCookie]);
     res.clearCookie(rememberCookie);
-  ***REMOVED***
-***REMOVED***
+  }
+}
 
 module.exports = router;

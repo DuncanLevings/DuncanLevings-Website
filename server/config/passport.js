@@ -13,26 +13,26 @@ const RememberMeStrategy = require("passport-remember-me").Strategy;
 const userService = require("../service/userService");
 const utils = require("../service/utils");
 
-passport.use(new LocalStrategy(***REMOVED***
+passport.use(new LocalStrategy({
     usernameField: "email",
     passwordField: "password",
-***REMOVED***, userService.authenticate));
+}, userService.authenticate));
 
 passport.use(new RememberMeStrategy(
-    function(token, done) ***REMOVED***
-        userService.consumeRememberMeToken(token, function (err, uid) ***REMOVED***
-            if (err) ***REMOVED*** return done(err); ***REMOVED***
-            if (!uid) ***REMOVED*** return done(null, false); ***REMOVED***
+    function(token, done) {
+        userService.consumeRememberMeToken(token, function (err, uid) {
+            if (err) { return done(err); }
+            if (!uid) { return done(null, false); }
             return done(null, uid);
-        ***REMOVED***);
-    ***REMOVED***,
-    function(uid, done) ***REMOVED***
+        });
+    },
+    function(uid, done) {
         var token = utils.randomString(64);
-        userService.saveRememberMeToken(token, uid, function (err) ***REMOVED***
-            if (err) ***REMOVED*** return done(err); ***REMOVED***
+        userService.saveRememberMeToken(token, uid, function (err) {
+            if (err) { return done(err); }
             return done(null, token);
-        ***REMOVED***);
-    ***REMOVED***
+        });
+    }
 ));
 
 

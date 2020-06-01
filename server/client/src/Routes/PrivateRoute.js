@@ -5,38 +5,38 @@
  */
 
 import React from 'react';
-import ***REMOVED*** Route, Redirect ***REMOVED*** from "react-router-dom";
-import ***REMOVED*** connect ***REMOVED*** from 'react-redux';
+import { Route, Redirect } from "react-router-dom";
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import ***REMOVED*** RS ***REMOVED*** from 'constants/routeConstants';
+import { RS } from 'constants/routeConstants';
 
-const PrivateRoute = (***REMOVED*** component: Component, ...rest ***REMOVED***) => (
+const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
-      ***REMOVED***...rest***REMOVED***
-      render=***REMOVED***props =>
+      {...rest}
+      render={props =>
         rest.isAuthenticated ? (
-          <Component ***REMOVED***...props***REMOVED*** ***REMOVED***...rest***REMOVED*** />
+          <Component {...props} {...rest} />
         ) : (
           <Redirect
-            to=***REMOVED******REMOVED***
+            to={{
               pathname: RS.LOGIN,
-              state: ***REMOVED*** from: props.location ***REMOVED***
-            ***REMOVED******REMOVED***
+              state: { from: props.location }
+            }}
           />
         )
-      ***REMOVED***
+      }
     />
 );
 
-PrivateRoute.propTypes = ***REMOVED***
+PrivateRoute.propTypes = {
   isAuthenticated: PropTypes.bool
-***REMOVED***;
+};
 
-const mapStateToProps = state => ***REMOVED***
-    return ***REMOVED***
+const mapStateToProps = state => {
+    return {
       isAuthenticated: state.userReducer.isAuthenticated
-    ***REMOVED***;
-***REMOVED***
+    };
+}
 
 export default connect(mapStateToProps, null)(PrivateRoute);
 

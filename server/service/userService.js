@@ -7,41 +7,41 @@
 "use strict";
 
 const mongoose = require("mongoose");
-const ***REMOVED*** User, Token ***REMOVED*** = require("../config/mongo");
+const { User, Token } = require("../config/mongo");
 
 /* Regular expressions for parameter validation. */
 const NAME_REGEX = new RegExp(/^[a-zA-Z0-9]+$/);
-const EMAIL_REGEX = new RegExp(/(?:[a-z0-9!#$%&'*+/=?^_`***REMOVED***|***REMOVED***~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`***REMOVED***|***REMOVED***~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.)***REMOVED***3***REMOVED***(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/)
+const EMAIL_REGEX = new RegExp(/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/)
 
-const authenticate = async (email, password, cb) => ***REMOVED***
-    User.findOne(***REMOVED*** email: email ***REMOVED***)
-        .then((user) => ***REMOVED***
+const authenticate = async (email, password, cb) => {
+    User.findOne({ email: email })
+        .then((user) => {
             if (!user) return cb(null, false);
-            user.validatePassword(password, (err, valid) => ***REMOVED***
+            user.validatePassword(password, (err, valid) => {
                 if (valid) return cb(null, user);
                 return cb("email or password is incorrect!", false);
-            ***REMOVED***);
-        ***REMOVED***).catch(cb);
-***REMOVED***
+            });
+        }).catch(cb);
+}
 
-const getUser = async (id) => ***REMOVED***
+const getUser = async (id) => {
     const user = await User.findById(id);
     if (!user) throw Error("User not found!");
-    return (***REMOVED*** user: user.toAuthJSON() ***REMOVED***);
-***REMOVED***
+    return ({ user: user.toAuthJSON() });
+}
 
-const getUserByToken = async (token) => ***REMOVED***
-    const tkn = await Token.findOne(***REMOVED*** "payload.token": token ***REMOVED***);
+const getUserByToken = async (token) => {
+    const tkn = await Token.findOne({ "payload.token": token });
     if (!tkn) throw Error("Token not found!");
 
     const user = await User.findById(tkn.payload.uid);
     if (!user) throw Error("User not found!");
 
     return user;
-***REMOVED***
+}
 
-const registerUser = async (email, username, password) => ***REMOVED***
-    if (await User.findOne(***REMOVED*** email: email ***REMOVED***))
+const registerUser = async (email, username, password) => {
+    if (await User.findOne({ email: email }))
         throw Error("An account with that E-mail is already registered!");
 
     const user = new User(
@@ -51,66 +51,66 @@ const registerUser = async (email, username, password) => ***REMOVED***
             .withPassword(password));
 
     return await user.save();
-***REMOVED***
+}
 
-const consumeRememberMeToken = (token, fn) => ***REMOVED***
-    Token.findOne(***REMOVED*** "payload.token": token ***REMOVED***, async (err, tkn) => ***REMOVED***
+const consumeRememberMeToken = (token, fn) => {
+    Token.findOne({ "payload.token": token }, async (err, tkn) => {
         if (!tkn) return fn(null, null);
-        await Token.deleteOne(***REMOVED*** "payload.token": token ***REMOVED***);
+        await Token.deleteOne({ "payload.token": token });
         return fn(null, tkn.payload.uid);
-    ***REMOVED***);
-***REMOVED***;
+    });
+};
 
-const saveRememberMeToken = (token, uid, fn) => ***REMOVED***
-    let tkn = new Token(***REMOVED***
-        payload: ***REMOVED***
+const saveRememberMeToken = (token, uid, fn) => {
+    let tkn = new Token({
+        payload: {
             uid: uid,
             token: token
-        ***REMOVED***
-    ***REMOVED***);
+        }
+    });
     tkn.save();
     return fn();
-***REMOVED***;
+};
 
-const clearOldToken = async (token) => ***REMOVED***
-    await Token.deleteOne(***REMOVED*** "payload.token": token ***REMOVED***);
-***REMOVED***
+const clearOldToken = async (token) => {
+    await Token.deleteOne({ "payload.token": token });
+}
 
-const serializeUser = (user, cb) => ***REMOVED***
+const serializeUser = (user, cb) => {
     cb(null, user);
-***REMOVED***;
+};
   
-const deserializeUser = (id, cb) => ***REMOVED***
-    User.findById(id, (err, user) => ***REMOVED***
+const deserializeUser = (id, cb) => {
+    User.findById(id, (err, user) => {
         cb(err, user);
-    ***REMOVED***);
-***REMOVED***;
+    });
+};
 
-class UserBuilder ***REMOVED***
-    withEmail(email) ***REMOVED***
+class UserBuilder {
+    withEmail(email) {
         if (!email) throw Error("Email is required!");
         if (!EMAIL_REGEX.test(email)) throw Error("Email is invalid!");
         this.email = email;
         return this;
-    ***REMOVED***
+    }
 
-    withUserName(username) ***REMOVED***
+    withUserName(username) {
         if (!username) throw Error("Username is required!");
         if (!NAME_REGEX.test(username)) throw Error("Username is invalid!");
         this.username = username;
         return this;
-    ***REMOVED***
+    }
 
-    withPassword(password) ***REMOVED***
+    withPassword(password) {
         if (!password) throw Error("password is required!");
         if (password.length < 3)
             throw Error("password must be more than 3 characters!");
         this.password = password;
         return this;
-    ***REMOVED***
-***REMOVED***
+    }
+}
 
-module.exports = ***REMOVED*** 
+module.exports = { 
     authenticate, 
     getUser, 
     getUserByToken,
@@ -120,4 +120,4 @@ module.exports = ***REMOVED***
     clearOldToken,
     serializeUser,
     deserializeUser
-***REMOVED***
+}
