@@ -4,36 +4,35 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-"use strict";
+'use strict';
 
 var createError = require('http-errors');
 var express = require('express');
-const cors = require("cors");
+const cors = require('cors');
 const bodyParser = require('body-parser');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mongoose = require('mongoose');
-const session = require("express-session");
-const passport = require("passport");
-const MongoStore = require("connect-mongo")(session);
-const { secret, sessionName, accessCookie } = require("./config/config.json");
-const { CONNECT_TTL } = require("./constants/config_consts");
-require("./config/mongo");
-// require("./config/redis");
-require("./config/passport");
+const session = require('express-session');
+const passport = require('passport');
+const MongoStore = require('connect-mongo')(session);
+const { CONNECT_TTL } = require('./consts/config_consts');
+const _config = require('./config/config.json');
+require('./config/mongo');
+require('./config/passport');
 
 var app = express();
 
 var sessionOptions = {
-  name: sessionName,
-  secret: secret,
+  name: _config.sessionName,
+  secret: _config.secret,
   resave: false,
   saveUninitialized: false,
   rolling: true,
   store: new MongoStore({ mongooseConnection: mongoose.connection }),
   cookie: { 
-    httpOnly: true, 
+    httpOnly: true,
     maxAge: CONNECT_TTL 
   },
   unset: 'destroy'
@@ -60,9 +59,9 @@ app.use(passport.authenticate('remember-me'));
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use((req, res, next) => {
-  if (!req.cookies[sessionName] && !req.user) {
-    res.clearCookie(sessionName);
-    res.clearCookie(accessCookie);      
+  if (!req.cookies[_config.sessionName] && !req.user) {
+    res.clearCookie(_config.sessionName);
+    res.clearCookie(_config.accessCookie);      
   }
   next();
 });
@@ -71,8 +70,8 @@ app.use(require('./routes'));
 
 // must be last router
 app.use(express.static(path.join(__dirname, 'client/build')));
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "client/build/index.html"));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, `client/build/index.html`));
 });
 
 // catch 404 and forward to error handler

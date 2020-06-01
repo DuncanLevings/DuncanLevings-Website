@@ -5,31 +5,32 @@
  */
 
 const jwt = require('jsonwebtoken');
-const { secret } = require("../config/config.json");
+const _config = require('../config/config.json');
+const { AUTH_ERROR } = require('../consts/error_jsons');
 
 const checkAccess = (isAdmin = false) => {
   return (req, res, next) => {
-    const token = req.cookies.access_token;
+    const token = req.cookies[_config.accessCookie];
     if (!token) {
-      return res.sendStatus(401);
+      return res.status(401).send(AUTH_ERROR);
     } else {
-      jwt.verify(token, secret, function (err, decoded) {
+      jwt.verify(token, _config.secret, function (err, decoded) {
         // console.log(decoded)
 
         if (isAdmin)
           if (!decoded.isAdmin) {
-            return res.status(403).send("Required admin privilege to access!");
+            return res.status(403).send(AUTH_ERROR);
           }
         
         if (decoded.exp <= Date.now() / 1000) {
-          res.clearCookie("access_token");
-          return res.status(401).send("Unauthorized: Token has expired!");
+          res.clearCookie(_config.accessCookie);
+          return res.status(401).send(AUTH_ERROR);
         }
         
         //check expire
         if (err) {
-          res.clearCookie("access_token");
-          return res.status(401).send("Unauthorized: Invalid token");
+          res.clearCookie(_config.accessCookie);
+          return res.status(401).send(AUTH_ERROR);
         } else {
           return next();
         }

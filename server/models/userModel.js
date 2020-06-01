@@ -4,13 +4,13 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-"use strict";
+'use strict';
 
-const mongoose = require("mongoose");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const { secret } = require("../config/config.json");
-const { ACCESS_TOKEN_TTL } = require("../constants/config_consts");
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+const { secret } = require('../config/config.json');
+const { ACCESS_TOKEN_TTL } = require('../consts/config_consts');
 
 const userSchema = new mongoose.Schema({
     email: { type: String, required: true },
@@ -22,10 +22,10 @@ const userSchema = new mongoose.Schema({
 const SALT_WORK_FACTOR = 10;
 
 // hash the password before saving to DB
-userSchema.pre("save", function (next) {
+userSchema.pre('save', function (next) {
     const user = this;
 
-    if (!user.isModified("password")) return next();
+    if (!user.isModified('password')) return next();
 
     bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
         if (err) return next(err);
@@ -38,7 +38,7 @@ userSchema.pre("save", function (next) {
 });
 
 // hash the password before updating to DB
-userSchema.pre("update", function (next) {
+userSchema.pre('update', function (next) {
     if (!this.getUpdate().$set) return next();
 
     const password = this.getUpdate().$set.password;
@@ -79,7 +79,7 @@ userSchema.methods.toAuthJSON = function () {
     };
 };
 
-userSchema.set("toJSON", { virtuals: true });
-const User = mongoose.model("User", userSchema, "users");
+userSchema.set('toJSON', { virtuals: true });
+const User = mongoose.model('User', userSchema, 'users');
 
 module.exports = { User }

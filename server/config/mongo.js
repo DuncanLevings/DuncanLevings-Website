@@ -6,8 +6,8 @@
 
 "use strict";
 
-const { mongoDB, mongoDBLocal } = require("../config/config.json");
-const mongoose = require("mongoose");
+const { mongoDB, mongoDBLocal } = require('./config.json');
+const mongoose = require('mongoose');
 
 let connString = mongoDB;
 if (process.env.NODE_ENV !== 'production') {
@@ -18,7 +18,7 @@ mongoose.connect(connString, {
     useCreateIndex: true,
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    replicaSet: "duncanlevings-shard-0",
+    replicaSet: 'duncanlevings-shard-0',
     connectTimeoutMS: 864000000
 });
 
@@ -26,8 +26,8 @@ let db = mongoose.connection;
 db.once('open', () => console.log('connected to the database'));
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-const { User } = require("../models/userModel");
-const { Token } = require("../models/tokenModel");
+const { User } = require('../models/userModel');
+const { Token } = require('../models/tokenModel');
 
 module.exports = {
     User,

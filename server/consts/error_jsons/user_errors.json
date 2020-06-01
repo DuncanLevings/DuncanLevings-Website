@@ -1,0 +1,17 @@
+{
+    "client_errors": {
+        "INCORRECT_LOGIN": "Email or Password is incorrect!",
+        "EMAIL_TAKEN": "An account with that E-mail is already registered!"
+    },
+    "server_errors": {
+        "LOGIN_REQUIRED": "Login is required!",
+        "EMAIL_REQUIRED": "Email is required!",
+        "USERNAME_REQUIRED": "Username is required!",
+        "PASSWORD_REQUIRED": "Password is required!",
+        "EMAIL_REGEX_FAIL": "Email is invalid!",
+        "USERNAME_REGEX_FAIL": "Username is invalid!",
+        "PASSWORD_LENGTH": "Password must be more than 3 characters!",
+        "USER_NOT_FOUND": "User not found!",
+        "TOKEN_NOT_FOUND": "Token not found!"
+    }
+}

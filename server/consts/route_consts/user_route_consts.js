@@ -4,16 +4,17 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-export const USER_ROOT = '/users';
+const _ROOT = '/users';
 
-const ROOT = '/';
+const USER_ROOT = '/';
 const REGISTER = '/register';
 const LOGIN = '/login';
 const LOGOUT = '/logout';
 const REFRESH_TOKEN = '/refresh-token';
 
-export const USER_ROUTES = {
-    ROOT,
+module.exports = {
+    _ROOT,
+    USER_ROOT,
     REGISTER,
     LOGIN,
     LOGOUT,

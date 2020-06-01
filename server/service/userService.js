@@ -4,10 +4,11 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-"use strict";
+'use strict';
 
-const mongoose = require("mongoose");
-const { User, Token } = require("../config/mongo");
+const mongoose = require('mongoose');
+const { User, Token } = require('../config/mongo');
+const { USER_CLIENT_ERRORS, USER_SERVER_ERRORS } = require('../consts/error_jsons');
 
 /* Regular expressions for parameter validation. */
 const NAME_REGEX = new RegExp(/^[a-zA-Z0-9]+$/);
@@ -19,30 +20,30 @@ const authenticate = async (email, password, cb) => {
             if (!user) return cb(null, false);
             user.validatePassword(password, (err, valid) => {
                 if (valid) return cb(null, user);
-                return cb("email or password is incorrect!", false);
+                return cb(USER_CLIENT_ERRORS.INCORRECT_LOGIN, false);
             });
         }).catch(cb);
 }
 
 const getUser = async (id) => {
     const user = await User.findById(id);
-    if (!user) throw Error("User not found!");
+    if (!user) throw Error(USER_SERVER_ERRORS.USER_NOT_FOUND);
     return ({ user: user.toAuthJSON() });
 }
 
 const getUserByToken = async (token) => {
     const tkn = await Token.findOne({ "payload.token": token });
-    if (!tkn) throw Error("Token not found!");
+    if (!tkn) throw Error(USER_SERVER_ERRORS.TOKEN_NOT_FOUND);
 
     const user = await User.findById(tkn.payload.uid);
-    if (!user) throw Error("User not found!");
+    if (!user) throw Error(USER_SERVER_ERRORS.USER_NOT_FOUND);
 
     return user;
 }
 
 const registerUser = async (email, username, password) => {
     if (await User.findOne({ email: email }))
-        throw Error("An account with that E-mail is already registered!");
+        throw Error(USER_CLIENT_ERRORS.EMAIL_TAKEN);
 
     const user = new User(
         new UserBuilder()
@@ -88,23 +89,23 @@ const deserializeUser = (id, cb) => {
 
 class UserBuilder {
     withEmail(email) {
-        if (!email) throw Error("Email is required!");
-        if (!EMAIL_REGEX.test(email)) throw Error("Email is invalid!");
+        if (!email) throw Error(USER_SERVER_ERRORS.EMAIL_REQUIRED);
+        if (!EMAIL_REGEX.test(email)) throw Error(USER_SERVER_ERRORS.EMAIL_REGEX_FAIL);
         this.email = email;
         return this;
     }
 
     withUserName(username) {
-        if (!username) throw Error("Username is required!");
-        if (!NAME_REGEX.test(username)) throw Error("Username is invalid!");
+        if (!username) throw Error(USER_SERVER_ERRORS.USERNAME_REQUIRED);
+        if (!NAME_REGEX.test(username)) throw Error(USER_SERVER_ERRORS.USERNAME_REGEX_FAIL);
         this.username = username;
         return this;
     }
 
     withPassword(password) {
-        if (!password) throw Error("password is required!");
+        if (!password) throw Error(USER_SERVER_ERRORS.PASSWORD_REQUIRED);
         if (password.length < 3)
-            throw Error("password must be more than 3 characters!");
+            throw Error(USER_SERVER_ERRORS.PASSWORD_LENGTH);
         this.password = password;
         return this;
     }
