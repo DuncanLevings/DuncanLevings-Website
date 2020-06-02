@@ -18,7 +18,7 @@ const store = createStore(
   createRootReducer(history),
   compose(
     applyMiddleware(sagaMiddleware, routerMiddleware(history)),
-    process.env.NODE_ENV === "development" ? f => f :
+    process.env.NODE_ENV === "production" ? f => f :
     window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__() && window.__REDUX_DEVTOOLS_EXTENSION__({ trace: true, traceLimit: 25 })
   )
 );
