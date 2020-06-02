@@ -6,7 +6,7 @@
 
 import { call, takeLatest, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
-import { RSTOOL_ROUTES } from '@rstoolsConsts';
+import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import { getUserAPI, loginAPI, logoutAPI, signUpAPI } from '../api/userAPI';
 import * as actionTypes from '../actionTypes/userActionTypes'
 import * as actionCreators from '../actions/userActions';

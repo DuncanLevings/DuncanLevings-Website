@@ -6,6 +6,6 @@
 
 import { RSTOOL_ROUTES } from './routeConsts';
 
-export default {
+export {
     RSTOOL_ROUTES
 }

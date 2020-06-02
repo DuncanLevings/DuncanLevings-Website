@@ -6,14 +6,14 @@
 
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { RESUME_ROOT, RUNESCAPE_ROOT } from '@consts';
+import { RESUME_ROOT, RSTOOL_ROOT } from 'consts';
 import ResumeRouter from './ResumeRoutes';
 import RSRouter from './RunescapeRoutes';
 
 const Router = (props) => (
     <Switch>
         <Route exact path={RESUME_ROOT} component={ResumeRouter} />
-        <Route path={RUNESCAPE_ROOT} component={RSRouter} />
+        <Route path={RSTOOL_ROOT} component={RSRouter} />
     </Switch>
 )
 export default Router;

@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { RUNESCAPE_ROOT } from 'consts';
+import { RSTOOL_ROOT } from 'consts';
 import './ResumeHome.scss';
 
 class ResumeHome extends React.Component {
@@ -23,7 +23,7 @@ class ResumeHome extends React.Component {
         return (
             <div className="ResumeHome">
                 <h1>ResumeHome component</h1>
-                <Link className="nav-link" to={RUNESCAPE_ROOT}>Runescape Tools</Link>
+                <Link className="nav-link" to={RSTOOL_ROOT}>Runescape Tools</Link>
             </div>
         );
     }

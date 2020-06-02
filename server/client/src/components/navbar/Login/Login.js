@@ -8,8 +8,8 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { loginUser } from '@actions/userActions';
-import { RSTOOL_ROUTES } from '@rstoolsConsts';
+import { loginUser } from 'store/actions/userActions';
+import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import { Form, InputGroup, FormControl, Button } from 'react-bootstrap'
 import { FaUser, FaKey } from 'react-icons/fa';
 import { Formik } from 'formik';
@@ -136,10 +136,10 @@ class Login extends React.Component {
                             </div>
                             <div className="card-footer">
                                 <div className="d-flex justify-content-center links">
-                                    Don't have an account?<Link to={RS.SIGNUP}>Sign Up</Link>
+                                    Don't have an account?<Link to={RSTOOL_ROUTES.SIGNUP}>Sign Up</Link>
                                 </div>
                                 <div className="d-flex justify-content-center">
-                                    <Link to={RS.FORGOTPASS}>Forgot your password?</Link>
+                                    <Link to={RSTOOL_ROUTES.FORGOTPASS}>Forgot your password?</Link>
                                 </div>
                             </div>
                         </div>

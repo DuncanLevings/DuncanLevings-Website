@@ -7,7 +7,7 @@
 import React from 'react';
 import { Route, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
-import { RSTOOL_ROUTES } from '@rstoolsConsts';
+import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import PropTypes from 'prop-types';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (

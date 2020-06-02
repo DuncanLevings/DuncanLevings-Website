@@ -6,8 +6,8 @@
 
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { RESUME_ROUTES } from '@resumeConsts';
-import ResumeHome from '@resumeComponents/ResumeHome/ResumeHome.lazy';
+import { RESUME_ROUTES } from 'consts/Resume_Consts';
+import ResumeHome from 'components/Resume/ResumeHome/ResumeHome.lazy';
 
 const ResumeRouter = (props) => (
     <Switch>

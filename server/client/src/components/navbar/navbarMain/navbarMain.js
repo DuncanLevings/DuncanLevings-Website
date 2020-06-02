@@ -10,8 +10,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Navbar, Nav } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
-import { RESUME_ROOT, RUNESCAPE_ROOT } from '@consts';
-import { logoutUser } from '@actions/userActions';
+import { RESUME_ROOT, RSTOOL_ROOT } from 'consts';
+import { logoutUser } from 'store/actions/userActions';
 import './navbarMain.scss';
 
 class navbarMain extends React.Component {
@@ -46,9 +46,7 @@ class navbarMain extends React.Component {
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
-                            <Nav.Link>
-                                <Link to={RUNESCAPE_ROOT} hidden={!isAuthenticated}>Home</Link>
-                            </Nav.Link>
+                            <Link to={RSTOOL_ROOT} hidden={!isAuthenticated}>Home</Link>
                         </Nav>
                         <Nav>
                             <Button variant="primary" onClick={this.logout} hidden={!isAuthenticated}>Logout</Button>

@@ -6,6 +6,6 @@
 
 import { RESUME_ROUTES } from './routeConsts';
 
-export default {
+export {
     RESUME_ROUTES
 }
