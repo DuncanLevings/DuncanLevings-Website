@@ -5,9 +5,9 @@
  */
 
 import React from 'react';
-import './ResumeHome.scss';
-import { RUNESCAPE_ROOT } from 'constants/routeConstants';
 import { Link } from 'react-router-dom';
+import { RUNESCAPE_ROOT } from 'consts';
+import './ResumeHome.scss';
 
 class ResumeHome extends React.Component {
     constructor(props) {

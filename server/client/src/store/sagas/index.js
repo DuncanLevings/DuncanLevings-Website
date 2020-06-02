@@ -5,7 +5,7 @@
  */
 
 import { all } from 'redux-saga/effects';
-import { getUserWatcher, loginUserWatcher, logoutUserWatcher, signupUserWatcher } from 'store/sagas/userSaga';
+import { getUserWatcher, loginUserWatcher, logoutUserWatcher, signupUserWatcher } from './userSaga';
 
 export default function* rootSaga() {
     yield all([

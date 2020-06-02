@@ -7,8 +7,8 @@
 import React from 'react';
 import { Route, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
+import { RSTOOL_ROUTES } from '@rstoolsConsts';
 import PropTypes from 'prop-types';
-import { RS } from 'constants/routeConstants';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
@@ -19,7 +19,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
         ) : (
           <Redirect
             to={{
-              pathname: RS.LOGIN,
+              pathname: RSTOOL_ROUTES.LOGIN,
               state: { from: props.location }
             }}
           />

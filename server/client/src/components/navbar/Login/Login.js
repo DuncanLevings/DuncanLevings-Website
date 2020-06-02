@@ -8,8 +8,8 @@ import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { loginUser } from 'store/actions/userActions';
-import { RS } from 'constants/routeConstants';
+import { loginUser } from '@actions/userActions';
+import { RSTOOL_ROUTES } from '@rstoolsConsts';
 import { Form, InputGroup, FormControl, Button } from 'react-bootstrap'
 import { FaUser, FaKey } from 'react-icons/fa';
 import { Formik } from 'formik';
@@ -38,7 +38,7 @@ class Login extends React.Component {
     }
 
     login = values => {
-        const { from } = this.props.location.state || { from: { pathname: RS.DASH } };
+        const { from } = this.props.location.state || { from: { pathname: RSTOOL_ROUTES.DASH } };
         this.props.loginUser(values, from);
     }
 

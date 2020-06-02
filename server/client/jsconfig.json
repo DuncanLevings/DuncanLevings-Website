@@ -1,6 +1,15 @@
 {
   "compilerOptions": {
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "paths": {
+      "@resumeComponents/*": ["components/Resume/*"],
+      "@rstoolComponents/*": ["components/RSTools/*"],
+      "@navbarComponents/*": ["components/navbar/*"],
+      "@consts": ["consts"],
+      "@resumeConsts": ["consts/Resume_Consts"],
+      "@rstoolsConsts": ["consts/RSTools_Consts"],
+      "@actions/*": ["store/actions/*"]
+    }
   },
   "include": [
     "src"

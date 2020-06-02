@@ -6,9 +6,9 @@
 
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import ResumeRouter from 'Routes/ResumeRoutes';
-import RSRouter from 'Routes/RunescapeRoutes';
-import { RESUME_ROOT, RUNESCAPE_ROOT } from 'constants/routeConstants';
+import { RESUME_ROOT, RUNESCAPE_ROOT } from '@consts';
+import ResumeRouter from './ResumeRoutes';
+import RSRouter from './RunescapeRoutes';
 
 const Router = (props) => (
     <Switch>

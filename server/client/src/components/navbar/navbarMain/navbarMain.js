@@ -8,10 +8,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button } from 'react-bootstrap';
+import { Button, Navbar, Nav } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
-import { RESUME_ROOT, RUNESCAPE_ROOT } from 'constants/routeConstants';
-import { logoutUser } from 'store/actions/userActions';
+import { RESUME_ROOT, RUNESCAPE_ROOT } from '@consts';
+import { logoutUser } from '@actions/userActions';
 import './navbarMain.scss';
 
 class navbarMain extends React.Component {
@@ -31,18 +31,30 @@ class navbarMain extends React.Component {
         const { isAuthenticated } = this.props.userReducer;
         return (
             <div>
-                <nav className="navbar navbar-expand-lg navbar-light bg-light">
-                    <Link className="navbar-brand" to={RESUME_ROOT}>Navbar</Link>
-
-                    <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul className="navbar-nav mr-auto">
-                            <li className="nav-item active">
-                                <Link className="nav-link" to={RUNESCAPE_ROOT} hidden={!isAuthenticated}>Home</Link>
-                            </li>
-                        </ul>
-                        <Button variant="primary" type="submit" className="btn float-right" onClick={this.logout} hidden={!isAuthenticated}>Logout</Button>
-                    </div>
-                </nav>
+                <Navbar bg="light">
+                    <Navbar.Brand>
+                        <Link to={RESUME_ROOT}>
+                            <img
+                                src="/logo192.png"
+                                width="30"
+                                height="30"
+                                className="d-inline-block align-top"
+                                alt="Logo"
+                            />
+                        </Link>
+                    </Navbar.Brand>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="responsive-navbar-nav">
+                        <Nav className="mr-auto">
+                            <Nav.Link>
+                                <Link to={RUNESCAPE_ROOT} hidden={!isAuthenticated}>Home</Link>
+                            </Nav.Link>
+                        </Nav>
+                        <Nav>
+                            <Button variant="primary" onClick={this.logout} hidden={!isAuthenticated}>Logout</Button>
+                        </Nav>
+                    </Navbar.Collapse>
+                </Navbar>
             </div>
         );
     }

@@ -4,7 +4,7 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-import * as actionTypes from 'store/actionTypes/userActionTypes';
+import * as actionTypes from '../actionTypes/userActionTypes';
 
 const intialState = {
     user: null,

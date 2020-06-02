@@ -6,12 +6,12 @@
 
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { RESUME } from 'constants/routeConstants';
-import ResumeHome from 'components/Resume/ResumeHome/ResumeHome.lazy';
+import { RESUME_ROUTES } from '@resumeConsts';
+import ResumeHome from '@resumeComponents/ResumeHome/ResumeHome.lazy';
 
 const ResumeRouter = (props) => (
     <Switch>
-        <Route path={RESUME.HOME} component={ResumeHome} />
+        <Route path={RESUME_ROUTES.HOME} component={ResumeHome} />
     </Switch>
 )
 export default ResumeRouter;

@@ -7,7 +7,7 @@
 import axios from 'axios';
 import { URL } from "config.js"
 import store from 'store';
-import { getUser, logoutUser } from 'store/actions/userActions';
+import { getUser, logoutUser } from '../actions/userActions';
 
 const axiosInstance = axios.create({
     baseURL: URL

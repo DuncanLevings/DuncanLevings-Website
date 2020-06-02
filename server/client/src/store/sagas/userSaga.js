@@ -6,10 +6,10 @@
 
 import { call, takeLatest, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
-import { RS } from 'constants/routeConstants';
-import { getUserAPI, loginAPI, logoutAPI, signUpAPI } from 'store/api/userAPI';
-import * as actionTypes from 'store/actionTypes/userActionTypes'
-import * as actionCreators from 'store/actions/userActions';
+import { RSTOOL_ROUTES } from '@rstoolsConsts';
+import { getUserAPI, loginAPI, logoutAPI, signUpAPI } from '../api/userAPI';
+import * as actionTypes from '../actionTypes/userActionTypes'
+import * as actionCreators from '../actions/userActions';
 
 function* getUser() {
     try {
@@ -39,7 +39,7 @@ function* logoutUser() {
     try {
         yield call(logoutAPI);
         yield put(actionCreators.logoutUserSuccess());
-        yield put(push(RS.LOGIN));
+        yield put(push(RSTOOL_ROUTES.LOGIN));
     } catch (error) {
         yield put(actionCreators.userError(error.response.data))
     }
@@ -49,7 +49,7 @@ function* signupUser(signupAction) {
     try {
         yield call(signUpAPI, signupAction.payload);
         yield put(actionCreators.signupUserSuccess());
-        yield put(push(RS.LOGIN));
+        yield put(push(RSTOOL_ROUTES.LOGIN));
     } catch (error) {
         yield put(actionCreators.userError(error.response.data))
     }
