@@ -1,0 +1,19 @@
+/*
+ * Author: Duncan Levings
+ * 
+ * Copyright (c) 2020 DuncanLevings
+ */
+
+ @import 'assets/style/colors';
+
+ $body-bg: $body-background;
+ $body-color: $body-font;
+ 
+ $theme-colors: (
+     'primary': $primary-theme,
+     'light': $light-theme,
+     'dark': $dark-theme,
+     'button-primary': $button-primary
+ );
+
+@import '~bootstrap/scss/bootstrap';

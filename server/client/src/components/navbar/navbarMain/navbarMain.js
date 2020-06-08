@@ -31,48 +31,48 @@ class navbarMain extends React.Component {
 
     scrollWidthOffset = el => {
         const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
-        let yOffset = -60;
+        let yOffset = -80;
         if (isMobile) yOffset = -180;
         window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' }); 
     }
 
     renderNav = () => {
         const type = this.props.type;
+        const location = this.props.location;
 
         switch (type) {
             case NAVBAR_TYPE.RESUME:
                 return (
                     <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav className="mr-3">
-                            <NavHashLink 
-                            to={"#aboutme"}
-                            scroll={this.scrollWidthOffset}
-                            >About Me</NavHashLink>
-                        </Nav>
-                        <Nav className="mr-3">
-                            <NavHashLink 
-                            to={"#education"}
-                            scroll={this.scrollWidthOffset}
-                            >Education</NavHashLink>
-                        </Nav>
-                        <Nav className="mr-3">
-                            <NavHashLink 
-                            to={"#experience"}
-                            scroll={this.scrollWidthOffset}
-                            >Experience</NavHashLink>
-                        </Nav>
-                        <Nav className="mr-3">
-                            <NavHashLink 
-                            to={"#projects"}
-                            scroll={this.scrollWidthOffset}
-                            >Projects</NavHashLink>
-                        </Nav>
-                        <Nav className="mr-3">
-                            <NavHashLink 
-                            to={"#contact"}
-                            scroll={this.scrollWidthOffset}
-                            >Contact Me</NavHashLink>
-                        </Nav>
+                        <NavHashLink 
+                        to={"#home"}
+                        activeClassName={`${location.hash}` === "#home" ? "is-active-link" : ""}
+                        scroll={this.scrollWidthOffset}
+                        >HOME</NavHashLink>
+                        <div className="ml-3 mr-3 bordered"/>
+                        <NavHashLink 
+                        to={"#education"}
+                        activeClassName={`${location.hash}` === "#education" ? "is-active-link" : ""}
+                        scroll={this.scrollWidthOffset}
+                        >PROFESSIONAL</NavHashLink>
+                        <div className="ml-3 mr-3 bordered"/>
+                        <NavHashLink 
+                        to={"#experience"}
+                        activeClassName={`${location.hash}` === "#experience" ? "is-active-link" : ""}
+                        scroll={this.scrollWidthOffset}
+                        >EXPERIENCE</NavHashLink>
+                        <div className="ml-3 mr-3 bordered"/>
+                        <NavHashLink 
+                        to={"#projects"}
+                        activeClassName={`${location.hash}` === "#projects" ? "is-active-link" : ""}
+                        scroll={this.scrollWidthOffset}
+                        >PORTFOLIO</NavHashLink>
+                        <div className="ml-3 mr-3 bordered"/>
+                        <NavHashLink 
+                        to={"#contact"}
+                        activeClassName={`${location.hash}` === "#contact" ? "is-active-link" : ""}
+                        scroll={this.scrollWidthOffset}
+                        >CONTACT</NavHashLink>
                     </Navbar.Collapse>
                 );
             case NAVBAR_TYPE.RS_TOOLS:
@@ -83,7 +83,7 @@ class navbarMain extends React.Component {
                             <Link to={RSTOOL_ROOT} hidden={!isAuthenticated}>Home</Link>
                         </Nav>
                         <Nav>
-                            <Button variant="primary" onClick={this.logout} hidden={!isAuthenticated}>Logout</Button>
+                            <Button variant="button-primary" onClick={this.logout} hidden={!isAuthenticated}>Logout</Button>
                         </Nav>
                     </Navbar.Collapse>
                 );
@@ -94,18 +94,19 @@ class navbarMain extends React.Component {
 
     render() {
         return (
-            <Navbar bg="light" sticky="top" expand="lg">
-                <Navbar.Brand>
+            <Navbar bg="dark" variant="light" sticky="top" expand="lg">
+                <Navbar.Brand className="main-logo">
                     <Link to={RESUME_ROOT}>
                         <img
-                            src="/logo192.png"
-                            width="30"
-                            height="30"
-                            className="d-inline-block align-top"
+                            src="/DJL_Logo.png"
+                            width="50"
+                            height="50"
+                            className="d-inline-block"
                             alt="Logo"
                         />
                     </Link>
                 </Navbar.Brand>
+                <div className="ml-4 mr-4"/>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 {this.renderNav()}
             </Navbar>

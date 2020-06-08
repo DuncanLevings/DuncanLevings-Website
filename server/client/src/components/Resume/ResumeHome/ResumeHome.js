@@ -7,6 +7,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { RSTOOL_ROOT } from 'consts';
+import { Image } from 'react-bootstrap';
 import './ResumeHome.scss';
 
 class ResumeHome extends React.Component {
@@ -23,8 +24,18 @@ class ResumeHome extends React.Component {
         return (
             <>
             <div className="ResumeHome">
-                <span className="temp-disclaim">*DISCLAIMER* Website is a work in progress</span>
-                <h1 id="aboutme">About Me</h1>
+                <div className="background-home">
+                    <Image src="/tokyo_night_city.jpg" />
+                </div>
+                <div  id="home" className="content">
+                    <h1 className="main-header">
+                        I'm Duncan Levings.
+                    </h1>
+                    <h3 className="main-sub-header">
+                        SOFTWARE ENGINEER
+                    </h3>
+                </div>
+                <h1>About Me</h1>
                 <p className="small-font">I am a motivated and challenge-seeking person who has been programming since 2010.
                     I thoroughly enjoy all programming aspects and communities. Taking concepts and translating them into tangible,
                     workable applications is what motivates me. It’s exciting to bring ideas to life, and allow people to share in these experiences.
@@ -123,6 +134,7 @@ class ResumeHome extends React.Component {
                     <a href="https://www.linkedin.com/in/duncan-levings/">LinkedIn</a>
                 </p>
             </div>
+            <span className="temp-disclaim">*DISCLAIMER* Website is a work in progress</span>
             <div className="temp-footer">
                 <span>Copyright (c) 2020 DuncanLevings <br/> Updated: June 3 2020</span>
             </div>
