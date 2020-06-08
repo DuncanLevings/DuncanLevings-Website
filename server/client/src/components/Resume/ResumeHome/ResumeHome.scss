@@ -1,45 +1,37 @@
 @import '../../../assets/style/breakpoints';
 
 .ResumeHome {
-    .background-home {
+    .home {
         min-height: calc(100vh - 77px);
-        position: absolute;
-        z-index: -9999;
 
-        @include respond-to(xs) {
-            img {
-                width: 200vw;
-                height: calc(100vh - 77px);
+        .content {
+            text-align: left;
+            display: flex;
+            min-height: calc(100vh - 77px);
+            flex-direction: column;
+            margin-left: 3rem;
+            margin-right: 3rem;
+            justify-content: center;
+            // need to figure out font styling.. diff from wix
+            .main-header {
+                font-family: lulo-clean-w01-one-bold, sans-serif;
+                font-size: calc(65px + 3vmin);
+            }
+        
+            .main-sub-header {
+                font-family: avenir-lt-w01_35-light1475496, sans-serif;
+                font-size: calc(30px + 1vmin);
             }
         }
-    
-        @include respond-to(m) {
-            img {
-                width: 100vw;
-                height: calc(100vh - 77px);
-            }
-        }
-    }
 
-    .content {
-        text-align: left;
-        display: flex;
-        min-height: calc(100vh - 77px);
-        flex-direction: column;
-        // align-items: center;
-        margin-left: 3rem;
-        margin-right: 3rem;
-        justify-content: center;
-        font-size: calc(10px + 2vmin);
-        color: white;
-    }
-    
-    .main-header {
-        font-family: lulo-clean-w01-one-bold, sans-serif;
-    }
+        background-image: url("/tokyo_night_city.jpg");
+        /* Full height */
+        height: 100%;
 
-    .main-sub-header {
-        font-family: avenir-lt-w01_35-light1475496, sans-serif;
+        /* Center and scale the image nicely */
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
     }
 
     .temp-disclaim {

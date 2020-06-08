@@ -32,7 +32,7 @@ class navbarMain extends React.Component {
     scrollWidthOffset = el => {
         const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
         let yOffset = -80;
-        if (isMobile) yOffset = -180;
+        // if (isMobile) yOffset = -180;
         window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' }); 
     }
 
@@ -94,7 +94,7 @@ class navbarMain extends React.Component {
 
     render() {
         return (
-            <Navbar bg="dark" variant="light" sticky="top" expand="lg">
+            <Navbar collapseOnSelect bg="dark" variant="light" sticky="top" expand="lg">
                 <Navbar.Brand className="main-logo">
                     <Link to={RESUME_ROOT}>
                         <img
