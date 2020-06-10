@@ -8,9 +8,35 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { RSTOOL_ROOT } from 'consts';
 import { isMobile } from 'react-device-detect';
-import { Image, Container, Row, Col } from 'react-bootstrap';
+import { Image, Container, Row, Col, Button, ProgressBar } from 'react-bootstrap';
 import { ParallaxBanner } from 'react-scroll-parallax';
+import { FaDownload } from 'react-icons/fa';
+import Fade from 'react-reveal/Fade';
 import './ResumeHome.scss';
+import { useInView } from 'react-intersection-observer';
+
+const RenderProgBar = (props) => {
+    let curr = 0;
+
+    if (typeof window.IntersectionObserver === 'undefined' || isMobile) {
+        curr = props.amount;
+    }
+
+    const [ref, inView, entry] = useInView({
+        threshold: 1,
+        triggerOnce: true
+      });
+
+    if (inView) {
+        curr = props.amount;
+    }
+
+    return (
+        <div ref={ref} className="bar">
+            <ProgressBar variant="bar-primary" label={isMobile ? `${curr}%` : null} now={curr} />
+        </div>
+    );
+}
 
 class ResumeHome extends React.Component {
     constructor(props) {
@@ -25,55 +51,316 @@ class ResumeHome extends React.Component {
         }
     }
 
+    renderHome = () => {
+        if (isMobile) {
+            return (
+                <Container className="content">
+                    <Row>
+                        <Col xs={12}>
+                            <Row>
+                                <div className="profileImgContainer mb-4 mx-auto">
+                                    <Image className="profileImg" src="/cropped.png" roundedCircle />
+                                </div>
+                            </Row>
+                            <Row>
+                                <span className="text main-head mx-auto">
+                                    I'M
+                                </span>
+                            </Row>
+                            <Row>
+                                <span className="text main-head mx-auto">
+                                    DUNCAN
+                                </span>
+                            </Row>
+                            <Row>
+                                <span className="text main-head mx-auto">
+                                    LEVINGS
+                                </span>
+                            </Row>
+                            <Row>
+                                <span className="text sub-head mx-auto">
+                                    SOFTWARE ENGINEER
+                                </span>
+                            </Row>
+                        </Col>
+                    </Row>
+                </Container>
+            );
+        }
+        return (
+            <Container className="content">
+                <Row>
+                    <Col xs={12} md={6}>
+                        <Row>
+                            <span className="text main-head">
+                                I'M
+                            </span>
+                        </Row>
+                        <Row>
+                            <span className="text main-head">
+                                DUNCAN
+                            </span>
+                        </Row>
+                        <Row>
+                            <span className="text main-head">
+                                LEVINGS.
+                            </span>
+                        </Row>
+                        <Row>
+                            <span className="text sub-head">
+                                SOFTWARE ENGINEER
+                            </span>
+                        </Row>
+                    </Col>
+                    <Col xs={0} md={6}>
+                        <div className="profileImgContainer">
+                            <Image className="profileImg" src="/cropped.png" roundedCircle />
+                        </div>
+                    </Col>
+                </Row>
+                <div className="aboutme">
+                    <Row>
+                        <Col md={12}>
+                            <span className="text aboutme-text">
+                                I am a motivated and challenge-seeking person who has been programming since 2010.<br/><br/>
+                                I thoroughly enjoy all programming aspects and communities. Taking concepts and translating them into tangible,
+                                workable applications is what motivates me. It’s exciting to bring ideas to life, and allow people to share in these experiences.
+                            </span>
+                        </Col>
+                        {/* <Col md={2} className="my-auto">
+                            <Button variant="button-primary" className="resume-button"><FaDownload /> Resume</Button>
+                        </Col> */}
+                    </Row>
+                </div>
+            </Container>
+        );
+    }
+
+    renderProfessional = () => {
+        if (isMobile) {
+            return (
+                <Container className="content">
+                    <Row>
+                        <div className="center-head">
+                            <span className="text body-head">
+                                <span className="section-number">01</span> PROFESSIONAL
+                            </span>
+                        </div>
+                    </Row>
+                    <Row>
+                        <div className="center-head">
+                            <span className="text body-sub-head">
+                                MY KNOWLEDGE LEVEL IN SOFTWARE
+                            </span>
+                        </div>
+                    </Row>
+                    <div className="spacer-4" />
+                    <Row>
+                        <Col xs={4}>
+                            <div className="bar-head">
+                                <span className="text body-text">
+                                        JAVASCRIPT
+                                </span>
+                            </div>
+                        </Col>
+                        <Col xs={8}>
+                            <RenderProgBar amount={80} />
+                        </Col>
+                    </Row>
+                    <div className="spacer-2" />
+                    <Row>
+                        <Col xs={4}>
+                            <div className="bar-head">
+                                <span className="text body-text">
+                                        REACT
+                                </span>
+                            </div>
+                        </Col>
+                        <Col xs={8}>
+                            <RenderProgBar amount={90} />
+                        </Col>
+                    </Row>
+                    <div className="spacer-2" />
+                    <Row>
+                        <Col xs={4}>
+                            <div className="bar-head">
+                                <span className="text body-text">
+                                        TEST
+                                </span>
+                            </div>
+                        </Col>
+                        <Col xs={8}>
+                            <RenderProgBar amount={75} />
+                        </Col>
+                    </Row>
+                    <div className="spacer-2" />
+                    <Row>
+                        <Col xs={4}>
+                            <div className="bar-head">
+                                <span className="text body-text">
+                                        TEST
+                                </span>
+                            </div>
+                        </Col>
+                        <Col xs={8}>
+                            <RenderProgBar amount={50} />
+                        </Col>
+                    </Row>
+                </Container>
+            );
+        }
+        return (
+            <Container className="content">
+                <Row>
+                    <div className="center-head">
+                        <span className="text body-head">
+                            <span className="section-number">01</span> PROFESSIONAL
+                        </span>
+                    </div>
+                </Row>
+                <Row>
+                    <div className="center-head">
+                        <span className="text body-sub-head">
+                            MY KNOWLEDGE LEVEL IN SOFTWARE
+                        </span>
+                    </div>
+                </Row>
+                <div className="spacer-5" />
+                <Row>
+                    <Col xs={2}>
+                        <div className="bar-head">
+                            <span className="text body-text">
+                                    JAVASCRIPT
+                            </span>
+                        </div>
+                    </Col>
+                    <Col xs={8}>
+                        <RenderProgBar amount={80} />
+                    </Col>
+                    <Col xs={2}>
+                        <div className="bar-end">
+                            <Fade delay={100} disabled={isMobile}>
+                                <span className="ml-4 text body-text">
+                                    80%
+                                </span>
+                            </Fade>
+                        </div>
+                    </Col>
+                </Row>
+                <div className="spacer-2" />
+                <Row>
+                    <Col xs={2}>
+                        <div className="bar-head">
+                            <span className="text body-text">
+                                    REACT
+                            </span>
+                        </div>
+                    </Col>
+                    <Col xs={8}>
+                        <RenderProgBar amount={90} />
+                    </Col>
+                    <Col xs={2}>
+                        <div className="bar-end">
+                            <Fade delay={200} disabled={isMobile}>
+                                <span className="ml-4 text body-text">
+                                    90%
+                                </span>
+                            </Fade>
+                        </div>
+                    </Col>
+                </Row>
+                <div className="spacer-2" />
+                <Row>
+                    <Col xs={2}>
+                        <div className="bar-head">
+                            <span className="text body-text">
+                                    TEST
+                            </span>
+                        </div>
+                    </Col>
+                    <Col xs={8}>
+                        <RenderProgBar amount={75} />
+                    </Col>
+                    <Col xs={2}>
+                        <div className="bar-end">
+                            <Fade delay={300} disabled={isMobile}>
+                                <span className="ml-4 text body-text">
+                                    75%
+                                </span>
+                            </Fade>
+                        </div>
+                    </Col>
+                </Row>
+                <div className="spacer-2" />
+                <Row>
+                    <Col xs={2}>
+                        <div className="bar-head">
+                            <span className="text body-text">
+                                    TEST
+                            </span>
+                        </div>
+                    </Col>
+                    <Col xs={8}>
+                        <RenderProgBar amount={50} />
+                    </Col>
+                    <Col xs={2}>
+                        <div className="bar-end">
+                            <Fade delay={400} disabled={isMobile}>
+                                <span className="ml-4 text body-text">
+                                    50%
+                                </span>
+                            </Fade>
+                        </div>
+                    </Col>
+                </Row>
+            </Container>
+        );
+    }
+
     render() {
         return (
             <div>
                 <div className="ResumeHome" id='home'>
                 <ParallaxBanner
                     className="home"
+                    disabled={isMobile}
                     layers={[
                         {
                             image: "/tokyo_night_city.jpg",
-                            amount: 0.3,
-                        },
+                            amount: 0.3
+                        }
                     ]}
                 >
-                    <Container className="content">
-                            <Row>
-                                <Col xs={12} md={8}>
-                                    <Row>
-                                        <span className="text main-head">
-                                            I'M
-                                        </span>
-                                    </Row>
-                                    <Row>
-                                        <span className="text main-head">
-                                            DUNCAN
-                                        </span>
-                                    </Row>
-                                    <Row>
-                                        <span className="text main-head">
-                                            LEVINGS.
-                                        </span>
-                                    </Row>
-                                    <Row>
-                                        <span className="text sub-head">
-                                            SOFTWARE ENGINEER
-                                        </span>
-                                    </Row>
-                                </Col>
-                                <Col xs={0} md={4}>
-                                    <Image className="profileImg" src="/cropped.png" roundedCircle />
-                                </Col>
-                            </Row>
-                            <span className="text aboutme">
-                                I am a motivated and challenge-seeking person who has been programming since 2010.<br/><br/>
-                                I thoroughly enjoy all programming aspects and communities. Taking concepts and translating them into tangible,
-                                workable applications is what motivates me. It’s exciting to bring ideas to life, and allow people to share in these experiences.
-                            </span>
-                    </Container>
+                    {this.renderHome()}
                 </ParallaxBanner>
-                    <h1 id="professional">Education</h1>
+                {isMobile ?
+                <div className="aboutme-mobile">
+                    <span className="text aboutme-text">
+                        I am a motivated and challenge-seeking person who has been programming since 2010.<br/><br/>
+                        I thoroughly enjoy all programming aspects and communities. Taking concepts and translating them into tangible,
+                        workable applications is what motivates me. It’s exciting to bring ideas to life, and allow people to share in these experiences.
+                    </span>
+                    <hr />
+                    <div className="mobile-resume-button">
+                        <Button variant="button-primary" className="resume-button"><FaDownload /> Resume</Button>
+                    </div>
+                </div>
+                : null}
+                <div id="professional"/>
+                <ParallaxBanner
+                    className="professional"
+                    disabled={isMobile}
+                    layers={[
+                        {
+                            image: "/desk.jpg",
+                            amount: 0.3,
+                            props: {style: {opacity: 0.45}}
+                        }
+                    ]}
+                >
+                    {this.renderProfessional()}
+                </ParallaxBanner>
+                    <h1>Education</h1>
                     <p className="small-font">
                     Sheridan College<br />
                     Bachelor's degree of Computer Science<br />

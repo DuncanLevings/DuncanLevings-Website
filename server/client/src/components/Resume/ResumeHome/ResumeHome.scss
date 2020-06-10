@@ -5,6 +5,19 @@ $minHeightDesktop: calc(100vh - 77px);
 $minHeightMobile: calc((var(--vh, 1vh) * 100) - 77px);
 
 .ResumeHome {
+
+    .text {
+        text-align: start;
+        line-height: normal;
+        font-style: normal;
+        font-variant-ligatures: normal;
+        font-variant-caps: normal;
+        font-variant-numeric: normal;
+        font-variant-east-asian: normal;
+        font-weight: normal;
+        font-stretch: normal;
+    }
+
     .home {
         @include respond-to(xs) {
             min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
@@ -26,20 +39,10 @@ $minHeightMobile: calc((var(--vh, 1vh) * 100) - 77px);
             
             @include respond-to(m) {
                 min-height: $minHeightDesktop;
+                padding-right: 15px;
+                padding-left: 15px;
             }
 
-            .text {
-                text-align: start;
-                line-height: normal;
-                font-style: normal;
-                font-variant-ligatures: normal;
-                font-variant-caps: normal;
-                font-variant-numeric: normal;
-                font-variant-east-asian: normal;
-                font-weight: normal;
-                font-stretch: normal;
-            }
-    
             .main-head {
                 font-family: 'Krona One', sans-serif;
     
@@ -65,25 +68,33 @@ $minHeightMobile: calc((var(--vh, 1vh) * 100) - 77px);
                     font-size: calc(40px + 1vmin);
                 }
             }
+            
+            .profileImgContainer {
+                justify-content: center;
+                display: flex;
+
+                .profileImg {
+                    border: 6px solid white;
+
+                    @include respond-to(xs) {
+                        width: 150px; 
+                        height: 150px;
+                    }
     
-
-            .profileImg {
-                border: 6px solid white;
-
-                @include respond-to(xs) {
-                    display: none;
-                }
-                
-                @include respond-to(m) {
-                    display: block;
-                    width: 400px; 
-                    height: 400px;
+                    @include respond-to(m) {
+                        width: 400px; 
+                        height: 400px;
+                    }
                 }
             }
 
             .aboutme {
                 position: absolute;
                 bottom: 0;
+                z-index: 1;
+                padding: 1rem;
+                background-color: $body-background;
+                border-radius: 15px 15px 0px 0px;
 
                 @include respond-to(xs) {
                     left: 5%;
@@ -94,14 +105,137 @@ $minHeightMobile: calc((var(--vh, 1vh) * 100) - 77px);
                     left: 20%;
                     right: 20%;
                 }
-                
-                z-index: 1;
-                padding: 1rem;
-                background-color: $body-background;
-                border-radius: 15px 15px 0px 0px;
-                font-family: 'Arya', sans-serif;
-                font-size: calc(12px + 0.5vmin);
-                line-height: 1.5rem;
+
+                .aboutme-text {
+                    font-family: 'Roboto', sans-serif;;
+                    font-size: calc(12px + 1vmin);
+                    line-height: 1.5rem;
+                }
+            }
+        }
+    }
+
+    .resume-button {
+        border: 1px solid $link-active;
+    }
+
+    .aboutme-mobile {
+        padding: 1rem;
+        background-color: $body-background;
+        font-family: 'Roboto', sans-serif;;
+        font-size: calc(12px + 0.5vmin);
+        line-height: 1.5rem;
+
+        .mobile-resume-button {
+            display: flex;
+            justify-content: center;
+        }
+    }
+
+    .center-head {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+
+        .body-head {
+            font-family: 'Arya', sans-serif;
+            z-index: 1;
+    
+            @include respond-to(xs) {
+                font-size: calc(25px + 1vmin);
+            }
+            
+            @include respond-to(m) {
+                font-size: calc(40px + 1vmin);
+            }
+        }
+
+        .body-sub-head {
+            font-family: 'Roboto', sans-serif;
+            z-index: 1;
+    
+            @include respond-to(xs) {
+                font-size: calc(15px + 1vmin);
+            }
+            
+            @include respond-to(m) {
+                font-size: calc(20px + 1vmin);
+            }
+        }
+    
+        .section-number {
+            color: $section-number;
+        }
+    }
+
+    .body-text {
+        color: $resume-body;
+        // z-index: 1;
+
+        @include respond-to(xs) {
+            font-size: calc(15px + 1vmin);
+        }
+        
+        @include respond-to(m) {
+            font-size: calc(12px + 1vmin);
+        }
+    }
+
+    .spacer-2 {
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+    }
+
+    .spacer-3 {
+        margin-top: 4vh;
+        margin-bottom: 4vh;
+    }
+
+    .spacer-4 {
+        margin-top: 6vh;
+        margin-bottom: 6vh;
+    }
+
+    .spacer-5 {
+        margin-top: 10vh;
+        margin-bottom: 10vh;
+    }
+
+    .professional {
+        @include respond-to(xs) {
+            min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
+            min-height: $minHeightMobile;
+        }
+        
+        @include respond-to(m) {
+            min-height: $minHeightDesktop;
+        }
+
+        .content {
+            margin-top: 10vh;
+
+            .bar-head {
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            .bar {
+                height: 100%;
+                padding-top: 0.2rem;
+                padding-bottom: 0.2rem;
+
+                .progress {
+                    height: 100%;
+                    background-color: $resume-body;
+                }
+
+                .progress-bar {
+                    transition: width 2s ease-in-out;
+                }
+            }
+
+            .bar-end {
+                display: flex;
             }
         }
     }
