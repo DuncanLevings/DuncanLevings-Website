@@ -14,9 +14,10 @@ import NavBarMain from 'components/navbar/navbarMain/navbarMain.lazy';
 const ResumeRouter = (props) => (
     <div className="Resume">
         <NavBarMain type={NAVBAR_TYPE.RESUME} />
-        <Switch>
-            <Route path={RESUME_ROUTES.HOME} component={ResumeHome} />
-        </Switch>
+        
+            <Switch>
+                <Route path={RESUME_ROUTES.HOME} component={ResumeHome} />
+            </Switch>
     </div>
 )
 export default ResumeRouter;

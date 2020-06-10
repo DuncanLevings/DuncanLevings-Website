@@ -7,7 +7,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { RSTOOL_ROOT } from 'consts';
-import { Image } from 'react-bootstrap';
+import { isMobile } from 'react-device-detect';
+import { Image, Container, Row, Col } from 'react-bootstrap';
+import { ParallaxBanner } from 'react-scroll-parallax';
 import './ResumeHome.scss';
 
 class ResumeHome extends React.Component {
@@ -17,31 +19,61 @@ class ResumeHome extends React.Component {
     }
 
     componentDidMount() {
-
+        if (isMobile) {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
     }
 
     render() {
         return (
             <div>
-                <div className="ResumeHome">
-                    <div  id="home" className="home">
-                        <div className="content">
-                            <h1 className="main-header">
-                                I'm Duncan Levings.
-                            </h1>
-                            <h3 className="main-sub-header mt-4">
-                                SOFTWARE ENGINEER
-                            </h3>
-                        </div>
-                    </div>
-                    <h1>About Me</h1>
-                    <p className="small-font">I am a motivated and challenge-seeking person who has been programming since 2010.
-                        I thoroughly enjoy all programming aspects and communities. Taking concepts and translating them into tangible,
-                        workable applications is what motivates me. It’s exciting to bring ideas to life, and allow people to share in these experiences.
-                        <br />
-                        <br />
-                        Although my interests are diverse, I am particularly interested in web development through Desktop and/or Mobile applications.</p>
-                    <h1 id="education">Education</h1>
+                <div className="ResumeHome" id='home'>
+                <ParallaxBanner
+                    className="home"
+                    layers={[
+                        {
+                            image: "/tokyo_night_city.jpg",
+                            amount: 0.3,
+                        },
+                    ]}
+                >
+                    <Container className="content">
+                            <Row>
+                                <Col xs={8} s={6}>
+                                    <Row>
+                                        <span className="text main-head">
+                                            I'M
+                                        </span>
+                                    </Row>
+                                    <Row>
+                                        <span className="text main-head">
+                                            DUNCAN
+                                        </span>
+                                    </Row>
+                                    <Row>
+                                        <span className="text main-head">
+                                            LEVINGS.
+                                        </span>
+                                    </Row>
+                                    <Row>
+                                        <span className="text sub-head">
+                                            SOFTWARE ENGINEER
+                                        </span>
+                                    </Row>
+                                </Col>
+                                <Col xs={4} s={6}>
+                                    <Image className="profileImg" src="/cropped.png" roundedCircle />
+                                </Col>
+                            </Row>
+                            <span className="text aboutme">
+                                I am a motivated and challenge-seeking person who has been programming since 2010.<br/><br/>
+                                I thoroughly enjoy all programming aspects and communities. Taking concepts and translating them into tangible,
+                                workable applications is what motivates me. It’s exciting to bring ideas to life, and allow people to share in these experiences.
+                            </span>
+                    </Container>
+                </ParallaxBanner>
+                    <h1 id="professional">Education</h1>
                     <p className="small-font">
                     Sheridan College<br />
                     Bachelor's degree of Computer Science<br />
@@ -81,7 +113,7 @@ class ResumeHome extends React.Component {
                         • Collaborated with Rangle.IO developers in designing and implementing a Genworth application.<br />
                         • Worked with back-end team to develop new back-end service points using Java and bootstrap.<br />
                     </p>
-                    <h1 id="projects">Projects</h1>
+                    <h1 id="portfolio">Projects</h1>
                     <p className="small-font">
                         <b>RSTools</b><br />
                         May 2020 – Current<br />
@@ -135,7 +167,7 @@ class ResumeHome extends React.Component {
                 </div>
                 <span className="temp-disclaim">*DISCLAIMER* Website is a work in progress</span>
                 <div className="temp-footer">
-                    <span>Copyright (c) 2020 DuncanLevings <br/> Updated: June 3 2020</span>
+                    <span>Copyright (c) 2020 DuncanLevings <br/> Updated: June 8 2020</span>
                 </div>
             </div>
         );
