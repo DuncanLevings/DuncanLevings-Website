@@ -48,10 +48,14 @@ class ResumeHome extends React.Component {
         if (isMobile) {
             let vh = window.innerHeight * 0.01;
             document.documentElement.style.setProperty('--vh', `${vh}px`);
+        } else {
+            if (window.innerHeight < 780) this.setState({ smallScreen: true});
         }
     }
 
     renderHome = () => {
+        const { smallScreen } = this.state;
+
         if (isMobile) {
             return (
                 <Container className="content">
@@ -118,20 +122,23 @@ class ResumeHome extends React.Component {
                         </div>
                     </Col>
                 </Row>
-                <div className="aboutme">
-                    <Row>
-                        <Col md={12}>
-                            <span className="text aboutme-text">
-                                I am a motivated and challenge-seeking person who has been programming since 2010.<br/><br/>
-                                I thoroughly enjoy all programming aspects and communities. Taking concepts and translating them into tangible,
-                                workable applications is what motivates me. It’s exciting to bring ideas to life, and allow people to share in these experiences.
-                            </span>
-                        </Col>
-                        {/* <Col md={2} className="my-auto">
-                            <Button variant="button-primary" className="resume-button"><FaDownload /> Resume</Button>
-                        </Col> */}
-                    </Row>
-                </div>
+                {smallScreen ? 
+                null :
+                    <div className="aboutme">
+                        <Row>
+                            <Col md={12}>
+                                <span className="text aboutme-text">
+                                    I am a motivated and challenge-seeking person who has been programming since 2010.<br/><br/>
+                                    I thoroughly enjoy all programming aspects and communities. Taking concepts and translating them into tangible,
+                                    workable applications is what motivates me. It’s exciting to bring ideas to life, and allow people to share in these experiences.
+                                </span>
+                            </Col>
+                            {/* <Col md={2} className="my-auto">
+                                <Button variant="button-primary" className="resume-button"><FaDownload /> Resume</Button>
+                            </Col> */}
+                        </Row>
+                    </div>
+                }
             </Container>
         );
     }
@@ -318,6 +325,8 @@ class ResumeHome extends React.Component {
     }
 
     render() {
+        const { smallScreen } = this.state;
+
         return (
             <div>
                 <div className="ResumeHome" id='home'>
@@ -333,7 +342,7 @@ class ResumeHome extends React.Component {
                 >
                     {this.renderHome()}
                 </ParallaxBanner>
-                {isMobile ?
+                {isMobile || smallScreen ?
                 <div className="aboutme-mobile">
                     <span className="text aboutme-text">
                         I am a motivated and challenge-seeking person who has been programming since 2010.<br/><br/>
