@@ -40,7 +40,7 @@ class ResumeHome extends React.Component {
                 >
                     <Container className="content">
                             <Row>
-                                <Col xs={8} s={6}>
+                                <Col xs={12} md={8}>
                                     <Row>
                                         <span className="text main-head">
                                             I'M
@@ -62,7 +62,7 @@ class ResumeHome extends React.Component {
                                         </span>
                                     </Row>
                                 </Col>
-                                <Col xs={4} s={6}>
+                                <Col xs={0} md={4}>
                                     <Image className="profileImg" src="/cropped.png" roundedCircle />
                                 </Col>
                             </Row>

@@ -71,13 +71,13 @@ $minHeightMobile: calc((var(--vh, 1vh) * 100) - 77px);
                 border: 6px solid white;
 
                 @include respond-to(xs) {
-                    width: 100px; 
-                    height: 100px;
+                    display: none;
                 }
                 
                 @include respond-to(m) {
-                    width: 450px; 
-                    height: 450px;
+                    display: block;
+                    width: 400px; 
+                    height: 400px;
                 }
             }
 

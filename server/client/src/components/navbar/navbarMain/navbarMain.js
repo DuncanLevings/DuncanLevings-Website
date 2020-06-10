@@ -51,7 +51,7 @@ class navbarMain extends React.Component {
         let yOffset = -77;
 
         if (isMobile) {
-            yOffset = -330;
+            yOffset = -327;
             this.setExpanded(false);
         }
 
