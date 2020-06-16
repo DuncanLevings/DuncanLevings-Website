@@ -8,7 +8,7 @@ $breakpoints: (
 'xs'  : ( min-width:  300px ),
 's'  : ( min-width:  767px ),
 'm' : ( min-width:  992px ),
-'lg'  : ( min-width: 1200px )
+'lg'  : ( min-width: 1170px )
 );
 
 @mixin respond-to($name) {
