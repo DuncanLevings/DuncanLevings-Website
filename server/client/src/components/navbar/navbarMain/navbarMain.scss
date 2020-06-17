@@ -9,17 +9,4 @@
     a:hover {
         text-decoration: none;
     }
-
-    @include respond-to(xs) {
-        .bordered {
-            border: none;
-        }
-    }
-
-    @include respond-to(m) {
-        .bordered {
-            height: 50px;
-            border-left: 1px solid $link-divider;
-        }
-    }
 }

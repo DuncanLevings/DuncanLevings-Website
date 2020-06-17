@@ -1,45 +1,366 @@
 @import '../../../assets/style/breakpoints';
+@import '../../../assets/style/colors';
+
+$minHeightDesktop: calc(100vh - 77px);
+$minHeightMobile: calc((var(--vh, 1vh) * 100) - 77px);
 
 .ResumeHome {
-    .background-home {
-        min-height: calc(100vh - 77px);
-        position: absolute;
-        z-index: -9999;
+
+    .text {
+        text-align: start;
+        line-height: normal;
+        font-style: normal;
+        font-variant-ligatures: normal;
+        font-variant-caps: normal;
+        font-variant-numeric: normal;
+        font-variant-east-asian: normal;
+        font-weight: normal;
+        font-stretch: normal;
+    }
+
+    .home {
+        @include respond-to(xs) {
+            min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
+            min-height: $minHeightMobile;
+        }
+        
+        @include respond-to(m) {
+            min-height: $minHeightDesktop;
+        }
+
+        .content {
+            margin-top: 10vh;
+
+            @include respond-to(xs) {
+                min-height: $minHeightMobile;
+                padding-right: 10vw;
+                padding-left: 10vw;
+            }
+            
+            @include respond-to(m) {
+                min-height: $minHeightDesktop;
+                padding-right: 15px;
+                padding-left: 15px;
+            }
+
+            .main-head {
+                font-family: 'Krona One', sans-serif;
+    
+                @include respond-to(xs) {
+                    font-size: calc(40px + 1vmin);
+                }
+                
+                @include respond-to(m) {
+                    font-size: calc(65px + 1vmin);
+                }
+            }
+        
+            .sub-head {
+                font-family: 'Arya', sans-serif;
+    
+                @include respond-to(xs) {
+                    margin-top: 2rem;
+                    font-size: calc(25px + 1vmin);
+                }
+                
+                @include respond-to(m) {
+                    margin-top: 5rem;
+                    font-size: calc(40px + 1vmin);
+                }
+            }
+            
+            .profileImgContainer {
+                justify-content: center;
+                display: flex;
+
+                .profileImg {
+                    border: 6px solid white;
+
+                    @include respond-to(xs) {
+                        width: 150px; 
+                        height: 150px;
+                    }
+    
+                    @include respond-to(m) {
+                        width: 400px; 
+                        height: 400px;
+                    }
+                }
+            }
+
+            .aboutme {
+                position: absolute;
+                bottom: 0;
+                z-index: 1;
+                padding: 1rem;
+                background-color: $body-background;
+                border-radius: 15px 15px 0px 0px;
+
+                @include respond-to(xs) {
+                    left: 5%;
+                    right: 5%;
+                }
+                
+                @include respond-to(m) {
+                    left: 20%;
+                    right: 20%;
+                }
+
+                .aboutme-text {
+                    display: flex;
+                    text-align: center;
+                    font-family: 'Roboto', sans-serif;;
+                    font-size: calc(12px + 1vmin);
+                    line-height: 1.5rem;
+                }
+            }
+        }
+    }
+
+    .centered-button-container {
+        justify-content: center;
+        display: flex;
+    }
+
+    .aboutme-mobile {
+        text-align: center;
+        padding: 1rem;
+        background-color: $body-background;
+        font-family: 'Roboto', sans-serif;;
+        font-size: calc(12px + 0.5vmin);
+        line-height: 1.5rem;
+    }
+
+    .center-head {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+
+        .body-head {
+            font-family: 'Arya', sans-serif;
+            z-index: 1;
+    
+            @include respond-to(xs) {
+                font-size: calc(25px + 1vmin);
+            }
+            
+            @include respond-to(m) {
+                font-size: calc(40px + 1vmin);
+            }
+        }
+
+        .body-sub-head {
+            font-family: 'Roboto', sans-serif;
+            z-index: 1;
+    
+            @include respond-to(xs) {
+                font-size: calc(15px + 1vmin);
+            }
+            
+            @include respond-to(m) {
+                font-size: calc(20px + 1vmin);
+            }
+        }
+    
+        .section-number {
+            color: $section-number;
+        }
+    }
+
+    .body-text {
+        color: $resume-body;
+        // z-index: 1;
 
         @include respond-to(xs) {
-            img {
-                width: 200vw;
-                height: calc(100vh - 77px);
-            }
+            font-size: calc(15px + 1vmin);
         }
-    
+        
         @include respond-to(m) {
-            img {
-                width: 100vw;
-                height: calc(100vh - 77px);
+            font-size: calc(12px + 1vmin);
+        }
+    }
+
+    .spacer-2 {
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+    }
+
+    .spacer-3 {
+        margin-top: 4vh;
+        margin-bottom: 4vh;
+    }
+
+    .spacer-4 {
+        margin-top: 6vh;
+        margin-bottom: 6vh;
+    }
+
+    .spacer-5 {
+        margin-top: 10vh;
+        margin-bottom: 10vh;
+    }
+
+    .divider {
+        border-top-color: $hr-divider;
+    }
+
+    .professional {
+        @include respond-to(xs) {
+            min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
+            min-height: $minHeightMobile;
+        }
+        
+        @include respond-to(m) {
+            min-height: $minHeightDesktop;
+        }
+
+        .content {
+            margin-top: 10vh;
+            margin-bottom: 10vh;
+
+            .bar-head {
+                display: flex;
+                justify-content: flex-end;
+            }
+
+            .bar {
+                height: 100%;
+                padding-top: 0.2rem;
+                padding-bottom: 0.2rem;
+
+                .progress {
+                    height: 100%;
+                    background-color: $resume-body;
+                }
+
+                .progress-bar {
+                    transition: width 2s ease-in-out;
+                }
+            }
+
+            .bar-end {
+                display: flex;
             }
         }
     }
 
-    .content {
-        text-align: left;
-        display: flex;
-        min-height: calc(100vh - 77px);
-        flex-direction: column;
-        // align-items: center;
-        margin-left: 3rem;
-        margin-right: 3rem;
-        justify-content: center;
-        font-size: calc(10px + 2vmin);
-        color: white;
-    }
-    
-    .main-header {
-        font-family: lulo-clean-w01-one-bold, sans-serif;
+    .experience {
+        @include respond-to(xs) {
+            min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
+            min-height: $minHeightMobile;
+        }
+        
+        @include respond-to(m) {
+            min-height: $minHeightDesktop;
+        }
+
+        background-position: center center;
+        background-size: cover;
+        background-image: url("/mountain.jpg"); /* Fallback for browsers that do not support Custom Properties */
+        background-image: linear-gradient(rgba($color: $body-background, $alpha: 0.65), rgba($color: $body-background, $alpha: 0.65)), url("/mountain.jpg");
+
+        .content {
+            padding-top: 10vh;
+            padding-bottom: 10vh;
+
+            .vertical-timeline.vertical-timeline-custom-line::before {
+                background: $timeline-line;
+            }
+
+            .vertical-timeline-element-content-arrow {
+                border-Right: 7px solid $resume-body;
+            }
+
+            .vertical-timeline-element-title.title {
+                font-family: 'Arya', sans-serif;
+                color: $body-font;
+            }
+
+            .vertical-timeline-element-subtitle.subtitle {
+                font-family: 'Roboto', sans-serif;
+                color: $body-font;
+            }
+
+            .timeline-date {
+                font-family: 'Roboto', sans-serif;
+                font-weight: bold;
+                padding-top: 0;
+                padding-bottom: 0;
+
+                @include respond-to(xs) {
+                    font-size: calc(15px + 1vmin);
+                }
+                
+                @include respond-to(m) {
+                    font-size: calc(20px + 1vmin);
+                }
+            }
+
+            .timeline-icon {
+                color: $resume-body;
+                background-color: $body-background;
+                box-shadow: none;
+                border: 2px solid $resume-body;
+            }
+
+            .timeline-container {
+                font-family: 'Roboto', sans-serif;
+                color: $resume-body;
+                background-color: $body-background;
+                box-shadow: none;
+                border: 2px solid $resume-body;
+            }
+
+            .timeline-circle {
+                position: absolute;
+                color: $resume-body;
+                background-color: $timeline-line;
+                border-radius: 50%;
+                height: 24px;
+                width: 24px;
+                z-index: 1;
+            }
+
+            .timeline-circle.top {
+                @include respond-to(xs) {
+                    left: 8px;
+                    top: 0;
+                }
+                
+                @include respond-to(lg) {
+                    left: calc(50% - 12px);
+                    top: 0;
+                }
+            }
+
+            .timeline-circle.bottom {
+                @include respond-to(xs) {
+                    left: 8px;
+                    bottom: 0;
+                }
+                
+                @include respond-to(lg) {
+                    left: calc(50% - 12px);
+                    bottom: 0;
+                }
+            }
+        }
     }
 
-    .main-sub-header {
-        font-family: avenir-lt-w01_35-light1475496, sans-serif;
+    .portfolio {
+        @include respond-to(xs) {
+            min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
+            min-height: $minHeightMobile;
+        }
+        
+        @include respond-to(m) {
+            min-height: $minHeightDesktop;
+        }
+
+        .content {
+            margin-top: 10vh;
+            margin-bottom: 10vh;
+        }
     }
 
     .temp-disclaim {
@@ -50,6 +371,10 @@
     .small-font {
         font-size: calc(10px + 1vmin);
     }
+}
+
+.reference {
+    color: black;
 }
 
 .temp-footer {
