@@ -18,6 +18,7 @@ import Login from 'components/navbar/Login/Login.lazy';
 import SignUp from 'components/navbar/SignUp/SignUp.lazy';
 import ForgotPassword from 'components/navbar/ForgotPassword/ForgotPassword.lazy';
 import RSDash from 'components/RSTools/RSDash/RSDash.lazy';
+import NotFound from 'errors/NotFound';
 import PropTypes from 'prop-types';
 
 class RSRouter extends React.Component {
@@ -40,6 +41,7 @@ class RSRouter extends React.Component {
                     <Route exact path={RSTOOL_ROUTES.SIGNUP} component={SignUp} /> 
                     <Route exact path={RSTOOL_ROUTES.FORGOTPASS} component={ForgotPassword} /> 
                     <PrivateRoute exact path={RSTOOL_ROUTES.DASH} component={RSDash} />
+                    <Route component={NotFound} />
                 </Switch>
             </div>
         );
