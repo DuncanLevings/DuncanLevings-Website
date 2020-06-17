@@ -12,21 +12,10 @@ import { loginUser } from 'store/actions/userActions';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import { Form, InputGroup, FormControl, Button } from 'react-bootstrap'
 import { FaUser, FaKey } from 'react-icons/fa';
+import { loginSchema } from 'components/helpers/formValidation';
 import { Formik } from 'formik';
-import * as yup from 'yup';
 import PropTypes from 'prop-types';
 import './Login.scss';
-
-const validationSchema = yup.object().shape({
-    email: yup.string()
-        .email("Must be a valid email address")
-        .max(100, "*Email must be less than 100 characters")
-        .required("*Email is required"),
-    password: yup.string()
-        .min(4, "*Password must be at least 4 characters")
-        .max(100, "*Password must be less than 100 characters")
-        .required("*Password is required")
-  });
 
 class Login extends React.Component {
     constructor(props) {
@@ -57,7 +46,7 @@ class Login extends React.Component {
                                     {error}
                                 </div>
                                 <Formik
-                                    validationSchema={validationSchema}
+                                    validationSchema={loginSchema}
                                     onSubmit={this.login}
                                     initialValues={{
                                         email: '',

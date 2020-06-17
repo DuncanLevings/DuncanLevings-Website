@@ -27,7 +27,6 @@ class RSDash extends React.Component {
                     {isFetching || !user ?
                         <Spinner variant="light" />
                         : <h1>Weclome {user.username}</h1>}
-                </div>
                 <CardColumns>
                     <Card>
                         <Card.Body>
@@ -74,6 +73,7 @@ class RSDash extends React.Component {
                         </Card.Body>
                     </Card>
                 </CardColumns>
+                </div>
             </Container>
         );
     }

@@ -16,6 +16,7 @@ import { FaDownload, FaGraduationCap, FaBriefcase } from 'react-icons/fa';
 import Fade from 'react-reveal/Fade';
 import 'react-vertical-timeline-component/style.min.css';
 import './ResumeHome.scss';
+import Contact from '../Contact/Contact.lazy';
 
 const ParallaxCache = () => {
     const { parallaxController } = useController();
@@ -229,7 +230,8 @@ class ResumeHome extends React.Component {
                             </span>
                         </div>
                     </Row>
-                    <div className="spacer-4" />
+                    <div className="spacer-h-4
+" />
                     <Row>
                         <Col xs={4} className="pr-1">
                             <div className="bar-head">
@@ -242,7 +244,7 @@ class ResumeHome extends React.Component {
                             <RenderProgBar amount={90} />
                         </Col>
                     </Row>
-                    <div className="spacer-2" />
+                    <div className="spacer-h-2" />
                     <Row>
                         <Col xs={4} className="pr-1">
                             <div className="bar-head">
@@ -255,7 +257,7 @@ class ResumeHome extends React.Component {
                             <RenderProgBar amount={90} />
                         </Col>
                     </Row>
-                    <div className="spacer-2" />
+                    <div className="spacer-h-2" />
                     <Row>
                         <Col xs={4} className="pr-1">
                             <div className="bar-head">
@@ -268,7 +270,7 @@ class ResumeHome extends React.Component {
                             <RenderProgBar amount={80} />
                         </Col>
                     </Row>
-                    <div className="spacer-2" />
+                    <div className="spacer-h-2" />
                     <Row>
                         <Col xs={4} className="pr-1">
                             <div className="bar-head">
@@ -281,7 +283,7 @@ class ResumeHome extends React.Component {
                             <RenderProgBar amount={85} />
                         </Col>
                     </Row>
-                    <div className="spacer-2" />
+                    <div className="spacer-h-2" />
                     <Row>
                         <Col xs={4} className="pr-1">
                             <div className="bar-head">
@@ -294,7 +296,7 @@ class ResumeHome extends React.Component {
                             <RenderProgBar amount={75} />
                         </Col>
                     </Row>
-                    <div className="spacer-2" />
+                    <div className="spacer-h-2" />
                     <Row>
                         <Col xs={4} className="pr-1">
                             <div className="bar-head">
@@ -307,7 +309,7 @@ class ResumeHome extends React.Component {
                             <RenderProgBar amount={80} />
                         </Col>
                     </Row>
-                    <div className="spacer-2" />
+                    <div className="spacer-h-2" />
                     <Row>
                         <Col xs={4} className="pr-1">
                             <div className="bar-head">
@@ -320,7 +322,7 @@ class ResumeHome extends React.Component {
                             <RenderProgBar amount={70} />
                         </Col>
                     </Row>
-                    <div className="spacer-2" />
+                    <div className="spacer-h-2" />
                     <Row>
                         <Col xs={4} className="pr-1">
                             <div className="bar-head">
@@ -333,7 +335,7 @@ class ResumeHome extends React.Component {
                             <RenderProgBar amount={85} />
                         </Col>
                     </Row>
-                    <div className="spacer-2" />
+                    <div className="spacer-h-2" />
                     <Row>
                         <Col xs={4} className="pr-1">
                             <div className="bar-head">
@@ -365,7 +367,8 @@ class ResumeHome extends React.Component {
                         </span>
                     </div>
                 </Row>
-                <div className="spacer-5" />
+                <div className="spacer-h-5
+" />
                 <Row>
                     <Col xs={2}>
                         <div className="bar-head">
@@ -387,7 +390,7 @@ class ResumeHome extends React.Component {
                         </div>
                     </Col>
                 </Row>
-                <div className="spacer-2" />
+                <div className="spacer-h-2" />
                 <Row>
                     <Col xs={2}>
                         <div className="bar-head">
@@ -409,7 +412,7 @@ class ResumeHome extends React.Component {
                         </div>
                     </Col>
                 </Row>
-                <div className="spacer-2" />
+                <div className="spacer-h-2" />
                 <Row>
                     <Col xs={2}>
                         <div className="bar-head">
@@ -431,7 +434,7 @@ class ResumeHome extends React.Component {
                         </div>
                     </Col>
                 </Row>
-                <div className="spacer-2" />
+                <div className="spacer-h-2" />
                 <Row>
                     <Col xs={2}>
                         <div className="bar-head">
@@ -453,7 +456,7 @@ class ResumeHome extends React.Component {
                         </div>
                     </Col>
                 </Row>
-                <div className="spacer-2" />
+                <div className="spacer-h-2" />
                 <Row>
                     <Col xs={2}>
                         <div className="bar-head">
@@ -475,7 +478,7 @@ class ResumeHome extends React.Component {
                         </div>
                     </Col>
                 </Row>
-                <div className="spacer-2" />
+                <div className="spacer-h-2" />
                 <Row>
                     <Col xs={2}>
                         <div className="bar-head">
@@ -497,7 +500,7 @@ class ResumeHome extends React.Component {
                         </div>
                     </Col>
                 </Row>
-                <div className="spacer-2" />
+                <div className="spacer-h-2" />
                 <Row>
                     <Col xs={2}>
                         <div className="bar-head">
@@ -519,7 +522,7 @@ class ResumeHome extends React.Component {
                         </div>
                     </Col>
                 </Row>
-                <div className="spacer-2" />
+                <div className="spacer-h-2" />
                 <Row>
                     <Col xs={2}>
                         <div className="bar-head">
@@ -541,7 +544,7 @@ class ResumeHome extends React.Component {
                         </div>
                     </Col>
                 </Row>
-                <div className="spacer-2" />
+                <div className="spacer-h-2" />
                 <Row>
                     <Col xs={2}>
                         <div className="bar-head">
@@ -578,7 +581,8 @@ class ResumeHome extends React.Component {
                             </span>
                         </div>
                     </Row>
-                    <div className="spacer-4" />
+                    <div className="spacer-h-4
+" />
                     <VerticalTimeline className="vertical-timeline-custom-line" animate={!isMobile}>
                         <div className="timeline-circle top" />
                         <VerticalTimelineElement
@@ -590,7 +594,7 @@ class ResumeHome extends React.Component {
                         >
                             <h3 className="vertical-timeline-element-title title">Software Engineer</h3>
                             <h4 className="vertical-timeline-element-subtitle subtitle">ZHY Interactive</h4>
-                            <div className="spacer-2" />
+                            <div className="spacer-h-2" />
                             <ul>
                                 <li>Worked with React to design, develop, test and deploy new features to 
                                     <a href="https://royaltymine.com/" rel="noopener noreferrer" target="_blank"> Royaltymine.com</a></li>
@@ -603,7 +607,7 @@ class ResumeHome extends React.Component {
                             <div className="centered-button-container">
                                 <Button variant="button-primary" onClick={() => this.setReferenceShow(true)}>Reference Letter</Button>
                             </div>
-                            <div className="spacer-2" />
+                            <div className="spacer-h-2" />
                         </VerticalTimelineElement>
                         <VerticalTimelineElement
                             dateClassName="timeline-date"
@@ -614,7 +618,7 @@ class ResumeHome extends React.Component {
                         >
                             <h3 className="vertical-timeline-element-title title">Associate Information Technology Technician</h3>
                             <h4 className="vertical-timeline-element-subtitle subtitle">Genworth Canada</h4>
-                            <div className="spacer-2" />
+                            <div className="spacer-h-2" />
                             <ul>
                                 <li>Worked with AngularJS to develop, maintain and produce front-end applications</li>
                                 <li>Designed and implemented services, libraries and various components utilizing Angular Clarity and Angular Material framework</li>
@@ -633,7 +637,7 @@ class ResumeHome extends React.Component {
                         >
                             <h3 className="vertical-timeline-element-title title">Bachelor's degree of Computer Science</h3>
                             <h4 className="vertical-timeline-element-subtitle subtitle">Sheridan College</h4>
-                            <div className="spacer-2" />
+                            <div className="spacer-h-2" />
                             <ul>
                                 <li>Expected graduation 2021, Dec</li>
                             </ul>
@@ -647,7 +651,7 @@ class ResumeHome extends React.Component {
                         >
                             <h3 className="vertical-timeline-element-title title">Certificate of Advanced Programming: Game Development</h3>
                             <h4 className="vertical-timeline-element-subtitle subtitle">Sheridan College</h4>
-                            <div className="spacer-2" />
+                            <div className="spacer-h-2" />
                             <ul>
                                 <li>Focused on C++, Unity, OpenGL and creation of tools for the development of games</li>
                                 <li>Using Unity engine, created multiple games including android and iOS multiplayer aspects</li>
@@ -663,7 +667,7 @@ class ResumeHome extends React.Component {
                         >
                             <h3 className="vertical-timeline-element-title title">Ontario College Diploma of Computer Programming</h3>
                             <h4 className="vertical-timeline-element-subtitle subtitle">Sheridan College</h4>
-                            <div className="spacer-2" />
+                            <div className="spacer-h-2" />
                             <ul>
                                 <li>Studied Java, Javascript, HTML5, and C#</li>
                                 <li>Developed a sound understanding of mathematical computing, web development, object oriented programming, Linux, and Unix, UI design, network, SQL, UML, and IT management</li>
@@ -678,7 +682,7 @@ class ResumeHome extends React.Component {
                         >
                             <h3 className="vertical-timeline-element-title title">Summer Student; Operations Administration</h3>
                             <h4 className="vertical-timeline-element-subtitle subtitle">Genworth Canada</h4>
-                            <div className="spacer-2" />
+                            <div className="spacer-h-2" />
                             <ul>
                                 <li>Worked in the underwriting department assisting with general data entry and collation tasks</li>
                                 <li>Improved processes, reduced storage use and increased productivity through the creation of Excel scripts</li>
@@ -692,6 +696,51 @@ class ResumeHome extends React.Component {
     }
 
     renderPortfolio = () => {
+        if (isMobile) {
+            return (
+                <div className="portfolio" id="portfolio">
+                    <Container className="content">
+                            <Row>
+                                <div className="center-head">
+                                    <span className="text body-head">
+                                        <span className="section-number">03</span> PORTFOLIO
+                                    </span>
+                                </div>
+                            </Row>
+                            <Row>
+                                <div className="center-head">
+                                    <span className="text body-sub-head">
+                                        MY LATEST WORK. <Link to={"/"} className="section-number">SEE MORE &gt;</Link>
+                                    </span>
+                                </div>
+                            </Row>
+                            <div className="spacer-h-5
+" />
+                            <Row>
+                                <Col className="portfolio-image-container">
+                                    <div className="portfolio-box-container">
+                                        <Link to={RSTOOL_ROOT} className="portfolio-link first">RSTools</Link>
+                                    </div>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="portfolio-image-container">
+                                    <div className="portfolio-box-container">
+                                        <Link to={"/"} className="portfolio-link second">RSTools</Link>
+                                    </div>
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col className="portfolio-image-container">
+                                    <div className="portfolio-box-container">
+                                        <Link to={"/"} className="portfolio-link third">RSTools</Link>
+                                    </div>
+                                </Col>
+                            </Row>
+                    </Container>
+                </div>
+            );
+        }
         return (
             <div className="portfolio" id="portfolio">
                 <Container className="content">
@@ -705,11 +754,24 @@ class ResumeHome extends React.Component {
                         <Row>
                             <div className="center-head">
                                 <span className="text body-sub-head">
-                                    MY LATEST WORK. <Link to={"/"} className="section-number">SEE MORE ></Link>
+                                    MY LATEST WORK. <Link to={"/"} className="section-number">SEE MORE &gt;</Link>
                                 </span>
                             </div>
                         </Row>
-                        <div>
+                        <div className="spacer-h-5
+" />
+                        <Row className="portfolio-box-container ml-3 mr-3">
+                            <Col className="portfolio-image-container">
+                                <Link to={RSTOOL_ROOT} className="portfolio-link first">RSTools</Link>
+                            </Col>
+                            <Col className="portfolio-image-container">
+                                <Link to={"/"} className="portfolio-link second">RSTools</Link>
+                            </Col>
+                            <Col className="portfolio-image-container">
+                                <Link to={"/"} className="portfolio-link third">RSTools</Link>
+                            </Col>
+                        </Row>
+                        {/* <div>
                         <p className="small-font">
                             <b>RSTools</b><br />
                             May 2020 – Current<br />
@@ -754,9 +816,20 @@ class ResumeHome extends React.Component {
                             • The game was developed to include up to four players simultaneously, allowing joining in a lobby, 
                             fighting between users, and playing in a collaborative manner to complete the main dungeon quest.<br />
                         </p>
-                        </div>
+                        </div> */}
                 </Container>
             </div>
+        );
+    }
+
+    renderContact = () => {
+        return (
+            <Container className="content">
+                <div className="contact-head" />
+                <div className="contact-container">
+                    <Contact />
+                </div>
+            </Container>
         );
     }
 
@@ -819,16 +892,20 @@ class ResumeHome extends React.Component {
                     </ParallaxBanner>
                     {this.renderExperience()}
                     {this.renderPortfolio()}
-                        <h1 id="contact">Contact Me</h1>
-                        <p>
-                            Duncan.levings@gmail.com<br />
-                            <a href="https://github.com/DuncanLevings">Github</a><br />
-                            <a href="https://www.linkedin.com/in/duncan-levings/">LinkedIn</a>
-                        </p>
-                    </div>
-                <span className="temp-disclaim">*DISCLAIMER* Website is a work in progress</span>
-                <div className="temp-footer">
-                    <span>Copyright (c) 2020 DuncanLevings <br/> Updated: June 16 2020</span>
+                    <div id="contact" />
+                    <ParallaxBanner
+                        className="contact"
+                        disabled={isMobile}
+                        layers={[
+                            {
+                                image: "/footer.jpg",
+                                amount: 0.5,
+                                props: {style: {opacity: 0.45}}
+                            }
+                        ]}
+                    >
+                        {this.renderContact()}
+                    </ParallaxBanner>
                 </div>
             </div>
         );

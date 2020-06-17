@@ -1,6 +1,19 @@
+@import '../../../assets/style/breakpoints';
+
+$minHeightDesktop: calc(100vh - 77px);
+$minHeightMobile: calc((var(--vh, 1vh) * 100) - 77px);
+
 .RSDash {
+    @include respond-to(xs) {
+        min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
+        min-height: $minHeightMobile;
+    }
+    
+    @include respond-to(m) {
+        min-height: $minHeightDesktop;
+    }
+
     text-align: center;
-    min-height: 100px;
     display: flex;
     flex-direction: column;
     align-items: center;

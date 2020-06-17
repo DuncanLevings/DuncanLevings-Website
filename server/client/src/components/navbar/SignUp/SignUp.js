@@ -12,27 +12,9 @@ import { signupUser } from 'store/actions/userActions';
 import { Form, InputGroup, FormControl, Button } from 'react-bootstrap'
 import { FaUser, FaKey, FaEnvelope } from 'react-icons/fa';
 import { Formik } from 'formik';
-import * as yup from 'yup';
+import { signUpSchema } from 'components/helpers/formValidation';
 import PropTypes from 'prop-types';
 import './SignUp.scss';
-
-const validationSchema = yup.object().shape({
-    username: yup.string()
-        .min(2, "*Username must be at least 2 characters")
-        .max(30, "*Username must be less than 30 characters")
-        .required("*Username is required"),
-    email: yup.string()
-        .email("Must be a valid email address")
-        .max(100, "*Email must be less than 100 characters")
-        .required("*Email is required"),
-    password: yup.string()
-        .min(4, "*Password must be at least 4 characters")
-        .max(100, "*Password must be less than 100 characters")
-        .required("*Password is required"),
-    confirmPassword: yup.string()
-        .oneOf([yup.ref("password"), null], "Passwords must match")
-        .required("*Must confirm password")
-  });
 
 class SignUp extends React.Component {
     constructor(props) {
@@ -63,7 +45,7 @@ class SignUp extends React.Component {
                                     {error}
                                 </div>
                                 <Formik
-                                    validationSchema={validationSchema}
+                                    validationSchema={signUpSchema}
                                     onSubmit={this.signUp}
                                     initialValues={{
                                         username: '',

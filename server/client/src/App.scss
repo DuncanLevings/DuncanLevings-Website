@@ -18,3 +18,38 @@
     color: $link-active;
     text-decoration: none;
 }
+.spacer-h-2 {
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+.spacer {
+    &-h {
+        &-2 {
+            margin-top: 2vh;
+            margin-bottom: 2vh;
+        }
+
+        &-3 {
+            margin-top: 4vh;
+            margin-bottom: 4vh;
+        }
+
+        &-4 {
+            margin-top: 6vh;
+            margin-bottom: 6vh;
+        }
+
+        &-5 {
+            margin-top: 10vh;
+            margin-bottom: 10vh;
+        }
+    }
+
+    &-w {
+        &-2 {
+            margin-left: 2vh;
+            margin-right: 2vh;
+        }
+    }
+}
