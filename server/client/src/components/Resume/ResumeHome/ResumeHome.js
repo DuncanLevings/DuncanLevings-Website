@@ -17,6 +17,7 @@ import Fade from 'react-reveal/Fade';
 import 'react-vertical-timeline-component/style.min.css';
 import './ResumeHome.scss';
 import Contact from '../Contact/Contact.lazy';
+import { RESUME_ROUTES } from 'consts/Resume_Consts';
 
 const ParallaxCache = () => {
     const { parallaxController } = useController();
@@ -710,7 +711,7 @@ class ResumeHome extends React.Component {
                             <Row>
                                 <div className="center-head">
                                     <span className="text body-sub-head">
-                                        MY LATEST WORK. <Link to={"/"} className="section-number">SEE MORE &gt;</Link>
+                                        MY LATEST WORK. <Link to={RESUME_ROUTES.PORTFOLIO} className="section-number">SEE MORE &gt;</Link>
                                     </span>
                                 </div>
                             </Row>
@@ -754,7 +755,7 @@ class ResumeHome extends React.Component {
                         <Row>
                             <div className="center-head">
                                 <span className="text body-sub-head">
-                                    MY LATEST WORK. <Link to={"/"} className="section-number">SEE MORE &gt;</Link>
+                                    MY LATEST WORK. <Link to={RESUME_ROUTES.PORTFOLIO} className="section-number">SEE MORE &gt;</Link>
                                 </span>
                             </div>
                         </Row>
@@ -839,7 +840,6 @@ class ResumeHome extends React.Component {
 
     render() {
         const { smallScreen, referenceShow } = this.state;
-        
         return (
             <div>
                 <ParallaxCache />

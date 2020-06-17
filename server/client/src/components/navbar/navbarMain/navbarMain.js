@@ -34,20 +34,21 @@ class navbarMain extends React.Component {
         this.setState({ expanded: val });
     }
 
-    isActiveClass = (hash, emptyCheck = false) => {
-        const location = this.props.location;
-
+    isActiveClass = (hashRoute, emptyCheck = false) => {
+        const { hash } = this.props.location;
+        const fullHash = '/' + hash;
         if (emptyCheck) {
-            if (location.hash === hash || location.hash === "")
+            if (fullHash === hashRoute || fullHash === "")
                 return "is-active-link";
         }
 
-        if (location.hash === hash)
+        if (fullHash === hashRoute)
             return "is-active-link";
         return "";
     }
 
     scrollWidthOffset = el => {
+        let top = el.getBoundingClientRect().top;
         let yOffset = -77;
 
         if (isMobile) {
@@ -55,7 +56,8 @@ class navbarMain extends React.Component {
             this.setExpanded(false);
         }
 
-        const yCoordinate = el.getBoundingClientRect().top + window.pageYOffset;
+        const yCoordinate = top + window.pageYOffset;
+        if (top > 0 && top < (yOffset * -1)) return
         window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' }); 
     }
 
@@ -130,7 +132,7 @@ class navbarMain extends React.Component {
             <Navbar expanded={expanded} bg="dark" variant="light" sticky="top" expand="lg">
                 <Navbar.Brand className="main-logo">
                     <NavHashLink 
-                        to={RESUME_ROOT + RESUME_ROUTES.HASH_HOME} 
+                        to={RESUME_ROUTES.HASH_HOME} 
                         scroll={this.scrollWidthOffset}
                     >
                         <img

@@ -1,8 +1,6 @@
 @import '../../../assets/style/breakpoints';
 @import '../../../assets/style/colors';
-
-$minHeightDesktop: calc(100vh - 77px);
-$minHeightMobile: calc((var(--vh, 1vh) * 100) - 77px);
+@import '../../../assets/style/vars';
 
 .ResumeHome {
 
@@ -445,8 +443,21 @@ $minHeightMobile: calc((var(--vh, 1vh) * 100) - 77px);
                 background-color: $contact-background;
                 box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.4);
                 border-radius: 20px;
-                padding: 5%;   
-                margin-top: 10%;          
+
+                @include respond-to(xs) {
+                    padding: 3%;   
+                    margin-top: 5%;  
+                }
+
+                @include respond-to(m) {
+                    padding: 3%;   
+                    margin-top: 5%;  
+                }
+                
+                @include respond-to(lg) {
+                    padding: 5%;   
+                    margin-top: 10%;  
+                }          
             }
         }
     }

@@ -1,0 +1,8 @@
+/*
+ * Author: Duncan Levings
+ * 
+ * Copyright (c) 2020 DuncanLevings
+ */
+
+ $minHeightDesktop: calc(100vh - 77px);
+ $minHeightMobile: calc((var(--vh, 1vh) * 100) - 77px);

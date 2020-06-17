@@ -40,9 +40,9 @@ class Contact extends React.Component {
                         validationSchema={contactSchema}
                         onSubmit={this.submit}
                         initialValues={{
-                            firstName: '',
-                            lastName: '',
+                            name: '',
                             email: '',
+                            subject: '',
                             message: ''
                         }}
                         >
@@ -53,52 +53,22 @@ class Contact extends React.Component {
                             touched,
                             errors
                         }) => (
-                        <Form noValidate onSubmit={handleSubmit}>
-                            <Form.Row>
-                                <Col xs={12} md={6}>
-                                    <Form.Group controlId="formFirstName">
-                                        <InputGroup>
-                                            <InputGroup.Prepend>
-                                                <InputGroup.Text><FaUser/></InputGroup.Text>
-                                            </InputGroup.Prepend>
-                                            <FormControl
-                                                name="firstName"
-                                                placeholder="Your First Name"
-                                                aria-label="First Name"
-                                                aria-describedby="First Name"
-                                                value={values.firstName}
-                                                onChange={handleChange}
-                                                isInvalid={touched.firstName && !!errors.firstName}
-                                            />
-                                            <Form.Control.Feedback type="invalid">
-                                                {errors.firstName}
-                                            </Form.Control.Feedback>
-                                        </InputGroup>
-                                    </Form.Group>
-                                </Col>
-                                <Col xs={12} md={6}>
-                                    <Form.Group controlId="formLastName">
-                                        <InputGroup>
-                                            <InputGroup.Prepend>
-                                                <InputGroup.Text><FaUser/></InputGroup.Text>
-                                            </InputGroup.Prepend>
-                                            <FormControl
-                                                name="lastName"
-                                                placeholder="Your Last Name"
-                                                aria-label="Last Name"
-                                                aria-describedby="Last Name"
-                                                value={values.lastName}
-                                                onChange={handleChange}
-                                                isInvalid={touched.lastName && !!errors.lastName}
-                                            />
-                                            <Form.Control.Feedback type="invalid">
-                                                {errors.lastName}
-                                            </Form.Control.Feedback>
-                                        </InputGroup>
-                                    </Form.Group>
-                                </Col>
-                                
-                            </Form.Row>
+                        <Form noValidate onSubmit={handleSubmit} className="contact-form">
+                            <Form.Group controlId="formName">
+                                <InputGroup>
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text><FaUser/></InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                        name="name"
+                                        placeholder="Name"
+                                        aria-label="Name"
+                                        aria-describedby="Name"
+                                        value={values.name}
+                                        onChange={handleChange}
+                                    />
+                                </InputGroup>
+                            </Form.Group>
                             <Form.Group controlId="formEmail">
                                 <InputGroup>
                                     <InputGroup.Prepend>
@@ -107,7 +77,7 @@ class Contact extends React.Component {
                                     <FormControl
                                         type="email"
                                         name="email"
-                                        placeholder="Your E-Mail Address"
+                                        placeholder="E-Mail"
                                         aria-label="Email"
                                         aria-describedby="Email"
                                         value={values.email}
@@ -119,6 +89,21 @@ class Contact extends React.Component {
                                     </Form.Control.Feedback>
                                 </InputGroup>
                             </Form.Group>
+                            <Form.Group controlId="formSubject">
+                                <InputGroup>
+                                    <InputGroup.Prepend>
+                                        <InputGroup.Text><FaEnvelope/></InputGroup.Text>
+                                    </InputGroup.Prepend>
+                                    <FormControl
+                                        name="subject"
+                                        placeholder="Subject"
+                                        aria-label="subject"
+                                        aria-describedby="subject"
+                                        value={values.subject}
+                                        onChange={handleChange}
+                                    />
+                                </InputGroup>
+                            </Form.Group>
                             <Form.Group controlId="formMessage">
                                 <InputGroup>
                                     <InputGroup.Prepend>
@@ -127,7 +112,7 @@ class Contact extends React.Component {
                                     <FormControl as ="textarea" rows={5}
                                         className="contact-message"
                                         name="message"
-                                        placeholder="Your Message"
+                                        placeholder="Message"
                                         aria-label="Message"
                                         aria-describedby="Message"
                                         value={values.message}

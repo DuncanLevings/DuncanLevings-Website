@@ -1,5 +1,13 @@
+@import '../../../assets/style/breakpoints';
+
 .Contact {
-    .contact-message {
-        resize: none;
+    .contact-form {
+        @include respond-to(xs) {
+            width: 80%
+        }
+        
+        @include respond-to(m) {
+            width: 60%
+        }
     }
 }

@@ -7,14 +7,16 @@
 export const RESUME_ROOT = '/';
 
 const HOME = RESUME_ROOT;
-const HASH_HOME = "#home";
-const HASH_PROFESSIONAL = "#professional";
-const HASH_EXPERIENCE = "#experience";
-const HASH_PORTFOLIO = "#portfolio";
-const HASH_CONTACT = "#contact";
+const PORTFOLIO = RESUME_ROOT + "portfolio";
+const HASH_HOME = RESUME_ROOT + "#home";
+const HASH_PROFESSIONAL = RESUME_ROOT + "#professional";
+const HASH_EXPERIENCE = RESUME_ROOT + "#experience";
+const HASH_PORTFOLIO = RESUME_ROOT + "#portfolio";
+const HASH_CONTACT = RESUME_ROOT + "#contact";
 
 export const RESUME_ROUTES = {
     HOME,
+    PORTFOLIO,
     HASH_HOME,
     HASH_PROFESSIONAL,
     HASH_EXPERIENCE,

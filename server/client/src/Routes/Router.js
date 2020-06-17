@@ -12,8 +12,8 @@ import RSRouter from './RunescapeRoutes';
 
 const Router = (props) => (
     <Switch>
-        <Route exact path={RESUME_ROOT} component={ResumeRouter} />
-        <Route path={RSTOOL_ROOT} component={RSRouter} />
+        <Route exact path={RSTOOL_ROOT} component={RSRouter} />
+        <Route path={RESUME_ROOT} component={ResumeRouter} />
     </Switch>
 )
 export default Router;

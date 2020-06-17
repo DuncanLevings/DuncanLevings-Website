@@ -1,7 +1,8 @@
 @import '../../../assets/style/breakpoints';
+@import '../../../assets/style/colors';
 @import '../../../assets/style/vars';
 
-.RSDash {
+.Portfolio {
     @include respond-to(xs) {
         min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
         min-height: $minHeightMobile;
@@ -11,11 +12,8 @@
         min-height: $minHeightDesktop;
     }
 
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: calc(10px + 2vmin);
-    color: white;
+    .content {
+        padding-top: 10vh;
+        padding-bottom: 10vh;
+    }
 }

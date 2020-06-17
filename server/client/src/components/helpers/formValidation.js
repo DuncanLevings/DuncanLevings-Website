@@ -41,10 +41,6 @@ export const signUpSchema = yup.object().shape({
   });
 
 export const contactSchema = yup.object().shape({
-    firstName: yup.string()
-        .required("*First name is required"),
-    lastName: yup.string()
-        .required("*First name is required"),
     email: yup.string()
         .trim()
         .email("Must be a valid email address")
