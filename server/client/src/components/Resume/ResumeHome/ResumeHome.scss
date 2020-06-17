@@ -254,9 +254,14 @@ $minHeightMobile: calc((var(--vh, 1vh) * 100) - 77px);
             min-height: $minHeightDesktop;
         }
 
+        background-position: center center;
+        background-size: cover;
+        background-image: url("/mountain.jpg"); /* Fallback for browsers that do not support Custom Properties */
+        background-image: linear-gradient(rgba($color: $body-background, $alpha: 0.65), rgba($color: $body-background, $alpha: 0.65)), url("/mountain.jpg");
+
         .content {
-            margin-top: 10vh;
-            margin-bottom: 10vh;
+            padding-top: 10vh;
+            padding-bottom: 10vh;
 
             .vertical-timeline.vertical-timeline-custom-line::before {
                 background: $timeline-line;

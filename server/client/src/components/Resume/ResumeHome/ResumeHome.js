@@ -568,131 +568,126 @@ class ResumeHome extends React.Component {
     }
 
     renderExperience = () => {
-        // if (isMobile) {
-        //     return (
-        //         <Container className="content">
-                    
-        //         </Container>
-        //     );
-        // }
         return (
-            <Container className="content">
-                <Row>
-                    <div className="center-head">
-                        <span className="text body-head">
-                            <span className="section-number">02</span> EXPERIENCE
-                        </span>
-                    </div>
-                </Row>
-                <div className="spacer-4" />
-                <VerticalTimeline className="vertical-timeline-custom-line" animate={!isMobile}>
-                    <div className="timeline-circle top" />
-                    <VerticalTimelineElement
-                        dateClassName="timeline-date"
-                        iconClassName="timeline-icon"
-                        textClassName="timeline-container"
-                        date="2020, Jan - present"
-                        icon={<FaBriefcase />}
-                    >
-                        <h3 className="vertical-timeline-element-title title">Software Engineer</h3>
-                        <h4 className="vertical-timeline-element-subtitle subtitle">ZHY Interactive</h4>
-                        <div className="spacer-2" />
-                        <ul>
-                            <li>Worked with React to design, develop, test and deploy new features to 
-                                <a href="https://royaltymine.com/" rel="noopener noreferrer" target="_blank"> Royaltymine.com</a></li>
-                            <li>Utilized MongoDB along with conventional standards in react services to develop new backend features</li>
-                            <li>Integrated Aggregate functionality into the backend to significantly improve performance</li>
-                            <li>Created new front-end pages using Ant design along with Bootstrap</li>
-                            <li>Researched, designed and implemented JWT Token authentication for login and user access permissions</li>
-                            <li>Using Socket.IO created connection streams for real-time notifications</li>
-                        </ul>
-                        <div className="centered-button-container">
-                            <Button variant="button-primary" onClick={() => this.setReferenceShow(true)}>Reference Letter</Button>
+            <div className="experience" id="experience">
+                <Container className="content">
+                    <Row>
+                        <div className="center-head">
+                            <span className="text body-head">
+                                <span className="section-number">02</span> EXPERIENCE
+                            </span>
                         </div>
-                        <div className="spacer-2" />
-                    </VerticalTimelineElement>
-                    <VerticalTimelineElement
-                        dateClassName="timeline-date"
-                        iconClassName="timeline-icon"
-                        textClassName="timeline-container"
-                        date="2019, Apr - 2019, Aug"
-                        icon={<FaBriefcase />}
-                    >
-                        <h3 className="vertical-timeline-element-title title">Associate Information Technology Technician</h3>
-                        <h4 className="vertical-timeline-element-subtitle subtitle">Genworth Canada</h4>
-                        <div className="spacer-2" />
-                        <ul>
-                            <li>Worked with AngularJS to develop, maintain and produce front-end applications</li>
-                            <li>Designed and implemented services, libraries and various components utilizing Angular Clarity and Angular Material framework</li>
-                            <li>Created Karma test cases, Keycloak library, Storybook UI components and Docker files</li>
-                            <li>Utilized tools such as: Jira, Gitlab and npm</li>
-                            <li>Collaborated with Rangle.IO developers in designing and implementing a Genworth application</li>
-                            <li>Worked with back-end team to develop new back-end service points using Java and bootstrap</li>
-                        </ul>
-                    </VerticalTimelineElement>
-                    <VerticalTimelineElement
-                        dateClassName="timeline-date"
-                        iconClassName="timeline-icon"
-                        textClassName="timeline-container"
-                        date="2018, Jan - present"
-                        icon={<FaGraduationCap />}
-                    >
-                        <h3 className="vertical-timeline-element-title title">Bachelor's degree of Computer Science</h3>
-                        <h4 className="vertical-timeline-element-subtitle subtitle">Sheridan College</h4>
-                        <div className="spacer-2" />
-                        <ul>
-                            <li>Expected graduation 2021, Dec</li>
-                        </ul>
-                    </VerticalTimelineElement>
-                    <VerticalTimelineElement
-                        dateClassName="timeline-date"
-                        iconClassName="timeline-icon"
-                        textClassName="timeline-container"
-                        date="2015, Sep - 2016, Aug"
-                        icon={<FaGraduationCap />}
-                    >
-                        <h3 className="vertical-timeline-element-title title">Certificate of Advanced Programming: Game Development</h3>
-                        <h4 className="vertical-timeline-element-subtitle subtitle">Sheridan College</h4>
-                        <div className="spacer-2" />
-                        <ul>
-                            <li>Focused on C++, Unity, OpenGL and creation of tools for the development of games</li>
-                            <li>Using Unity engine, created multiple games including android and iOS multiplayer aspects</li>
-                            <li>Major capstone involved team of four members to create a fully functional Android game</li>
-                        </ul>
-                    </VerticalTimelineElement>
-                    <VerticalTimelineElement
-                        dateClassName="timeline-date"
-                        iconClassName="timeline-icon"
-                        textClassName="timeline-container"
-                        date="2013, Sep - 2015, Apr"
-                        icon={<FaGraduationCap />}
-                    >
-                        <h3 className="vertical-timeline-element-title title">Ontario College Diploma of Computer Programming</h3>
-                        <h4 className="vertical-timeline-element-subtitle subtitle">Sheridan College</h4>
-                        <div className="spacer-2" />
-                        <ul>
-                            <li>Studied Java, Javascript, HTML5, and C#</li>
-                            <li>Developed a sound understanding of mathematical computing, web development, object oriented programming, Linux, and Unix, UI design, network, SQL, UML, and IT management</li>
-                        </ul>
-                    </VerticalTimelineElement>
-                    <VerticalTimelineElement
-                        dateClassName="timeline-date"
-                        iconClassName="timeline-icon"
-                        textClassName="timeline-container"
-                        date="2013, May - 2013, Aug"
-                        icon={<FaBriefcase />}
-                    >
-                        <h3 className="vertical-timeline-element-title title">Summer Student; Operations Administration</h3>
-                        <h4 className="vertical-timeline-element-subtitle subtitle">Genworth Canada</h4>
-                        <div className="spacer-2" />
-                        <ul>
-                            <li>Worked in the underwriting department assisting with general data entry and collation tasks</li>
-                            <li>Improved processes, reduced storage use and increased productivity through the creation of Excel scripts</li>
-                        </ul>
-                    </VerticalTimelineElement>
-                    <div className="timeline-circle bottom" />
-                </VerticalTimeline>
-            </Container>
+                    </Row>
+                    <div className="spacer-4" />
+                    <VerticalTimeline className="vertical-timeline-custom-line" animate={!isMobile}>
+                        <div className="timeline-circle top" />
+                        <VerticalTimelineElement
+                            dateClassName="timeline-date"
+                            iconClassName="timeline-icon"
+                            textClassName="timeline-container"
+                            date="2020, Jan - present"
+                            icon={<FaBriefcase />}
+                        >
+                            <h3 className="vertical-timeline-element-title title">Software Engineer</h3>
+                            <h4 className="vertical-timeline-element-subtitle subtitle">ZHY Interactive</h4>
+                            <div className="spacer-2" />
+                            <ul>
+                                <li>Worked with React to design, develop, test and deploy new features to 
+                                    <a href="https://royaltymine.com/" rel="noopener noreferrer" target="_blank"> Royaltymine.com</a></li>
+                                <li>Utilized MongoDB along with conventional standards in react services to develop new backend features</li>
+                                <li>Integrated Aggregate functionality into the backend to significantly improve performance</li>
+                                <li>Created new front-end pages using Ant design along with Bootstrap</li>
+                                <li>Researched, designed and implemented JWT Token authentication for login and user access permissions</li>
+                                <li>Using Socket.IO created connection streams for real-time notifications</li>
+                            </ul>
+                            <div className="centered-button-container">
+                                <Button variant="button-primary" onClick={() => this.setReferenceShow(true)}>Reference Letter</Button>
+                            </div>
+                            <div className="spacer-2" />
+                        </VerticalTimelineElement>
+                        <VerticalTimelineElement
+                            dateClassName="timeline-date"
+                            iconClassName="timeline-icon"
+                            textClassName="timeline-container"
+                            date="2019, Apr - 2019, Aug"
+                            icon={<FaBriefcase />}
+                        >
+                            <h3 className="vertical-timeline-element-title title">Associate Information Technology Technician</h3>
+                            <h4 className="vertical-timeline-element-subtitle subtitle">Genworth Canada</h4>
+                            <div className="spacer-2" />
+                            <ul>
+                                <li>Worked with AngularJS to develop, maintain and produce front-end applications</li>
+                                <li>Designed and implemented services, libraries and various components utilizing Angular Clarity and Angular Material framework</li>
+                                <li>Created Karma test cases, Keycloak library, Storybook UI components and Docker files</li>
+                                <li>Utilized tools such as: Jira, Gitlab and npm</li>
+                                <li>Collaborated with Rangle.IO developers in designing and implementing a Genworth application</li>
+                                <li>Worked with back-end team to develop new back-end service points using Java and bootstrap</li>
+                            </ul>
+                        </VerticalTimelineElement>
+                        <VerticalTimelineElement
+                            dateClassName="timeline-date"
+                            iconClassName="timeline-icon"
+                            textClassName="timeline-container"
+                            date="2018, Jan - present"
+                            icon={<FaGraduationCap />}
+                        >
+                            <h3 className="vertical-timeline-element-title title">Bachelor's degree of Computer Science</h3>
+                            <h4 className="vertical-timeline-element-subtitle subtitle">Sheridan College</h4>
+                            <div className="spacer-2" />
+                            <ul>
+                                <li>Expected graduation 2021, Dec</li>
+                            </ul>
+                        </VerticalTimelineElement>
+                        <VerticalTimelineElement
+                            dateClassName="timeline-date"
+                            iconClassName="timeline-icon"
+                            textClassName="timeline-container"
+                            date="2015, Sep - 2016, Aug"
+                            icon={<FaGraduationCap />}
+                        >
+                            <h3 className="vertical-timeline-element-title title">Certificate of Advanced Programming: Game Development</h3>
+                            <h4 className="vertical-timeline-element-subtitle subtitle">Sheridan College</h4>
+                            <div className="spacer-2" />
+                            <ul>
+                                <li>Focused on C++, Unity, OpenGL and creation of tools for the development of games</li>
+                                <li>Using Unity engine, created multiple games including android and iOS multiplayer aspects</li>
+                                <li>Major capstone involved team of four members to create a fully functional Android game</li>
+                            </ul>
+                        </VerticalTimelineElement>
+                        <VerticalTimelineElement
+                            dateClassName="timeline-date"
+                            iconClassName="timeline-icon"
+                            textClassName="timeline-container"
+                            date="2013, Sep - 2015, Apr"
+                            icon={<FaGraduationCap />}
+                        >
+                            <h3 className="vertical-timeline-element-title title">Ontario College Diploma of Computer Programming</h3>
+                            <h4 className="vertical-timeline-element-subtitle subtitle">Sheridan College</h4>
+                            <div className="spacer-2" />
+                            <ul>
+                                <li>Studied Java, Javascript, HTML5, and C#</li>
+                                <li>Developed a sound understanding of mathematical computing, web development, object oriented programming, Linux, and Unix, UI design, network, SQL, UML, and IT management</li>
+                            </ul>
+                        </VerticalTimelineElement>
+                        <VerticalTimelineElement
+                            dateClassName="timeline-date"
+                            iconClassName="timeline-icon"
+                            textClassName="timeline-container"
+                            date="2013, May - 2013, Aug"
+                            icon={<FaBriefcase />}
+                        >
+                            <h3 className="vertical-timeline-element-title title">Summer Student; Operations Administration</h3>
+                            <h4 className="vertical-timeline-element-subtitle subtitle">Genworth Canada</h4>
+                            <div className="spacer-2" />
+                            <ul>
+                                <li>Worked in the underwriting department assisting with general data entry and collation tasks</li>
+                                <li>Improved processes, reduced storage use and increased productivity through the creation of Excel scripts</li>
+                            </ul>
+                        </VerticalTimelineElement>
+                        <div className="timeline-circle bottom" />
+                    </VerticalTimeline>
+                </Container>
+            </div>
         );
     }
 
@@ -822,23 +817,7 @@ class ResumeHome extends React.Component {
                     >
                         {this.renderProfessional()}
                     </ParallaxBanner>
-                    <div id="experience"/>
-                    <ParallaxBanner
-                        className="experience"
-                        disabled={isMobile}
-                        layers={[
-                            {
-                                image: "/mountain.jpg",
-                                amount: 0.4,
-                                props: {style: {opacity: 0.3}}
-                            }
-                        ]}
-                        style={{
-                            height: '100%',
-                        }}
-                    >
-                        {this.renderExperience()}
-                    </ParallaxBanner>
+                    {this.renderExperience()}
                     {this.renderPortfolio()}
                         <h1 id="contact">Contact Me</h1>
                         <p>
