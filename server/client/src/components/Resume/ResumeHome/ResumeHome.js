@@ -733,24 +733,18 @@ class ResumeHome extends React.Component {
                             </Row>
                             <div className="spacer-h-5" />
                             <Row>
-                                <Col className="portfolio-image-container">
-                                    <div className="portfolio-box-container">
-                                        <Link to={RSTOOL_ROOT} className="portfolio-link first">RSTools</Link>
-                                    </div>
+                                <Col className="portfolio-image-container first">
+                                    <Link to={RESUME_ROUTES.PORTFOLIO} className="portfolio-link">DuncanLevings website</Link>
                                 </Col>
                             </Row>
                             <Row>
-                                <Col className="portfolio-image-container">
-                                    <div className="portfolio-box-container">
-                                        <Link to={"/"} className="portfolio-link second">RSTools</Link>
-                                    </div>
+                                <Col className="portfolio-image-container second">
+                                    <Link to={RESUME_ROUTES.PORTFOLIO} className="portfolio-link">RSTools</Link>
                                 </Col>
                             </Row>
                             <Row>
-                                <Col className="portfolio-image-container">
-                                    <div className="portfolio-box-container">
-                                        <Link to={"/"} className="portfolio-link third">RSTools</Link>
-                                    </div>
+                                <Col className="portfolio-image-container third">
+                                    <Link to={RESUME_ROUTES.PORTFOLIO} className="portfolio-link">Royaltymine</Link>
                                 </Col>
                             </Row>
                     </Container>
@@ -777,62 +771,16 @@ class ResumeHome extends React.Component {
                     </Row>
                     <div className="spacer-h-5" />
                     <Row className="portfolio-box-container ml-3 mr-3">
-                        <Col className="portfolio-image-container">
-                            <Link to={RSTOOL_ROOT} className="portfolio-link first">RSTools</Link>
+                        <Col className="portfolio-image-container first">
+                            <Link to={RESUME_ROUTES.PORTFOLIO} className="portfolio-link">Duncan Levings website</Link>
                         </Col>
-                        <Col className="portfolio-image-container">
-                            <Link to={"/"} className="portfolio-link second">RSTools</Link>
+                        <Col className="portfolio-image-container second">
+                            <Link to={RESUME_ROUTES.PORTFOLIO} className="portfolio-link">RSTools</Link>
                         </Col>
-                        <Col className="portfolio-image-container">
-                            <Link to={"/"} className="portfolio-link third">RSTools</Link>
+                        <Col className="portfolio-image-container third">
+                            <Link to={RESUME_ROUTES.PORTFOLIO} className="portfolio-link">Royaltymine</Link>
                         </Col>
                     </Row>
-                    {/* <div>
-                    <p className="small-font">
-                        <b>RSTools</b><br />
-                        May 2020 – Current<br />
-                        Work in progress tools website <Link to={RSTOOL_ROOT}>Link to site</Link>
-                    </p>
-                    <br />
-                    <p className="small-font">
-                        <b>Find A Spot</b><br />
-                        Jan 2019 – Apr 2019<br />
-                        Designed and developed a mobile application that uses map API to find nearby 
-                        parking organized by user preferred price and distance settings.<br /><br />
-                        • Utilizes ParkWhiz API and Google Map API.<br />
-                        • Developed using IntelliJ IDEA with Cordova framework.<br />
-                        • User data is stored in Google FireBase and images in local phone storage.<br />
-                        • Uses Geolocation to appropriately set nearby parking parameters.<br />
-                    </p>
-                    <br />
-                    <p className="small-font">
-                        <b>Inner Hero</b><br />
-                        Apr 2016 – Aug 2016<br /><br />
-                        • Collaborated with four members, including three programmers, and one designer from the Game Level 
-                        Design program, to develop and produce an original Android mobile game, currently available through Android Apps on Google Play.<br />
-                        • Completed the project in four months, logging 7-8 hours of work each day, five days per week.<br />
-                        • Developed and executed all gameplay with the main section, including interactive elements, 
-                        path-finding for players and enemies, main combat systems (including elements from Fruit Ninja), and UI elements (quick slot, toggle, and other buttons).<br />
-                        • Created AI for the main player, enabling intervention and command. Incorporated the ability for the user to set the phone down while play continued.<br />
-                        • Developed unique systems that operated during run time, mapped out and generated logical 
-                        lists of interest points to allow automatic exploration, created a dynamic and random behaviour of bosses, and options to select 40 different abilities.<br />
-                        • Identified and selected algorithmic, programming, and mathematical techniques to develop systems for various aspects of the game.<br />
-                        • Created prototypes with existing professional tools, such as game engines, middleware, and common application programming interfaces.<br />
-                        • Leveraged collaborative tools related to industry practices, including source control, build management, deployment, and bug tracking.<br />
-                        • Utilized project management skills, including development tasks and team member interactions.<br />
-                        • Tested, debugged, and optimized game and components to meet production requirements and time constraints.<br />
-                    </p>
-                    <br />
-                    <p className="small-font">
-                        <b>Darkest Dungeon</b><br />
-                        Jan 2016 – Apr 2016<br /><br />
-                        • Collaborated on a mobile game project with two team members, leveraging the multi-platform game development tool, Unity.<br />
-                        • Accountable for the multiplayer portion of development, using Unity’s Photon classes, UI elements 
-                        (bag system and in-game menus), and large components of AI, including a smart AI-controlled player assist.<br />
-                        • The game was developed to include up to four players simultaneously, allowing joining in a lobby, 
-                        fighting between users, and playing in a collaborative manner to complete the main dungeon quest.<br />
-                    </p>
-                    </div> */}
                 </Container>
             </div>
         );

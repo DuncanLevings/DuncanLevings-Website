@@ -24,29 +24,19 @@
                 padding-bottom: 1.5rem;
             }
 
-            @include respond-to(m) {
-                padding-bottom: 3rem;
-            }
-
             @include respond-to(lg) {
                 padding-bottom: 0; 
             }
         }
         
         .language-icon {
-            @include respond-to(xs) {
-                font-size: calc(25px + 5vmin);
-            }
-
-            @include respond-to(m) {
-                font-size: calc(50px + 5vmin);
-            }
-
+            font-size: calc(12px + 5vmin);
             padding-top: 0;
         }
 
         .language-icon:hover {
             color: $link-active;
+            cursor: pointer;
         }
 
         .language-text {
@@ -55,7 +45,7 @@
             opacity: 0;
             text-align: center;
             font-family: 'Roboto', sans-serif;
-            transition: opacity 800ms 0ms;
+            transition: opacity 800ms 0ms, color 0ms 0ms;
 
             @include respond-to(xs) {
                 padding-top: 0.5rem;
@@ -63,14 +53,15 @@
             }
 
             @include respond-to(m) {
-                padding-top: 1rem;
-                font-size: calc(12px + 1vmin);
+                padding-top: 0.5rem;
+                font-size: calc(8px + 1vmin);
             }
         }
 
         .language-icon:hover + .language-text {
             opacity: 1;
-            transition: opacity 600ms 0ms;
+            color: $link-active;
+            transition: opacity 600ms 0ms, color 400ms 0ms;
         }
 
         .text {
@@ -90,6 +81,59 @@
             border: 0;
             height: 1px;
             background-image: linear-gradient(to right, #74737300, #7473739a, #74737300);
+        }
+
+        .portfolio-card {
+            height: 100%;
+            
+            @include respond-to(xs) {
+                width: 95%;
+                max-width: 95%;
+            }
+
+            @include respond-to(m) {
+                width: 45%;
+                max-width: 45%;
+            }
+
+            @include respond-to(lg) {
+                width: 30%;
+                max-width: 30%;
+            }
+
+            display: block;
+            flex-basis: auto;
+            margin-bottom: 2rem;
+
+            color: $resume-body;
+            background-color: $contact-background;
+            box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+            font-family: 'Roboto', sans-serif;
+
+            .card-title {
+                color: white;
+            }
+
+            .main-body {
+                height: 125px;
+                line-height: 25px;
+                overflow: hidden;
+            }
+
+            .portfolio-icon {
+                float: right;
+                font-size: calc(12px + 2vmin);
+            }
+    
+            .click-to-read-more {
+                color: $link-divider;
+                vertical-align: bottom;
+            }
+        }
+
+        .portfolio-card:hover {
+            background-color: $contact-background-hover;
         }
     }
 }

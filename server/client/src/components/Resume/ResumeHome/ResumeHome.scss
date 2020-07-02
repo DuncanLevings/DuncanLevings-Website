@@ -345,19 +345,17 @@
             padding-top: 10vh;
             padding-bottom: 10vh;
 
-            .portfolio-box-container {
-                box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.4);
-            }
-
             .portfolio-image-container {
                 @include respond-to(xs) {
-                    padding-left: 25px;
-                    padding-right: 25px;
+                    margin-left: 25px;
+                    margin-right: 25px;
                 }
                 
                 @include respond-to(m) {
                     padding-left: 0;
                     padding-right: 0;
+                    margin-left: 0;
+                    margin-right: 0;
                     -webkit-transition: all 1s ease;
                     -moz-transition: all 1s ease;
                     -o-transition: all 1s ease;
@@ -365,43 +363,50 @@
                     transition: all 1s ease;
                 }
 
+                box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.4);
+                background-color: $resume-body;
+                background-position: center center;
+                background-size: cover;
+                padding-top: auto;
+                padding-bottom: auto;
+
+                &.first {
+                    background-image: url("/static_images/project1.jpg"); /* Fallback for browsers that do not support Custom Properties */
+                    background-image: linear-gradient(rgba($color: $body-background, $alpha: 0.5), rgba($color: $body-background, $alpha: 0.5)), url("/static_images/project1.jpg");
+                }
+
+                &.second {
+                    background-image: url("/static_images/project2.jpeg"); /* Fallback for browsers that do not support Custom Properties */
+                    background-image: linear-gradient(rgba($color: $body-background, $alpha: 0.5), rgba($color: $body-background, $alpha: 0.5)), url("/static_images/project2.jpeg");
+                }
+
+                &.third {
+                    background-image: url("/static_images/project3.jpg"); /* Fallback for browsers that do not support Custom Properties */
+                    background-image: linear-gradient(rgba($color: $body-background, $alpha: 0.5), rgba($color: $body-background, $alpha: 0.5)), url("/static_images/project3.jpg");
+                }
+
                 .portfolio-link {
                     display: flex;
                     justify-content: center;
                     align-items: center;
-                    padding-top: 30%;
-                    padding-bottom: 30%;
+                    height: 100%;
                     width: 100.1%; // fixes weird sliver of background color between image and shadow on right box
 
                     font-family: 'Roboto', sans-serif;
                     color: $body-font;
-                    background-color: $resume-body;
                     text-decoration: none;
+                    text-shadow:  1px 1px 1px #000;
+                    -webkit-font-smoothing: antialiased;
 
                     @include respond-to(xs) {
                         font-size: calc(25px + 1vmin);
+                        padding-top: 15%;
+                        padding-bottom: 15%;
                     }
                     
                     @include respond-to(m) {
                         font-size: calc(40px + 1vmin);
-                    }
-
-                    background-position: center center;
-                    background-size: cover;
-
-                    &.first {
-                        background-image: url("/static_images/project1.jpg"); /* Fallback for browsers that do not support Custom Properties */
-                        background-image: linear-gradient(rgba($color: $body-background, $alpha: 0.5), rgba($color: $body-background, $alpha: 0.5)), url("/static_images/project1.jpg");
-                    }
-
-                    &.second {
-                        background-image: url("/static_images/project2.jpeg"); /* Fallback for browsers that do not support Custom Properties */
-                        background-image: linear-gradient(rgba($color: $body-background, $alpha: 0.5), rgba($color: $body-background, $alpha: 0.5)), url("/static_images/project2.jpeg");
-                    }
-
-                    &.third {
-                        background-image: url("/static_images/project3.jpg"); /* Fallback for browsers that do not support Custom Properties */
-                        background-image: linear-gradient(rgba($color: $body-background, $alpha: 0.5), rgba($color: $body-background, $alpha: 0.5)), url("/static_images/project3.jpg");
+                        padding: 10%;
                     }
                 }
             }
