@@ -23,7 +23,7 @@
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.12",
+    "mongoose": "^5.9.21",
     "morgan": "^1.10.0",
     "node-addon-api": "^3.0.0",
     "node-pre-gyp": "^0.14.0",
