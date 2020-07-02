@@ -12,9 +12,10 @@ import { Button, Navbar, Nav } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
 import { NavHashLink } from 'react-router-hash-link';
 import { isMobile } from 'react-device-detect';
-import { RESUME_ROOT, RSTOOL_ROOT, NAVBAR_TYPE } from 'consts';
+import { RSTOOL_ROOT, NAVBAR_TYPE } from 'consts';
 import { RESUME_ROUTES } from 'consts/Resume_Consts';
 import { logoutUser } from 'store/actions/userActions';
+import { updateActiveHash } from 'store/actions/navbarActions';
 import './navbarMain.scss';
 
 class navbarMain extends React.Component {
@@ -34,9 +35,12 @@ class navbarMain extends React.Component {
         this.setState({ expanded: val });
     }
 
+    setActivehash = val => {
+        this.props.updateActiveHash(val);
+    }
+
     isActiveClass = (hashRoute, hash) => {
-        const pathNoHash =  hashRoute.replace("/#", "");
-        if (pathNoHash === hash) return "is-active-link";
+        if (hashRoute === hash) return "is-active-link";
         return "";
     }
 
@@ -44,13 +48,18 @@ class navbarMain extends React.Component {
         let top = el.getBoundingClientRect().top;
         let yOffset = -77;
 
+        if (top > 0 && top < (yOffset * -1)) {
+            if (isMobile) this.setExpanded(false);
+            return;
+        }
+
         if (isMobile) {
-            yOffset = -327;
-            this.setExpanded(false);
+            setTimeout(() => {
+                this.setExpanded(false);
+            }, 1000);
         }
 
         const yCoordinate = top + window.pageYOffset;
-        if (top > 0 && top < (yOffset * -1)) return
         window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' }); 
     }
 
@@ -66,6 +75,7 @@ class navbarMain extends React.Component {
                             to={RESUME_ROUTES.HASH_HOME}
                             activeClassName={this.isActiveClass(RESUME_ROUTES.HASH_HOME, hash)}
                             scroll={this.scrollWidthOffset}
+                            onClick={() => this.setActivehash(RESUME_ROUTES.HASH_HOME)}
                         >
                             HOME
                         </NavHashLink>
@@ -149,6 +159,7 @@ class navbarMain extends React.Component {
 
 navbarMain.propTypes = {
     logoutUser: PropTypes.func,
+    updateActiveHash: PropTypes.func,
     userReducer: PropTypes.object,
     navbarReducer: PropTypes.object,
 };
@@ -160,6 +171,6 @@ const mapStateToProps = state => {
     };
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ logoutUser }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ logoutUser, updateActiveHash }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(navbarMain));

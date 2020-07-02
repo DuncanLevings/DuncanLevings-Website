@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { isMobile } from 'react-device-detect';
+import { isMobileOnly, isMobile } from 'react-device-detect';
 import { useInView } from 'react-intersection-observer';
 import { ParallaxBanner, useController } from 'react-scroll-parallax';
 import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
@@ -73,7 +73,7 @@ const RenderProgBar = (props) => {
 
     return (
         <div ref={ref} className="bar">
-            <ProgressBar variant="bar-primary" label={isMobile ? `${curr}%` : null} now={curr} />
+            <ProgressBar variant="bar-primary" label={isMobileOnly ? `${curr}%` : null} now={curr} />
         </div>
     );
 }
@@ -143,7 +143,7 @@ class ResumeHome extends React.Component {
     }
 
     componentDidMount() {
-        if (isMobile) {
+        if (isMobileOnly) {
             let vh = window.innerHeight * 0.01;
             document.documentElement.style.setProperty('--vh', `${vh}px`);
         } else {
@@ -154,10 +154,10 @@ class ResumeHome extends React.Component {
     renderHome = () => {
         const { smallScreen } = this.state;
 
-        if (isMobile) {
+        if (isMobileOnly) {
             return (
                 <Container className="content">
-                    <RenderInViewSection hashLocation={"home"} />
+                    <RenderInViewSection hashLocation={RESUME_ROUTES.HASH_HOME} />
                     <Row>
                         <Col xs={12}>
                             <Row>
@@ -192,7 +192,7 @@ class ResumeHome extends React.Component {
         }
         return (
             <Container className="content">
-                <RenderInViewSection hashLocation={"home"} />
+                <RenderInViewSection hashLocation={RESUME_ROUTES.HASH_HOME} />
                 <Row>
                     <Col xs={12} md={6}>
                         <Row>
@@ -240,10 +240,10 @@ class ResumeHome extends React.Component {
     }
 
     renderProfessional = () => {
-        if (isMobile) {
+        if (isMobileOnly) {
             return (
                 <Container className="content">
-                    <RenderInViewSection hashLocation={"professional"} />
+                    <RenderInViewSection hashLocation={RESUME_ROUTES.HASH_PROFESSIONAL} />
                     <Row>
                         <div className="center-head">
                             <span className="text body-head">
@@ -380,7 +380,7 @@ class ResumeHome extends React.Component {
         }
         return (
             <Container className="content">
-                <RenderInViewSection hashLocation={"professional"} />
+                <RenderInViewSection hashLocation={RESUME_ROUTES.HASH_PROFESSIONAL} />
                 <Row>
                     <div className="center-head">
                         <span className="text body-head">
@@ -583,7 +583,7 @@ class ResumeHome extends React.Component {
         return (
             <div className="experience" id="experience">
                 <Container className="content">
-                    <RenderInViewSection hashLocation={"experience"} />
+                    <RenderInViewSection hashLocation={RESUME_ROUTES.HASH_EXPERIENCE} />
                     <Row>
                         <div className="center-head">
                             <span className="text body-head">
@@ -705,7 +705,7 @@ class ResumeHome extends React.Component {
                         </VerticalTimelineElement>
                         <div className="timeline-circle bottom" />
                     </VerticalTimeline>
-                    <RenderInViewSection hashLocation={"experience"} />
+                    <RenderInViewSection hashLocation={RESUME_ROUTES.HASH_EXPERIENCE} />
                 </Container>
             </div>
         );
@@ -716,7 +716,7 @@ class ResumeHome extends React.Component {
             return (
                 <div className="portfolio" id="portfolio">
                     <Container className="content">
-                        <RenderInViewSection hashLocation={"portfolio"} />
+                        <RenderInViewSection hashLocation={RESUME_ROUTES.HASH_PORTFOLIO} />
                             <Row>
                                 <div className="center-head">
                                     <span className="text body-head">
@@ -760,7 +760,7 @@ class ResumeHome extends React.Component {
         return (
             <div className="portfolio" id="portfolio">
                 <Container className="content">
-                    <RenderInViewSection hashLocation={"portfolio"} />
+                    <RenderInViewSection hashLocation={RESUME_ROUTES.HASH_PORTFOLIO} />
                     <Row>
                         <div className="center-head">
                             <span className="text body-head">
@@ -843,7 +843,7 @@ class ResumeHome extends React.Component {
             <Container className="content">
                 <div className="contact-head" id="contact" />
                 <div className="contact-container">
-                    <RenderInViewSection hashLocation={"contact"} />
+                    <RenderInViewSection hashLocation={RESUME_ROUTES.HASH_CONTACT} />
                     <Contact />
                 </div>
             </Container>
@@ -866,7 +866,7 @@ class ResumeHome extends React.Component {
                 <div className="ResumeHome" id="home">
                     <ParallaxBanner
                         className="home"
-                        disabled={isMobile}
+                        disabled={isMobileOnly}
                         layers={[
                             {
                                 image: "/static_images/tokyo_night_city.jpg",
@@ -876,7 +876,7 @@ class ResumeHome extends React.Component {
                     >
                         {this.renderHome()}
                     </ParallaxBanner>
-                    {isMobile || smallScreen ?
+                    {isMobileOnly || smallScreen ?
                     <div className="aboutme-mobile">
                         <span className="text aboutme-text">
                             I am a motivated and challenge-seeking person who has been programming since 2010.<br/><br/>
@@ -892,7 +892,7 @@ class ResumeHome extends React.Component {
                     <div id="professional" />
                     <ParallaxBanner
                         className="professional"
-                        disabled={isMobile}
+                        disabled={isMobileOnly}
                         layers={[
                             {
                                 image: "/static_images/desk.jpg",
@@ -910,7 +910,7 @@ class ResumeHome extends React.Component {
                     {this.renderPortfolio()}
                     <ParallaxBanner
                         className="contact"
-                        disabled={isMobile}
+                        disabled={isMobileOnly}
                         layers={[
                             {
                                 image: "/static_images/footer.jpg",

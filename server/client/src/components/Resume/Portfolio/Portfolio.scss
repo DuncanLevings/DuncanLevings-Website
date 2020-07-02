@@ -13,7 +13,83 @@
     }
 
     .content {
-        padding-top: 10vh;
-        padding-bottom: 10vh;
+        padding-top: 5vh;
+        padding-bottom: 5vh;
+
+        .language-container {
+            display: block;
+            text-align: center;
+
+            @include respond-to(xs) {
+                padding-bottom: 1.5rem;
+            }
+
+            @include respond-to(m) {
+                padding-bottom: 3rem;
+            }
+
+            @include respond-to(lg) {
+                padding-bottom: 0; 
+            }
+        }
+        
+        .language-icon {
+            @include respond-to(xs) {
+                font-size: calc(25px + 5vmin);
+            }
+
+            @include respond-to(m) {
+                font-size: calc(50px + 5vmin);
+            }
+
+            padding-top: 0;
+        }
+
+        .language-icon:hover {
+            color: $link-active;
+        }
+
+        .language-text {
+            display: block;
+            height: 0;
+            opacity: 0;
+            text-align: center;
+            font-family: 'Roboto', sans-serif;
+            transition: opacity 800ms 0ms;
+
+            @include respond-to(xs) {
+                padding-top: 0.5rem;
+                font-size: calc(8px + 1vmin);
+            }
+
+            @include respond-to(m) {
+                padding-top: 1rem;
+                font-size: calc(12px + 1vmin);
+            }
+        }
+
+        .language-icon:hover + .language-text {
+            opacity: 1;
+            transition: opacity 600ms 0ms;
+        }
+
+        .text {
+            text-align: start;
+            line-height: normal;
+            font-style: normal;
+            font-variant-ligatures: normal;
+            font-variant-caps: normal;
+            font-variant-numeric: normal;
+            font-variant-east-asian: normal;
+            font-weight: normal;
+            font-stretch: normal;
+        }
+
+        .portfolio-divider {
+            color: $hr-divider;
+            border: 0;
+            height: 1px;
+            background-image: linear-gradient(to right, #74737300, #7473739a, #74737300);
+        }
     }
 }
