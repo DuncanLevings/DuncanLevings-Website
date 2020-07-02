@@ -20,7 +20,7 @@ class Footer extends React.Component {
     render() {
         return (
             <div className="main-footer">
-                <span>© 2020 by DuncanLevings <br /> Updated: June 17 2020</span>
+                <span>© 2020 by DuncanLevings <br /> Updated: July 2 2020</span>
             </div>
         );
     }

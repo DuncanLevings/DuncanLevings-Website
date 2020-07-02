@@ -34,20 +34,6 @@ class navbarMain extends React.Component {
         this.setState({ expanded: val });
     }
 
-    // isActiveClass = (hashRoute, emptyCheck = false) => {
-    //     const { hash, pathname } = this.props.location;
-    //     const fullHash = "/" + hash;
-    //     const pathNoHash =  hashRoute.replace("#", "");
-    //     if (emptyCheck) {
-    //         if (fullHash === hashRoute || fullHash === "")
-    //             return "is-active-link";
-    //     }
-
-    //     if (fullHash === hashRoute || pathname === pathNoHash)
-    //         return "is-active-link";
-    //     return "";
-    // }
-
     isActiveClass = (hashRoute, hash) => {
         const pathNoHash =  hashRoute.replace("/#", "");
         if (pathNoHash === hash) return "is-active-link";
@@ -144,7 +130,7 @@ class navbarMain extends React.Component {
                         scroll={this.scrollWidthOffset}
                     >
                         <img
-                            src="/DJL_Logo.png"
+                            src="/static_images/DJL_Logo.png"
                             width="50"
                             height="50"
                             className="d-inline-block"

@@ -7,18 +7,18 @@
 import React, { useLayoutEffect, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { RSTOOL_ROOT } from 'consts';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { isMobile } from 'react-device-detect';
 import { useInView } from 'react-intersection-observer';
 import { ParallaxBanner, useController } from 'react-scroll-parallax';
 import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
 import { Image, Container, Row, Col, Button, ProgressBar, Modal } from 'react-bootstrap';
 import { FaDownload, FaGraduationCap, FaBriefcase } from 'react-icons/fa';
-import { RESUME_ROUTES } from 'consts/Resume_Consts';
-import Contact from '../Contact/Contact.lazy';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { updateActiveHash } from 'store/actions/navbarActions';
+import { RESUME_ROUTES } from 'consts/Resume_Consts';
+import { RSTOOL_ROOT } from 'consts';
+import Contact from '../Contact/Contact.lazy';
 import 'react-vertical-timeline-component/style.min.css';
 import './ResumeHome.scss';
 
@@ -63,6 +63,7 @@ const RenderProgBar = (props) => {
 
     const [ref, inView, entry] = useInView({
         threshold: 1,
+        rootMargin: "0px 0px -25px 0px",
         triggerOnce: true
     });
 
@@ -161,7 +162,7 @@ class ResumeHome extends React.Component {
                         <Col xs={12}>
                             <Row>
                                 <div className="profileImgContainer mb-4 mx-auto">
-                                    <Image className="profileImg" src="/cropped.png" roundedCircle />
+                                    <Image className="profileImg" src="/static_images/cropped.png" roundedCircle />
                                 </div>
                             </Row>
                             <Row>
@@ -217,7 +218,7 @@ class ResumeHome extends React.Component {
                     </Col>
                     <Col xs={0} md={6}>
                         <div className="profileImgContainer">
-                            <Image className="profileImg" src="/cropped.png" roundedCircle />
+                            <Image className="profileImg" src="/static_images/cropped.png" roundedCircle />
                         </div>
                     </Col>
                 </Row>
@@ -599,6 +600,7 @@ class ResumeHome extends React.Component {
                             textClassName="timeline-container"
                             date="2020, Jan - present"
                             icon={<FaBriefcase />}
+                            intersectionObserverProps={{ rootMargin: "0px 0px -200px 0px" }}
                         >
                             <h3 className="vertical-timeline-element-title title">Software Engineer</h3>
                             <h4 className="vertical-timeline-element-subtitle subtitle">ZHY Interactive</h4>
@@ -623,6 +625,7 @@ class ResumeHome extends React.Component {
                             textClassName="timeline-container"
                             date="2019, Apr - 2019, Aug"
                             icon={<FaBriefcase />}
+                            intersectionObserverProps={{ rootMargin: "0px 0px -200px 0px" }}
                         >
                             <h3 className="vertical-timeline-element-title title">Associate Information Technology Technician</h3>
                             <h4 className="vertical-timeline-element-subtitle subtitle">Genworth Canada</h4>
@@ -642,6 +645,7 @@ class ResumeHome extends React.Component {
                             textClassName="timeline-container"
                             date="2018, Jan - present"
                             icon={<FaGraduationCap />}
+                            intersectionObserverProps={{ rootMargin: "0px 0px -200px 0px" }}
                         >
                             <h3 className="vertical-timeline-element-title title">Bachelor's degree of Computer Science</h3>
                             <h4 className="vertical-timeline-element-subtitle subtitle">Sheridan College</h4>
@@ -656,6 +660,7 @@ class ResumeHome extends React.Component {
                             textClassName="timeline-container"
                             date="2015, Sep - 2016, Aug"
                             icon={<FaGraduationCap />}
+                            intersectionObserverProps={{ rootMargin: "0px 0px -200px 0px" }}
                         >
                             <h3 className="vertical-timeline-element-title title">Certificate of Advanced Programming: Game Development</h3>
                             <h4 className="vertical-timeline-element-subtitle subtitle">Sheridan College</h4>
@@ -672,6 +677,7 @@ class ResumeHome extends React.Component {
                             textClassName="timeline-container"
                             date="2013, Sep - 2015, Apr"
                             icon={<FaGraduationCap />}
+                            intersectionObserverProps={{ rootMargin: "0px 0px -200px 0px" }}
                         >
                             <h3 className="vertical-timeline-element-title title">Ontario College Diploma of Computer Programming</h3>
                             <h4 className="vertical-timeline-element-subtitle subtitle">Sheridan College</h4>
@@ -687,6 +693,7 @@ class ResumeHome extends React.Component {
                             textClassName="timeline-container"
                             date="2013, May - 2013, Aug"
                             icon={<FaBriefcase />}
+                            intersectionObserverProps={{ rootMargin: "0px 0px -200px 0px" }}
                         >
                             <h3 className="vertical-timeline-element-title title">Summer Student; Operations Administration</h3>
                             <h4 className="vertical-timeline-element-subtitle subtitle">Genworth Canada</h4>
@@ -862,7 +869,7 @@ class ResumeHome extends React.Component {
                         disabled={isMobile}
                         layers={[
                             {
-                                image: "/tokyo_night_city.jpg",
+                                image: "/static_images/tokyo_night_city.jpg",
                                 amount: 0.4
                             }
                         ]}
@@ -888,7 +895,7 @@ class ResumeHome extends React.Component {
                         disabled={isMobile}
                         layers={[
                             {
-                                image: "/desk.jpg",
+                                image: "/static_images/desk.jpg",
                                 amount: 0.4,
                                 props: {style: {opacity: 0.45}}
                             }
@@ -906,7 +913,7 @@ class ResumeHome extends React.Component {
                         disabled={isMobile}
                         layers={[
                             {
-                                image: "/footer.jpg",
+                                image: "/static_images/footer.jpg",
                                 amount: 0.5,
                                 props: {style: {opacity: 0.45}}
                             }

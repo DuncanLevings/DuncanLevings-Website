@@ -239,8 +239,8 @@
 
         background-position: center center;
         background-size: cover;
-        background-image: url("/mountain.jpg"); /* Fallback for browsers that do not support Custom Properties */
-        background-image: linear-gradient(rgba($color: $body-background, $alpha: 0.65), rgba($color: $body-background, $alpha: 0.65)), url("/mountain.jpg");
+        background-image: url("/static_images/mountain.jpg"); /* Fallback for browsers that do not support Custom Properties */
+        background-image: linear-gradient(rgba($color: $body-background, $alpha: 0.65), rgba($color: $body-background, $alpha: 0.65)), url("/static_images/mountain.jpg");
 
         .content {
             padding-top: 10vh;
@@ -388,18 +388,18 @@
                     background-size: cover;
 
                     &.first {
-                        background-image: url("/project1.jpg"); /* Fallback for browsers that do not support Custom Properties */
-                        background-image: linear-gradient(rgba($color: $body-background, $alpha: 0.5), rgba($color: $body-background, $alpha: 0.5)), url("/project1.jpg");
+                        background-image: url("/static_images/project1.jpg"); /* Fallback for browsers that do not support Custom Properties */
+                        background-image: linear-gradient(rgba($color: $body-background, $alpha: 0.5), rgba($color: $body-background, $alpha: 0.5)), url("/static_images/project1.jpg");
                     }
 
                     &.second {
-                        background-image: url("/project2.jpeg"); /* Fallback for browsers that do not support Custom Properties */
-                        background-image: linear-gradient(rgba($color: $body-background, $alpha: 0.5), rgba($color: $body-background, $alpha: 0.5)), url("/project2.jpeg");
+                        background-image: url("/static_images/project2.jpeg"); /* Fallback for browsers that do not support Custom Properties */
+                        background-image: linear-gradient(rgba($color: $body-background, $alpha: 0.5), rgba($color: $body-background, $alpha: 0.5)), url("/static_images/project2.jpeg");
                     }
 
                     &.third {
-                        background-image: url("/project3.jpg"); /* Fallback for browsers that do not support Custom Properties */
-                        background-image: linear-gradient(rgba($color: $body-background, $alpha: 0.5), rgba($color: $body-background, $alpha: 0.5)), url("/project3.jpg");
+                        background-image: url("/static_images/project3.jpg"); /* Fallback for browsers that do not support Custom Properties */
+                        background-image: linear-gradient(rgba($color: $body-background, $alpha: 0.5), rgba($color: $body-background, $alpha: 0.5)), url("/static_images/project3.jpg");
                     }
                 }
             }
