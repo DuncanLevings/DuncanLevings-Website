@@ -4,7 +4,8 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-import React, { useLayoutEffect } from 'react';
+import React, { useLayoutEffect, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { RSTOOL_ROOT } from 'consts';
 import { isMobile } from 'react-device-detect';
@@ -13,11 +14,13 @@ import { ParallaxBanner, useController } from 'react-scroll-parallax';
 import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
 import { Image, Container, Row, Col, Button, ProgressBar, Modal } from 'react-bootstrap';
 import { FaDownload, FaGraduationCap, FaBriefcase } from 'react-icons/fa';
-import Fade from 'react-reveal/Fade';
+import { RESUME_ROUTES } from 'consts/Resume_Consts';
+import Contact from '../Contact/Contact.lazy';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { updateActiveHash } from 'store/actions/navbarActions';
 import 'react-vertical-timeline-component/style.min.css';
 import './ResumeHome.scss';
-import Contact from '../Contact/Contact.lazy';
-import { RESUME_ROUTES } from 'consts/Resume_Consts';
 
 const ParallaxCache = () => {
     const { parallaxController } = useController();
@@ -31,6 +34,26 @@ const ParallaxCache = () => {
     return null;
 };
 
+const _RenderInViewSection = (props) => {
+    const [ref, inView, entry] = useInView({
+        threshold: 1
+    });
+
+    useEffect(() => {
+        if (inView) props.updateActiveHash(props.hashLocation);
+    });
+
+    return (
+        <div ref={ref} />
+    );
+}
+
+_RenderInViewSection.propTypes = {
+    updateActiveHash: PropTypes.func
+};
+const mapDispatchToProps = dispatch => bindActionCreators({ updateActiveHash }, dispatch);
+const RenderInViewSection = connect(null, mapDispatchToProps)(_RenderInViewSection);
+
 const RenderProgBar = (props) => {
     let curr = 0;
 
@@ -41,7 +64,7 @@ const RenderProgBar = (props) => {
     const [ref, inView, entry] = useInView({
         threshold: 1,
         triggerOnce: true
-      });
+    });
 
     if (inView) {
         curr = props.amount;
@@ -133,6 +156,7 @@ class ResumeHome extends React.Component {
         if (isMobile) {
             return (
                 <Container className="content">
+                    <RenderInViewSection hashLocation={"home"} />
                     <Row>
                         <Col xs={12}>
                             <Row>
@@ -167,6 +191,7 @@ class ResumeHome extends React.Component {
         }
         return (
             <Container className="content">
+                <RenderInViewSection hashLocation={"home"} />
                 <Row>
                     <Col xs={12} md={6}>
                         <Row>
@@ -217,6 +242,7 @@ class ResumeHome extends React.Component {
         if (isMobile) {
             return (
                 <Container className="content">
+                    <RenderInViewSection hashLocation={"professional"} />
                     <Row>
                         <div className="center-head">
                             <span className="text body-head">
@@ -231,8 +257,7 @@ class ResumeHome extends React.Component {
                             </span>
                         </div>
                     </Row>
-                    <div className="spacer-h-4
-" />
+                    <div className="spacer-h-4" />
                     <Row>
                         <Col xs={4} className="pr-1">
                             <div className="bar-head">
@@ -354,6 +379,7 @@ class ResumeHome extends React.Component {
         }
         return (
             <Container className="content">
+                <RenderInViewSection hashLocation={"professional"} />
                 <Row>
                     <div className="center-head">
                         <span className="text body-head">
@@ -368,8 +394,7 @@ class ResumeHome extends React.Component {
                         </span>
                     </div>
                 </Row>
-                <div className="spacer-h-5
-" />
+                <div className="spacer-h-5" />
                 <Row>
                     <Col xs={2}>
                         <div className="bar-head">
@@ -383,11 +408,9 @@ class ResumeHome extends React.Component {
                     </Col>
                     <Col xs={2}>
                         <div className="bar-end">
-                            <Fade delay={100} disabled={isMobile}>
-                                <span className="ml-4 text body-text">
-                                    90%
-                                </span>
-                            </Fade>
+                            <span className="ml-4 text body-text">
+                                90%
+                            </span>
                         </div>
                     </Col>
                 </Row>
@@ -405,11 +428,9 @@ class ResumeHome extends React.Component {
                     </Col>
                     <Col xs={2}>
                         <div className="bar-end">
-                            <Fade delay={200} disabled={isMobile}>
-                                <span className="ml-4 text body-text">
-                                    90%
-                                </span>
-                            </Fade>
+                            <span className="ml-4 text body-text">
+                                90%
+                            </span>
                         </div>
                     </Col>
                 </Row>
@@ -427,11 +448,9 @@ class ResumeHome extends React.Component {
                     </Col>
                     <Col xs={2}>
                         <div className="bar-end">
-                            <Fade delay={200} disabled={isMobile}>
-                                <span className="ml-4 text body-text">
-                                    80%
-                                </span>
-                            </Fade>
+                            <span className="ml-4 text body-text">
+                                80%
+                            </span>
                         </div>
                     </Col>
                 </Row>
@@ -449,11 +468,9 @@ class ResumeHome extends React.Component {
                     </Col>
                     <Col xs={2}>
                         <div className="bar-end">
-                            <Fade delay={200} disabled={isMobile}>
-                                <span className="ml-4 text body-text">
-                                    85%
-                                </span>
-                            </Fade>
+                            <span className="ml-4 text body-text">
+                                85%
+                            </span>
                         </div>
                     </Col>
                 </Row>
@@ -471,11 +488,9 @@ class ResumeHome extends React.Component {
                     </Col>
                     <Col xs={2}>
                         <div className="bar-end">
-                            <Fade delay={200} disabled={isMobile}>
-                                <span className="ml-4 text body-text">
-                                    75%
-                                </span>
-                            </Fade>
+                            <span className="ml-4 text body-text">
+                                75%
+                            </span>
                         </div>
                     </Col>
                 </Row>
@@ -493,11 +508,9 @@ class ResumeHome extends React.Component {
                     </Col>
                     <Col xs={2}>
                         <div className="bar-end">
-                            <Fade delay={200} disabled={isMobile}>
-                                <span className="ml-4 text body-text">
-                                    80%
-                                </span>
-                            </Fade>
+                            <span className="ml-4 text body-text">
+                                80%
+                            </span>
                         </div>
                     </Col>
                 </Row>
@@ -515,11 +528,9 @@ class ResumeHome extends React.Component {
                     </Col>
                     <Col xs={2}>
                         <div className="bar-end">
-                            <Fade delay={200} disabled={isMobile}>
-                                <span className="ml-4 text body-text">
-                                    70%
-                                </span>
-                            </Fade>
+                            <span className="ml-4 text body-text">
+                                70%
+                            </span>
                         </div>
                     </Col>
                 </Row>
@@ -537,11 +548,9 @@ class ResumeHome extends React.Component {
                     </Col>
                     <Col xs={2}>
                         <div className="bar-end">
-                            <Fade delay={200} disabled={isMobile}>
-                                <span className="ml-4 text body-text">
-                                    85%
-                                </span>
-                            </Fade>
+                            <span className="ml-4 text body-text">
+                                85%
+                            </span>
                         </div>
                     </Col>
                 </Row>
@@ -559,11 +568,9 @@ class ResumeHome extends React.Component {
                     </Col>
                     <Col xs={2}>
                         <div className="bar-end">
-                            <Fade delay={200} disabled={isMobile}>
-                                <span className="ml-4 text body-text">
-                                    60%
-                                </span>
-                            </Fade>
+                            <span className="ml-4 text body-text">
+                                60%
+                            </span>
                         </div>
                     </Col>
                 </Row>
@@ -575,6 +582,7 @@ class ResumeHome extends React.Component {
         return (
             <div className="experience" id="experience">
                 <Container className="content">
+                    <RenderInViewSection hashLocation={"experience"} />
                     <Row>
                         <div className="center-head">
                             <span className="text body-head">
@@ -582,8 +590,7 @@ class ResumeHome extends React.Component {
                             </span>
                         </div>
                     </Row>
-                    <div className="spacer-h-4
-" />
+                    <div className="spacer-h-4" />
                     <VerticalTimeline className="vertical-timeline-custom-line" animate={!isMobile}>
                         <div className="timeline-circle top" />
                         <VerticalTimelineElement
@@ -691,6 +698,7 @@ class ResumeHome extends React.Component {
                         </VerticalTimelineElement>
                         <div className="timeline-circle bottom" />
                     </VerticalTimeline>
+                    <RenderInViewSection hashLocation={"experience"} />
                 </Container>
             </div>
         );
@@ -701,6 +709,7 @@ class ResumeHome extends React.Component {
             return (
                 <div className="portfolio" id="portfolio">
                     <Container className="content">
+                        <RenderInViewSection hashLocation={"portfolio"} />
                             <Row>
                                 <div className="center-head">
                                     <span className="text body-head">
@@ -715,8 +724,7 @@ class ResumeHome extends React.Component {
                                     </span>
                                 </div>
                             </Row>
-                            <div className="spacer-h-5
-" />
+                            <div className="spacer-h-5" />
                             <Row>
                                 <Col className="portfolio-image-container">
                                     <div className="portfolio-box-container">
@@ -745,79 +753,79 @@ class ResumeHome extends React.Component {
         return (
             <div className="portfolio" id="portfolio">
                 <Container className="content">
-                        <Row>
-                            <div className="center-head">
-                                <span className="text body-head">
-                                    <span className="section-number">03</span> PORTFOLIO
-                                </span>
-                            </div>
-                        </Row>
-                        <Row>
-                            <div className="center-head">
-                                <span className="text body-sub-head">
-                                    MY LATEST WORK. <Link to={RESUME_ROUTES.PORTFOLIO} className="section-number">SEE MORE &gt;</Link>
-                                </span>
-                            </div>
-                        </Row>
-                        <div className="spacer-h-5
-" />
-                        <Row className="portfolio-box-container ml-3 mr-3">
-                            <Col className="portfolio-image-container">
-                                <Link to={RSTOOL_ROOT} className="portfolio-link first">RSTools</Link>
-                            </Col>
-                            <Col className="portfolio-image-container">
-                                <Link to={"/"} className="portfolio-link second">RSTools</Link>
-                            </Col>
-                            <Col className="portfolio-image-container">
-                                <Link to={"/"} className="portfolio-link third">RSTools</Link>
-                            </Col>
-                        </Row>
-                        {/* <div>
-                        <p className="small-font">
-                            <b>RSTools</b><br />
-                            May 2020 – Current<br />
-                            Work in progress tools website <Link to={RSTOOL_ROOT}>Link to site</Link>
-                        </p>
-                        <br />
-                        <p className="small-font">
-                            <b>Find A Spot</b><br />
-                            Jan 2019 – Apr 2019<br />
-                            Designed and developed a mobile application that uses map API to find nearby 
-                            parking organized by user preferred price and distance settings.<br /><br />
-                            • Utilizes ParkWhiz API and Google Map API.<br />
-                            • Developed using IntelliJ IDEA with Cordova framework.<br />
-                            • User data is stored in Google FireBase and images in local phone storage.<br />
-                            • Uses Geolocation to appropriately set nearby parking parameters.<br />
-                        </p>
-                        <br />
-                        <p className="small-font">
-                            <b>Inner Hero</b><br />
-                            Apr 2016 – Aug 2016<br /><br />
-                            • Collaborated with four members, including three programmers, and one designer from the Game Level 
-                            Design program, to develop and produce an original Android mobile game, currently available through Android Apps on Google Play.<br />
-                            • Completed the project in four months, logging 7-8 hours of work each day, five days per week.<br />
-                            • Developed and executed all gameplay with the main section, including interactive elements, 
-                            path-finding for players and enemies, main combat systems (including elements from Fruit Ninja), and UI elements (quick slot, toggle, and other buttons).<br />
-                            • Created AI for the main player, enabling intervention and command. Incorporated the ability for the user to set the phone down while play continued.<br />
-                            • Developed unique systems that operated during run time, mapped out and generated logical 
-                            lists of interest points to allow automatic exploration, created a dynamic and random behaviour of bosses, and options to select 40 different abilities.<br />
-                            • Identified and selected algorithmic, programming, and mathematical techniques to develop systems for various aspects of the game.<br />
-                            • Created prototypes with existing professional tools, such as game engines, middleware, and common application programming interfaces.<br />
-                            • Leveraged collaborative tools related to industry practices, including source control, build management, deployment, and bug tracking.<br />
-                            • Utilized project management skills, including development tasks and team member interactions.<br />
-                            • Tested, debugged, and optimized game and components to meet production requirements and time constraints.<br />
-                        </p>
-                        <br />
-                        <p className="small-font">
-                            <b>Darkest Dungeon</b><br />
-                            Jan 2016 – Apr 2016<br /><br />
-                            • Collaborated on a mobile game project with two team members, leveraging the multi-platform game development tool, Unity.<br />
-                            • Accountable for the multiplayer portion of development, using Unity’s Photon classes, UI elements 
-                            (bag system and in-game menus), and large components of AI, including a smart AI-controlled player assist.<br />
-                            • The game was developed to include up to four players simultaneously, allowing joining in a lobby, 
-                            fighting between users, and playing in a collaborative manner to complete the main dungeon quest.<br />
-                        </p>
-                        </div> */}
+                    <RenderInViewSection hashLocation={"portfolio"} />
+                    <Row>
+                        <div className="center-head">
+                            <span className="text body-head">
+                                <span className="section-number">03</span> PORTFOLIO
+                            </span>
+                        </div>
+                    </Row>
+                    <Row>
+                        <div className="center-head">
+                            <span className="text body-sub-head">
+                                MY LATEST WORK. <Link to={RESUME_ROUTES.PORTFOLIO} className="section-number">SEE MORE &gt;</Link>
+                            </span>
+                        </div>
+                    </Row>
+                    <div className="spacer-h-5" />
+                    <Row className="portfolio-box-container ml-3 mr-3">
+                        <Col className="portfolio-image-container">
+                            <Link to={RSTOOL_ROOT} className="portfolio-link first">RSTools</Link>
+                        </Col>
+                        <Col className="portfolio-image-container">
+                            <Link to={"/"} className="portfolio-link second">RSTools</Link>
+                        </Col>
+                        <Col className="portfolio-image-container">
+                            <Link to={"/"} className="portfolio-link third">RSTools</Link>
+                        </Col>
+                    </Row>
+                    {/* <div>
+                    <p className="small-font">
+                        <b>RSTools</b><br />
+                        May 2020 – Current<br />
+                        Work in progress tools website <Link to={RSTOOL_ROOT}>Link to site</Link>
+                    </p>
+                    <br />
+                    <p className="small-font">
+                        <b>Find A Spot</b><br />
+                        Jan 2019 – Apr 2019<br />
+                        Designed and developed a mobile application that uses map API to find nearby 
+                        parking organized by user preferred price and distance settings.<br /><br />
+                        • Utilizes ParkWhiz API and Google Map API.<br />
+                        • Developed using IntelliJ IDEA with Cordova framework.<br />
+                        • User data is stored in Google FireBase and images in local phone storage.<br />
+                        • Uses Geolocation to appropriately set nearby parking parameters.<br />
+                    </p>
+                    <br />
+                    <p className="small-font">
+                        <b>Inner Hero</b><br />
+                        Apr 2016 – Aug 2016<br /><br />
+                        • Collaborated with four members, including three programmers, and one designer from the Game Level 
+                        Design program, to develop and produce an original Android mobile game, currently available through Android Apps on Google Play.<br />
+                        • Completed the project in four months, logging 7-8 hours of work each day, five days per week.<br />
+                        • Developed and executed all gameplay with the main section, including interactive elements, 
+                        path-finding for players and enemies, main combat systems (including elements from Fruit Ninja), and UI elements (quick slot, toggle, and other buttons).<br />
+                        • Created AI for the main player, enabling intervention and command. Incorporated the ability for the user to set the phone down while play continued.<br />
+                        • Developed unique systems that operated during run time, mapped out and generated logical 
+                        lists of interest points to allow automatic exploration, created a dynamic and random behaviour of bosses, and options to select 40 different abilities.<br />
+                        • Identified and selected algorithmic, programming, and mathematical techniques to develop systems for various aspects of the game.<br />
+                        • Created prototypes with existing professional tools, such as game engines, middleware, and common application programming interfaces.<br />
+                        • Leveraged collaborative tools related to industry practices, including source control, build management, deployment, and bug tracking.<br />
+                        • Utilized project management skills, including development tasks and team member interactions.<br />
+                        • Tested, debugged, and optimized game and components to meet production requirements and time constraints.<br />
+                    </p>
+                    <br />
+                    <p className="small-font">
+                        <b>Darkest Dungeon</b><br />
+                        Jan 2016 – Apr 2016<br /><br />
+                        • Collaborated on a mobile game project with two team members, leveraging the multi-platform game development tool, Unity.<br />
+                        • Accountable for the multiplayer portion of development, using Unity’s Photon classes, UI elements 
+                        (bag system and in-game menus), and large components of AI, including a smart AI-controlled player assist.<br />
+                        • The game was developed to include up to four players simultaneously, allowing joining in a lobby, 
+                        fighting between users, and playing in a collaborative manner to complete the main dungeon quest.<br />
+                    </p>
+                    </div> */}
                 </Container>
             </div>
         );
@@ -826,8 +834,9 @@ class ResumeHome extends React.Component {
     renderContact = () => {
         return (
             <Container className="content">
-                <div className="contact-head" />
+                <div className="contact-head" id="contact" />
                 <div className="contact-container">
+                    <RenderInViewSection hashLocation={"contact"} />
                     <Contact />
                 </div>
             </Container>
@@ -847,7 +856,7 @@ class ResumeHome extends React.Component {
                     show={referenceShow}
                     onHide={() => this.setReferenceShow(false)}
                 />
-                <div className="ResumeHome" id='home'>
+                <div className="ResumeHome" id="home">
                     <ParallaxBanner
                         className="home"
                         disabled={isMobile}
@@ -873,7 +882,7 @@ class ResumeHome extends React.Component {
                         </div>
                     </div>
                     : null}
-                    <div id="professional"/>
+                    <div id="professional" />
                     <ParallaxBanner
                         className="professional"
                         disabled={isMobile}
@@ -892,7 +901,6 @@ class ResumeHome extends React.Component {
                     </ParallaxBanner>
                     {this.renderExperience()}
                     {this.renderPortfolio()}
-                    <div id="contact" />
                     <ParallaxBanner
                         className="contact"
                         disabled={isMobile}

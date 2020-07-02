@@ -31,7 +31,7 @@ class Contact extends React.Component {
                 <Row>
                     <div className="center-head">
                         <span className="text body-head">
-                            CONTACT
+                            CONTACT ME
                         </span>
                     </div>
                 </Row>

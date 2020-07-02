@@ -34,16 +34,23 @@ class navbarMain extends React.Component {
         this.setState({ expanded: val });
     }
 
-    isActiveClass = (hashRoute, emptyCheck = false) => {
-        const { hash } = this.props.location;
-        const fullHash = '/' + hash;
-        if (emptyCheck) {
-            if (fullHash === hashRoute || fullHash === "")
-                return "is-active-link";
-        }
+    // isActiveClass = (hashRoute, emptyCheck = false) => {
+    //     const { hash, pathname } = this.props.location;
+    //     const fullHash = "/" + hash;
+    //     const pathNoHash =  hashRoute.replace("#", "");
+    //     if (emptyCheck) {
+    //         if (fullHash === hashRoute || fullHash === "")
+    //             return "is-active-link";
+    //     }
 
-        if (fullHash === hashRoute)
-            return "is-active-link";
+    //     if (fullHash === hashRoute || pathname === pathNoHash)
+    //         return "is-active-link";
+    //     return "";
+    // }
+
+    isActiveClass = (hashRoute, hash) => {
+        const pathNoHash =  hashRoute.replace("/#", "");
+        if (pathNoHash === hash) return "is-active-link";
         return "";
     }
 
@@ -62,15 +69,16 @@ class navbarMain extends React.Component {
     }
 
     renderNav = () => {
-        const type = this.props.type;
+        const { type } = this.props;
 
         switch (type) {
             case NAVBAR_TYPE.RESUME:
+                const { hash } = this.props.navbarReducer;
                 return (
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <NavHashLink 
                             to={RESUME_ROUTES.HASH_HOME}
-                            activeClassName={this.isActiveClass(RESUME_ROUTES.HASH_HOME, true)}
+                            activeClassName={this.isActiveClass(RESUME_ROUTES.HASH_HOME, hash)}
                             scroll={this.scrollWidthOffset}
                         >
                             HOME
@@ -78,7 +86,7 @@ class navbarMain extends React.Component {
                         <div className="ml-3 mr-3"/>
                         <NavHashLink 
                             to={RESUME_ROUTES.HASH_PROFESSIONAL}
-                            activeClassName={this.isActiveClass(RESUME_ROUTES.HASH_PROFESSIONAL)}
+                            activeClassName={this.isActiveClass(RESUME_ROUTES.HASH_PROFESSIONAL, hash)}
                             scroll={this.scrollWidthOffset}
                         >
                             PROFESSIONAL
@@ -86,7 +94,7 @@ class navbarMain extends React.Component {
                         <div className="ml-3 mr-3"/>
                         <NavHashLink 
                             to={RESUME_ROUTES.HASH_EXPERIENCE}
-                            activeClassName={this.isActiveClass(RESUME_ROUTES.HASH_EXPERIENCE)}
+                            activeClassName={this.isActiveClass(RESUME_ROUTES.HASH_EXPERIENCE, hash)}
                             scroll={this.scrollWidthOffset}
                         >
                             EXPERIENCE
@@ -94,7 +102,7 @@ class navbarMain extends React.Component {
                         <div className="ml-3 mr-3"/>
                         <NavHashLink 
                             to={RESUME_ROUTES.HASH_PORTFOLIO}
-                            activeClassName={this.isActiveClass(RESUME_ROUTES.HASH_PORTFOLIO)}
+                            activeClassName={this.isActiveClass(RESUME_ROUTES.HASH_PORTFOLIO, hash)}
                             scroll={this.scrollWidthOffset}
                         >
                             PORTFOLIO
@@ -102,7 +110,7 @@ class navbarMain extends React.Component {
                         <div className="ml-3 mr-3"/>
                         <NavHashLink 
                             to={RESUME_ROUTES.HASH_CONTACT}
-                            activeClassName={this.isActiveClass(RESUME_ROUTES.HASH_CONTACT)}
+                            activeClassName={this.isActiveClass(RESUME_ROUTES.HASH_CONTACT, hash)}
                             scroll={this.scrollWidthOffset}
                         >
                             CONTACT
@@ -146,6 +154,7 @@ class navbarMain extends React.Component {
                 </Navbar.Brand>
                 <div className="ml-4 mr-4"/>
                 <Navbar.Toggle onClick={() => this.setExpanded(expanded ? false : "expanded")} aria-controls="responsive-navbar-nav" />
+                {/* TODO: style this toggle button */}
                 {this.renderNav()}
             </Navbar>
         );
@@ -154,12 +163,14 @@ class navbarMain extends React.Component {
 
 navbarMain.propTypes = {
     logoutUser: PropTypes.func,
-    userReducer: PropTypes.object
+    userReducer: PropTypes.object,
+    navbarReducer: PropTypes.object,
 };
 
 const mapStateToProps = state => {
     return {
-        userReducer: state.userReducer
+        userReducer: state.userReducer,
+        navbarReducer: state.navbarReducer
     };
 }
 
