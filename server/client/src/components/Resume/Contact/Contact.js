@@ -5,11 +5,11 @@
  */
 
 import React from 'react';
-import { Container, Row, Form, InputGroup, FormControl, Button, Col, Alert } from 'react-bootstrap';
+import { Container, Row, Form, InputGroup, FormControl, Button } from 'react-bootstrap';
 import { contactSchema } from 'components/helpers/formValidation';
-import './Contact.scss';
 import { Formik } from 'formik';
 import { FaEnvelope, FaUser, FaEnvelopeOpenText } from 'react-icons/fa';
+import './Contact.scss';
 
 class Contact extends React.Component {
     constructor(props) {

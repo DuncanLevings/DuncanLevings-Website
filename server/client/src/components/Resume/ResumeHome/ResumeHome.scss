@@ -3,19 +3,6 @@
 @import '../../../assets/style/vars';
 
 .ResumeHome {
-
-    .text {
-        text-align: start;
-        line-height: normal;
-        font-style: normal;
-        font-variant-ligatures: normal;
-        font-variant-caps: normal;
-        font-variant-numeric: normal;
-        font-variant-east-asian: normal;
-        font-weight: normal;
-        font-stretch: normal;
-    }
-
     .home {
         @include respond-to(xs) {
             min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */

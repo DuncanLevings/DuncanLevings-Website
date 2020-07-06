@@ -1,0 +1,48 @@
+@import '../../../assets/style/colors';
+
+.PortfolioModal {
+    color: $dark-theme;
+    font-family: 'Roboto', sans-serif;
+
+    .modal-title {
+        font-size: calc(12px + 2vmin);
+    }
+
+    .modal-body {
+        font-size: calc(12px + 1vmin);
+
+        .carousel-inner {
+            height: 376px; // adjust for different screen sizes
+        }
+
+        .carousel-item {
+            height: 100%;
+        }
+
+        .carousel-item > img {
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .portfolio-header {
+            padding-bottom: 1rem;
+        }
+
+        .language-text {
+            padding-left: 1rem;
+            font-size: calc(8px + 1vmin);
+        }
+
+        .portfolio-details {
+            font-size: calc(8px + 1vmin);
+        }
+    }
+
+    .portfolio-link {
+        flex: auto;
+
+        .portfolio-footer-button {
+            margin-right: 1rem;
+        }
+    }
+}

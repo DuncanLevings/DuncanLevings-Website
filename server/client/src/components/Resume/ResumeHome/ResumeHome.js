@@ -4,7 +4,7 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-import React, { useLayoutEffect, useEffect } from 'react';
+import React, { useLayoutEffect, useEffect, createRef } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
@@ -17,7 +17,6 @@ import { Image, Container, Row, Col, Button, ProgressBar, Modal } from 'react-bo
 import { FaDownload, FaGraduationCap, FaBriefcase } from 'react-icons/fa';
 import { updateActiveHash } from 'store/actions/navbarActions';
 import { RESUME_ROUTES } from 'consts/Resume_Consts';
-import { RSTOOL_ROOT } from 'consts';
 import Contact from '../Contact/Contact.lazy';
 import 'react-vertical-timeline-component/style.min.css';
 import './ResumeHome.scss';
@@ -138,7 +137,8 @@ class ResumeHome extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            referenceShow: false
+            referenceShow: false,
+            modalWrapper: createRef()
         }
     }
 
@@ -712,6 +712,7 @@ class ResumeHome extends React.Component {
     }
 
     renderPortfolio = () => {
+        // TODO: render latest 3 projects ordered by date started.
         if (isMobile) {
             return (
                 <div className="portfolio" id="portfolio">

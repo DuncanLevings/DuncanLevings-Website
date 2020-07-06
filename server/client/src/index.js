@@ -8,13 +8,11 @@ import store, { history } from 'store';
 import 'index.scss';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Provider store={store}>
+  <Provider store={store}>
       <ConnectedRouter history={history}>
         <App />
       </ConnectedRouter>
-    </Provider>
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 

@@ -8,9 +8,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Container, Row, Col, Card, CardColumns, CardGroup, CardDeck } from 'react-bootstrap';
+import { Container, Row, Col, Card, CardDeck } from 'react-bootstrap';
 import { updateActiveHash } from 'store/actions/navbarActions';
 import { RESUME_ROUTES } from 'consts/Resume_Consts';
+import PortfolioModal from '../PortfolioModal/PortfolioModal.lazy';
 import './Portfolio.scss';
 
 class Portfolio extends React.Component {
@@ -64,7 +65,58 @@ class Portfolio extends React.Component {
                     title: "DuncanLevings website",
                     icon: "react",
                     context: "My personal resume website.",
-                    dates: "May 2020 - Current"
+                    dateStart: "May 2020",
+                    dateEnd: "",
+                    images: ["/static_images/project_img1.png", "/static_images/project_img2.png"],
+                    languages: [
+                        {
+                            icon: "react",
+                            text: "React"
+                        },
+                        {
+                            icon: "typescript",
+                            text: "Typescript"
+                        },
+                        {
+                            icon: "nodejs",
+                            text: "NodeJS"
+                        },
+                        {
+                            icon: "bootstrap",
+                            text: "Bootstrap"
+                        }
+                    ],
+                    tools: [
+                        {
+                            icon: "github",
+                            text: "Github"
+                        },
+                        {
+                            icon: "visualstudio",
+                            text: "Visual Studio"
+                        },
+                        {
+                            icon: "google",
+                            text: "Google Services"
+                        },
+                        {
+                            icon: "mongodb",
+                            text: "MongoDB"
+                        },
+                        {
+                            icon: "redis",
+                            text: "Redis"
+                        }
+                    ],
+                    details: [
+                        "Built upon React libary utilizing Google App Engine for deployment.",
+                        "Responsive design allowing user friendly browsing on all devices.",
+                        "Admin login for adding/editing/removing components of the site."
+                    ],
+                    link: "localhost:3000",
+                    github: "https://github.com/DuncanLevings/personal_website",
+                    completed: false,
+                    date: "" // used for mongodb retrival
                 },
                 {
                     title: "RSTools",
@@ -180,7 +232,8 @@ class Portfolio extends React.Component {
                     context: "AHK scripts",
                     dates: "TBD"
                 }
-            ]
+            ],
+            showModal: false
         }
     }
 
@@ -189,10 +242,21 @@ class Portfolio extends React.Component {
         this.props.updateActiveHash(RESUME_ROUTES.HASH_PORTFOLIO);
     }
 
+    showModal = (bool, index = -1) => {
+        this.setState({ showModal: bool });
+        if (index > -1) this.setState({ selectedProject: this.state.projects[index] });
+    }
+
     render() {
+        const { showModal, selectedProject } = this.state;
         return (
             <div className="Portfolio">
                 <Container className="content">
+                    <PortfolioModal
+                        show={showModal}
+                        onHide={() => this.showModal(false)}
+                        selectedproject={selectedProject}
+                    />
                     <Row className="justify-content-center">
                         {this.state.languages.map((language, i) => {
                             return (
@@ -213,7 +277,7 @@ class Portfolio extends React.Component {
                     <CardDeck>
                         {this.state.projects.map((project, i) => {
                                 return (
-                                    <Card className="portfolio-card" key={i}>
+                                    <Card className="portfolio-card" key={i} onClick={() => this.showModal(true, i) }>
                                         <Card.Body className="main-body">
                                             <Card.Title>{project.title}<i className={`portfolio-icon devicon-${project.icon}-plain`} /></Card.Title>
                                             <Card.Text>
@@ -224,7 +288,7 @@ class Portfolio extends React.Component {
                                             <span className="click-to-read-more">Click to read more...</span>
                                         </Card.Body>
                                         <Card.Footer>
-                                            <small className="text-muted">Dates: {project.dates}</small>
+                                            <small className="text-muted">Dates: {project.dateStart} - {project.dateEnd ? project.dateEnd : "current"}</small>
                                         </Card.Footer>
                                     </Card>
                                 );

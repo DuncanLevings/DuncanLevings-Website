@@ -18,9 +18,17 @@
     color: $link-active;
     text-decoration: none;
 }
-.spacer-h-2 {
-    margin-top: 2vh;
-    margin-bottom: 2vh;
+
+.text {
+    text-align: start;
+    line-height: normal;
+    font-style: normal;
+    font-variant-ligatures: normal;
+    font-variant-caps: normal;
+    font-variant-numeric: normal;
+    font-variant-east-asian: normal;
+    font-weight: normal;
+    font-stretch: normal;
 }
 
 .spacer {
