@@ -1,3 +1,4 @@
+@import '../../../assets/style/breakpoints';
 @import '../../../assets/style/colors';
 
 .PortfolioModal {
@@ -12,7 +13,13 @@
         font-size: calc(12px + 1vmin);
 
         .carousel-inner {
-            height: 376px; // adjust for different screen sizes
+            @include respond-to(xs) {
+                height: 176px;
+            }
+
+            @include respond-to(m) {
+                height: 376px;
+            }
         }
 
         .carousel-item {

@@ -705,7 +705,9 @@ class ResumeHome extends React.Component {
                         </VerticalTimelineElement>
                         <div className="timeline-circle bottom" />
                     </VerticalTimeline>
-                    <RenderInViewSection hashLocation={RESUME_ROUTES.HASH_EXPERIENCE} />
+                    {isMobileOnly ? (null) : (
+                        <RenderInViewSection hashLocation={RESUME_ROUTES.HASH_EXPERIENCE} />
+                    )}
                 </Container>
             </div>
         );

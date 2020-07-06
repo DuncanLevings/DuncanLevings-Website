@@ -8,6 +8,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Modal, Button, Carousel, Row, Col } from 'react-bootstrap';
 import './PortfolioModal.scss';
+import { FaTools } from 'react-icons/fa';
 
 class PortfolioModal extends React.Component {
     constructor(props) {
@@ -65,7 +66,9 @@ class PortfolioModal extends React.Component {
                                 return (
                                     <Row key={i}>
                                         <Col>
-                                            <i className={`language-icon devicon-${language.icon}-plain`} />
+                                            {language.icon ? (
+                                                <i className={`language-icon devicon-${language.icon}-plain`} />
+                                            ) : (<FaTools />)} 
                                             <span className="language-text">{language.text}</span>
                                         </Col>
                                     </Row>
@@ -78,7 +81,9 @@ class PortfolioModal extends React.Component {
                                 return (
                                     <Row key={i}>
                                         <Col>
-                                            <i className={`language-icon devicon-${tool.icon}-plain`} />
+                                            {tool.icon ? (
+                                                <i className={`language-icon devicon-${tool.icon}-plain`} />
+                                            ) : (<FaTools />)}
                                             <span className="language-text">{tool.text}</span>
                                         </Col>
                                     </Row>
@@ -101,7 +106,9 @@ class PortfolioModal extends React.Component {
                         {link ? (
                             <Button className="portfolio-footer-button" variant="button-primary" href={link} target="_blank">View site</Button>
                         ) : (null)}
-                        <Button className="portfolio-footer-button" variant="button-primary" href={github} target="_blank">Github</Button>
+                        {github ? (
+                            <Button className="portfolio-footer-button" variant="button-primary" href={github} target="_blank">Github</Button>
+                        ) : (null)}
                     </div>
                     <Button onClick={this.props.onHide}>Close</Button>
                 </Modal.Footer>

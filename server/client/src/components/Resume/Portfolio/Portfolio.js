@@ -67,7 +67,7 @@ class Portfolio extends React.Component {
                     context: "My personal resume website.",
                     dateStart: "May 2020",
                     dateEnd: "",
-                    images: ["/static_images/project_img1.png", "/static_images/project_img2.png"],
+                    images: ["/static_images/project_img1.png", "/static_images/project_img2.png", "/static_images/mountain.jpg"],
                     languages: [
                         {
                             icon: "react",
@@ -122,115 +122,230 @@ class Portfolio extends React.Component {
                     title: "RSTools",
                     icon: "react",
                     context: "Collection of tools to enhance game interaction.",
-                    dates: "May 2020 - Current"
+                    dateStart: "May 2020",
+                    dateEnd: "",
+                    languages: [
+                        {
+                            icon: "react",
+                            text: "React"
+                        },
+                        {
+                            icon: "typescript",
+                            text: "Typescript"
+                        },
+                        {
+                            icon: "nodejs",
+                            text: "NodeJS"
+                        },
+                        {
+                            icon: "bootstrap",
+                            text: "Bootstrap"
+                        }
+                    ],
+                    tools: [
+                        {
+                            icon: "github",
+                            text: "Github"
+                        },
+                        {
+                            icon: "visualstudio",
+                            text: "Visual Studio"
+                        },
+                        {
+                            icon: "google",
+                            text: "Google Services"
+                        },
+                        {
+                            icon: "mongodb",
+                            text: "MongoDB"
+                        }
+                    ],
+                    details: [
+                        "Coming soon."
+                    ],
+                    link: "",
+                    github: "",
+                    completed: false,
+                    date: "" // used for mongodb retrival
                 },
                 {
                     title: "Royaltymine",
                     icon: "react",
                     context: "Website owned by ZHYInteractive. MongoDB, SocketIO, JWT Tokens...",
-                    dates: "Jan 2020 - June 2020"
+                    dateStart: "Jan 2020",
+                    dateEnd: "June 2020",
+                    languages: [
+                        {
+                            icon: "react",
+                            text: "React"
+                        },
+                        {
+                            icon: "typescript",
+                            text: "Typescript"
+                        },
+                        {
+                            icon: "nodejs",
+                            text: "NodeJS"
+                        },
+                        {
+                            icon: "",
+                            text: "AntD Styling"
+                        }
+                    ],
+                    tools: [
+                        {
+                            icon: "github",
+                            text: "Github"
+                        },
+                        {
+                            icon: "visualstudio",
+                            text: "Visual Studio"
+                        },
+                        {
+                            icon: "google",
+                            text: "Google Services"
+                        },
+                        {
+                            icon: "mongodb",
+                            text: "MongoDB"
+                        },
+                        {
+                            icon: "redis",
+                            text: "Redis"
+                        },
+                        {
+                            icon: "",
+                            text: "SendGrid"
+                        }
+                    ],
+                    details: [
+                        "Utilized MongoDB along with conventional standards in react services to develop new backend features.",
+                        "Implemented JWT Token authentication for login and user access permissions.",
+                        "Uses Socket.IO created connection streams for real-time notifications."
+                    ],
+                    link: "https://royaltymine.com/",
+                    github: "",
+                    completed: true,
+                    date: "" // used for mongodb retrival
                 },
                 {
                     title: "Find A Spot",
                     icon: "android",
                     context: "App for finding nearby parking.",
-                    dates: "Jan 2019 – Apr 2019"
+                    dateStart: "Jan 2019",
+                    dateEnd: "Apr 2019"
                 },
                 {
                     title: "Web Scraper",
                     icon: "python",
                     context: "Tool to scrape website with python",
-                    dates: "2019 Jan - 2019 Jan"
+                    dateStart: "2019 Jan",
+                    dateEnd: "2019 Jan"
                 },
                 {
                     title: "Slayer Tool",
                     icon: "csharp",
                     context: "Windows app to allow creating preset loadouts.",
-                    dates: "2018 Dec - 2018 Dec"
+                    dateStart: "2018 Dec",
+                    dateEnd: "2018 Dec"
                 },
                 {
                     title: "School Assignments",
                     icon: "java",
                     context: "Various assignments using Java.",
-                    dates: "2018"
+                    dateStart: "2018",
+                    dateEnd: "2018"
                 },
                 {
                     title: "School Assignments",
                     icon: "javascript",
                     context: "Various assignments using Javascript.",
-                    dates: "2018"
+                    dateStart: "2018",
+                    dateEnd: "2018"
                 },
                 {
                     title: "School Assignments",
                     icon: "cplusplus",
                     context: "Various assignments using C/C++.",
-                    dates: "2018"
+                    dateStart: "2018",
+                    dateEnd: "2018"
                 },
                 {
                     title: "School Assignments",
                     icon: "python",
                     context: "Various assignments using Python.",
-                    dates: "2018"
+                    dateStart: "2018",
+                    dateEnd: "2018"
                 },
                 {
                     title: "Recipe Plus",
                     icon: "android",
                     context: "App for creating recipes.",
-                    dates: "Oct 2018 – Dec 2018"
+                    dateStart: "Oct 2018",
+                    dateEnd: "Dec 2018"
                 },
                 {
                     title: "Inner Hero",
                     icon: "csharp",
                     context: "Capstone project, fully functional Unity game.",
-                    dates: "Apr 2016 – Aug 2016"
+                    dateStart: "Apr 2016",
+                    dateEnd: "Aug 2016"
                 },
                 {
                     title: "Darkest Dungeon",
                     icon: "csharp",
                     context: "Unity game with multiplayer",
-                    dates: "Jan 2016 – Apr 2016"
+                    dateStart: "Jan 2016",
+                    dateEnd: "Apr 2016"
                 },
                 {
                     title: "Borderlands 2 AHK Scripts",
                     icon: "github",
                     context: "AHK scripts",
-                    dates: "TBD"
+                    dateStart: "TBD",
+                    dateEnd: "TBD"
                 },
                 {
                     title: "Runescape AHK Scripts",
                     icon: "github",
                     context: "AHK scripts",
-                    dates: "TBD"
+                    dateStart: "TBD",
+                    dateEnd: "TBD"
                 },
                 {
                     title: "Darksouls AHK Scripts",
                     icon: "github",
                     context: "AHK scripts",
-                    dates: "TBD"
+                    dateStart: "TBD",
+                    dateEnd: "TBD"
                 },
                 {
                     title: "Disgaea AHK Scripts",
                     icon: "github",
                     context: "AHK scripts",
-                    dates: "TBD"
+                    dateStart: "TBD",
+                    dateEnd: "TBD"
                 },
                 {
                     title: "Warframe AHK Scripts",
                     icon: "github",
                     context: "AHK scripts",
-                    dates: "TBD"
+                    dateStart: "TBD",
+                    dateEnd: "TBD"
                 },
                 {
                     title: "Dungeon Defenders AHK Scripts",
                     icon: "github",
                     context: "AHK scripts",
-                    dates: "TBD"
+                    dateStart: "TBD",
+                    dateEnd: "TBD"
                 },
                 {
                     title: "Modded Minecraft AHK Scripts",
                     icon: "github",
                     context: "AHK scripts",
-                    dates: "TBD"
+                    dateStart: "TBD",
+                    dateEnd: "TBD"
                 }
             ],
             showModal: false

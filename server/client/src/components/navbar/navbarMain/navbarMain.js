@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux';
 import { Button, Navbar, Nav } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
 import { NavHashLink } from 'react-router-hash-link';
-import { isMobile } from 'react-device-detect';
+import { isMobile, isMobileOnly } from 'react-device-detect';
 import { RSTOOL_ROOT, NAVBAR_TYPE } from 'consts';
 import { RESUME_ROUTES } from 'consts/Resume_Consts';
 import { logoutUser } from 'store/actions/userActions';
@@ -46,20 +46,15 @@ class navbarMain extends React.Component {
 
     scrollWidthOffset = el => {
         let top = el.getBoundingClientRect().top;
-        let yOffset = -77;
+        const yCoordinate = top + window.pageYOffset;
+        let yOffset = isMobile ? -327.81 : -77.81;
 
         if (top > 0 && top < (yOffset * -1)) {
             if (isMobile) this.setExpanded(false);
             return;
         }
+        if (isMobile) this.setExpanded(false);
 
-        if (isMobile) {
-            setTimeout(() => {
-                this.setExpanded(false);
-            }, 1000);
-        }
-
-        const yCoordinate = top + window.pageYOffset;
         window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' }); 
     }
 
@@ -150,7 +145,6 @@ class navbarMain extends React.Component {
                 </Navbar.Brand>
                 <div className="ml-4 mr-4"/>
                 <Navbar.Toggle onClick={() => this.setExpanded(expanded ? false : "expanded")} aria-controls="responsive-navbar-nav" />
-                {/* TODO: style this toggle button */}
                 {this.renderNav()}
             </Navbar>
         );
