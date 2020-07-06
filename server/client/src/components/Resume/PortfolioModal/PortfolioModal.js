@@ -7,8 +7,8 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Modal, Button, Carousel, Row, Col } from 'react-bootstrap';
-import './PortfolioModal.scss';
 import { FaTools } from 'react-icons/fa';
+import './PortfolioModal.scss';
 
 class PortfolioModal extends React.Component {
     constructor(props) {
@@ -50,7 +50,7 @@ class PortfolioModal extends React.Component {
                                         <img
                                             className="d-block w-100"
                                             src={img}
-                                            alt="image"
+                                            alt="project"
                                         />
                                     </Carousel.Item>
                                 );

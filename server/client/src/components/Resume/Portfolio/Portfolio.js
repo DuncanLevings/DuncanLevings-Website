@@ -62,12 +62,12 @@ class Portfolio extends React.Component {
             ],
             projects: [
                 {
-                    title: "DuncanLevings website",
+                    title: "Duncan Levings",
                     icon: "react",
                     context: "My personal resume website.",
                     dateStart: "May 2020",
                     dateEnd: "",
-                    images: ["/static_images/project_img1.png", "/static_images/project_img2.png", "/static_images/mountain.jpg"],
+                    images: ["/static_images/project_img1.png", "/static_images/project_img2.png"],
                     languages: [
                         {
                             icon: "react",
@@ -113,7 +113,7 @@ class Portfolio extends React.Component {
                         "Responsive design allowing user friendly browsing on all devices.",
                         "Admin login for adding/editing/removing components of the site."
                     ],
-                    link: "localhost:3000",
+                    link: "https://duncanlevings.com",
                     github: "https://github.com/DuncanLevings/personal_website",
                     completed: false,
                     date: "" // used for mongodb retrival

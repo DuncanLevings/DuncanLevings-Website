@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux';
 import { Button, Navbar, Nav } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
 import { NavHashLink } from 'react-router-hash-link';
-import { isMobile, isMobileOnly } from 'react-device-detect';
+import { isMobile } from 'react-device-detect';
 import { RSTOOL_ROOT, NAVBAR_TYPE } from 'consts';
 import { RESUME_ROUTES } from 'consts/Resume_Consts';
 import { logoutUser } from 'store/actions/userActions';

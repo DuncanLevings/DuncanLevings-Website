@@ -13,13 +13,14 @@ import { isMobileOnly, isMobile } from 'react-device-detect';
 import { useInView } from 'react-intersection-observer';
 import { ParallaxBanner, useController } from 'react-scroll-parallax';
 import { VerticalTimeline, VerticalTimelineElement }  from 'react-vertical-timeline-component';
-import { Image, Container, Row, Col, Button, ProgressBar, Modal } from 'react-bootstrap';
+import { Image, Container, Row, Col, Button, ProgressBar } from 'react-bootstrap';
 import { FaDownload, FaGraduationCap, FaBriefcase } from 'react-icons/fa';
 import { updateActiveHash } from 'store/actions/navbarActions';
 import { RESUME_ROUTES } from 'consts/Resume_Consts';
 import Contact from '../Contact/Contact.lazy';
 import 'react-vertical-timeline-component/style.min.css';
 import './ResumeHome.scss';
+import ReferenceModal from '../ReferenceModal/ReferenceModal.lazy';
 
 const ParallaxCache = () => {
     const { parallaxController } = useController();
@@ -34,7 +35,7 @@ const ParallaxCache = () => {
 };
 
 const _RenderInViewSection = (props) => {
-    const [ref, inView, entry] = useInView({
+    const [ref, inView] = useInView({
         threshold: 1
     });
 
@@ -46,7 +47,6 @@ const _RenderInViewSection = (props) => {
         <div ref={ref} />
     );
 }
-
 _RenderInViewSection.propTypes = {
     updateActiveHash: PropTypes.func
 };
@@ -60,7 +60,7 @@ const RenderProgBar = (props) => {
         curr = props.amount;
     }
 
-    const [ref, inView, entry] = useInView({
+    const [ref, inView] = useInView({
         threshold: 1,
         rootMargin: "0px 0px -25px 0px",
         triggerOnce: true
@@ -77,68 +77,156 @@ const RenderProgBar = (props) => {
     );
 }
 
-const ReferenceModal = props => {
-    return (
-        <Modal
-            {...props}
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            dialogClassName="reference"
-            centered
-        >
-            <Modal.Body>
-                <p>
-                    Jack Yan<br/>
-                    Suite 406<br/>
-                    Toronto, 263 Adelaide Street West, ON M5H 1Y2<br/>
-                    jack@zhyinteractive.com
-                </p>
-                <p>
-                    Dear Hiring Manager,
-                </p>
-                <p>
-                    I am the Founder of ZHY Interactive Incorporated, a technology holding company based in Toronto. 
-                    It is with great enthusiasm that I am writing this letter for <b>Duncan Levings</b>’ application to your company. 
-                </p>
-                <p>
-                    Duncan worked as a Software Engineer at ZHY Interactive Incorporated from January 1, 2020 to April 30, 2020. 
-                    During this time he contributed towards the development and launch of key features for Royaltymine, an 
-                    industry leading crowdfunding platform for musicians. He fulfilled this role with professionalism and 
-                    continuously demonstrated enthusiasm towards working with his peers and completing tasks assigned to him. 
-                    He also demonstrated value right from the beginning of his internship by obtaining a working understanding of 
-                    React and MongoDB without much prior knowledge in a very short amount of time.
-                </p>
-                <p>
-                    He was able to quickly pick up important business implications when writing code, making him an integral part 
-                    of our team. He contributed greatly to the design and implementation of Royaltymine’s music licensing services 
-                    and royalty distribution services, which are Royaltymine’s two key offerings. Furthermore, he was able to improve 
-                    several behind the scenes services by making them more effective and secure.
-                </p>
-                <p>
-                    I have the utmost confidence that Duncan will excel in whatever task he is provided with as he has demonstrated the 
-                    ability to learn quickly on the job and the ability to identify key issues whose resolution will greatly 
-                    accelerate the development process. 
-                </p>
-                <p>
-                    Sincerely,
-                </p>
-                <p>
-                    Jack Yan
-                </p>
-            </Modal.Body>
-            <Modal.Footer>
-                <Button onClick={props.onHide}>Close</Button>
-            </Modal.Footer>
-        </Modal>
-    );
-  }
-
 class ResumeHome extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             referenceShow: false,
-            modalWrapper: createRef()
+            modalWrapper: createRef(),
+            // BELOW WILL COME FROM DB
+            profile_img: "/static_images/cropped.png",
+            job_title: "SOFTWARE ENGINEER",
+            home_blurb: 
+            `I am a motivated and challenge-seeking person who has been programming since 2010.
+
+            I thoroughly enjoy all programming aspects and communities. Taking concepts and translating them into tangible, workable applications is what motivates me. It’s exciting to bring ideas to life, and allow people to share in these experiences.`,
+            professional: [
+                {
+                    skill: "JAVASCRIPT",
+                    amount: 90
+                },
+                {
+                    skill: "REACT",
+                    amount: 90
+                },
+                {
+                    skill: "ANGULAR",
+                    amount: 80
+                },
+                {
+                    skill: "HTML/CSS",
+                    amount: 85
+                },
+                {
+                    skill: "MONGODB",
+                    amount: 75
+                },
+                {
+                    skill: "PYTHON",
+                    amount: 80
+                },
+                {
+                    skill: "JAVA",
+                    amount: 70
+                },
+                {
+                    skill: "C#",
+                    amount: 85
+                },
+                {
+                    skill: "C/C++",
+                    amount: 60
+                }
+            ],
+            experience: [
+                {
+                    type: 1, // 1 for job, 0 for education
+                    dateStart: "2020, Jan",
+                    dateEnd: "2020, June",
+                    date: "", // for mongo retreival,
+                    title: "Software Engineer",
+                    subtitle: "ZHY Interactive",
+                    details: [
+                        "Worked with React to design, develop, test and deploy new features to Royaltymine.",
+                        "Utilized MongoDB along with conventional standards in react services to develop new backend features.",
+                        "Integrated Aggregate functionality into the backend to significantly improve performance.",
+                        "Created new front-end pages using Ant design along with Bootstrap.",
+                        "Researched, designed and implemented JWT Token authentication for login and user access permissions.",
+                        "Using Socket.IO created connection streams for real-time notifications."
+                    ],
+                    hasReference: true // if true, show button, get selected experince on click, pass object _id to populate reference modal
+                },
+                {
+                    type: 1, // 1 for job, 0 for education
+                    dateStart: "2019, Apr",
+                    dateEnd: "2019, Aug",
+                    date: "", // for mongo retreival,
+                    title: "Associate Information Technology Technician",
+                    subtitle: "Genworth Canada",
+                    details: [
+                        "Worked with AngularJS to develop, maintain and produce front-end applications.",
+                        "Designed and implemented services, libraries and various components utilizing Angular Clarity and Angular Material framework.",
+                        "Created Karma test cases, Keycloak library, Storybook UI components and Docker files.",
+                        "Utilized tools such as: Jira, Gitlab and npm.",
+                        "Collaborated with Rangle.IO developers in designing and implementing a Genworth application.",
+                        "Worked with back-end team to develop new back-end service points using Java and bootstrap."
+                    ],
+                    hasReference: false // if true, show button, get selected experince on click, pass object _id to populate reference modal
+                },
+                {
+                    type: 0, // 1 for job, 0 for education
+                    dateStart: "2018, Jan",
+                    date: "", // for mongo retreival,
+                    title: "Bachelor's degree of Computer Science",
+                    subtitle: "Sheridan College",
+                    details: [
+                        "Expected graduation 2021, Dec.",
+                    ],
+                    hasReference: false // if true, show button, get selected experince on click, pass object _id to populate reference modal
+                },
+                {
+                    type: 0, // 1 for job, 0 for education
+                    dateStart: "2015, Sep",
+                    dateEnd: "2016, Aug",
+                    date: "", // for mongo retreival,
+                    title: "Certificate of Advanced Programming: Game Development",
+                    subtitle: "Sheridan College",
+                    details: [
+                        "Focused on C++, Unity, OpenGL and creation of tools for the development of games.",
+                        "Using Unity engine, created multiple games including android and iOS multiplayer aspects.",
+                        "Major capstone involved team of four members to create a fully functional Android game."
+                    ],
+                    hasReference: false // if true, show button, get selected experince on click, pass object _id to populate reference modal
+                },
+                {
+                    type: 0, // 1 for job, 0 for education
+                    dateStart: "2013, Sep",
+                    dateEnd: "2015, Apr",
+                    date: "", // for mongo retreival,
+                    title: "Ontario College Diploma of Computer Programming",
+                    subtitle: "Sheridan College",
+                    details: [
+                        "Studied Java, Javascript, HTML5, and C#.",
+                        "Developed a sound understanding of mathematical computing, web development, object oriented programming, Linux, and Unix, UI design, network, SQL, UML, and IT management."
+                    ],
+                    hasReference: false // if true, show button, get selected experince on click, pass object _id to populate reference modal
+                },
+                {
+                    type: 1, // 1 for job, 0 for education
+                    dateStart: "2013, May",
+                    dateEnd: "2013, Aug",
+                    date: "", // for mongo retreival,
+                    title: "Summer Student; Operations Administration",
+                    subtitle: "Genworth Canada",
+                    details: [
+                        "Worked in the underwriting department assisting with general data entry and collation tasks.",
+                        "Improved processes, reduced storage use and increased productivity through the creation of Excel scripts."
+                    ],
+                    hasReference: false // if true, show button, get selected experince on click, pass object _id to populate reference modal
+                }
+                
+            ],
+            projects: [
+                {
+                    title: "Duncan Levings"
+                },
+                {
+                    title: "RSTools"
+                },
+                {
+                    title: "Royaltymine"
+                }
+            ]
         }
     }
 
@@ -152,7 +240,7 @@ class ResumeHome extends React.Component {
     }
 
     renderHome = () => {
-        const { smallScreen } = this.state;
+        const { smallScreen, profile_img, job_title, home_blurb } = this.state;
 
         if (isMobileOnly) {
             return (
@@ -162,7 +250,7 @@ class ResumeHome extends React.Component {
                         <Col xs={12}>
                             <Row>
                                 <div className="profileImgContainer mb-4 mx-auto">
-                                    <Image className="profileImg" src="/static_images/cropped.png" roundedCircle />
+                                    <Image className="profileImg" src={profile_img} roundedCircle />
                                 </div>
                             </Row>
                             <Row>
@@ -182,7 +270,7 @@ class ResumeHome extends React.Component {
                             </Row>
                             <Row>
                                 <span className="text sub-head mx-auto">
-                                    SOFTWARE ENGINEER
+                                    {job_title}
                                 </span>
                             </Row>
                         </Col>
@@ -212,22 +300,20 @@ class ResumeHome extends React.Component {
                         </Row>
                         <Row>
                             <span className="text sub-head">
-                                SOFTWARE ENGINEER
+                                {job_title}
                             </span>
                         </Row>
                     </Col>
                     <Col xs={0} md={6}>
                         <div className="profileImgContainer">
-                            <Image className="profileImg" src="/static_images/cropped.png" roundedCircle />
+                            <Image className="profileImg" src={profile_img} roundedCircle />
                         </div>
                     </Col>
                 </Row>
                 {smallScreen ? null :
                     <div className="aboutme">
                         <span className="text aboutme-text">
-                            I am a motivated and challenge-seeking person who has been programming since 2010.<br /><br />
-                            I thoroughly enjoy all programming aspects and communities. Taking concepts and translating them into tangible,
-                            workable applications is what motivates me. It’s exciting to bring ideas to life, and allow people to share in these experiences.
+                            {home_blurb}
                         </span>
                         <hr className="divider" />
                         <div className="centered-button-container">
@@ -240,6 +326,8 @@ class ResumeHome extends React.Component {
     }
 
     renderProfessional = () => {
+        const { professional } = this.state;
+
         if (isMobileOnly) {
             return (
                 <Container className="content">
@@ -259,122 +347,25 @@ class ResumeHome extends React.Component {
                         </div>
                     </Row>
                     <div className="spacer-h-4" />
-                    <Row>
-                        <Col xs={4} className="pr-1">
-                            <div className="bar-head">
-                                <span className="text body-text">
-                                        JAVASCRIPT
-                                </span>
+                    {professional.map((item, i) => {
+                        return (
+                            <div key={i}>
+                                <Row>
+                                    <Col xs={4} className="pr-1">
+                                        <div className="bar-head">
+                                            <span className="text body-text">
+                                                    {item.skill}
+                                            </span>
+                                        </div>
+                                    </Col>
+                                    <Col xs={8}>
+                                        <RenderProgBar amount={item.amount} />
+                                    </Col>
+                                </Row>
+                                <div className="spacer-h-2" />
                             </div>
-                        </Col>
-                        <Col xs={8}>
-                            <RenderProgBar amount={90} />
-                        </Col>
-                    </Row>
-                    <div className="spacer-h-2" />
-                    <Row>
-                        <Col xs={4} className="pr-1">
-                            <div className="bar-head">
-                                <span className="text body-text">
-                                        REACT
-                                </span>
-                            </div>
-                        </Col>
-                        <Col xs={8}>
-                            <RenderProgBar amount={90} />
-                        </Col>
-                    </Row>
-                    <div className="spacer-h-2" />
-                    <Row>
-                        <Col xs={4} className="pr-1">
-                            <div className="bar-head">
-                                <span className="text body-text">
-                                        ANGULAR
-                                </span>
-                            </div>
-                        </Col>
-                        <Col xs={8}>
-                            <RenderProgBar amount={80} />
-                        </Col>
-                    </Row>
-                    <div className="spacer-h-2" />
-                    <Row>
-                        <Col xs={4} className="pr-1">
-                            <div className="bar-head">
-                                <span className="text body-text">
-                                        HTML/CSS
-                                </span>
-                            </div>
-                        </Col>
-                        <Col xs={8}>
-                            <RenderProgBar amount={85} />
-                        </Col>
-                    </Row>
-                    <div className="spacer-h-2" />
-                    <Row>
-                        <Col xs={4} className="pr-1">
-                            <div className="bar-head">
-                                <span className="text body-text">
-                                        MONGO
-                                </span>
-                            </div>
-                        </Col>
-                        <Col xs={8}>
-                            <RenderProgBar amount={75} />
-                        </Col>
-                    </Row>
-                    <div className="spacer-h-2" />
-                    <Row>
-                        <Col xs={4} className="pr-1">
-                            <div className="bar-head">
-                                <span className="text body-text">
-                                        PYTHON
-                                </span>
-                            </div>
-                        </Col>
-                        <Col xs={8}>
-                            <RenderProgBar amount={80} />
-                        </Col>
-                    </Row>
-                    <div className="spacer-h-2" />
-                    <Row>
-                        <Col xs={4} className="pr-1">
-                            <div className="bar-head">
-                                <span className="text body-text">
-                                        JAVA
-                                </span>
-                            </div>
-                        </Col>
-                        <Col xs={8}>
-                            <RenderProgBar amount={70} />
-                        </Col>
-                    </Row>
-                    <div className="spacer-h-2" />
-                    <Row>
-                        <Col xs={4} className="pr-1">
-                            <div className="bar-head">
-                                <span className="text body-text">
-                                        C#
-                                </span>
-                            </div>
-                        </Col>
-                        <Col xs={8}>
-                            <RenderProgBar amount={85} />
-                        </Col>
-                    </Row>
-                    <div className="spacer-h-2" />
-                    <Row>
-                        <Col xs={4} className="pr-1">
-                            <div className="bar-head">
-                                <span className="text body-text">
-                                        C/C++
-                                </span>
-                            </div>
-                        </Col>
-                        <Col xs={8}>
-                            <RenderProgBar amount={60} />
-                        </Col>
-                    </Row>
+                        );
+                    })}
                 </Container>
             );
         }
@@ -396,190 +387,39 @@ class ResumeHome extends React.Component {
                     </div>
                 </Row>
                 <div className="spacer-h-5" />
-                <Row>
-                    <Col xs={2}>
-                        <div className="bar-head">
-                            <span className="text body-text">
-                                    JAVASCRIPT
-                            </span>
+                {professional.map((item, i) => {
+                    return (
+                        <div key={i}>
+                            <Row>
+                                <Col xs={2}>
+                                    <div className="bar-head">
+                                        <span className="text body-text">
+                                                {item.skill}
+                                        </span>
+                                    </div>
+                                </Col>
+                                <Col xs={8}>
+                                    <RenderProgBar amount={item.amount} />
+                                </Col>
+                                <Col xs={2}>
+                                    <div className="bar-end">
+                                        <span className="ml-4 text body-text">
+                                            {item.amount}%
+                                        </span>
+                                    </div>
+                                </Col>
+                            </Row>
+                            <div className="spacer-h-2" />
                         </div>
-                    </Col>
-                    <Col xs={8}>
-                        <RenderProgBar amount={90} />
-                    </Col>
-                    <Col xs={2}>
-                        <div className="bar-end">
-                            <span className="ml-4 text body-text">
-                                90%
-                            </span>
-                        </div>
-                    </Col>
-                </Row>
-                <div className="spacer-h-2" />
-                <Row>
-                    <Col xs={2}>
-                        <div className="bar-head">
-                            <span className="text body-text">
-                                    REACT
-                            </span>
-                        </div>
-                    </Col>
-                    <Col xs={8}>
-                        <RenderProgBar amount={90} />
-                    </Col>
-                    <Col xs={2}>
-                        <div className="bar-end">
-                            <span className="ml-4 text body-text">
-                                90%
-                            </span>
-                        </div>
-                    </Col>
-                </Row>
-                <div className="spacer-h-2" />
-                <Row>
-                    <Col xs={2}>
-                        <div className="bar-head">
-                            <span className="text body-text">
-                                    ANGULAR
-                            </span>
-                        </div>
-                    </Col>
-                    <Col xs={8}>
-                        <RenderProgBar amount={80} />
-                    </Col>
-                    <Col xs={2}>
-                        <div className="bar-end">
-                            <span className="ml-4 text body-text">
-                                80%
-                            </span>
-                        </div>
-                    </Col>
-                </Row>
-                <div className="spacer-h-2" />
-                <Row>
-                    <Col xs={2}>
-                        <div className="bar-head">
-                            <span className="text body-text">
-                                    HTML/CSS
-                            </span>
-                        </div>
-                    </Col>
-                    <Col xs={8}>
-                        <RenderProgBar amount={85} />
-                    </Col>
-                    <Col xs={2}>
-                        <div className="bar-end">
-                            <span className="ml-4 text body-text">
-                                85%
-                            </span>
-                        </div>
-                    </Col>
-                </Row>
-                <div className="spacer-h-2" />
-                <Row>
-                    <Col xs={2}>
-                        <div className="bar-head">
-                            <span className="text body-text">
-                                    MONGO
-                            </span>
-                        </div>
-                    </Col>
-                    <Col xs={8}>
-                        <RenderProgBar amount={75} />
-                    </Col>
-                    <Col xs={2}>
-                        <div className="bar-end">
-                            <span className="ml-4 text body-text">
-                                75%
-                            </span>
-                        </div>
-                    </Col>
-                </Row>
-                <div className="spacer-h-2" />
-                <Row>
-                    <Col xs={2}>
-                        <div className="bar-head">
-                            <span className="text body-text">
-                                    PYTHON
-                            </span>
-                        </div>
-                    </Col>
-                    <Col xs={8}>
-                        <RenderProgBar amount={80} />
-                    </Col>
-                    <Col xs={2}>
-                        <div className="bar-end">
-                            <span className="ml-4 text body-text">
-                                80%
-                            </span>
-                        </div>
-                    </Col>
-                </Row>
-                <div className="spacer-h-2" />
-                <Row>
-                    <Col xs={2}>
-                        <div className="bar-head">
-                            <span className="text body-text">
-                                    JAVA
-                            </span>
-                        </div>
-                    </Col>
-                    <Col xs={8}>
-                        <RenderProgBar amount={70} />
-                    </Col>
-                    <Col xs={2}>
-                        <div className="bar-end">
-                            <span className="ml-4 text body-text">
-                                70%
-                            </span>
-                        </div>
-                    </Col>
-                </Row>
-                <div className="spacer-h-2" />
-                <Row>
-                    <Col xs={2}>
-                        <div className="bar-head">
-                            <span className="text body-text">
-                                    C#
-                            </span>
-                        </div>
-                    </Col>
-                    <Col xs={8}>
-                        <RenderProgBar amount={85} />
-                    </Col>
-                    <Col xs={2}>
-                        <div className="bar-end">
-                            <span className="ml-4 text body-text">
-                                85%
-                            </span>
-                        </div>
-                    </Col>
-                </Row>
-                <div className="spacer-h-2" />
-                <Row>
-                    <Col xs={2}>
-                        <div className="bar-head">
-                            <span className="text body-text">
-                                    C/C++
-                            </span>
-                        </div>
-                    </Col>
-                    <Col xs={8}>
-                        <RenderProgBar amount={60} />
-                    </Col>
-                    <Col xs={2}>
-                        <div className="bar-end">
-                            <span className="ml-4 text body-text">
-                                60%
-                            </span>
-                        </div>
-                    </Col>
-                </Row>
+                    );
+                })}
             </Container>
         );
     }
 
     renderExperience = () => {
+        const { experience } = this.state;
+
         return (
             <div className="experience" id="experience">
                 <Container className="content">
@@ -594,119 +434,41 @@ class ResumeHome extends React.Component {
                     <div className="spacer-h-4" />
                     <VerticalTimeline className="vertical-timeline-custom-line" animate={!isMobile}>
                         <div className="timeline-circle top" />
-                        <VerticalTimelineElement
-                            dateClassName="timeline-date"
-                            iconClassName="timeline-icon"
-                            textClassName="timeline-container"
-                            date="2020, Jan - present"
-                            icon={<FaBriefcase />}
-                            intersectionObserverProps={{ rootMargin: "0px 0px -200px 0px" }}
-                        >
-                            <h3 className="vertical-timeline-element-title title">Software Engineer</h3>
-                            <h4 className="vertical-timeline-element-subtitle subtitle">ZHY Interactive</h4>
-                            <div className="spacer-h-2" />
-                            <ul>
-                                <li>Worked with React to design, develop, test and deploy new features to 
-                                    <a href="https://royaltymine.com/" rel="noopener noreferrer" target="_blank"> Royaltymine.com</a></li>
-                                <li>Utilized MongoDB along with conventional standards in react services to develop new backend features</li>
-                                <li>Integrated Aggregate functionality into the backend to significantly improve performance</li>
-                                <li>Created new front-end pages using Ant design along with Bootstrap</li>
-                                <li>Researched, designed and implemented JWT Token authentication for login and user access permissions</li>
-                                <li>Using Socket.IO created connection streams for real-time notifications</li>
-                            </ul>
-                            <div className="centered-button-container">
-                                <Button variant="button-primary" onClick={() => this.setReferenceShow(true)}>Reference Letter</Button>
-                            </div>
-                            <div className="spacer-h-2" />
-                        </VerticalTimelineElement>
-                        <VerticalTimelineElement
-                            dateClassName="timeline-date"
-                            iconClassName="timeline-icon"
-                            textClassName="timeline-container"
-                            date="2019, Apr - 2019, Aug"
-                            icon={<FaBriefcase />}
-                            intersectionObserverProps={{ rootMargin: "0px 0px -200px 0px" }}
-                        >
-                            <h3 className="vertical-timeline-element-title title">Associate Information Technology Technician</h3>
-                            <h4 className="vertical-timeline-element-subtitle subtitle">Genworth Canada</h4>
-                            <div className="spacer-h-2" />
-                            <ul>
-                                <li>Worked with AngularJS to develop, maintain and produce front-end applications</li>
-                                <li>Designed and implemented services, libraries and various components utilizing Angular Clarity and Angular Material framework</li>
-                                <li>Created Karma test cases, Keycloak library, Storybook UI components and Docker files</li>
-                                <li>Utilized tools such as: Jira, Gitlab and npm</li>
-                                <li>Collaborated with Rangle.IO developers in designing and implementing a Genworth application</li>
-                                <li>Worked with back-end team to develop new back-end service points using Java and bootstrap</li>
-                            </ul>
-                        </VerticalTimelineElement>
-                        <VerticalTimelineElement
-                            dateClassName="timeline-date"
-                            iconClassName="timeline-icon"
-                            textClassName="timeline-container"
-                            date="2018, Jan - present"
-                            icon={<FaGraduationCap />}
-                            intersectionObserverProps={{ rootMargin: "0px 0px -200px 0px" }}
-                        >
-                            <h3 className="vertical-timeline-element-title title">Bachelor's degree of Computer Science</h3>
-                            <h4 className="vertical-timeline-element-subtitle subtitle">Sheridan College</h4>
-                            <div className="spacer-h-2" />
-                            <ul>
-                                <li>Expected graduation 2021, Dec</li>
-                            </ul>
-                        </VerticalTimelineElement>
-                        <VerticalTimelineElement
-                            dateClassName="timeline-date"
-                            iconClassName="timeline-icon"
-                            textClassName="timeline-container"
-                            date="2015, Sep - 2016, Aug"
-                            icon={<FaGraduationCap />}
-                            intersectionObserverProps={{ rootMargin: "0px 0px -200px 0px" }}
-                        >
-                            <h3 className="vertical-timeline-element-title title">Certificate of Advanced Programming: Game Development</h3>
-                            <h4 className="vertical-timeline-element-subtitle subtitle">Sheridan College</h4>
-                            <div className="spacer-h-2" />
-                            <ul>
-                                <li>Focused on C++, Unity, OpenGL and creation of tools for the development of games</li>
-                                <li>Using Unity engine, created multiple games including android and iOS multiplayer aspects</li>
-                                <li>Major capstone involved team of four members to create a fully functional Android game</li>
-                            </ul>
-                        </VerticalTimelineElement>
-                        <VerticalTimelineElement
-                            dateClassName="timeline-date"
-                            iconClassName="timeline-icon"
-                            textClassName="timeline-container"
-                            date="2013, Sep - 2015, Apr"
-                            icon={<FaGraduationCap />}
-                            intersectionObserverProps={{ rootMargin: "0px 0px -200px 0px" }}
-                        >
-                            <h3 className="vertical-timeline-element-title title">Ontario College Diploma of Computer Programming</h3>
-                            <h4 className="vertical-timeline-element-subtitle subtitle">Sheridan College</h4>
-                            <div className="spacer-h-2" />
-                            <ul>
-                                <li>Studied Java, Javascript, HTML5, and C#</li>
-                                <li>Developed a sound understanding of mathematical computing, web development, object oriented programming, Linux, and Unix, UI design, network, SQL, UML, and IT management</li>
-                            </ul>
-                        </VerticalTimelineElement>
-                        <VerticalTimelineElement
-                            dateClassName="timeline-date"
-                            iconClassName="timeline-icon"
-                            textClassName="timeline-container"
-                            date="2013, May - 2013, Aug"
-                            icon={<FaBriefcase />}
-                            intersectionObserverProps={{ rootMargin: "0px 0px -200px 0px" }}
-                        >
-                            <h3 className="vertical-timeline-element-title title">Summer Student; Operations Administration</h3>
-                            <h4 className="vertical-timeline-element-subtitle subtitle">Genworth Canada</h4>
-                            <div className="spacer-h-2" />
-                            <ul>
-                                <li>Worked in the underwriting department assisting with general data entry and collation tasks</li>
-                                <li>Improved processes, reduced storage use and increased productivity through the creation of Excel scripts</li>
-                            </ul>
-                        </VerticalTimelineElement>
+                        {experience.map((item, i) => {
+                            return (
+                                <VerticalTimelineElement
+                                    key={i}
+                                    dateClassName="timeline-date"
+                                    iconClassName="timeline-icon"
+                                    textClassName="timeline-container"
+                                    date="2020, Jan - present"
+                                    date={`${item.dateStart} - ${item.dateEnd ? item.dateEnd : "present"}`}
+                                    icon={item.type == 1 ? <FaBriefcase /> : <FaGraduationCap />}
+                                    intersectionObserverProps={{ rootMargin: "0px 0px -200px 0px" }}
+                                >
+                                    <h3 className="vertical-timeline-element-title title">{item.title}</h3>
+                                    <h4 className="vertical-timeline-element-subtitle subtitle">{item.subtitle}</h4>
+                                    <div className="spacer-h-2" />
+                                    <ul>
+                                        {item.details.map((detail, i) => {
+                                            return (
+                                                <li key={i}>{detail}</li>
+                                            );
+                                        })}
+                                    </ul>
+                                    <div className="centered-button-container">
+                                        {item.hasReference ? (
+                                            <Button variant="button-primary" onClick={() => this.setReferenceShow(true)}>Reference Letter</Button>
+                                        ) : (null)}
+                                    </div>
+                                    <div className="spacer-h-2" />
+                                </VerticalTimelineElement>
+                            );
+                        })}
                         <div className="timeline-circle bottom" />
                     </VerticalTimeline>
                     {isMobileOnly ? (null) : (
-                        <RenderInViewSection hashLocation={RESUME_ROUTES.HASH_EXPERIENCE} />
+                        <RenderInViewSection hashLocation={RESUME_ROUTES.HASH_EXPERIENCE} /> // small size of mobile screen would mess with this id if present
                     )}
                 </Container>
             </div>
@@ -715,6 +477,9 @@ class ResumeHome extends React.Component {
 
     renderPortfolio = () => {
         // TODO: render latest 3 projects ordered by date started.
+        const { projects } = this.state;
+        const imgStyle = ["first", "second", "third"];
+
         if (isMobile) {
             return (
                 <div className="portfolio" id="portfolio">
@@ -735,21 +500,15 @@ class ResumeHome extends React.Component {
                                 </div>
                             </Row>
                             <div className="spacer-h-5" />
-                            <Row>
-                                <Col className="portfolio-image-container first">
-                                    <Link to={RESUME_ROUTES.PORTFOLIO} className="portfolio-link">DuncanLevings website</Link>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col className="portfolio-image-container second">
-                                    <Link to={RESUME_ROUTES.PORTFOLIO} className="portfolio-link">RSTools</Link>
-                                </Col>
-                            </Row>
-                            <Row>
-                                <Col className="portfolio-image-container third">
-                                    <Link to={RESUME_ROUTES.PORTFOLIO} className="portfolio-link">Royaltymine</Link>
-                                </Col>
-                            </Row>
+                            {projects.map((project, i) => {
+                                return (
+                                    <Row key={i}>
+                                        <Col className={`portfolio-image-container ${imgStyle[i]}`}>
+                                            <Link to={RESUME_ROUTES.PORTFOLIO} className="portfolio-link">{project.title}</Link>
+                                        </Col>
+                                    </Row>
+                                );
+                            })}
                     </Container>
                 </div>
             );
@@ -774,15 +533,13 @@ class ResumeHome extends React.Component {
                     </Row>
                     <div className="spacer-h-5" />
                     <Row className="portfolio-box-container ml-3 mr-3">
-                        <Col className="portfolio-image-container first">
-                            <Link to={RESUME_ROUTES.PORTFOLIO} className="portfolio-link">Duncan Levings website</Link>
-                        </Col>
-                        <Col className="portfolio-image-container second">
-                            <Link to={RESUME_ROUTES.PORTFOLIO} className="portfolio-link">RSTools</Link>
-                        </Col>
-                        <Col className="portfolio-image-container third">
-                            <Link to={RESUME_ROUTES.PORTFOLIO} className="portfolio-link">Royaltymine</Link>
-                        </Col>
+                        {projects.map((project, i) => {
+                            return (
+                                <Col className={`portfolio-image-container ${imgStyle[i]}`} key={i}>
+                                    <Link to={RESUME_ROUTES.PORTFOLIO} className="portfolio-link">{project.title}</Link>
+                                </Col>
+                            );
+                        })}
                     </Row>
                 </Container>
             </div>
@@ -806,7 +563,7 @@ class ResumeHome extends React.Component {
     }
 
     render() {
-        const { smallScreen, referenceShow } = this.state;
+        const { smallScreen, referenceShow, home_blurb } = this.state;
         return (
             <div>
                 <ParallaxCache />
@@ -830,9 +587,7 @@ class ResumeHome extends React.Component {
                     {isMobileOnly || smallScreen ?
                     <div className="aboutme-mobile">
                         <span className="text aboutme-text">
-                            I am a motivated and challenge-seeking person who has been programming since 2010.<br/><br/>
-                            I thoroughly enjoy all programming aspects and communities. Taking concepts and translating them into tangible,
-                            workable applications is what motivates me. It’s exciting to bring ideas to life, and allow people to share in these experiences.
+                            {home_blurb}
                         </span>
                         <hr className="divider" />
                         <div className="centered-button-container">

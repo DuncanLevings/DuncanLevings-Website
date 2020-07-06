@@ -104,6 +104,7 @@
                     font-family: 'Roboto', sans-serif;
                     font-size: calc(12px + 1vmin);
                     line-height: 1.5rem;
+                    white-space: pre-line;
                 }
             }
         }
@@ -121,6 +122,7 @@
         font-family: 'Roboto', sans-serif;;
         font-size: calc(12px + 0.5vmin);
         line-height: 1.5rem;
+        white-space: pre-line;
     }
 
     .center-head {
@@ -377,23 +379,24 @@
                     justify-content: center;
                     align-items: center;
                     height: 100%;
-                    width: 100.1%; // fixes weird sliver of background color between image and shadow on right box
+                    width: 100%;
 
                     font-family: 'Roboto', sans-serif;
                     color: $body-font;
                     text-decoration: none;
                     text-shadow:  1px 1px 1px #000;
                     -webkit-font-smoothing: antialiased;
+                    overflow: hidden;
+                    text-align: center;
 
                     @include respond-to(xs) {
                         font-size: calc(25px + 1vmin);
-                        padding-top: 15%;
-                        padding-bottom: 15%;
+                        padding: 20% 5% 20% 5%;
                     }
                     
                     @include respond-to(m) {
                         font-size: calc(40px + 1vmin);
-                        padding: 10%;
+                        padding: 25% 5% 25% 5%;
                     }
                 }
             }
@@ -455,8 +458,4 @@
             }
         }
     }
-}
-
-.reference {
-    color: black;
 }
