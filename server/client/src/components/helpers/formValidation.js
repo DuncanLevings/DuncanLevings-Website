@@ -18,7 +18,7 @@ export const loginSchema = yup.object().shape({
         .min(4, "*Password must be at least 4 characters")
         .max(100, "*Password must be less than 100 characters")
         .required("*Password is required")
-  });
+});
 
 export const signUpSchema = yup.object().shape({
     username: yup.string()
@@ -38,7 +38,14 @@ export const signUpSchema = yup.object().shape({
     confirmPassword: yup.string()
         .oneOf([yup.ref("password"), null], "Passwords must match")
         .required("*Must confirm password")
-  });
+});
+
+export const forgotPassSchema = yup.object().shape({
+    email: yup.string()
+        .email("Must be a valid email address")
+        .max(100, "*Email must be less than 100 characters")
+        .required("*Email is required")
+});
 
 export const contactSchema = yup.object().shape({
     email: yup.string()
@@ -48,4 +55,4 @@ export const contactSchema = yup.object().shape({
         .required("*Email is required"),
     message: yup.string()
         .required("*Message is required")
-  });
+});

@@ -1,0 +1,49 @@
+@import '../../../assets/style/breakpoints';
+@import '../../../assets/style/colors';
+@import '../../../assets/style/vars';
+
+.ResumeAdminDash {
+    @include respond-to(xs) {
+        min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
+        min-height: $minHeightMobile;
+    }
+    
+    @include respond-to(m) {
+        min-height: $minHeightDesktop;
+    }
+
+    .content {
+        padding-top: 5vh;
+        padding-bottom: 5vh;
+
+        .portfolio-card {
+            height: 100%;
+            
+            @include respond-to(xs) {
+                width: 95%;
+                max-width: 95%;
+            }
+
+            @include respond-to(m) {
+                width: 45%;
+                max-width: 45%;
+            }
+
+            display: block;
+            flex-basis: auto;
+            margin-bottom: 2rem;
+
+            color: $resume-body;
+            background-color: $contact-background;
+            box-shadow: 5px 10px 5px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+            font-family: 'Roboto', sans-serif;
+
+            .card-title {
+                color: white;
+                font-size: calc(50px + 2vmin);
+                text-align: center;
+            }
+        }
+    }
+}

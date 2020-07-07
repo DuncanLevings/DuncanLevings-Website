@@ -1,0 +1,19 @@
+@import '../../../../assets/style/breakpoints';
+@import '../../../../assets/style/colors';
+@import '../../../../assets/style/vars';
+
+.AdminDashPortfolio {
+    @include respond-to(xs) {
+        min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
+        min-height: $minHeightMobile;
+    }
+    
+    @include respond-to(m) {
+        min-height: $minHeightDesktop;
+    }
+
+    .content {
+        padding-top: 5vh;
+        padding-bottom: 5vh;
+    }
+}

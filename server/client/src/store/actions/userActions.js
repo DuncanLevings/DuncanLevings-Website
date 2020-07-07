@@ -28,8 +28,8 @@ export function loginUserSuccess(user) {
 
 // LOGOUT USER
 
-export function logoutUser() {
-    return { type: actionTypes.LOGOUT_USER };
+export function logoutUser(from) {
+    return { type: actionTypes.LOGOUT_USER, redirect: from};
 }
 
 export function logoutUserSuccess() {

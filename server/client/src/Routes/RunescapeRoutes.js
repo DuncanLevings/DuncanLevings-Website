@@ -9,7 +9,7 @@ import { Switch, Route , withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getUser } from 'store/actions/userActions';
-import { NAVBAR_TYPE } from 'consts';
+import { NAVBAR_TYPE, LOGIN_TYPE } from 'consts';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import PrivateRoute from './PrivateRoute';
 import NavBarMain from 'components/navbar/navbarMain/navbarMain.lazy';
@@ -18,6 +18,7 @@ import Login from 'components/navbar/Login/Login.lazy';
 import SignUp from 'components/navbar/SignUp/SignUp.lazy';
 import ForgotPassword from 'components/navbar/ForgotPassword/ForgotPassword.lazy';
 import RSDash from 'components/RSTools/RSDash/RSDash.lazy';
+import Footer from 'components/navbar/Footer/Footer.lazy';
 import NotFound from 'errors/NotFound';
 import PropTypes from 'prop-types';
 
@@ -37,18 +38,19 @@ class RSRouter extends React.Component {
                 <NavBarMain type={NAVBAR_TYPE.RS_TOOLS}/>
                 <Notification />
                 <Switch>
-                    <Route exact path={RSTOOL_ROUTES.LOGIN} component={Login} /> 
+                    <Route exact path={RSTOOL_ROUTES.LOGIN} render={(props) => <Login {...props} type={LOGIN_TYPE.RS_TOOLS} />} /> 
                     <Route exact path={RSTOOL_ROUTES.SIGNUP} component={SignUp} /> 
                     <Route exact path={RSTOOL_ROUTES.FORGOTPASS} component={ForgotPassword} /> 
-                    <PrivateRoute exact path={RSTOOL_ROUTES.DASH} component={RSDash} />
+                    <PrivateRoute exact path={RSTOOL_ROUTES.DASH} redirect={RSTOOL_ROUTES.LOGIN} component={RSDash} />
                     <Route component={NotFound} />
                 </Switch>
+                <Footer type={LOGIN_TYPE.RS_TOOLS} />
             </div>
         );
     }
 }
 
-Login.propTypes = {
+RSRouter.propTypes = {
     getUser: PropTypes.func
 };
 

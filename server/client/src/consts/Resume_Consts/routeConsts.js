@@ -8,6 +8,10 @@ export const RESUME_ROOT = '/';
 
 const HOME = RESUME_ROOT;
 const PORTFOLIO = RESUME_ROOT + "portfolio";
+const LOGIN = RESUME_ROOT + "login";
+const ADMIN_DASH = RESUME_ROOT + "dash";
+const ADMIN_RESUME = ADMIN_DASH + "/resume";
+const ADMIN_PORTFOLIO = ADMIN_DASH + "/portfolio";
 const HASH_HOME = RESUME_ROOT + "#home";
 const HASH_PROFESSIONAL = RESUME_ROOT + "#professional";
 const HASH_EXPERIENCE = RESUME_ROOT + "#experience";
@@ -17,6 +21,10 @@ const HASH_CONTACT = RESUME_ROOT + "#contact";
 export const RESUME_ROUTES = {
     HOME,
     PORTFOLIO,
+    LOGIN,
+    ADMIN_DASH,
+    ADMIN_RESUME,
+    ADMIN_PORTFOLIO,
     HASH_HOME,
     HASH_PROFESSIONAL,
     HASH_EXPERIENCE,

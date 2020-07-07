@@ -9,13 +9,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Navbar, Nav } from 'react-bootstrap';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter, NavLink } from 'react-router-dom';
 import { NavHashLink } from 'react-router-hash-link';
 import { isMobile } from 'react-device-detect';
 import { RSTOOL_ROOT, NAVBAR_TYPE } from 'consts';
 import { RESUME_ROUTES } from 'consts/Resume_Consts';
 import { logoutUser } from 'store/actions/userActions';
 import { updateActiveHash } from 'store/actions/navbarActions';
+import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import './navbarMain.scss';
 
 class navbarMain extends React.Component {
@@ -27,8 +28,8 @@ class navbarMain extends React.Component {
     componentDidMount() {
     }
 
-    logout = () => {
-        this.props.logoutUser();
+    logout = (redirect) => {
+        this.props.logoutUser(redirect);
     }
 
     setExpanded = val => {
@@ -60,6 +61,11 @@ class navbarMain extends React.Component {
 
     renderNav = () => {
         const { type } = this.props;
+        const { isAuthenticated } = this.props.userReducer;
+
+        var isAdmin = false;
+        if (this.props.userReducer.user)
+            isAdmin = this.props.userReducer.user.isAdmin;
 
         switch (type) {
             case NAVBAR_TYPE.RESUME:
@@ -106,17 +112,30 @@ class navbarMain extends React.Component {
                         >
                             CONTACT
                         </NavHashLink>
+                        {isAdmin ? (
+                            <>
+                                <div className="ml-3 mr-3"/>
+                                <NavLink 
+                                    to={RESUME_ROUTES.ADMIN_DASH}
+                                    activeClassName={this.isActiveClass(RESUME_ROUTES.ADMIN_DASH, hash)}
+                                >
+                                    DASH
+                                </NavLink>
+                                <div className="navbar-logout">
+                                    <Button variant="button-primary" onClick={() => this.logout(RESUME_ROUTES.HOME)} hidden={!isAdmin}>Logout</Button>
+                                </div>
+                            </>
+                        ) : (null)}
                     </Navbar.Collapse>
                 );
             case NAVBAR_TYPE.RS_TOOLS:
-                const { isAuthenticated } = this.props.userReducer;
                 return (
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
                             <Link to={RSTOOL_ROOT} hidden={!isAuthenticated}>Home</Link>
                         </Nav>
                         <Nav>
-                            <Button variant="button-primary" onClick={this.logout} hidden={!isAuthenticated}>Logout</Button>
+                            <Button variant="button-primary" onClick={() => this.logout(RSTOOL_ROUTES.LOGIN)} hidden={!isAuthenticated}>Logout</Button>
                         </Nav>
                     </Navbar.Collapse>
                 );

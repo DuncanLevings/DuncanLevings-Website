@@ -441,9 +441,8 @@ class ResumeHome extends React.Component {
                                     dateClassName="timeline-date"
                                     iconClassName="timeline-icon"
                                     textClassName="timeline-container"
-                                    date="2020, Jan - present"
-                                    date={`${item.dateStart} - ${item.dateEnd ? item.dateEnd : "present"}`}
-                                    icon={item.type == 1 ? <FaBriefcase /> : <FaGraduationCap />}
+                                    date={`${item.dateStart} - ${item.dateEnd || "present"}`}
+                                    icon={item.type === 1 ? <FaBriefcase /> : <FaGraduationCap />}
                                     intersectionObserverProps={{ rootMargin: "0px 0px -200px 0px" }}
                                 >
                                     <h3 className="vertical-timeline-element-title title">{item.title}</h3>

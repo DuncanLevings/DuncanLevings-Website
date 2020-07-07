@@ -18,11 +18,13 @@ $link-active: #00D646;
 
 // BUTTONS
 $button-primary: #00bd3d;
+$button-primary-hover: #1fd458;
+$button-secondary: #6e6e6e;
 
 // NAVBAR
 $link-divider: #72e497;
 
-//RESUME
+// RESUME
 $section-number: #BEC7D5;
 $resume-body: #BEC7D5;
 $bar-primary: #00D646;
@@ -30,3 +32,7 @@ $hr-divider: #74737359;
 $timeline-line: #00D646;
 $contact-background: rgb(65, 74, 97);
 $contact-background-hover: rgba(65, 74, 97, 0.5);
+
+// LOGIN
+$button-background: #31c560;
+$error: #ff0000;

@@ -21,7 +21,8 @@ class Portfolio extends React.Component {
             languages: [
                 {
                     icon: "react",
-                    text: "REACT"
+                    text: "REACT",
+                    mainIcon: true
                 },
                 {
                     icon: "angularjs",

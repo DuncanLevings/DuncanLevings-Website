@@ -9,7 +9,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { signupUser } from 'store/actions/userActions';
-import { Form, InputGroup, FormControl, Button } from 'react-bootstrap'
+import { Form, InputGroup, FormControl, Button, Container, Card } from 'react-bootstrap'
 import { FaUser, FaKey, FaEnvelope } from 'react-icons/fa';
 import { Formik } from 'formik';
 import { signUpSchema } from 'components/helpers/formValidation';
@@ -33,39 +33,36 @@ class SignUp extends React.Component {
     render() {
         const { isSignup, error } = this.props.userReducer;
         return (
-            <div className="login">
-                <div className="container">
-                    <div className="d-flex justify-content-center h-100">
-                        <div className="card">
-                            <div className="card-header">
-                                <h3>Sign Up</h3>
+            <div className="SignUp">
+                <Container className="content">
+                    <Card>
+                        <Card.Header as="h3">Sign Up</Card.Header>
+                        <Card.Body>
+                            <div className="card-errors">
+                                {error}
                             </div>
-                            <div className="card-body">
-                                <div className="card-errors">
-                                    {error}
-                                </div>
-                                <Formik
-                                    validationSchema={signUpSchema}
-                                    onSubmit={this.signUp}
-                                    initialValues={{
-                                        username: '',
-                                        email: '',
-                                        password: '',
-                                        confirmPassword: ''
-                                    }}
-                                    >
-                                    {({
-                                        handleSubmit,
-                                        handleChange,
-                                        values,
-                                        touched,
-                                        errors
-                                    }) => (
+                            <Formik
+                                validationSchema={signUpSchema}
+                                onSubmit={this.signUp}
+                                initialValues={{
+                                    username: '',
+                                    email: '',
+                                    password: '',
+                                    confirmPassword: ''
+                                }}
+                            >
+                                {({
+                                    handleSubmit,
+                                    handleChange,
+                                    values,
+                                    touched,
+                                    errors
+                                }) => (
                                     <Form noValidate onSubmit={handleSubmit}>
                                         <Form.Group controlId="formUsername">
                                             <InputGroup>
                                                 <InputGroup.Prepend>
-                                                    <InputGroup.Text><FaUser/></InputGroup.Text>
+                                                    <InputGroup.Text><FaUser /></InputGroup.Text>
                                                 </InputGroup.Prepend>
                                                 <FormControl
                                                     name="username"
@@ -85,7 +82,7 @@ class SignUp extends React.Component {
                                         <Form.Group controlId="formEmail">
                                             <InputGroup>
                                                 <InputGroup.Prepend>
-                                                    <InputGroup.Text><FaEnvelope/></InputGroup.Text>
+                                                    <InputGroup.Text><FaEnvelope /></InputGroup.Text>
                                                 </InputGroup.Prepend>
                                                 <FormControl
                                                     type="email"
@@ -105,7 +102,7 @@ class SignUp extends React.Component {
                                         <Form.Group controlId="formPassword">
                                             <InputGroup>
                                                 <InputGroup.Prepend>
-                                                    <InputGroup.Text><FaKey/></InputGroup.Text>
+                                                    <InputGroup.Text><FaKey /></InputGroup.Text>
                                                 </InputGroup.Prepend>
                                                 <FormControl
                                                     type="password"
@@ -125,7 +122,7 @@ class SignUp extends React.Component {
                                         <Form.Group controlId="formConfirmPassword">
                                             <InputGroup>
                                                 <InputGroup.Prepend>
-                                                    <InputGroup.Text><FaKey/></InputGroup.Text>
+                                                    <InputGroup.Text><FaKey /></InputGroup.Text>
                                                 </InputGroup.Prepend>
                                                 <FormControl
                                                     type="password"
@@ -142,18 +139,17 @@ class SignUp extends React.Component {
                                                 </Form.Control.Feedback>
                                             </InputGroup>
                                         </Form.Group>
-                                        <Button 
-                                            variant="primary" 
-                                            type="submit" 
-                                            className="btn float-right login_btn" 
+                                        <Button
+                                            variant="button-primary"
+                                            type="submit"
+                                            className="btn float-right login_btn"
                                             disabled={isSignup}>Submit</Button>
                                     </Form>
                                 )}
-                                </Formik>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                            </Formik>
+                        </Card.Body>
+                    </Card>
+                </Container>
             </div>
         );
     }

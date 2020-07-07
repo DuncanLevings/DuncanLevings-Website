@@ -37,11 +37,11 @@ function* loginUser(loginAction) {
     }
 }
 
-function* logoutUser() {
+function* logoutUser(logoutAction) {
     try {
         yield call(logoutAPI);
         yield put(actionCreators.logoutUserSuccess());
-        yield put(push(RSTOOL_ROUTES.LOGIN));
+        yield put(push(logoutAction.redirect));
     } catch (error) {
         yield put(actionCreators.userError(error.response.data))
     }

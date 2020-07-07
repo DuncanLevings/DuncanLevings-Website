@@ -10,4 +10,10 @@
     width: 100%;
     color: $resume-body;
     background-color: $dark-theme;
+
+    .admin-login {
+        position: absolute;
+        right: 0;
+        margin-right: 2rem;
+    }
 }
