@@ -10,9 +10,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { RESUME_ROUTES } from 'consts/Resume_Consts';
 import { logoutUser } from 'store/actions/userActions';
+import { Tabs, Tab } from 'react-bootstrap';
+import AdminDashProjects from './AdminDashProjects/AdminDashProjects.lazy';
+import AdminDashIcons from './AdminDashIcons/AdminDashIcons.lazy';
 import PropTypes from 'prop-types';
 import './AdminDashPortfolio.scss';
-import { Container } from 'react-bootstrap';
 
 class AdminDashPortfolio extends React.Component {
     constructor(props) {
@@ -21,7 +23,6 @@ class AdminDashPortfolio extends React.Component {
     }
 
     componentDidMount() {
-
     }
 
     componentDidUpdate() {
@@ -34,9 +35,14 @@ class AdminDashPortfolio extends React.Component {
     render() {
         return (
             <div className="AdminDashPortfolio">
-                <Container className="content">
-                    <h1>component</h1>
-                </Container>
+                <Tabs defaultActiveKey="projects" id="portfolio-dash">
+                    <Tab eventKey="projects" title="PROJECTS">
+                        <AdminDashProjects />
+                    </Tab>
+                    <Tab eventKey="icons" title="ICONS">
+                        <AdminDashIcons />
+                    </Tab>
+                </Tabs>
             </div>
         );
     }

@@ -56,3 +56,31 @@ export const contactSchema = yup.object().shape({
     message: yup.string()
         .required("*Message is required")
 });
+
+export const projectSchema = yup.object().shape({
+    title: yup.string()
+        .min(2, "*Title must be at least 2 characters")
+        .max(38, "*Title must be less than 39 characters")
+        .required("*Title is required"),
+    mainIcon: yup.string()
+        .required("*Main Icon is required"),
+    context: yup.string()
+        .min(2, "*Context must be at least 2 characters")
+        .max(100, "*Context must be less than 100 characters")
+        .required("*Context is required"),
+    languages: yup.array()
+        .required("*Language is required"),
+    tools: yup.array()
+        .required("*Tools is required"),
+    details: yup.string()
+        .min(2, "*Details must be at least 2 characters")
+        .max(1000, "*Details must be less than 1000 characters")
+        .required("*Details is required"),
+    link: yup.string()
+        .trim()
+        .url("Link must be a valid URL"),
+    github: yup.string()
+        .trim()
+        .url("Github link must be a valid URL")
+        .required("*Github link is required"),
+});

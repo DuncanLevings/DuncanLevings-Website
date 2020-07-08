@@ -1,0 +1,57 @@
+
+@import '../../../../../assets/style/breakpoints';
+@import '../../../../../assets/style/colors';
+@import '../../../../../assets/style/vars';
+
+.AdminProject {
+    @include respond-to(xs) {
+        min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
+        min-height: $minHeightMobile;
+    }
+    
+    @include respond-to(m) {
+        min-height: $minHeightDesktop;
+    }
+
+    .content {
+        padding-top: 5vh;
+        padding-bottom: 5vh;
+        font-family: 'Roboto', sans-serif;
+        
+        @include respond-to(xs) {
+            padding-left: 10vh;
+            padding-right: 10vh;
+        }
+        
+        @include respond-to(m) {
+            padding-left: 25vh;
+            padding-right: 25vh;
+        }
+
+        .add-icon {
+            margin-left: 0.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .project-submit {
+            width: 100%;
+            text-align: center;
+        }
+
+        .date-col {
+            padding: 0;
+        }
+
+        .react-datepicker-wrapper {
+            display: block;
+        }
+
+        .custom-date {
+            height: 38px;
+            width: 100%;
+            text-align: center;
+            color: $form-input;
+            border: 1px solid $form-border;
+        }
+    }
+}

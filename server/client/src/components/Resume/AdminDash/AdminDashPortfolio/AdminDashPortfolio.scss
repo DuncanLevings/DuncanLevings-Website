@@ -12,8 +12,20 @@
         min-height: $minHeightDesktop;
     }
 
-    .content {
-        padding-top: 5vh;
-        padding-bottom: 5vh;
+    padding-top: 10px;
+
+    .nav-tabs {
+        border-color: $tab-border;
+        justify-content: center;
+
+        .nav-item {
+            font-size: calc(12px + 1vmin);
+            width: 40%;
+            text-align: center;
+        }
+
+        .nav-link.active {
+            color: $link-active;
+        }
     }
 }

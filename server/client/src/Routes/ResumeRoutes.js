@@ -20,6 +20,7 @@ import Footer from 'components/navbar/Footer/Footer.lazy';
 import AdminDash from 'components/Resume/AdminDash/AdminDash.lazy';
 import AdminDashPortfolio from 'components/Resume/AdminDash/AdminDashPortfolio/AdminDashPortfolio.lazy';
 import AdminDashResume from 'components/Resume/AdminDash/AdminDashResume/AdminDashResume.lazy';
+import AdminProject from 'components/Resume/AdminDash/AdminDashPortfolio/AdminProject/AdminProject.lazy';
 import NotFound from 'errors/NotFound';
 import PropTypes from 'prop-types';
 
@@ -44,6 +45,7 @@ class ResumeRouter extends React.Component {
                     <PrivateRoute exact path={RESUME_ROUTES.ADMIN_DASH} redirect={RESUME_ROUTES.HOME} component={AdminDash} />
                     <PrivateRoute exact path={RESUME_ROUTES.ADMIN_RESUME} redirect={RESUME_ROUTES.HOME} component={AdminDashResume} />
                     <PrivateRoute exact path={RESUME_ROUTES.ADMIN_PORTFOLIO} redirect={RESUME_ROUTES.HOME} component={AdminDashPortfolio} />
+                    <PrivateRoute exact path={RESUME_ROUTES.ADMIN_PROJECT} redirect={RESUME_ROUTES.HOME} component={AdminProject} />
                     <Route component={NotFound} />
                 </Switch>
                 <Footer type={LOGIN_TYPE.ADMIN} />
