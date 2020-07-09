@@ -234,13 +234,11 @@ class ResumeHome extends React.Component {
         if (isMobileOnly) {
             let vh = window.innerHeight * 0.01;
             document.documentElement.style.setProperty('--vh', `${vh}px`);
-        } else {
-            if (window.innerHeight < 850) this.setState({ smallScreen: true});
         }
     }
 
     renderHome = () => {
-        const { smallScreen, profile_img, job_title, home_blurb } = this.state;
+        const { profile_img, job_title } = this.state;
 
         if (isMobileOnly) {
             return (
@@ -310,17 +308,6 @@ class ResumeHome extends React.Component {
                         </div>
                     </Col>
                 </Row>
-                {smallScreen ? null :
-                    <div className="aboutme">
-                        <span className="text aboutme-text">
-                            {home_blurb}
-                        </span>
-                        <hr className="divider" />
-                        <div className="centered-button-container">
-                            <Button variant="button-primary"><FaDownload /> Resume</Button>
-                        </div>
-                    </div>
-                }
             </Container>
         );
     }
@@ -562,14 +549,10 @@ class ResumeHome extends React.Component {
     }
 
     render() {
-        const { smallScreen, referenceShow, home_blurb } = this.state;
+        const { referenceShow, home_blurb } = this.state;
         return (
             <div>
                 <ParallaxCache />
-                <ReferenceModal
-                    show={referenceShow}
-                    onHide={() => this.setReferenceShow(false)}
-                />
                 <div className="ResumeHome" id="home">
                     <ParallaxBanner
                         className="home"
@@ -583,7 +566,6 @@ class ResumeHome extends React.Component {
                     >
                         {this.renderHome()}
                     </ParallaxBanner>
-                    {isMobileOnly || smallScreen ?
                     <div className="aboutme-mobile">
                         <span className="text aboutme-text">
                             {home_blurb}
@@ -593,7 +575,6 @@ class ResumeHome extends React.Component {
                             <Button variant="button-primary"><FaDownload /> Resume</Button>
                         </div>
                     </div>
-                    : null}
                     <div id="professional" />
                     <ParallaxBanner
                         className="professional"
@@ -627,6 +608,10 @@ class ResumeHome extends React.Component {
                         {this.renderContact()}
                     </ParallaxBanner>
                 </div>
+                <ReferenceModal
+                    show={referenceShow}
+                    onHide={() => this.setReferenceShow(false)}
+                />
             </div>
         );
     }
