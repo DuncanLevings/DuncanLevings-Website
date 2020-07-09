@@ -15,17 +15,66 @@
     .content {
         padding-top: 5vh;
         padding-bottom: 5vh;
+        font-family: 'Roboto', sans-serif;
 
-        .button-header {
-            display: flow-root;
+        .icon-row {
             margin-bottom: 2rem;
 
-            .add-project {
+            .filter-text {
+                @include respond-to(xs) {
+                    margin-left: 0;
+                    margin-right: 2rem;
+                }
+                
+                @include respond-to(m) {
+                    margin-left: 2rem;
+                    margin-right: 1rem;
+                }
+            }
+
+            .filter-text.first {
+                margin-left: 0;
+            }
+
+            .add-icon {
                 float: right;
             }
 
-            .filter-text {
-                margin-left: 1rem;
+            .small-newline {
+                @include respond-to(xs) {
+                    display: block;
+                    margin-bottom: 1rem;
+                }
+                
+                @include respond-to(m) {
+                    display: none;
+                }
+            }
+
+            .icon-button-col {
+                @include respond-to(xs) {
+                    display: none;
+                }
+                
+                @include respond-to(m) {
+                    display: block;
+                }
+            }
+        }
+
+        .small-icon-row {
+            margin-bottom: 2rem;
+
+            @include respond-to(xs) {
+                display: block;
+            }
+            
+            @include respond-to(m) {
+                display: none;
+            }
+
+            .add-icon {
+                // float: right;
             }
         }
 

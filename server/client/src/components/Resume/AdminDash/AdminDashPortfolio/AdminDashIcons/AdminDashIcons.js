@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { Container, Button, ListGroup } from 'react-bootstrap';
+import { Container, Button, ListGroup, Row, Col } from 'react-bootstrap';
 import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 import { FaPlusSquare, FaEdit, FaTrash } from 'react-icons/fa';
 import PropTypes from 'prop-types';
@@ -36,11 +36,32 @@ class AdminDashIcons extends React.Component {
         return (
             <div className="AdminDashIcons">
                 <Container className="content">
-                    <div className="button-header">
-                        {/* MAYBE DO DROPDOWN FILTER INSTEAD? could have main icon/ language/ tools as options */}
-                        <BootstrapSwitchButton checked={false} onstyle="outline-success" offstyle="outline-secondary"/><span className="filter-text">Filter Main Icons</span>
-                        <Button variant="button-primary" className="add-project"><FaPlusSquare /> Add Icon</Button>
-                    </div>
+                    <Row className="icon-row" noGutters>
+                        <Col>
+                            <span className="filter-text first">
+                                Main
+                            </span>
+                            <BootstrapSwitchButton checked={false} onstyle="outline-success" offstyle="outline-secondary" />
+                            <div className="small-newline" />
+                            <span className="filter-text">
+                                Languages
+                            </span>
+                            <BootstrapSwitchButton checked={true} onstyle="outline-success" offstyle="outline-secondary" />
+                            <div className="small-newline" />
+                            <span className="filter-text">
+                                Tools
+                            </span>
+                            <BootstrapSwitchButton checked={true} onstyle="outline-success" offstyle="outline-secondary" />
+                        </Col>
+                        <Col className="icon-button-col">
+                            <Button variant="button-primary" className="add-icon"><FaPlusSquare /> Add Icon</Button>
+                        </Col>
+                    </Row>
+                    <Row className="small-icon-row">
+                        <Col>
+                            <Button variant="button-primary" className="add-icon"><FaPlusSquare /> Add Icon</Button>
+                        </Col>
+                    </Row>
                     <ListGroup variant="flush">
                         {this.state.icons.map((icon, i) => {
                             return (
