@@ -5,10 +5,14 @@
  */
 
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { sendMail } from 'store/actions/emailActions';
 import { Container, Row, Form, InputGroup, FormControl, Button } from 'react-bootstrap';
 import { contactSchema } from 'components/helpers/formValidation';
 import { Formik } from 'formik';
 import { FaEnvelope, FaUser, FaEnvelopeOpenText } from 'react-icons/fa';
+import PropTypes from 'prop-types';
 import './Contact.scss';
 
 class Contact extends React.Component {
@@ -23,9 +27,12 @@ class Contact extends React.Component {
 
     submit = values => {
         console.log(values);
+        this.props.sendMail(values);
     }
 
     render() {
+        const { isSending, error } = this.props.emailReducer;
+
         return (
             <Container className="Contact">
                 <Row>
@@ -54,6 +61,9 @@ class Contact extends React.Component {
                             errors
                         }) => (
                         <Form noValidate onSubmit={handleSubmit} className="contact-form">
+                            <div className="contact-errors">
+                                {error}
+                            </div>
                             <Form.Group controlId="formName">
                                 <InputGroup>
                                     <InputGroup.Prepend>
@@ -128,7 +138,7 @@ class Contact extends React.Component {
                                 <Button
                                     variant="button-primary" 
                                     type="submit"
-                                    disabled={true}>Send</Button>
+                                    disabled={isSending}>Send</Button>
                             </Form.Row>
                         </Form>
                     )}
@@ -139,4 +149,17 @@ class Contact extends React.Component {
     }
 }
 
-export default Contact;
+Contact.propTypes = {
+    sendMail: PropTypes.func,
+    emailReducer: PropTypes.object
+};
+
+const mapStateToProps = state => {
+    return {
+        emailReducer: state.emailReducer
+    };
+}
+
+const mapDispatchToProps = dispatch => bindActionCreators({ sendMail }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Contact);

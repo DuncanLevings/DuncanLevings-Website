@@ -33,7 +33,7 @@ function* loginUser(loginAction) {
         yield put(actionCreators.loginUserSuccess(user));
         yield put(push(loginAction.redirect));
     } catch (error) {
-        yield put(actionCreators.userError(error.response.data))
+        yield put(actionCreators.userError(error.response.data));
     }
 }
 
@@ -43,7 +43,7 @@ function* logoutUser(logoutAction) {
         yield put(actionCreators.logoutUserSuccess());
         yield put(push(logoutAction.redirect));
     } catch (error) {
-        yield put(actionCreators.userError(error.response.data))
+        yield put(actionCreators.userError(error.response.data));
     }
 }
 
@@ -53,7 +53,7 @@ function* signupUser(signupAction) {
         yield put(actionCreators.signupUserSuccess());
         yield put(push(RSTOOL_ROUTES.LOGIN));
     } catch (error) {
-        yield put(actionCreators.userError(error.response.data))
+        yield put(actionCreators.userError(error.response.data));
     }
 }
 

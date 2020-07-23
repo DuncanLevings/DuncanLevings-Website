@@ -9,5 +9,10 @@
         @include respond-to(m) {
             width: 60%
         }
+
+        .contact-errors {
+            color: red;
+            padding-bottom: 1rem;
+        }
     }
 }

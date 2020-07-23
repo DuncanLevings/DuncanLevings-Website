@@ -6,12 +6,14 @@
 
 import { all } from 'redux-saga/effects';
 import { getUserWatcher, loginUserWatcher, logoutUserWatcher, signupUserWatcher } from './userSaga';
+import { sendMailWatcher } from './emailSaga';
 
 export default function* rootSaga() {
     yield all([
       getUserWatcher(),
       loginUserWatcher(),
       logoutUserWatcher(),
-      signupUserWatcher()
+      signupUserWatcher(),
+      sendMailWatcher()
     ]);
   }

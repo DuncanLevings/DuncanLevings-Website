@@ -7,6 +7,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "@sendgrid/mail": "^7.2.2",
     "async-redis": "^1.1.7",
     "axios": "^0.19.2",
     "bcrypt": "^4.0.1",

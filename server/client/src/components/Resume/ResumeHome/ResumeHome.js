@@ -548,6 +548,11 @@ class ResumeHome extends React.Component {
         this.setState({ referenceShow: bool });
     }
 
+    //TEMP
+    downloadResume = () => {
+
+    }
+
     render() {
         const { referenceShow, home_blurb } = this.state;
         return (
@@ -572,7 +577,7 @@ class ResumeHome extends React.Component {
                         </span>
                         <hr className="divider" />
                         <div className="centered-button-container">
-                            <Button variant="button-primary"><FaDownload /> Resume</Button>
+                            <Button variant="button-primary" href="https://storage.cloud.google.com/duncanlevings.appspot.com/resume/Resume_Feb2020_DuncanLevings.pdf" target="_blank"><FaDownload /> Resume</Button>
                         </div>
                     </div>
                     <div id="professional" />

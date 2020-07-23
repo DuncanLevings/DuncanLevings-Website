@@ -19,7 +19,7 @@ const {
   ACCESS_TOKEN_TTL,
   REMEMBER_TOKEN_TTL } = require('../../consts/config_consts');
 const { _userService, _utils } = require('../../service');
-var router = express.Router();
+const router = express.Router();
 
 // returns user as well as checking if the user has valid access_token
 router.get(USER_ROUTES.USER_ROOT, auth.user, (req, res) => {
