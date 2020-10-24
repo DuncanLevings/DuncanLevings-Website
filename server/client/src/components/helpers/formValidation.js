@@ -55,6 +55,7 @@ export const contactSchema = yup.object().shape({
         .required("*Email is required"),
     message: yup.string()
         .required("*Message is required")
+        .min(24, "Message too short!")
 });
 
 export const projectSchema = yup.object().shape({
