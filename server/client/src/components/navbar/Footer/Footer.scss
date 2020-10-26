@@ -1,15 +1,26 @@
+@import '../../../assets/style/breakpoints';
 @import '../../../assets/style/colors';
 
 .main-footer {
+    @include respond-to(xs) {
+        justify-content: start;
+        padding-left: 1rem;
+    }
+    
+    @include respond-to(m) {
+        justify-content: center;
+        padding-left: 0;
+    }
+
     display: flex;
     align-items: center;
-    justify-content: center;
     text-align: center;
     padding-top: 1rem;
     padding-bottom: 1rem;
     width: 100%;
     color: $resume-body;
     background-color: $dark-theme;
+    
 
     .admin-login {
         position: absolute;
