@@ -1,0 +1,47 @@
+@import '../../../../assets/style/breakpoints';
+@import '../../../../assets/style/vars';
+@import '../../../../assets/style/colors';
+
+.SearchDaily {
+    @include respond-to(xs) {
+        min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
+        min-height: $minHeightMobile;
+    }
+    
+    @include respond-to(m) {
+        min-height: $minHeightDesktop;
+    }
+
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    font-family: 'Roboto', sans-serif;
+
+    .list-group-item {
+        background-color: $body-background;
+        border-color: $hr-divider;
+        
+        @include respond-to(xs) {
+            font-size: calc(8px + 2vmin);
+        }
+        
+        @include respond-to(m) {
+            font-size: calc(12px + 1vmin);
+        }
+    }
+
+    .list-group-item:hover {
+        background-color: $contact-background;
+    }
+
+    .actions {
+        float: right;
+
+        .action-icon {
+            margin-left: 1rem;
+        }
+
+        .action-icon.add:hover {
+            color: $link-active;
+        }
+    }
+}

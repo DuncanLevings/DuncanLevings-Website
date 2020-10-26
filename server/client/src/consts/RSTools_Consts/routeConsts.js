@@ -10,10 +10,22 @@ const DASH = RSTOOL_ROOT;
 const LOGIN = RSTOOL_ROOT + '/login';
 const SIGNUP = RSTOOL_ROOT + '/sign-up';
 const FORGOTPASS = RSTOOL_ROOT + '/forgot-pasword';
+const DAILYS = RSTOOL_ROOT + '/dailys';
+const FARMRUNS = RSTOOL_ROOT + '/farmruns';
+const PVM = RSTOOL_ROOT + '/pvm';
+const ACTIVITIES = RSTOOL_ROOT + '/activities';
+const DAILYSEARCH = DAILYS + "/search"
+const ADDDAILY = DAILYS + "/new"
 
 export const RSTOOL_ROUTES = {
     DASH,
     LOGIN,
     SIGNUP,
-    FORGOTPASS
+    FORGOTPASS,
+    DAILYS,
+    FARMRUNS,
+    PVM,
+    ACTIVITIES,
+    DAILYSEARCH,
+    ADDDAILY
 }

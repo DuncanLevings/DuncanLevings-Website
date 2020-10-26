@@ -6,7 +6,8 @@
 
 import React from 'react';
 import { connect } from 'react-redux';
-import { Spinner, Container, CardColumns, Card } from 'react-bootstrap';
+import { Spinner, Container, CardDeck, Card } from 'react-bootstrap';
+import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import PropTypes from 'prop-types';
 import './RSDash.scss';
 
@@ -19,60 +20,41 @@ class RSDash extends React.Component {
     componentDidMount() {
     }
 
+    navigate = (route) => {
+        this.props.history.push(route);
+    }
+
     render() {
         const { isFetching, user } = this.props.userReducer;
+        if (isFetching || !user) {
+            return (<Spinner variant="light" />);
+        }
+
         return (
             <Container>
                 <div className="RSDash">
-                    {isFetching || !user ?
-                        <Spinner variant="light" />
-                        : <h1>Weclome {user.username}</h1>}
-                <CardColumns>
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>Card title that wraps to a new line</Card.Title>
-                            <Card.Text>
-                                This is a longer card with supporting text below as a natural lead-in to
-                                additional content. This content is a little bit longer.
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>Card title</Card.Title>
-                            <Card.Text>
-                                This card has supporting text below as a natural lead-in to additional content.{' '}
-                            </Card.Text>
-                        </Card.Body>
-                        <Card.Footer>
-                            <small className="text-muted">Last updated 3 mins ago</small>
-                        </Card.Footer>
-                    </Card>
-                    <Card className="text-center">
-                        <Card.Body>
-                            <Card.Title>Card title</Card.Title>
-                            <Card.Text>
-                                This card has supporting text below as a natural lead-in to additional content.{' '}
-                            </Card.Text>
-                            <Card.Text>
-                                <small className="text-muted">Last updated 3 mins ago</small>
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                    <Card>
-                        <Card.Body>
-                            <Card.Title>Card title</Card.Title>
-                            <Card.Text>
-                                This is a wider card with supporting text below as a natural lead-in to
-                                additional content. This card has even longer content than the first to
-                                show that equal height action.
-                            </Card.Text>
-                            <Card.Text>
-                                <small className="text-muted">Last updated 3 mins ago</small>
-                            </Card.Text>
-                        </Card.Body>
-                    </Card>
-                </CardColumns>
+                    <CardDeck>
+                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.DAILYS) }>
+                            <Card.Body>
+                                <Card.Title>DAILYS</Card.Title>
+                            </Card.Body>
+                        </Card>
+                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.FARMRUNS) }>
+                            <Card.Body>
+                                <Card.Title>FARM RUNS</Card.Title>
+                            </Card.Body>
+                        </Card>
+                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.PVM) }>
+                            <Card.Body>
+                                <Card.Title>PVM</Card.Title>
+                            </Card.Body>
+                        </Card>
+                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.ACTIVITIES) }>
+                            <Card.Body>
+                                <Card.Title>ACTIVITES</Card.Title>
+                            </Card.Body>
+                        </Card>
+                    </CardDeck>
                 </div>
             </Container>
         );

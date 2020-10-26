@@ -18,6 +18,9 @@ import Login from 'components/navbar/Login/Login.lazy';
 import SignUp from 'components/navbar/SignUp/SignUp.lazy';
 import ForgotPassword from 'components/navbar/ForgotPassword/ForgotPassword.lazy';
 import RSDash from 'components/RSTools/RSDash/RSDash.lazy';
+import Dailys from 'components/RSTools/Dailys/Dailys.lazy';
+import SearchDaily from 'components/RSTools/Dailys/SearchDaily/SearchDaily.lazy';
+import AddDaily from 'components/RSTools/Dailys/AddDaily/AddDaily.lazy';
 import Footer from 'components/navbar/Footer/Footer.lazy';
 import NotFound from 'errors/NotFound';
 import PropTypes from 'prop-types';
@@ -42,6 +45,9 @@ class RSRouter extends React.Component {
                     <Route exact path={RSTOOL_ROUTES.SIGNUP} component={SignUp} /> 
                     <Route exact path={RSTOOL_ROUTES.FORGOTPASS} component={ForgotPassword} /> 
                     <PrivateRoute exact path={RSTOOL_ROUTES.DASH} redirect={RSTOOL_ROUTES.LOGIN} component={RSDash} />
+                    <PrivateRoute exact path={RSTOOL_ROUTES.DAILYS} redirect={RSTOOL_ROUTES.LOGIN} component={Dailys} />
+                    <PrivateRoute exact path={RSTOOL_ROUTES.DAILYSEARCH} redirect={RSTOOL_ROUTES.LOGIN} component={SearchDaily} />
+                    <PrivateRoute exact path={RSTOOL_ROUTES.ADDDAILY} redirect={RSTOOL_ROUTES.LOGIN} component={AddDaily} />
                     <Route component={NotFound} />
                 </Switch>
                 <Footer type={LOGIN_TYPE.RS_TOOLS} />

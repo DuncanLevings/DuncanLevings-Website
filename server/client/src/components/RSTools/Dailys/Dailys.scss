@@ -1,0 +1,31 @@
+@import '../../../assets/style/breakpoints';
+@import '../../../assets/style/vars';
+@import '../../../assets/style/colors';
+
+.Dailys {
+    @include respond-to(xs) {
+        min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
+        min-height: $minHeightMobile;
+    }
+    
+    @include respond-to(m) {
+        min-height: $minHeightDesktop;
+    }
+
+    margin-top: 1rem;
+
+    .nav-tabs {
+        border-color: $tab-border;
+        justify-content: center;
+
+        .nav-item {
+            font-size: calc(12px + 1vmin);
+            width: 30%;
+            text-align: center;
+        }
+
+        .nav-link.active {
+            color: $link-active;
+        }
+    }
+}

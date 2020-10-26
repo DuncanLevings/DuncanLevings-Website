@@ -9,7 +9,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Navbar, Nav } from 'react-bootstrap';
-import { Link, withRouter, NavLink } from 'react-router-dom';
+import { withRouter, NavLink } from 'react-router-dom';
 import { NavHashLink } from 'react-router-hash-link';
 import { isMobile } from 'react-device-detect';
 import { RSTOOL_ROOT, NAVBAR_TYPE } from 'consts';
@@ -129,12 +129,25 @@ class navbarMain extends React.Component {
                     </Navbar.Collapse>
                 );
             case NAVBAR_TYPE.RS_TOOLS:
+                const { pathname } = this.props.location;
                 return (
                     <Navbar.Collapse id="responsive-navbar-nav">
-                        <Nav className="mr-auto">
-                            <Link to={RSTOOL_ROOT} hidden={!isAuthenticated}>Home</Link>
-                        </Nav>
                         <Nav>
+                            <NavLink activeClassName={this.isActiveClass(RSTOOL_ROUTES.DAILYS, pathname)} to={RSTOOL_ROUTES.DAILYS} hidden={!isAuthenticated}>DAILYS</NavLink >
+                        </Nav>
+                        <div className="ml-3 mr-3"/>
+                        <Nav>
+                            <NavLink activeClassName={this.isActiveClass(RSTOOL_ROUTES.FARMRUNS, pathname)}  to={RSTOOL_ROUTES.FARMRUNS} hidden={!isAuthenticated}>FARM RUNS</NavLink>
+                        </Nav>
+                        <div className="ml-3 mr-3"/>
+                        <Nav>
+                            <NavLink activeClassName={this.isActiveClass(RSTOOL_ROUTES.PVM, pathname)}  to={RSTOOL_ROUTES.PVM} hidden={!isAuthenticated}>PVM</NavLink>
+                        </Nav>
+                        <div className="ml-3 mr-3"/>
+                        <Nav>
+                            <NavLink activeClassName={this.isActiveClass(RSTOOL_ROUTES.ACTIVITIES, pathname)}  to={RSTOOL_ROUTES.ACTIVITIES} hidden={!isAuthenticated}>ACTIVITIES</NavLink>
+                        </Nav>
+                        <Nav className="ml-auto">
                             <Button variant="button-primary" onClick={() => this.logout(RSTOOL_ROUTES.LOGIN)} hidden={!isAuthenticated}>Logout</Button>
                         </Nav>
                     </Navbar.Collapse>

@@ -1,0 +1,48 @@
+
+@import '../../../../assets/style/breakpoints';
+@import '../../../../assets/style/vars';
+@import '../../../../assets/style/colors';
+
+.Daily {
+    @include respond-to(xs) {
+        min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
+        min-height: $minHeightMobile;
+    }
+    
+    @include respond-to(m) {
+        min-height: $minHeightDesktop;
+    }
+
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    font-family: 'Roboto', sans-serif;
+    
+    .button-header {
+        display: flow-root;
+        margin-bottom: 2rem;
+
+        .add-daily {
+            float: right;
+        }
+    }
+
+    .card {
+        background-color: $daily-card-background;
+
+        .card-header {
+            font-size: calc(8px + 2vmin);
+        }
+
+        .card-header:hover {
+            background-color: $daily-card-title-hover;
+        }
+    }
+
+    .daily-complete {
+        margin-right: 1rem;
+    }
+
+    .step-container {
+        margin-bottom: 1rem;
+    }
+}

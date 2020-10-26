@@ -85,3 +85,18 @@ export const projectSchema = yup.object().shape({
         .url("Github link must be a valid URL")
         .required("*Github link is required"),
 });
+
+export const dailySchema = yup.object().shape({
+    title: yup.string()
+        .min(2, "*Title must be at least 2 characters")
+        .max(59, "*Title must be less than 59 characters")
+        .required("*Title is required"),
+    numberOfSteps: yup.string()
+        .required("*At least one step is required"),
+    steps: yup.array().of(
+        yup.object().shape({
+            step: yup.string()
+                .required("*Step is required")
+        })
+    )
+});
