@@ -91,8 +91,6 @@ export const dailySchema = yup.object().shape({
         .min(2, "*Title must be at least 2 characters")
         .max(59, "*Title must be less than 59 characters")
         .required("*Title is required"),
-    numberOfSteps: yup.string()
-        .required("*At least one step is required"),
     steps: yup.array().of(
         yup.object().shape({
             step: yup.string()
