@@ -8,18 +8,40 @@ import React from 'react';
 import { Button, Col, Container, Form, FormControl, InputGroup, ListGroup } from 'react-bootstrap';
 import { ErrorMessage, Field, FieldArray, Formik } from 'formik';
 import { dailySchema } from 'components/helpers/formValidation';
+import { FaImage, FaPlus, FaTrash } from 'react-icons/fa';
+import ImgCrop from 'components/tools/ImgCrop/ImgCrop.lazy';
+import ImgPreview from 'components/tools/ImgPreview/ImgPreview.lazy';
 import PropTypes from 'prop-types';
 import './AddDaily.scss';
-import { FaImage, FaPlus, FaTrash } from 'react-icons/fa';
 
 class AddDaily extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            imgCropShow: false,
+            imgPreviewShow: false,
+            imgPreviewURL: "",
+            selectedStep: 0
+        }
     }
 
     componentDidMount() {
 
+    }
+
+    setImgCropShow = (bool, i) => {
+        this.setState({ 
+            imgCropShow: bool, 
+            selectedStep: i == undefined ? this.state.selectedStep : i 
+        });
+    }
+
+    setPreviewImgShow = (bool, i, img) => {
+        this.setState({ 
+            imgPreviewShow: bool, 
+            selectedStep: i == undefined ? this.state.selectedStep : i, 
+            imgPreviewURL: img == undefined ? "" : img 
+        });
     }
 
     addStep = (field, values, setValues) => e => {
@@ -36,11 +58,28 @@ class AddDaily extends React.Component {
         field.onChange(e);
     }
 
+    setImage = (img, values, setValues) => {
+        this.setImgCropShow(false);
+        const steps = [...values.steps];
+        steps[this.state.selectedStep].img = img;
+        setValues({ ...values, steps });
+    }
+
+    removeImg = (values, setValues) => {
+        this.setPreviewImgShow(false);
+        const steps = [...values.steps];
+        window.URL.revokeObjectURL(this.state.imgPreviewURL);
+        steps[this.state.selectedStep].img = "";
+        setValues({ ...values, steps });
+    }
+
     submitProject = values => {
         console.log(values)
+        //revoke all temp blob img urls
     }
 
     render() {
+        const { imgCropShow, imgPreviewShow, imgPreviewURL } = this.state;
         return (
             <Container>
                 <div className="AddDaily">
@@ -100,10 +139,13 @@ class AddDaily extends React.Component {
                                                                         </InputGroup.Prepend>
                                                                         <Field name={`steps.${i}.step`} type="text" className={'form-control' + (stepErrors.step && stepTouched.step ? ' is-invalid' : '')} />
                                                                         <InputGroup.Append>
-                                                                            <Button variant="button-secondary"><FaImage /> Add Image</Button>
+                                                                            {step.img ?
+                                                                                <Button variant="button-secondary" onClick={() => this.setPreviewImgShow(true, i, step.img)}><FaImage /> Preview Image</Button>
+                                                                                :
+                                                                                <Button variant="button-secondary" onClick={() => this.setImgCropShow(true, i)}><FaImage /> Add Image</Button>
+                                                                            }
                                                                             {i < 1 ?
                                                                                 null :
-                                                                                // <Button variant="button-warning-dull"  onClick={this.removeStep(i, values)}><FaTrash /> Remove Step</Button>
                                                                                 <Field name="stepTotal">
                                                                                     {({ field }) => (
                                                                                         <Button {...field} variant="button-warning-dull" onClick={this.removeStep(i, field, values, setValues)}><FaTrash /> Remove Step</Button>
@@ -135,6 +177,17 @@ class AddDaily extends React.Component {
                                             type="submit"
                                             disabled={false}>Submit</Button>
                                     </div>
+                                    <ImgCrop
+                                        show={imgCropShow}
+                                        onHide={() => this.setImgCropShow(false)}
+                                        onConfirm={img => this.setImage(img, values, setValues)}
+                                    />
+                                    <ImgPreview
+                                        show={imgPreviewShow}
+                                        onHide={() => this.setPreviewImgShow(false)}
+                                        croppedImageUrl={imgPreviewURL}
+                                        removeImg={() => this.removeImg(values, setValues)}
+                                    />
                                 </Form>
                             )}
                     </Formik>

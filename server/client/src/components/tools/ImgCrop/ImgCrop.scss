@@ -1,0 +1,21 @@
+@import '../../../assets/style/breakpoints';
+@import '../../../assets/style/colors';
+
+.ImgCrop {
+    color: $dark-theme;
+    font-family: 'Roboto', sans-serif;
+
+    .dropzone {
+        border: $dropzone-border 2px dashed;
+        padding: 1rem;
+        text-align: center;
+
+        &.accept {
+            border-color: $dropzone-border-accept;
+        }
+
+        &.reject {
+            border-color: $dropzone-border-reject;
+        }
+    }
+}
