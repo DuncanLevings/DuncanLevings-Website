@@ -9,7 +9,6 @@ import { Button, Modal } from 'react-bootstrap';
 import { useDropzone } from 'react-dropzone';
 import ReactCrop from 'react-image-crop';
 import 'react-image-crop/lib/ReactCrop.scss';
-import PropTypes from 'prop-types';
 import './ImgCrop.scss';
 
 function DropZone(props) {
@@ -87,7 +86,7 @@ class ImgCrop extends React.Component {
             const croppedImageUrl = await this.getCroppedImg(
                 this.imageRef,
                 crop,
-                'newFile.jpeg'
+                'newFile.png'
             );
             this.setState({ croppedImageUrl });
         }
@@ -120,15 +119,16 @@ class ImgCrop extends React.Component {
                     return;
                 }
                 blob.name = fileName;
+                this.setState({ imageBlob: blob });
                 // window.URL.revokeObjectURL(this.fileUrl);  --HANDLE REVOKING OF URLS IN FORM SUBMIT
                 this.fileUrl = window.URL.createObjectURL(blob);
                 resolve(this.fileUrl);
-            }, 'image/jpeg');
+            }, 'image/png');
         });
     }
 
     confirm = () => {
-        this.props.onConfirm(this.state.croppedImageUrl);
+        this.props.onConfirm({ url: this.state.croppedImageUrl, blob: this.state.imageBlob });
         this.setState({ src: null, croppedImageUrl: null });
     }
 
@@ -179,9 +179,5 @@ class ImgCrop extends React.Component {
         );
     }
 }
-
-ImgCrop.propTypes = {};
-
-ImgCrop.defaultProps = {};
 
 export default ImgCrop;

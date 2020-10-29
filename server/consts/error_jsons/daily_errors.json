@@ -1,0 +1,11 @@
+{
+    "server_errors": {
+        "USER_REQUIRED": "User ID is required!",
+        "TITLE_REQUIRED": "Title is required!",
+        "TYPE_REQUIRED": "Type is missing!",
+        "TYPE_REGEX_FAIL": "Type is invalid!",
+        "STEPS_REQUIRED": "Steps is required!",
+        "STEPS_LENGTH": "At least one step is required!",
+        "STEP_MISSING": "Step text is missing!"
+    }
+}

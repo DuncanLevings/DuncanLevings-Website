@@ -30,6 +30,11 @@
             font-size: calc(12px + 1vmin);
         }
     }
+    
+    .daily-error {
+        color: $error;
+        text-align: center;
+    }
 
     .daily-button {
         width: 100%;

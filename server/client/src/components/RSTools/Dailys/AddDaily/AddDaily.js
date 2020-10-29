@@ -5,12 +5,16 @@
  */
 
 import React from 'react';
-import { Button, Col, Container, Form, FormControl, InputGroup, ListGroup } from 'react-bootstrap';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { Button, Col, Container, Form, FormControl, InputGroup, ListGroup, Spinner } from 'react-bootstrap';
 import { ErrorMessage, Field, FieldArray, Formik } from 'formik';
 import { dailySchema } from 'components/helpers/formValidation';
 import { FaImage, FaPlus, FaTrash } from 'react-icons/fa';
+import { createDaily } from 'store/actions/dailyActions';
 import ImgCrop from 'components/tools/ImgCrop/ImgCrop.lazy';
 import ImgPreview from 'components/tools/ImgPreview/ImgPreview.lazy';
+import FormData from 'form-data';
 import PropTypes from 'prop-types';
 import './AddDaily.scss';
 
@@ -69,28 +73,47 @@ class AddDaily extends React.Component {
         this.setPreviewImgShow(false);
         const steps = [...values.steps];
         window.URL.revokeObjectURL(this.state.imgPreviewURL);
-        steps[this.state.selectedStep].img = "";
+        steps[this.state.selectedStep].img = {};
         setValues({ ...values, steps });
     }
+    
 
     submitProject = values => {
-        console.log(values)
-        //revoke all temp blob img urls
+        let formData = new FormData();
+
+        formData.append('title', values.title);
+        formData.append('type', this.props.dailyReducer.dailyType);
+
+        values.steps.forEach((step, i) => {
+            formData.append('steps', step.step);
+
+            if (step.img.blob) {
+                formData.append('images', step.img.blob, `step_${i}`);
+                window.URL.revokeObjectURL(step.img.url);
+            }
+        });
+        
+        this.props.createDaily(formData);
     }
 
     render() {
+        const { isCreating, error } = this.props.dailyReducer;
         const { imgCropShow, imgPreviewShow, imgPreviewURL } = this.state;
+
         return (
             <Container>
                 <div className="AddDaily">
                     <h1>Custom Daily</h1>
                     <div className="spacer-h-3" />
+                    <div className="daily-error">
+                        <p>{error}</p>
+                    </div>
                     <Formik
                         validationSchema={dailySchema}
                         onSubmit={this.submitProject}
                         initialValues={{
                             title: '',
-                            steps: [{ step: '', img: '' }]
+                            steps: [{ step: '', img: {} }]
                         }}
                     >
                         {({
@@ -139,8 +162,8 @@ class AddDaily extends React.Component {
                                                                         </InputGroup.Prepend>
                                                                         <Field name={`steps.${i}.step`} type="text" className={'form-control' + (stepErrors.step && stepTouched.step ? ' is-invalid' : '')} />
                                                                         <InputGroup.Append>
-                                                                            {step.img ?
-                                                                                <Button variant="button-secondary" onClick={() => this.setPreviewImgShow(true, i, step.img)}><FaImage /> Preview Image</Button>
+                                                                            {step.img.url ?
+                                                                                <Button variant="button-secondary" onClick={() => this.setPreviewImgShow(true, i, step.img.url)}><FaImage /> Preview Image</Button>
                                                                                 :
                                                                                 <Button variant="button-secondary" onClick={() => this.setImgCropShow(true, i)}><FaImage /> Add Image</Button>
                                                                             }
@@ -175,7 +198,7 @@ class AddDaily extends React.Component {
                                         <Button
                                             variant="button-primary"
                                             type="submit"
-                                            disabled={false}>Submit</Button>
+                                            disabled={isCreating}>Submit {isCreating ? <Spinner animation="border" variant="light" size="sm" /> : null}</Button>
                                     </div>
                                     <ImgCrop
                                         show={imgCropShow}
@@ -197,8 +220,17 @@ class AddDaily extends React.Component {
     }
 }
 
-AddDaily.propTypes = {};
+AddDaily.propTypes = {
+    createDaily: PropTypes.func,
+    dailyReducer: PropTypes.object
+};
 
-AddDaily.defaultProps = {};
+const mapStateToProps = state => {
+    return {
+        dailyReducer: state.dailyReducer
+    };
+}
 
-export default AddDaily;
+const mapDispatchToProps = dispatch => bindActionCreators({ createDaily }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddDaily);

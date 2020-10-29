@@ -12,6 +12,7 @@
         "USERNAME_REGEX_FAIL": "Username is invalid!",
         "PASSWORD_LENGTH": "Password must be more than 3 characters!",
         "USER_NOT_FOUND": "User not found!",
-        "TOKEN_NOT_FOUND": "Token not found!"
+        "TOKEN_NOT_FOUND": "Token not found!",
+        "USERID_REQUIRED": "User ID is required!"
     }
 }

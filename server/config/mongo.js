@@ -28,8 +28,12 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const { User } = require('../models/userModel');
 const { Token } = require('../models/tokenModel');
+const { Daily } = require('../models/dailyModel');
+const { RSToolsUser } = require('../models/rsToolsUserModel');
 
 module.exports = {
     User,
-    Token
+    Token,
+    Daily,
+    RSToolsUser
 }

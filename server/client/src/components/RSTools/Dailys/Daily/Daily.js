@@ -5,9 +5,12 @@
  */
 
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-import { Accordion, Button, Card, Container } from 'react-bootstrap';
+import { Accordion, Button, Card, Container, Spinner } from 'react-bootstrap';
 import { FaCheck, FaPlusSquare } from 'react-icons/fa';
+import { getDaily, setDailyType } from 'store/actions/dailyActions';
 import PropTypes from 'prop-types';
 import './Daily.scss';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
@@ -15,66 +18,17 @@ import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 class Daily extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            dailys: [
-                {
-                    title: "Compost",
-                    open: true,
-                    steps: [
-                        {
-                            text: "go to x",
-                            hasImg: false,
-                            img: ""
-                        },
-                        {
-                            text: "do x and y",
-                            hasImg: false,
-                            img: ""
-                        }
-                    ]
-                },
-                {
-                    title: "Runes",
-                    open: false,
-                    steps: [
-                        {
-                            text: "go to x",
-                            hasImg: false,
-                            img: ""
-                        },
-                        {
-                            text: "do x and y",
-                            hasImg: false,
-                            img: ""
-                        }
-                    ]
-                },
-                {
-                    title: "Shop run",
-                    open: false,
-                    steps: [
-                        {
-                            text: "go to x",
-                            hasImg: false,
-                            img: ""
-                        },
-                        {
-                            text: "do x and y",
-                            hasImg: false,
-                            img: ""
-                        }
-                    ]
-                }
-            ]
-        }
+        this.state = {}
     }
 
     componentDidMount() {
-
+        // retrieve dailys of type
+        this.props.getDaily(this.props.dailyType);
     }
 
     navigate = (route) => {
-        this.props.history.push({pathname: route});
+        this.props.setDailyType(this.props.dailyType);
+        this.props.history.push(route);
     }
 
     markComplete = (key) => e => {
@@ -84,49 +38,64 @@ class Daily extends React.Component {
     }
 
     render() {
+        const { dailys, isFetching } = this.props.dailyReducer;
+
         return (
             <Container>
                 <div className="Daily">
                     <div className="button-header">
                         <Button variant="button-primary" className="add-daily" onClick={() => this.navigate(RSTOOL_ROUTES.DAILYSEARCH)}><FaPlusSquare /> Add Daily</Button>
                     </div>
-                    {this.state.dailys.map((daily, i) => {
-                        var cardKey = i.toString();
-                        return (
-                            <Accordion defaultActiveKey={daily.open ? cardKey : ""} key={i}>
-                                <Card>
-                                    <Accordion.Toggle as={Card.Header} eventKey={cardKey}>
-                                        <Button variant="button-primary" className="daily-complete" onClick={this.markComplete(i)}><FaCheck /></Button>
-                                        {daily.title}
-                                    </Accordion.Toggle>
-                                    <Accordion.Collapse eventKey={cardKey}>
-                                    <Card.Body>
-                                        {daily.steps.map((step, j) => {
-                                            return (
-                                                <div className="step-container" key={j}>
-                                                    <Card.Text>
-                                                        {j + 1}. {step.text}
-                                                    </Card.Text>
-                                                    {step.hasImg ? 
-                                                    <Card.Img src={step.img} />
-                                                    : null}
-                                                </div>
-                                            );
-                                        })}
-                                    </Card.Body>
-                                    </Accordion.Collapse>
-                                </Card>
-                            </Accordion>
-                        );
-                    })}
+                    {isFetching ? <Spinner animation="border" variant="light" /> : (
+                        dailys.map((daily, i) => {
+                            var cardKey = i.toString();
+                            var dailyData = daily.dailyId;
+                            return (
+                                <Accordion defaultActiveKey={daily.collapsed ? "" : cardKey} key={i}>
+                                    <Card>
+                                        <Accordion.Toggle as={Card.Header} eventKey={cardKey}>
+                                            <Button variant="button-primary" className="daily-complete" onClick={this.markComplete(i)}><FaCheck /></Button>
+                                            {dailyData.title}
+                                        </Accordion.Toggle>
+                                        <Accordion.Collapse eventKey={cardKey}>
+                                            <Card.Body>
+                                                {dailyData.steps.map((step, j) => {
+                                                    return (
+                                                        <div className="step-container" key={j}>
+                                                            <Card.Text>
+                                                                {j + 1}. {step.step}
+                                                            </Card.Text>
+                                                            {step.url ?
+                                                                <Card.Img src={step.url} />
+                                                                : null}
+                                                        </div>
+                                                    );
+                                                })}
+                                            </Card.Body>
+                                        </Accordion.Collapse>
+                                    </Card>
+                                </Accordion>
+                            );
+                        })
+                    )}
                 </div>
             </Container>
         );
     }
 }
 
-Daily.propTypes = {};
+Daily.propTypes = {
+    setDailyType: PropTypes.func,
+    getDaily: PropTypes.func,
+    dailyReducer: PropTypes.object
+};
 
-Daily.defaultProps = {};
+const mapStateToProps = state => {
+    return {
+        dailyReducer: state.dailyReducer
+    };
+}
 
-export default withRouter(Daily);
+const mapDispatchToProps = dispatch => bindActionCreators({ setDailyType, getDaily }, dispatch);
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Daily));

@@ -32,7 +32,7 @@ class SearchDaily extends React.Component {
     }
 
     navigate = (route) => {
-        this.props.history.push({pathname: route});
+        this.props.history.push(route);
     }
 
     render() {

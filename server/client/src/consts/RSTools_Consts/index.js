@@ -5,7 +5,9 @@
  */
 
 import { RSTOOL_ROUTES } from './routeConsts';
+import DAILY_CONSTS from './dailyConsts';
 
 export {
-    RSTOOL_ROUTES
+    RSTOOL_ROUTES,
+    DAILY_CONSTS
 }

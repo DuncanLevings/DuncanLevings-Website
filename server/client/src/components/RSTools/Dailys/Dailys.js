@@ -4,6 +4,7 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
+import { DAILY_CONSTS } from 'consts/RSTools_Consts';
 import React from 'react';
 import { Tab, Tabs } from 'react-bootstrap';
 import Daily from './Daily/Daily.lazy';
@@ -24,7 +25,7 @@ class Dailys extends React.Component {
             <div className="Dailys">
                 <Tabs defaultActiveKey="dailys" id="daily-dash">
                     <Tab eventKey="dailys" title="DAILY">
-                        <Daily />
+                        <Daily dailyType={DAILY_CONSTS.DAILY} />
                     </Tab>
                     <Tab eventKey="weeklys" title="WEEKLY">
                     </Tab>

@@ -7,6 +7,8 @@
 import { all } from 'redux-saga/effects';
 import { getUserWatcher, loginUserWatcher, logoutUserWatcher, signupUserWatcher } from './userSaga';
 import { sendMailWatcher } from './emailSaga';
+import { uploadWatcher } from './imageSaga';
+import { createDailyWatcher, getDailyWatcher } from './dailySaga';
 
 export default function* rootSaga() {
     yield all([
@@ -14,6 +16,9 @@ export default function* rootSaga() {
       loginUserWatcher(),
       logoutUserWatcher(),
       signupUserWatcher(),
-      sendMailWatcher()
+      sendMailWatcher(),
+      uploadWatcher(),
+      getDailyWatcher(),
+      createDailyWatcher()
     ]);
   }
