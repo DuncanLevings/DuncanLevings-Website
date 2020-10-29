@@ -32,4 +32,19 @@ router.post(DAILY_ROUTES.CREATE, Multer.array('images'), auth.user, _imageServic
     .catch(err => res.status(400).json(err.message));
 });
 
+router.post(DAILY_ROUTES.EDIT, auth.user, (req, res) => {
+  
+});
+
+router.delete(DAILY_ROUTES.DELETE, auth.user, (req, res) => {
+  _dailyService
+    .deleteDaily(req.user.id, req.params.id)
+    .then(dailys => res.status(200).send(dailys))
+    .catch(err => res.status(400).json(err.message));
+});
+
+router.post(DAILY_ROUTES.REORDER, auth.user, (req, res) => {
+  
+});
+
 module.exports = router;

@@ -9,7 +9,9 @@ import * as actionTypes from '../actionTypes/dailyActionTypes';
 const intialState = {
     error: "",
     dailyType: 0,
+    dailyTypeName: "daily",
     dailys: [],
+    isSaving: false, // loading state
     isFetching: false, // loading state
     isCreating: false, // loading state
 };
@@ -26,10 +28,26 @@ export default (state = intialState, action) => {
                 ...state,
                 isCreating: true
             };
+        case actionTypes.EDIT_DAILY:
+            return {
+                ...state,
+                isSaving: true
+            };
+        case actionTypes.DELETE_DAILY:
+            return {
+                ...state,
+                isSaving: true
+            };
+        case actionTypes.REORDER_DAILY:
+            return {
+                ...state,
+                isSaving: true
+            };
         case actionTypes.SET_DAILY_TYPE:
             return {
                 ...state,
-                dailyType: action.payload
+                dailyType: action.payload.type,
+                dailyTypeName: action.payload.name
             };
         case actionTypes.GET_DAILY_SUCCESS:
             return {
@@ -43,6 +61,25 @@ export default (state = intialState, action) => {
                 ...state,
                 error: "",
                 isCreating: false
+            };
+        case actionTypes.EDIT_DAILY_SUCCESS:
+            return {
+                ...state,
+                error: "",
+                isSaving: false
+            };
+        case actionTypes.DELETE_DAILY_SUCCESS:
+            return {
+                ...state,
+                dailys: action.payload,
+                error: "",
+                isSaving: false
+            };
+        case actionTypes.REORDER_DAILY_SUCCESS:
+            return {
+                ...state,
+                error: "",
+                isSaving: false
             };
         case actionTypes.ERROR:
             return {

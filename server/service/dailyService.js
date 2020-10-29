@@ -61,7 +61,7 @@ const createDaily = async (user, data, images) => {
         const newDaily = await daily.save();
 
         // update every users daily list with new public daily
-        updateAllUsersDailyList(newDaily._id, newDaily.type)
+        addAllUsersDailyList(newDaily._id, newDaily.type)
             .then(() => { 
                 return newDaily; 
             })
@@ -73,10 +73,33 @@ const createDaily = async (user, data, images) => {
     return await daily.save();
 }
 
-const updateAllUsersDailyList = async (dailyId, dailyType) => {
+const deleteDaily = async (userId, dailyId) => {
+    const daily = await Daily.findOne({ _id: dailyId });
+    if (daily.ownerId != userId) {
+        throw Error(DAILY_ERRORS.NOT_OWNER);
+    }
+
+    // remove this daily from all users lists if its public type
+    if (daily.publicDaily) {
+        removeAllUsersDailyList(dailyId);
+    }
+
+    // to retrieve updated set of dailys assuming type from selected deletion one
+    const type = daily.type;
+
+    await Daily.deleteOne({ _id: dailyId });
+
+    return await getDailys(userId, type);
+}
+
+const addAllUsersDailyList = async (dailyId, dailyType) => {
     const users = await RSToolsUser.find({});
     for (const user of users) {
-        const position = user.dailys.length;
+        let position = 0;
+        console.log(user.dailys.length)
+        if (user.dailys.length > 0 ) {
+            position = (Math.max.apply(Math, user.dailys.map(daily => { return daily.position; }))) + 1;
+        }
         user.dailys.push({
             dailyId: dailyId,
             type: dailyType,
@@ -85,6 +108,28 @@ const updateAllUsersDailyList = async (dailyId, dailyType) => {
         await user.save();
     }
     return;
+}
+
+const removeUserDailyList = async (userId, dailyId) => {
+    try {
+        return await RSToolsUser.updateOne(
+           { userId: userId },
+           { $pull: { "dailys": { "dailyId": dailyId }}}
+        );
+     } catch (e) {
+        throw Error(e);
+     }
+}
+
+const removeAllUsersDailyList = async (dailyId) => {
+    try {
+        return await RSToolsUser.updateMany(
+           {},
+           { $pull: { "dailys": { "dailyId": dailyId }}}
+        );
+     } catch (e) {
+        throw Error(e);
+     }
 }
 
 class DailyBuilder {
@@ -121,5 +166,6 @@ class DailyBuilder {
 
 module.exports = {
     createDaily,
-    getDailys
+    getDailys,
+    deleteDaily
 }

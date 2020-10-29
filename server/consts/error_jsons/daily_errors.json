@@ -6,6 +6,7 @@
         "TYPE_REGEX_FAIL": "Type is invalid!",
         "STEPS_REQUIRED": "Steps is required!",
         "STEPS_LENGTH": "At least one step is required!",
-        "STEP_MISSING": "Step text is missing!"
+        "STEP_MISSING": "Step text is missing!",
+        "NOT_OWNER": "You are not the owner!"
     }
 }

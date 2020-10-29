@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Button, Container, Form, FormControl, InputGroup, ListGroup } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
@@ -28,7 +29,6 @@ class SearchDaily extends React.Component {
     }
 
     componentDidMount() {
-
     }
 
     navigate = (route) => {
@@ -36,6 +36,8 @@ class SearchDaily extends React.Component {
     }
 
     render() {
+        const { dailyTypeName } = this.props.dailyReducer;
+
         return (
             <Container>
                 <div className="SearchDaily">
@@ -48,21 +50,27 @@ class SearchDaily extends React.Component {
                                     aria-describedby="search"
                                 />
                                 <InputGroup.Append>
-                                    <Button variant="button-primary" onClick={() => this.navigate(RSTOOL_ROUTES.ADDDAILY)}>Add Custom Daily</Button>
+                                    <Button variant="button-primary" onClick={() => this.navigate(RSTOOL_ROUTES.ADDDAILY)}>Add Custom {dailyTypeName}</Button>
                                 </InputGroup.Append>
                             </InputGroup>
                         </Form.Group>
                         <Form.Group controlId="formOptions">
                             <Form.Check
                                 type="radio"
-                                label="All results"
+                                label="All activities"
                                 name="formSearchOptions"
                                 id="allResults"
                                 defaultChecked
                             />
                             <Form.Check
                                 type="radio"
-                                label="Custom only"
+                                label="Public activities"
+                                name="formSearchOptions"
+                                id="publicOnly"
+                            />
+                            <Form.Check
+                                type="radio"
+                                label="Your custom activites"
                                 name="formSearchOptions"
                                 id="customOnly"
                             />
@@ -81,8 +89,14 @@ class SearchDaily extends React.Component {
     }
 }
 
-SearchDaily.propTypes = {};
+SearchDaily.propTypes = {
+    dailyReducer: PropTypes.object
+};
 
-SearchDaily.defaultProps = {};
+const mapStateToProps = state => {
+    return {
+        dailyReducer: state.dailyReducer
+    };
+}
 
-export default withRouter(SearchDaily);
+export default withRouter(connect(mapStateToProps, null)(SearchDaily));

@@ -97,13 +97,13 @@ class AddDaily extends React.Component {
     }
 
     render() {
-        const { isCreating, error } = this.props.dailyReducer;
+        const { dailyTypeName, isCreating, error } = this.props.dailyReducer;
         const { imgCropShow, imgPreviewShow, imgPreviewURL } = this.state;
 
         return (
             <Container>
                 <div className="AddDaily">
-                    <h1>Custom Daily</h1>
+                    <h1>Custom {dailyTypeName}</h1>
                     <div className="spacer-h-3" />
                     <div className="daily-error">
                         <p>{error}</p>
@@ -132,7 +132,7 @@ class AddDaily extends React.Component {
                                             </InputGroup.Prepend>
                                             <FormControl
                                                 name="title"
-                                                placeholder="Title of Daily"
+                                                placeholder="Title"
                                                 aria-label="Title"
                                                 aria-describedby="Title"
                                                 value={values.title}

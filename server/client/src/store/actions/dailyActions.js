@@ -26,10 +26,51 @@ export function createDailySuccess() {
     return { type: actionTypes.CREATE_DAILY_SUCCESS };
 }
 
+// EDIT
+
+export function editDaily(formData) {
+    return { type: actionTypes.EDIT_DAILY, payload: formData };
+}
+
+export function editDailySuccess() {
+    return { type: actionTypes.EDIT_DAILY_SUCCESS };
+}
+
+// DELETE
+
+export function deleteDaily(dailyId) {
+    return { type: actionTypes.DELETE_DAILY, payload: dailyId };
+}
+
+export function deleteDailySuccess(dailys) {
+    return { type: actionTypes.DELETE_DAILY_SUCCESS, payload: dailys };
+}
+
+// ORDER
+
+export function reorderDaily(formData) {
+    return { type: actionTypes.REORDER_DAILY, payload: formData };
+}
+
+export function reorderDailySuccess() {
+    return { type: actionTypes.REORDER_DAILY_SUCCESS };
+}
+
 // type
 
 export function setDailyType(type) {
-    return { type: actionTypes.SET_DAILY_TYPE, payload: type };
+    let name = "Daily";
+    switch (type) {
+        case 1:
+            name = "Weekly";
+            break;
+        case 2:
+            name = "Monthly";
+            break;
+        default:
+            break;
+    }
+    return { type: actionTypes.SET_DAILY_TYPE, payload: { type: type, name: name } };
 }
 
 // ERROR

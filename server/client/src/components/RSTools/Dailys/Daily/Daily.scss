@@ -45,4 +45,31 @@
     .step-container {
         margin-bottom: 1rem;
     }
+
+    .actions {
+        float: right;
+
+        .action-icon {
+            margin-left: 1rem;
+        }
+
+        .action-icon.edit:hover {
+            color: $link-active;
+        }
+
+        .action-icon.delete:hover {
+            color: $error;
+        }
+    }
+
+    
+}
+
+.daily-modal {
+    font-family: 'Roboto', sans-serif;
+    color: $dark-theme;
+
+    .modal-title {
+        font-size: calc(12px + 2vmin);
+    }
 }
