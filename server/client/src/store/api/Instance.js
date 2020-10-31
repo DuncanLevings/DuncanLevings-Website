@@ -17,7 +17,7 @@ const axiosInstance = axios.create({
 const refreshAuthLogic = () =>
     axiosInstance.get('/api/users/refresh-token')
         .then(() => {
-            store.dispatch(getUser());
+            // store.dispatch(getUser());
             return Promise.resolve();
         })
         .catch(() => {

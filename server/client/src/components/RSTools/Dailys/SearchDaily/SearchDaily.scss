@@ -16,21 +16,24 @@
     padding-bottom: 5vh;
     font-family: 'Roboto', sans-serif;
 
-    .list-group-item {
-        background-color: $body-background;
-        border-color: $hr-divider;
-        
-        @include respond-to(xs) {
+    .card {
+        background-color: $daily-card-background;
+
+        .card-header {
             font-size: calc(8px + 2vmin);
         }
-        
-        @include respond-to(m) {
-            font-size: calc(12px + 1vmin);
+
+        .card-header:hover {
+            background-color: $daily-card-title-hover;
         }
     }
 
-    .list-group-item:hover {
-        background-color: $contact-background;
+    .step-container {
+        margin-bottom: 1rem;
+    }
+
+    .add-daily {
+        margin-right: 1rem;
     }
 
     .actions {

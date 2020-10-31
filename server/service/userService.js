@@ -53,7 +53,7 @@ const registerUser = async (email, username, password) => {
 
     await user.save();
 
-    // createRSToolsUser(user._id);
+    createRSToolsUser(user._id);
 
     return user;
 }
@@ -66,7 +66,7 @@ const createRSToolsUser = async (userId) => {
 
     // retrieve all public dailys and add to users daily list
     const dailys = [];
-    const result = await Daily.find({publicDaily: true }, { _id: 1, type: 1 });
+    const result = await Daily.find({ publicDaily: true }, { _id: 1, type: 1 });
     for (let i = 0; i < result.length; i++) {
         dailys.push({
             dailyId: result[i]._id,

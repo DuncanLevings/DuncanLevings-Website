@@ -9,8 +9,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { Accordion, Button, Card, Container, Modal, OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap';
-import { FaCheck, FaEdit, FaPlusSquare, FaTrash } from 'react-icons/fa';
-import { getDaily, setDailyType, deleteDaily } from 'store/actions/dailyActions';
+import { FaCheck, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
+import { getDaily, setDailyType, hideDaily, deleteDaily } from 'store/actions/dailyActions';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import PropTypes from 'prop-types';
 import './Daily.scss';
@@ -66,7 +66,7 @@ class Daily extends React.Component {
                     <Modal.Title>Confirm Hide or Delete</Modal.Title>
                 </Modal.Header>
                 <Modal.Footer>
-                    <Button variant="button-secondary" size="lg" onClick={this.setShowDelete(false)}>Hide</Button>
+                    <Button variant="button-secondary" size="lg" onClick={() => this.hideDaily()}>Hide</Button>
                     {disableDelete ?
                         <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Can only delete your own events.</Tooltip>}>
                             <span className="d-inline-block">
@@ -83,11 +83,16 @@ class Daily extends React.Component {
         );
     }
 
+    hideDaily = () => {
+        const { selectedDaily } = this.state;
+        this.props.hideDaily(selectedDaily.dailyId._id)
+        this.setState({ showDelete: false });
+    }
+
     deleteDaily = () => {
         const { selectedDaily } = this.state;
         this.props.deleteDaily(selectedDaily.dailyId._id)
         this.setState({ showDelete: false });
-        // this.props.getDaily(this.props.dailyType);
     }
 
     setShowEdit = (bool, i) => e => {
@@ -132,7 +137,7 @@ class Daily extends React.Component {
                     {this.deleteModal()}
                     {this.editModal()}
                     <div className="button-header">
-                        <Button variant="button-primary" className="add-daily" onClick={() => this.navigate(RSTOOL_ROUTES.DAILYSEARCH)}><FaPlusSquare /> Add {dailyTypeName}</Button>
+                        <Button variant="button-primary" className="add-daily" onClick={() => this.navigate(RSTOOL_ROUTES.DAILYSEARCH)}><FaPlus /> Add {dailyTypeName}</Button>
                     </div>
                     {isFetching ? <Spinner animation="border" variant="light" /> : (
                         dailys ? (
@@ -182,6 +187,7 @@ class Daily extends React.Component {
 Daily.propTypes = {
     setDailyType: PropTypes.func,
     getDaily: PropTypes.func,
+    hideDaily: PropTypes.func,
     deleteDaily: PropTypes.func,
     dailyReducer: PropTypes.object,
     userReducer: PropTypes.object
@@ -194,6 +200,6 @@ const mapStateToProps = state => {
     };
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ setDailyType, getDaily, deleteDaily }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ setDailyType, getDaily, hideDaily, deleteDaily }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Daily));

@@ -16,6 +16,7 @@ const PVM = RSTOOL_ROOT + '/pvm';
 const ACTIVITIES = RSTOOL_ROOT + '/activities';
 const DAILYSEARCH = DAILYS + "/search"
 const ADDDAILY = DAILYS + "/new"
+const EDITORDER = DAILYS + "/edit-order"
 
 export const RSTOOL_ROUTES = {
     DASH,
@@ -27,5 +28,6 @@ export const RSTOOL_ROUTES = {
     PVM,
     ACTIVITIES,
     DAILYSEARCH,
-    ADDDAILY
+    ADDDAILY,
+    EDITORDER
 }

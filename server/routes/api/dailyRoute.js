@@ -25,6 +25,27 @@ router.get(DAILY_ROUTES.GET_DAILYS, auth.user, (req, res) => {
     .catch(err => res.status(400).send(err.message));
 });
 
+router.get(DAILY_ROUTES.SEARCH_DAILYS, auth.user, (req, res) => {
+  _dailyService
+    .searchDailys(req.user.id, req.params.type, req.params.filter)
+    .then(dailys => res.status(200).send(dailys))
+    .catch(err => res.status(400).send(err.message));
+});
+
+router.post(DAILY_ROUTES.ADD, auth.user, (req, res) => {
+  _dailyService
+    .addDaily(req.user.id, req.body.id, req.body.type, req.body.filter)
+    .then(dailys => res.status(200).send(dailys))
+    .catch(err => res.status(400).send(err.message));
+});
+
+router.post(DAILY_ROUTES.HIDE, auth.user, (req, res) => {
+  _dailyService
+    .hideDaily(req.user.id, req.body.id)
+    .then(dailys => res.status(200).send(dailys))
+    .catch(err => res.status(400).send(err.message));
+});
+
 router.post(DAILY_ROUTES.CREATE, Multer.array('images'), auth.user, _imageService.uploadMultipleToBucket, (req, res) => {
   _dailyService
     .createDaily(req.user, req.body, req.files)

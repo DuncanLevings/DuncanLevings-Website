@@ -6,7 +6,7 @@
 
 import { call, takeLatest, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
-import { getDailyAPI, createDailyAPI, editDailyAPI, deleteDailyAPI, reorderDailyAPI } from '../api/dailyAPI';
+import { getDailyAPI, createDailyAPI, editDailyAPI, deleteDailyAPI, reorderDailyAPI, searchDailyAPI, addDailyAPI, hideDailyAPI } from '../api/dailyAPI';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import * as actionTypes from '../actionTypes/dailyActionTypes'
 import * as actionCreators from '../actions/dailyActions';
@@ -15,6 +15,34 @@ function* getDaily(dailyAction) {
     try {
         const dailys = yield call(getDailyAPI, dailyAction.payload);
         yield put(actionCreators.getDailySuccess(dailys));
+    } catch (error) {
+        yield put(actionCreators.dailyError(error.response.data));
+    }
+}
+
+function* searchDaily(dailyAction) {
+    try {
+        const dailys = yield call(searchDailyAPI, dailyAction.payload.type, dailyAction.payload.filter);
+        yield put(actionCreators.searchDailySuccess(dailys));
+    } catch (error) {
+        yield put(actionCreators.dailyError(error.response.data));
+    }
+}
+
+function* addDaily(dailyAction) {
+    try {
+        const dailys = yield call(addDailyAPI, dailyAction.payload);
+        yield put(actionCreators.addDailySuccess(dailys));
+    } catch (error) {
+        yield put(actionCreators.dailyError(error.response.data));
+    }
+}
+
+function* hideDaily(dailyAction) {
+    try {
+        console.log(dailyAction)
+        const dailys = yield call(hideDailyAPI, dailyAction.payload);
+        yield put(actionCreators.hideDailySuccess(dailys));
     } catch (error) {
         yield put(actionCreators.dailyError(error.response.data));
     }
@@ -67,6 +95,18 @@ function* reorderDaily(dailyAction) {
 
 export function* getDailyWatcher() {
     yield takeLatest(actionTypes.GET_DAILY, getDaily);
+}
+
+export function* searchDailyWatcher() {
+    yield takeLatest(actionTypes.SEARCH_DAILY, searchDaily);
+}
+
+export function* addDailyWatcher() {
+    yield takeLatest(actionTypes.ADD_DAILY, addDaily);
+}
+
+export function* hideDailyWatcher() {
+    yield takeLatest(actionTypes.HIDE_DAILY, hideDaily);
 }
 
 export function* createDailyWatcher() {

@@ -16,6 +16,36 @@ export function getDailySuccess(dailys) {
     return { type: actionTypes.GET_DAILY_SUCCESS, payload: dailys };
 }
 
+// SEARCH
+
+export function searchDaily(type, filter) {
+    return { type: actionTypes.SEARCH_DAILY, payload: { type: type, filter: filter} };
+}
+
+export function searchDailySuccess(dailys) {
+    return { type: actionTypes.SEARCH_DAILY_SUCCESS, payload: dailys };
+}
+
+// ADD
+
+export function addDaily(dailyId, type, filter) {
+    return { type: actionTypes.ADD_DAILY, payload: { id: dailyId, type: type, filter: filter } };
+}
+
+export function addDailySuccess(dailys) {
+    return { type: actionTypes.ADD_DAILY_SUCCESS, payload: dailys };
+}
+
+// HIDE
+
+export function hideDaily(dailyId) {
+    return { type: actionTypes.HIDE_DAILY, payload: {id: dailyId } };
+}
+
+export function hideDailySuccess(dailys) {
+    return { type: actionTypes.HIDE_DAILY_SUCCESS, payload: dailys };
+}
+
 // CREATE
 
 export function createDaily(formData) {

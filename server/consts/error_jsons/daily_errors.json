@@ -7,6 +7,8 @@
         "STEPS_REQUIRED": "Steps is required!",
         "STEPS_LENGTH": "At least one step is required!",
         "STEP_MISSING": "Step text is missing!",
-        "NOT_OWNER": "You are not the owner!"
+        "NOT_OWNER": "You are not the owner!",
+        "DAILY_ALREADY_IN_LIST": "That daily ID already exists in your list!",
+        "DAILY_ALREADY_HIDDEN": "That daily ID is already removed from your list!"
     }
 }

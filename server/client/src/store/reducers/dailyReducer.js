@@ -11,14 +11,32 @@ const intialState = {
     dailyType: 0,
     dailyTypeName: "daily",
     dailys: [],
+    searchDailys: [],
+    isAdding: false, // loading state
     isSaving: false, // loading state
     isFetching: false, // loading state
+    isSearching: false, // loading state
     isCreating: false, // loading state
 };
 
 export default (state = intialState, action) => {
     switch (action.type) {
         case actionTypes.GET_DAILY:
+            return {
+                ...state,
+                isFetching: true
+            };
+        case actionTypes.SEARCH_DAILY:
+            return {
+                ...state,
+                isSearching: true
+            };
+        case actionTypes.ADD_DAILY:
+            return {
+                ...state,
+                isAdding: true
+            };
+        case actionTypes.HIDE_DAILY:
             return {
                 ...state,
                 isFetching: true
@@ -50,6 +68,27 @@ export default (state = intialState, action) => {
                 dailyTypeName: action.payload.name
             };
         case actionTypes.GET_DAILY_SUCCESS:
+            return {
+                ...state,
+                dailys: action.payload,
+                error: "",
+                isFetching: false
+            };
+        case actionTypes.SEARCH_DAILY_SUCCESS:
+            return {
+                ...state,
+                searchDailys: action.payload,
+                error: "",
+                isSearching: false
+            };
+        case actionTypes.ADD_DAILY_SUCCESS:
+            return {
+                ...state,
+                searchDailys: action.payload,
+                error: "",
+                isAdding: false
+            };
+        case actionTypes.HIDE_DAILY_SUCCESS:
             return {
                 ...state,
                 dailys: action.payload,
