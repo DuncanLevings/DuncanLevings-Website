@@ -10,7 +10,14 @@ export function getDailyAPI(type) {
   return api.request({
     method: 'get',
     url: `/api/daily/get_dailys/${type}`,
-  }).then(res => res.data.dailys);
+  }).then(res => res.data);
+}
+
+export function getSingleDailyAPI(dailyId) {
+  return api.request({
+    method: 'get',
+    url: `/api/daily/get_daily/${dailyId}`,
+  }).then(res => res.data);
 }
 
 export function searchDailyAPI(type, filter) {
@@ -33,7 +40,7 @@ export function hideDailyAPI(data) {
     method: 'post',
     url: '/api/daily/hide_daily',
     data: data
-  }).then(res => res.data.dailys);
+  }).then(res => res.data);
 }
 
 export function createDailyAPI(formData) {
@@ -56,7 +63,7 @@ export function deleteDailyAPI(dailyId) {
   return api.request({
     method: 'delete',
     url: `/api/daily/delete/${dailyId}`
-  }).then(res => res.data.dailys);
+  }).then(res => res.data);
 }
 
 export function reorderDailyAPI(data) {
@@ -64,5 +71,5 @@ export function reorderDailyAPI(data) {
     method: 'post',
     url: '/api/daily/reorder',
     data: data
-  }).then(res => res.data.dailys);
+  }).then(res => res.data);
 }

@@ -22,6 +22,7 @@ import Dailys from 'components/RSTools/Dailys/Dailys.lazy';
 import SearchDaily from 'components/RSTools/Dailys/SearchDaily/SearchDaily.lazy';
 import AddDaily from 'components/RSTools/Dailys/AddDaily/AddDaily.lazy';
 import EditOrder from 'components/RSTools/Dailys/EditOrder/EditOrder.lazy';
+import EditDaily from 'components/RSTools/Dailys/EditDaily/EditDaily.lazy';
 import Footer from 'components/navbar/Footer/Footer.lazy';
 import NotFound from 'errors/NotFound';
 import PropTypes from 'prop-types';
@@ -50,6 +51,7 @@ class RSRouter extends React.Component {
                     <PrivateRoute exact path={RSTOOL_ROUTES.DAILYSEARCH} redirect={RSTOOL_ROUTES.LOGIN} component={SearchDaily} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.ADDDAILY} redirect={RSTOOL_ROUTES.LOGIN} component={AddDaily} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.EDITORDER} redirect={RSTOOL_ROUTES.LOGIN} component={EditOrder} />
+                    <PrivateRoute exact path={RSTOOL_ROUTES.EDITDAILY} redirect={RSTOOL_ROUTES.LOGIN} component={EditDaily} />
                     <Route component={NotFound} />
                 </Switch>
                 <Footer type={LOGIN_TYPE.RS_TOOLS} />

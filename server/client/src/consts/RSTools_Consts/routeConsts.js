@@ -14,9 +14,11 @@ const DAILYS = RSTOOL_ROOT + '/dailys';
 const FARMRUNS = RSTOOL_ROOT + '/farmruns';
 const PVM = RSTOOL_ROOT + '/pvm';
 const ACTIVITIES = RSTOOL_ROOT + '/activities';
-const DAILYSEARCH = DAILYS + "/search"
-const ADDDAILY = DAILYS + "/new"
-const EDITORDER = DAILYS + "/edit-order"
+const DAILYSEARCH = DAILYS + "/search";
+const ADDDAILY = DAILYS + "/new";
+const EDITORDER = DAILYS + "/edit-order";
+const EDITDAILY = DAILYS + "/edit/:dailyId";
+const EDITDAILY_PARAM = DAILYS + "/edit/";
 
 export const RSTOOL_ROUTES = {
     DASH,
@@ -29,5 +31,7 @@ export const RSTOOL_ROUTES = {
     ACTIVITIES,
     DAILYSEARCH,
     ADDDAILY,
-    EDITORDER
+    EDITORDER,
+    EDITDAILY,
+    EDITDAILY_PARAM
 }

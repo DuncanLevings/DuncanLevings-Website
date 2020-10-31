@@ -16,6 +16,32 @@ export function getDailySuccess(dailys) {
     return { type: actionTypes.GET_DAILY_SUCCESS, payload: dailys };
 }
 
+export function getWeekly(type) {
+    return { type: actionTypes.GET_WEEKLY, payload: type };
+}
+
+export function getWeeklySuccess(weeklys) {
+    return { type: actionTypes.GET_WEEKLY_SUCCESS, payload: weeklys };
+}
+
+export function getMonthly(type) {
+    return { type: actionTypes.GET_MONTHLY, payload: type };
+}
+
+export function getMonthlySuccess(monthlys) {
+    return { type: actionTypes.GET_MONTHLY_SUCCESS, payload: monthlys };
+}
+
+// RETRIEVE SINGLE
+
+export function getSingleDaily(dailyId) {
+    return { type: actionTypes.GET_SINGLE_DAILY, payload: dailyId };
+}
+
+export function getSingleDailySuccess(daily) {
+    return { type: actionTypes.GET_SINGLE_DAILY_SUCCESS, payload: daily };
+}
+
 // SEARCH
 
 export function searchDaily(type, filter) {
@@ -46,6 +72,22 @@ export function hideDailySuccess(dailys) {
     return { type: actionTypes.HIDE_DAILY_SUCCESS, payload: dailys };
 }
 
+export function hideWeekly(dailyId) {
+    return { type: actionTypes.HIDE_WEEKLY, payload: {id: dailyId } };
+}
+
+export function hideWeeklySuccess(weeklys) {
+    return { type: actionTypes.HIDE_WEEKLY_SUCCESS, payload: weeklys };
+}
+
+export function hideMonthly(dailyId) {
+    return { type: actionTypes.HIDE_MONTHLY, payload: {id: dailyId } };
+}
+
+export function hideMonthlySuccess(monthlys) {
+    return { type: actionTypes.HIDE_MONTHLY_SUCCESS, payload: monthlys };
+}
+
 // CREATE
 
 export function createDaily(formData) {
@@ -74,6 +116,22 @@ export function deleteDaily(dailyId) {
 
 export function deleteDailySuccess(dailys) {
     return { type: actionTypes.DELETE_DAILY_SUCCESS, payload: dailys };
+}
+
+export function deleteWeekly(dailyId) {
+    return { type: actionTypes.DELETE_WEEKLY, payload: dailyId };
+}
+
+export function deleteWeeklySuccess(weeklys) {
+    return { type: actionTypes.DELETE_WEEKLY_SUCCESS, payload: weeklys };
+}
+
+export function deleteMonthly(dailyId) {
+    return { type: actionTypes.DELETE_MONTHLY, payload: dailyId };
+}
+
+export function deleteMonthlySuccess(monthlys) {
+    return { type: actionTypes.DELETE_MONTHLY_SUCCESS, payload: monthlys };
 }
 
 // ORDER

@@ -21,7 +21,14 @@ import {
   getDailyWatcher,
   reorderDailyWatcher,
   searchDailyWatcher,
-  hideDailyWatcher
+  hideDailyWatcher,
+  getSingleDailyWatcher,
+  getWeeklyWatcher,
+  getMonthlyWatcher,
+  hideMonthlyWatcher,
+  hideWeeklyWatcher,
+  deleteWeeklyWatcher,
+  deleteMonthlyWatcher
 } from './dailySaga';
 
 export default function* rootSaga() {
@@ -33,12 +40,19 @@ export default function* rootSaga() {
     sendMailWatcher(),
     uploadWatcher(),
     getDailyWatcher(),
+    getWeeklyWatcher(),
+    getMonthlyWatcher(),
+    getSingleDailyWatcher(),
     searchDailyWatcher(),
     addDailyWatcher(),
     hideDailyWatcher(),
+    hideWeeklyWatcher(),
+    hideMonthlyWatcher(),
     createDailyWatcher(),
     editDailyWatcher(),
     deleteDailyWatcher(),
+    deleteWeeklyWatcher(),
+    deleteMonthlyWatcher(),
     reorderDailyWatcher()
   ]);
 }

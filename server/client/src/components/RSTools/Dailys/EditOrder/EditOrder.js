@@ -40,7 +40,7 @@ class EditOrder extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            dailys: []
+            items: []
         }
     }
 
@@ -51,13 +51,29 @@ class EditOrder extends React.Component {
             this.props.setDailyType(type);
             this.props.getDaily(type);
         } else {
-            this.setState({ dailys: this.props.dailyReducer.dailys });
+            this.setList(this.props.dailyReducer.dailyType);
         }
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.dailyReducer.dailys !== prevProps.dailyReducer.dailys) {
-            this.setState({ dailys: this.props.dailyReducer.dailys });
+            this.setList(this.props.dailyReducer.dailyType);
+        }
+    }
+
+    setList = (type) => {
+        switch (type) {
+            case 0:
+                this.setState({ items: this.props.dailyReducer.dailys });
+                break;
+            case 1:
+                this.setState({ items: this.props.dailyReducer.weeklys });
+                break;
+            case 2:
+                this.setState({ items: this.props.dailyReducer.monthlys });
+                break;
+            default:
+                break;
         }
     }
 
@@ -68,20 +84,20 @@ class EditOrder extends React.Component {
         }
 
         const items = reorder(
-            this.state.dailys,
+            this.state.items,
             result.source.index,
             result.destination.index
         );
 
         this.setState({
-            dailys: items
+            items: items
         });
     }
 
     saveOrder = () => {
         const newOrder = [];
-        this.state.dailys.forEach((daily, i) => {
-            newOrder.push({ id: daily._id, position: i + 1 });
+        this.state.items.forEach((item, i) => {
+            newOrder.push({ id: item._id, position: i + 1 });
         });
 
         this.props.reorderDaily(newOrder, this.props.dailyReducer.dailyType);
@@ -89,14 +105,14 @@ class EditOrder extends React.Component {
 
     render() {
         const { isSaving } = this.props.dailyReducer;
-        const { dailys } = this.state;
+        const { items } = this.state;
 
         return (
             <Container>
                 <div className="EditOrder">
                     <h1>Drag to Re-Order</h1>
                     <div className="spacer-h-3" />
-                    {dailys.length > 0 ?
+                    {items.length > 0 ?
                         <DragDropContext onDragEnd={this.onDragEnd}>
                             <Droppable droppableId="droppable">
                                 {(provided, snapshot) => (
@@ -105,8 +121,8 @@ class EditOrder extends React.Component {
                                         ref={provided.innerRef}
                                         className="drag-list"
                                     >
-                                        {dailys.map((daily, index) => (
-                                            <Draggable key={daily._id} draggableId={daily._id} index={index}>
+                                        {items.map((item, index) => (
+                                            <Draggable key={item._id} draggableId={item._id} index={index}>
                                                 {(provided, snapshot) => (
                                                     <div
                                                         ref={provided.innerRef}
@@ -118,7 +134,7 @@ class EditOrder extends React.Component {
                                                         )}
                                                         className="drag-item"
                                                     >
-                                                        {daily.dailyId.title}
+                                                        {item.dailyId.title}
                                                     </div>
                                                 )}
                                             </Draggable>

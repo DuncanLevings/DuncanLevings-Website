@@ -36,6 +36,19 @@
         .card-header:hover {
             background-color: $daily-card-title-hover;
         }
+
+        .card-text {
+            font-size: calc(8px + 1.5vmin);
+        }
+
+        .step-number {
+            color: $section-number;
+            font-size: calc(8px + .75vmin);
+        }
+
+        .card-img {
+            width: unset;
+        }
     }
 
     .daily-complete {

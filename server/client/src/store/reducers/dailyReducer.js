@@ -11,6 +11,9 @@ const intialState = {
     dailyType: 0,
     dailyTypeName: "Daily",
     dailys: [],
+    weeklys: [],
+    monthlys: [],
+    editDaily: null,
     searchDailys: [],
     isAdding: false, // loading state
     isSaving: false, // loading state
@@ -22,6 +25,21 @@ const intialState = {
 export default (state = intialState, action) => {
     switch (action.type) {
         case actionTypes.GET_DAILY:
+            return {
+                ...state,
+                isFetching: true
+            };
+        case actionTypes.GET_WEEKLY:
+            return {
+                ...state,
+                isFetching: true
+            };
+        case actionTypes.GET_MONTHLY:
+            return {
+                ...state,
+                isFetching: true
+            };
+        case actionTypes.GET_SINGLE_DAILY:
             return {
                 ...state,
                 isFetching: true
@@ -41,6 +59,16 @@ export default (state = intialState, action) => {
                 ...state,
                 isFetching: true
             };
+        case actionTypes.HIDE_WEEKLY:
+            return {
+                ...state,
+                isFetching: true
+            };
+        case actionTypes.HIDE_MONTHLY:
+            return {
+                ...state,
+                isFetching: true
+            };
         case actionTypes.CREATE_DAILY:
             return {
                 ...state,
@@ -52,6 +80,16 @@ export default (state = intialState, action) => {
                 isSaving: true
             };
         case actionTypes.DELETE_DAILY:
+            return {
+                ...state,
+                isSaving: true
+            };
+        case actionTypes.DELETE_WEEKLY:
+            return {
+                ...state,
+                isSaving: true
+            };
+        case actionTypes.DELETE_MONTHLY:
             return {
                 ...state,
                 isSaving: true
@@ -71,6 +109,27 @@ export default (state = intialState, action) => {
             return {
                 ...state,
                 dailys: action.payload,
+                error: "",
+                isFetching: false
+            };
+        case actionTypes.GET_WEEKLY_SUCCESS:
+            return {
+                ...state,
+                weeklys: action.payload,
+                error: "",
+                isFetching: false
+            };
+        case actionTypes.GET_MONTHLY_SUCCESS:
+            return {
+                ...state,
+                monthlys: action.payload,
+                error: "",
+                isFetching: false
+            };
+        case actionTypes.GET_SINGLE_DAILY_SUCCESS:
+            return {
+                ...state,
+                editDaily: action.payload,
                 error: "",
                 isFetching: false
             };
@@ -95,6 +154,20 @@ export default (state = intialState, action) => {
                 error: "",
                 isFetching: false
             };
+        case actionTypes.HIDE_WEEKLY_SUCCESS:
+            return {
+                ...state,
+                weeklys: action.payload,
+                error: "",
+                isFetching: false
+            };
+        case actionTypes.HIDE_MONTHLY_SUCCESS:
+            return {
+                ...state,
+                monthlys: action.payload,
+                error: "",
+                isFetching: false
+            };
         case actionTypes.CREATE_DAILY_SUCCESS:
             return {
                 ...state,
@@ -114,6 +187,20 @@ export default (state = intialState, action) => {
                 error: "",
                 isSaving: false
             };
+        case actionTypes.DELETE_WEEKLY_SUCCESS:
+            return {
+                ...state,
+                weeklys: action.payload,
+                error: "",
+                isSaving: false
+            };
+        case actionTypes.DELETE_MONTHLY_SUCCESS:
+            return {
+                ...state,
+                monthlys: action.payload,
+                error: "",
+                isSaving: false
+            };
         case actionTypes.REORDER_DAILY_SUCCESS:
             return {
                 ...state,
@@ -125,7 +212,11 @@ export default (state = intialState, action) => {
             return {
                 ...state,
                 error: action.payload,
-                isCreating: false
+                isCreating: false,
+                isAdding: false,
+                isSaving: false,
+                isFetching: false,
+                isSearching: false,
             };
         default:
             return state;

@@ -4,10 +4,14 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-import { DAILY_CONSTS } from 'consts/RSTools_Consts';
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { getDaily, getWeekly, getMonthly, setDailyType } from 'store/actions/dailyActions';
 import { Tab, Tabs } from 'react-bootstrap';
+import { DAILY_CONSTS } from 'consts/RSTools_Consts';
 import Daily from './Daily/Daily.lazy';
+import PropTypes from 'prop-types';
 import './Dailys.scss';
 
 class Dailys extends React.Component {
@@ -17,19 +21,47 @@ class Dailys extends React.Component {
     }
 
     componentDidMount() {
+        this.props.getDaily(DAILY_CONSTS.DAILY);
+        this.props.getWeekly(DAILY_CONSTS.WEEKLY);
+        this.props.getMonthly(DAILY_CONSTS.MONTHLY);
 
+        // default
+        this.setDataType(DAILY_CONSTS.DAILY);
+    }
+
+    handleSelect = key => {
+        switch (parseInt(key)) {
+            case DAILY_CONSTS.DAILY:
+                this.setDataType(DAILY_CONSTS.DAILY);
+                break;
+            case DAILY_CONSTS.WEEKLY:
+                this.setDataType(DAILY_CONSTS.WEEKLY);
+                break;
+            case DAILY_CONSTS.MONTHLY:
+                this.setDataType(DAILY_CONSTS.MONTHLY);
+                break;
+            default:
+                break;
+        }
+    }
+
+    setDataType = (type) => {
+        this.props.setDailyType(type);
+        localStorage.setItem("type", type);
     }
 
     render() {
         return (
             <div className="Dailys">
-                <Tabs defaultActiveKey="dailys" id="daily-dash">
-                    <Tab eventKey="dailys" title="DAILY">
-                        <Daily dailyType={DAILY_CONSTS.DAILY} />
+                <Tabs defaultActiveKey={DAILY_CONSTS.DAILY} id="daily-dash" onSelect={this.handleSelect}>
+                    <Tab eventKey={DAILY_CONSTS.DAILY} title="DAILY">
+                        <Daily />
                     </Tab>
-                    <Tab eventKey="weeklys" title="WEEKLY">
+                    <Tab eventKey={DAILY_CONSTS.WEEKLY} title="WEEKLY">
+                        <Daily />
                     </Tab>
-                    <Tab eventKey="monthlys" title="MONTHLY">
+                    <Tab eventKey={DAILY_CONSTS.MONTHLY} title="MONTHLY">
+                        <Daily />
                     </Tab>
                 </Tabs>
             </div>
@@ -37,8 +69,13 @@ class Dailys extends React.Component {
     }
 }
 
-Dailys.propTypes = {};
+Dailys.propTypes = {
+    setDailyType: PropTypes.func,
+    getDaily: PropTypes.func,
+    getWeekly: PropTypes.func,
+    getMonthly: PropTypes.func
+};
 
-Dailys.defaultProps = {};
+const mapDispatchToProps = dispatch => bindActionCreators({ setDailyType, getDaily, getWeekly, getMonthly }, dispatch);
 
-export default Dailys;
+export default connect(null, mapDispatchToProps)(Dailys);

@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { Accordion, Button, Card, Container, Modal, OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap';
 import { FaCheck, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
-import { getDaily, setDailyType, hideDaily, deleteDaily } from 'store/actions/dailyActions';
+import { getDaily, setDailyType, hideDaily, hideWeekly, hideMonthly, deleteDaily, deleteWeekly, deleteMonthly } from 'store/actions/dailyActions';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import PropTypes from 'prop-types';
 import './Daily.scss';
@@ -26,11 +26,6 @@ class Daily extends React.Component {
     }
 
     componentDidMount() {
-        // retrieve dailys of type
-        this.props.setDailyType(this.props.dailyType);
-        this.props.getDaily(this.props.dailyType);
-
-        localStorage.setItem("type", this.props.dailyType);
     }
 
     navigate = (route) => {
@@ -86,24 +81,53 @@ class Daily extends React.Component {
     }
 
     hideDaily = () => {
+        const { dailyType } = this.props.dailyReducer;
         const { selectedDaily } = this.state;
-        this.props.hideDaily(selectedDaily.dailyId._id)
+
+        if (dailyType === 0) {
+            this.props.hideDaily(selectedDaily.dailyId._id);
+        } else if (dailyType === 1) {
+            this.props.hideWeekly(selectedDaily.dailyId._id);
+        } else {
+            this.props.hideMonthly(selectedDaily.dailyId._id);
+        }
+
         this.setState({ showDelete: false });
     }
 
     deleteDaily = () => {
+        const { dailyType } = this.props.dailyReducer;
         const { selectedDaily } = this.state;
-        this.props.deleteDaily(selectedDaily.dailyId._id)
+
+        if (dailyType === 0) {
+            this.props.deleteDaily(selectedDaily.dailyId._id);
+        } else if (dailyType === 1) {
+            this.props.deleteWeekly(selectedDaily.dailyId._id);
+        } else {
+            this.props.deleteMonthly(selectedDaily.dailyId._id);
+        }
+        
         this.setState({ showDelete: false });
     }
 
-    setShowEdit = (bool, i) => e => {
+    setShowEdit = (bool, daily) => e => {
         e.stopPropagation();
-        this.setState({ showEdit: bool });
+        this.setState({
+            showEdit: bool,
+            selectedDaily: daily == undefined ? this.state.selectedDaily : daily
+        });
     }
 
     editModal = () => {
-        const { showEdit } = this.state;
+        const { showEdit, selectedDaily } = this.state;
+        const { user } = this.props.userReducer;
+
+        let disableEdit = false;
+        if (user && !user.isAdmin) {
+            if (selectedDaily && selectedDaily.dailyId.publicDaily) {
+                disableEdit = true;
+            }
+        }
 
         return (
             <Modal
@@ -117,7 +141,17 @@ class Daily extends React.Component {
                     <Modal.Title>Confirm edit</Modal.Title>
                 </Modal.Header>
                 <Modal.Footer>
-                    <Button variant="button-secondary" onClick={this.setShowEdit(false)}>Edit</Button>
+                    {disableEdit ?
+                        <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Can only edit your own events.</Tooltip>}>
+                            <span className="d-inline-block">
+                                <Button variant="button-secondary" disabled style={{ pointerEvents: 'none' }}>
+                                    Edit
+                                </Button>
+                            </span>
+                        </OverlayTrigger>
+                        :
+                        <Button variant="button-secondary" onClick={() => this.navigate(RSTOOL_ROUTES.EDITDAILY_PARAM + selectedDaily.dailyId._id)}>Edit</Button>
+                    }
                     <Button variant="button-secondary" onClick={() => this.navigate(RSTOOL_ROUTES.EDITORDER)}>Change Order</Button>
                 </Modal.Footer>
             </Modal>
@@ -131,7 +165,16 @@ class Daily extends React.Component {
     }
 
     render() {
-        const { dailyTypeName, dailys, isFetching } = this.props.dailyReducer;
+        const { dailyTypeName, dailyType, dailys, weeklys, monthlys, isFetching } = this.props.dailyReducer;
+
+        let data = [];
+        if (dailyType === 0) {
+            data = dailys;
+        } else if (dailyType === 1) {
+            data = weeklys;
+        } else {
+            data = monthlys;
+        }
 
         return (
             <Container>
@@ -142,8 +185,8 @@ class Daily extends React.Component {
                         <Button variant="button-primary" className="add-daily" onClick={() => this.navigate(RSTOOL_ROUTES.DAILYSEARCH)}><FaPlus /> Add {dailyTypeName}</Button>
                     </div>
                     {isFetching ? <Spinner animation="border" variant="light" /> : (
-                        dailys ? (
-                            dailys.map((daily, i) => {
+                        data.length > 0 ? (
+                            data.map((daily, i) => {
                                 var cardKey = i.toString();
                                 var dailyData = daily.dailyId;
                                 return (
@@ -163,7 +206,7 @@ class Daily extends React.Component {
                                                         return (
                                                             <div className="step-container" key={j}>
                                                                 <Card.Text>
-                                                                    {j + 1}. {step.step}
+                                                                    <span className="step-number">{j + 1}.</span> {step.step}
                                                                 </Card.Text>
                                                                 {step.url ?
                                                                     <Card.Img src={step.url} />
@@ -178,7 +221,7 @@ class Daily extends React.Component {
                                 );
                             })
                         ) :
-                            <p>No data.</p>
+                        <p>Completed all {dailyTypeName} for this reset!</p>
                     )}
                 </div>
             </Container>
@@ -190,7 +233,11 @@ Daily.propTypes = {
     setDailyType: PropTypes.func,
     getDaily: PropTypes.func,
     hideDaily: PropTypes.func,
+    hideWeekly: PropTypes.func,
+    hideMonthly: PropTypes.func,
     deleteDaily: PropTypes.func,
+    deleteWeekly: PropTypes.func,
+    deleteMonthly: PropTypes.func,
     dailyReducer: PropTypes.object,
     userReducer: PropTypes.object
 };
@@ -202,6 +249,6 @@ const mapStateToProps = state => {
     };
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ setDailyType, getDaily, hideDaily, deleteDaily }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ setDailyType, getDaily, hideDaily, hideWeekly, hideMonthly, deleteDaily, deleteWeekly, deleteMonthly }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Daily));

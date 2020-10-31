@@ -6,7 +6,7 @@
 
 import { call, takeLatest, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
-import { getDailyAPI, createDailyAPI, editDailyAPI, deleteDailyAPI, reorderDailyAPI, searchDailyAPI, addDailyAPI, hideDailyAPI } from '../api/dailyAPI';
+import { getDailyAPI, getSingleDailyAPI, createDailyAPI, editDailyAPI, deleteDailyAPI, reorderDailyAPI, searchDailyAPI, addDailyAPI, hideDailyAPI } from '../api/dailyAPI';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import * as actionTypes from '../actionTypes/dailyActionTypes'
 import * as actionCreators from '../actions/dailyActions';
@@ -15,6 +15,33 @@ function* getDaily(dailyAction) {
     try {
         const dailys = yield call(getDailyAPI, dailyAction.payload);
         yield put(actionCreators.getDailySuccess(dailys));
+    } catch (error) {
+        yield put(actionCreators.dailyError(error.response.data));
+    }
+}
+
+function* getWeekly(dailyAction) {
+    try {
+        const weeklys = yield call(getDailyAPI, dailyAction.payload);
+        yield put(actionCreators.getWeeklySuccess(weeklys));
+    } catch (error) {
+        yield put(actionCreators.dailyError(error.response.data));
+    }
+}
+
+function* getMonthly(dailyAction) {
+    try {
+        const monthlys = yield call(getDailyAPI, dailyAction.payload);
+        yield put(actionCreators.getMonthlySuccess(monthlys));
+    } catch (error) {
+        yield put(actionCreators.dailyError(error.response.data));
+    }
+}
+
+function* getSingleDaily(dailyAction) {
+    try {
+        const daily = yield call(getSingleDailyAPI, dailyAction.payload);
+        yield put(actionCreators.getSingleDailySuccess(daily));
     } catch (error) {
         yield put(actionCreators.dailyError(error.response.data));
     }
@@ -40,9 +67,26 @@ function* addDaily(dailyAction) {
 
 function* hideDaily(dailyAction) {
     try {
-        console.log(dailyAction)
         const dailys = yield call(hideDailyAPI, dailyAction.payload);
         yield put(actionCreators.hideDailySuccess(dailys));
+    } catch (error) {
+        yield put(actionCreators.dailyError(error.response.data));
+    }
+}
+
+function* hideWeekly(dailyAction) {
+    try {
+        const weeklys = yield call(hideDailyAPI, dailyAction.payload);
+        yield put(actionCreators.hideWeeklySuccess(weeklys));
+    } catch (error) {
+        yield put(actionCreators.dailyError(error.response.data));
+    }
+}
+
+function* hideMonthly(dailyAction) {
+    try {
+        const monthlys = yield call(hideDailyAPI, dailyAction.payload);
+        yield put(actionCreators.hideMonthlySuccess(monthlys));
     } catch (error) {
         yield put(actionCreators.dailyError(error.response.data));
     }
@@ -66,6 +110,7 @@ function* editDaily(dailyAction) {
     try {
         yield call(editDailyAPI, dailyAction.payload);
         yield put(actionCreators.editDailySuccess());
+        yield put(push(RSTOOL_ROUTES.DAILYS));
     } catch (error) {
         if (error.response.status === 500) {
             yield put(actionCreators.dailyError("Image upload failed!"));
@@ -79,6 +124,24 @@ function* deleteDaily(dailyAction) {
     try {
         const dailys = yield call(deleteDailyAPI, dailyAction.payload);
         yield put(actionCreators.deleteDailySuccess(dailys));
+    } catch (error) {
+        yield put(actionCreators.dailyError(error.response.data));
+    }
+}
+
+function* deleteWeekly(dailyAction) {
+    try {
+        const weeklys = yield call(deleteDailyAPI, dailyAction.payload);
+        yield put(actionCreators.deleteWeeklySuccess(weeklys));
+    } catch (error) {
+        yield put(actionCreators.dailyError(error.response.data));
+    }
+}
+
+function* deleteMonthly(dailyAction) {
+    try {
+        const monthlys = yield call(deleteDailyAPI, dailyAction.payload);
+        yield put(actionCreators.deleteMonthlySuccess(monthlys));
     } catch (error) {
         yield put(actionCreators.dailyError(error.response.data));
     }
@@ -98,6 +161,18 @@ export function* getDailyWatcher() {
     yield takeLatest(actionTypes.GET_DAILY, getDaily);
 }
 
+export function* getWeeklyWatcher() {
+    yield takeLatest(actionTypes.GET_WEEKLY, getWeekly);
+}
+
+export function* getMonthlyWatcher() {
+    yield takeLatest(actionTypes.GET_MONTHLY, getMonthly);
+}
+
+export function* getSingleDailyWatcher() {
+    yield takeLatest(actionTypes.GET_SINGLE_DAILY, getSingleDaily);
+}
+
 export function* searchDailyWatcher() {
     yield takeLatest(actionTypes.SEARCH_DAILY, searchDaily);
 }
@@ -110,6 +185,14 @@ export function* hideDailyWatcher() {
     yield takeLatest(actionTypes.HIDE_DAILY, hideDaily);
 }
 
+export function* hideWeeklyWatcher() {
+    yield takeLatest(actionTypes.HIDE_WEEKLY, hideWeekly);
+}
+
+export function* hideMonthlyWatcher() {
+    yield takeLatest(actionTypes.HIDE_MONTHLY, hideMonthly);
+}
+
 export function* createDailyWatcher() {
     yield takeLatest(actionTypes.CREATE_DAILY, createDaily);
 }
@@ -120,6 +203,14 @@ export function* editDailyWatcher() {
 
 export function* deleteDailyWatcher() {
     yield takeLatest(actionTypes.DELETE_DAILY, deleteDaily);
+}
+
+export function* deleteWeeklyWatcher() {
+    yield takeLatest(actionTypes.DELETE_WEEKLY, deleteWeekly);
+}
+
+export function* deleteMonthlyWatcher() {
+    yield takeLatest(actionTypes.DELETE_MONTHLY, deleteMonthly);
 }
 
 export function* reorderDailyWatcher() {

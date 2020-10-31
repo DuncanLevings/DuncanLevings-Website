@@ -18,10 +18,18 @@ const Multer = multer({
   fileSize: 5 * 1024 * 1024
 });
 
+_dailyService.resetDailys("5f0371760174273ce430c37d", 0);
 router.get(DAILY_ROUTES.GET_DAILYS, auth.user, (req, res) => {
   _dailyService
     .getDailys(req.user.id, req.params.type)
     .then(dailys => res.status(200).send(dailys))
+    .catch(err => res.status(400).send(err.message));
+});
+
+router.get(DAILY_ROUTES.GET_DAILY, auth.user, (req, res) => {
+  _dailyService
+    .getDaily(req.user.id, req.params.id)
+    .then(daily => res.status(200).send(daily))
     .catch(err => res.status(400).send(err.message));
 });
 
@@ -53,8 +61,11 @@ router.post(DAILY_ROUTES.CREATE, Multer.array('images'), auth.user, _imageServic
     .catch(err => res.status(400).json(err.message));
 });
 
-router.post(DAILY_ROUTES.EDIT, auth.user, (req, res) => {
-  
+router.post(DAILY_ROUTES.EDIT, Multer.array('images'), auth.user, _imageService.uploadMultipleToBucket, (req, res) => {
+  _dailyService
+    .editDaily(req.user._id, req.body, req.files)
+    .then(() => res.sendStatus(200))
+    .catch(err => res.status(400).json(err.message));
 });
 
 router.delete(DAILY_ROUTES.DELETE, auth.user, (req, res) => {

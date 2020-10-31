@@ -1,0 +1,48 @@
+@import '../../../../assets/style/breakpoints';
+@import '../../../../assets/style/vars';
+@import '../../../../assets/style/colors';
+
+.EditDaily {
+    @include respond-to(xs) {
+        min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
+        min-height: $minHeightMobile;
+    }
+    
+    @include respond-to(m) {
+        min-height: $minHeightDesktop;
+    }
+
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+
+    .list-group-item {
+        background-color: $body-background;
+        border-color: $hr-divider;
+        padding: 0;
+        
+        @include respond-to(xs) {
+            font-size: calc(8px + 2vmin);
+        }
+        
+        @include respond-to(m) {
+            font-size: calc(12px + 1vmin);
+        }
+    }
+    
+    .daily-error {
+        color: $error;
+        text-align: center;
+    }
+
+    .daily-button {
+        width: 100%;
+        text-align: center;
+        margin-top: 1rem;
+    }
+
+    .divider {
+        border-top-color: $hr-divider;
+    }
+}
