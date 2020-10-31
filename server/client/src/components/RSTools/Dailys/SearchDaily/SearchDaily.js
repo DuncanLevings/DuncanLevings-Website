@@ -8,7 +8,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
-import { Accordion, Button, Card, Container, Form, FormControl, InputGroup, ListGroup, Spinner } from 'react-bootstrap';
+import { Accordion, Button, Card, Container, Form, FormControl, InputGroup, Spinner } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
 import { searchDaily, addDaily } from 'store/actions/dailyActions';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';

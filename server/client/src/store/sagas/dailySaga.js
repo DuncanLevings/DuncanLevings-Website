@@ -85,12 +85,13 @@ function* deleteDaily(dailyAction) {
 }
 
 function* reorderDaily(dailyAction) {
-    // try {
-    //     yield call(reorderDailyAPI, dailyAction.payload);
-    //     yield put(actionCreators.reorderDailySuccess());
-    // } catch (error) {
-    //     yield put(actionCreators.dailyError(error.response.data));
-    // }
+    try {
+        const dailys = yield call(reorderDailyAPI, dailyAction.payload);
+        yield put(actionCreators.reorderDailySuccess(dailys));
+        yield put(push(RSTOOL_ROUTES.DAILYS));
+    } catch (error) {
+        yield put(actionCreators.dailyError(error.response.data));
+    }
 }
 
 export function* getDailyWatcher() {

@@ -29,6 +29,8 @@ class Daily extends React.Component {
         // retrieve dailys of type
         this.props.setDailyType(this.props.dailyType);
         this.props.getDaily(this.props.dailyType);
+
+        localStorage.setItem("type", this.props.dailyType);
     }
 
     navigate = (route) => {
@@ -116,7 +118,7 @@ class Daily extends React.Component {
                 </Modal.Header>
                 <Modal.Footer>
                     <Button variant="button-secondary" onClick={this.setShowEdit(false)}>Edit</Button>
-                    <Button variant="button-secondary" onClick={this.setShowEdit(false)}>Change Order</Button>
+                    <Button variant="button-secondary" onClick={() => this.navigate(RSTOOL_ROUTES.EDITORDER)}>Change Order</Button>
                 </Modal.Footer>
             </Modal>
         );

@@ -9,7 +9,7 @@
 const mongoose = require('mongoose');
 
 const dailyListSchema = new mongoose.Schema({
-    dailyId: { type: mongoose.Schema.Types.ObjectId, ref: "Daily", required: true },
+    dailyId: { type: mongoose.Types.ObjectId, ref: "Daily", required: true },
     type: { type: Number, default: 0 },
     completed: { type: Boolean, default: false },
     collapsed: { type: Boolean, default: true },
@@ -17,7 +17,7 @@ const dailyListSchema = new mongoose.Schema({
 });
 
 const rsToolsUserSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    userId: { type: mongoose.Types.ObjectId, ref: "User", required: true },
     dailys: { 
         type: [dailyListSchema],
         default: []

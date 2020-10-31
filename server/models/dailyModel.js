@@ -9,7 +9,7 @@
 const mongoose = require('mongoose');
 
 const dailySchema = new mongoose.Schema({
-    ownerId: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+    ownerId: { type: mongoose.Types.ObjectId, ref: "User", required: true },
     title: { type: String, required: true },
     type: { type: Number, required: true },
     steps: { type: Array, required: true },

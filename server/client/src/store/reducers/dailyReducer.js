@@ -9,7 +9,7 @@ import * as actionTypes from '../actionTypes/dailyActionTypes';
 const intialState = {
     error: "",
     dailyType: 0,
-    dailyTypeName: "daily",
+    dailyTypeName: "Daily",
     dailys: [],
     searchDailys: [],
     isAdding: false, // loading state
@@ -118,6 +118,7 @@ export default (state = intialState, action) => {
             return {
                 ...state,
                 error: "",
+                dailys: action.payload,
                 isSaving: false
             };
         case actionTypes.ERROR:

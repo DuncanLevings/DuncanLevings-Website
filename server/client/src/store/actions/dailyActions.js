@@ -78,12 +78,12 @@ export function deleteDailySuccess(dailys) {
 
 // ORDER
 
-export function reorderDaily(formData) {
-    return { type: actionTypes.REORDER_DAILY, payload: formData };
+export function reorderDaily(list, type) {
+    return { type: actionTypes.REORDER_DAILY, payload: { dailyList: list, type: type } };
 }
 
-export function reorderDailySuccess() {
-    return { type: actionTypes.REORDER_DAILY_SUCCESS };
+export function reorderDailySuccess(dailys) {
+    return { type: actionTypes.REORDER_DAILY_SUCCESS, payload: dailys };
 }
 
 // type

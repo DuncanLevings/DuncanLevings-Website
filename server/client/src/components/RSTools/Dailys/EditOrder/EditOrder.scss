@@ -1,0 +1,39 @@
+
+@import '../../../../assets/style/breakpoints';
+@import '../../../../assets/style/vars';
+@import '../../../../assets/style/colors';
+
+.EditOrder {
+    @include respond-to(xs) {
+        min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
+        min-height: $minHeightMobile;
+    }
+    
+    @include respond-to(m) {
+        min-height: $minHeightDesktop;
+    }
+
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    font-family: 'Roboto', sans-serif;
+
+    h1 {
+        text-align: center;
+    }
+
+    .drag-list {
+        margin-left: auto;
+        margin-right: auto;
+        padding: 1rem;
+        width: 50vw;
+    }
+
+    .drag-item {
+        font-size: calc(8px + 2vmin);
+    }
+
+    .save-order-button {
+        width: 100%;
+        text-align: center;
+    }
+}

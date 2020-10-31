@@ -18,7 +18,12 @@ const TYPE_REGEX = new RegExp(/^[0-2]+$/);
  * @param {*} type 
  */
 const getDailys = async (userId, type) => {
-    return await RSToolsUser.findOne({ userId: userId, "dailys.type": type, "dailys.completed": false }, { dailys: 1 }).populate('dailys.dailyId');
+    const dailyList = await RSToolsUser.findOne({ userId: userId, "dailys.type": type, "dailys.completed": false }, { _id: 0, dailys: 1 }).populate('dailys.dailyId');
+
+    // sort the list by position
+    if (dailyList) dailyList.dailys.sort((x, y) => (x.position > y.position) ? 1 : -1 );
+    
+    return dailyList;
 }
 
 /**
@@ -45,7 +50,7 @@ const searchDailys = async (userId, type, filter) => {
     } else if (filter == 1) { // filter for public, of type, that are not already in their list
         return await Daily.find({
             _id: { $nin: userDailyList },
-            publicDaily: true, 
+            publicDaily: true,
             type: n_type
         });
     } else { // filter for user owned dailys, of type, that are not already in their list
@@ -237,6 +242,20 @@ const removeAllUsersDailyList = async (dailyId) => {
     }
 }
 
+const reOrder = async (userId, dailyList, type) => {
+    const user = await RSToolsUser.findOne({ userId: userId });
+
+    for (const daily of user.dailys) {
+        const newPosition = dailyList.filter(d => d.id == daily._id)[0].position;
+        if (newPosition > -1 ) daily.position = newPosition;
+        else throw Error(DAILY_ERRORS.RE_ORDER_FAIL);
+    }
+
+    await user.save();
+
+    return await getDailys(userId, type);
+}
+
 class DailyBuilder {
     withOwner(id) {
         if (!id) throw Error(DAILY_ERRORS.USER_REQUIRED);
@@ -275,5 +294,6 @@ module.exports = {
     addDaily,
     hideDaily,
     createDaily,
-    deleteDaily
+    deleteDaily,
+    reOrder
 }

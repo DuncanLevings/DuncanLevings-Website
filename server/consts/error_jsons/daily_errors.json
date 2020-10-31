@@ -9,6 +9,7 @@
         "STEP_MISSING": "Step text is missing!",
         "NOT_OWNER": "You are not the owner!",
         "DAILY_ALREADY_IN_LIST": "That daily ID already exists in your list!",
-        "DAILY_ALREADY_HIDDEN": "That daily ID is already removed from your list!"
+        "DAILY_ALREADY_HIDDEN": "That daily ID is already removed from your list!",
+        "RE_ORDER_FAIL": "Something went wrong with new order of positions!"
     }
 }

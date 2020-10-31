@@ -59,9 +59,10 @@ export function deleteDailyAPI(dailyId) {
   }).then(res => res.data.dailys);
 }
 
-export function reorderDailyAPI() {
+export function reorderDailyAPI(data) {
   return api.request({
     method: 'post',
-    url: '/api/daily/reorder'
-  });
+    url: '/api/daily/reorder',
+    data: data
+  }).then(res => res.data.dailys);
 }
