@@ -63,7 +63,6 @@ const getRSTime = () => {
  * @param {*} userId 
  */
 const checkReset = async (userId) => {
-    console.log(userId)
     const user = await RSToolsUser.findOne({ userId: userId });
 
     const localTime = getLocalTime(user.resetTimes)
