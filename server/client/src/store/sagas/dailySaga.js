@@ -6,10 +6,31 @@
 
 import { call, takeLatest, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
-import { getDailyAPI, getSingleDailyAPI, createDailyAPI, editDailyAPI, deleteDailyAPI, reorderDailyAPI, searchDailyAPI, addDailyAPI, hideDailyAPI } from '../api/dailyAPI';
+import {
+    getDailyAPI,
+    getSingleDailyAPI,
+    createDailyAPI,
+    editDailyAPI,
+    deleteDailyAPI,
+    reorderDailyAPI,
+    searchDailyAPI,
+    addDailyAPI,
+    hideDailyAPI,
+    completeDailyAPI,
+    checkResetAPI
+} from '../api/dailyAPI';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import * as actionTypes from '../actionTypes/dailyActionTypes'
 import * as actionCreators from '../actions/dailyActions';
+
+function* checkReset() {
+    try {
+        const refresh = yield call(checkResetAPI);
+        yield put(actionCreators.checkResetSuccess(refresh));
+    } catch (error) {
+        yield put(actionCreators.dailyError(error.response.data));
+    }
+}
 
 function* getDaily(dailyAction) {
     try {
@@ -157,6 +178,37 @@ function* reorderDaily(dailyAction) {
     }
 }
 
+function* completeDaily(dailyAction) {
+    try {
+        const dailys = yield call(completeDailyAPI, dailyAction.payload);
+        yield put(actionCreators.completeDailySuccess(dailys));
+    } catch (error) {
+        yield put(actionCreators.dailyError(error.response.data));
+    }
+}
+
+function* completeWeekly(dailyAction) {
+    try {
+        const weeklys = yield call(completeDailyAPI, dailyAction.payload);
+        yield put(actionCreators.completeWeeklySuccess(weeklys));
+    } catch (error) {
+        yield put(actionCreators.dailyError(error.response.data));
+    }
+}
+
+function* completeMonthy(dailyAction) {
+    try {
+        const monthlys = yield call(completeDailyAPI, dailyAction.payload);
+        yield put(actionCreators.completeMonthlySuccess(monthlys));
+    } catch (error) {
+        yield put(actionCreators.dailyError(error.response.data));
+    }
+}
+
+export function* checkResetWatcher() {
+    yield takeLatest(actionTypes.CHECK_RESET, checkReset);
+}
+
 export function* getDailyWatcher() {
     yield takeLatest(actionTypes.GET_DAILY, getDaily);
 }
@@ -215,4 +267,16 @@ export function* deleteMonthlyWatcher() {
 
 export function* reorderDailyWatcher() {
     yield takeLatest(actionTypes.REORDER_DAILY, reorderDaily);
+}
+
+export function* completeDailyWatcher() {
+    yield takeLatest(actionTypes.COMPLETE_DAILY, completeDaily);
+}
+
+export function* completeWeeklyWatcher() {
+    yield takeLatest(actionTypes.COMPLETE_WEEKLY, completeWeekly);
+}
+
+export function* completeMonthlyWatcher() {
+    yield takeLatest(actionTypes.COMPLETE_MONTHLY, completeMonthy);
 }

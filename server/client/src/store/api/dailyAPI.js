@@ -6,6 +6,13 @@
 
 import api from './Instance';
 
+export function checkResetAPI() {
+  return api.request({
+    method: 'get',
+    url: '/api/daily/check_reset',
+  }).then(res => res.data);
+}
+
 export function getDailyAPI(type) {
   return api.request({
     method: 'get',
@@ -70,6 +77,14 @@ export function reorderDailyAPI(data) {
   return api.request({
     method: 'post',
     url: '/api/daily/reorder',
+    data: data
+  }).then(res => res.data);
+}
+
+export function completeDailyAPI(data) {
+  return api.request({
+    method: 'post',
+    url: '/api/daily/complete_daily',
     data: data
   }).then(res => res.data);
 }

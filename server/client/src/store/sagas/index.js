@@ -28,17 +28,26 @@ import {
   hideMonthlyWatcher,
   hideWeeklyWatcher,
   deleteWeeklyWatcher,
-  deleteMonthlyWatcher
+  deleteMonthlyWatcher,
+  completeDailyWatcher,
+  completeWeeklyWatcher,
+  completeMonthlyWatcher,
+  checkResetWatcher
 } from './dailySaga';
 
 export default function* rootSaga() {
   yield all([
+    // USER
     getUserWatcher(),
     loginUserWatcher(),
     logoutUserWatcher(),
     signupUserWatcher(),
     sendMailWatcher(),
+    // IMAGE
     uploadWatcher(),
+    // RSTOOLS
+    // DAILY
+    checkResetWatcher(),
     getDailyWatcher(),
     getWeeklyWatcher(),
     getMonthlyWatcher(),
@@ -53,6 +62,9 @@ export default function* rootSaga() {
     deleteDailyWatcher(),
     deleteWeeklyWatcher(),
     deleteMonthlyWatcher(),
-    reorderDailyWatcher()
+    reorderDailyWatcher(),
+    completeDailyWatcher(),
+    completeWeeklyWatcher(),
+    completeMonthlyWatcher()
   ]);
 }

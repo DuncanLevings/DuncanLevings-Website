@@ -15,6 +15,7 @@ const intialState = {
     monthlys: [],
     editDaily: null,
     searchDailys: [],
+    refresh: false,
     isAdding: false, // loading state
     isSaving: false, // loading state
     isFetching: false, // loading state
@@ -24,6 +25,10 @@ const intialState = {
 
 export default (state = intialState, action) => {
     switch (action.type) {
+        case actionTypes.CHECK_RESET:
+            return {
+                ...state
+            };
         case actionTypes.GET_DAILY:
             return {
                 ...state,
@@ -99,11 +104,37 @@ export default (state = intialState, action) => {
                 ...state,
                 isSaving: true
             };
+        case actionTypes.COMPLETE_DAILY:
+            return {
+                ...state,
+                isFetching: true
+            };
+        case actionTypes.COMPLETE_WEEKLY:
+            return {
+                ...state,
+                isFetching: true
+            };
+        case actionTypes.COMPLETE_MONTHLY:
+            return {
+                ...state,
+                isFetching: true
+            };
+        case actionTypes.SET_REFRESH:
+            return {
+                ...state,
+                refresh: action.payload
+            };
         case actionTypes.SET_DAILY_TYPE:
             return {
                 ...state,
                 dailyType: action.payload.type,
                 dailyTypeName: action.payload.name
+            };
+        case actionTypes.CHECK_RESET_SUCCESS:
+            return {
+                ...state,
+                refresh: action.payload,
+                error: ""
             };
         case actionTypes.GET_DAILY_SUCCESS:
             return {
@@ -207,6 +238,27 @@ export default (state = intialState, action) => {
                 error: "",
                 dailys: action.payload,
                 isSaving: false
+            };
+        case actionTypes.COMPLETE_DAILY_SUCCESS:
+            return {
+                ...state,
+                error: "",
+                dailys: action.payload,
+                isFetching: false
+            };
+        case actionTypes.COMPLETE_WEEKLY_SUCCESS:
+            return {
+                ...state,
+                error: "",
+                weeklys: action.payload,
+                isFetching: false
+            };
+        case actionTypes.COMPLETE_MONTHLY_SUCCESS:
+            return {
+                ...state,
+                error: "",
+                monthlys: action.payload,
+                isFetching: false
             };
         case actionTypes.ERROR:
             return {

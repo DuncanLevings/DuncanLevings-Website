@@ -18,7 +18,17 @@ const Multer = multer({
   fileSize: 5 * 1024 * 1024
 });
 
-_dailyService.resetDailys("5f0371760174273ce430c37d", 0);
+// _dailyService.resetDailys("5f0371760174273ce430c37d", 0);
+// _dailyService.resetDailys("5f0371760174273ce430c37d", 1);
+// _dailyService.resetDailys("5f0371760174273ce430c37d", 2);
+
+router.get(DAILY_ROUTES.CHECK_RESET, auth.user, (req, res) => {
+  _dailyService
+    .checkReset(req.user.id)
+    .then(refresh => res.status(200).send(refresh))
+    .catch(err => res.status(400).send(err.message));
+});
+
 router.get(DAILY_ROUTES.GET_DAILYS, auth.user, (req, res) => {
   _dailyService
     .getDailys(req.user.id, req.params.type)
@@ -78,6 +88,13 @@ router.delete(DAILY_ROUTES.DELETE, auth.user, (req, res) => {
 router.post(DAILY_ROUTES.REORDER, auth.user, (req, res) => {
   _dailyService
     .reOrder(req.user.id, req.body.dailyList, req.body.type)
+    .then(dailys => res.status(200).send(dailys))
+    .catch(err => res.status(400).json(err.message));
+});
+
+router.post(DAILY_ROUTES.COMPLETE, auth.user, (req, res) => {
+  _dailyService
+    .setComplete(req.user.id, req.body.id, req.body.type)
     .then(dailys => res.status(200).send(dailys))
     .catch(err => res.status(400).json(err.message));
 });

@@ -11,23 +11,32 @@ const mongoose = require('mongoose');
 const dailyListSchema = new mongoose.Schema({
     dailyId: { type: mongoose.Types.ObjectId, ref: "Daily", required: true },
     completed: { type: Boolean, default: false },
-    collapsed: { type: Boolean, default: true },
     position: { type: Number, required: true }
+});
+
+const resetTimeSchema = new mongoose.Schema({
+    lastDayReset: { type: Date, default: new Date() },
+    lastWeekReset: { type: Date, default: new Date() },
+    lastMonthReset: { type: Date, default: new Date() },
 });
 
 const rsToolsUserSchema = new mongoose.Schema({
     userId: { type: mongoose.Types.ObjectId, ref: "User", required: true },
-    dailys: { 
-        type: [dailyListSchema],    
+    dailys: {
+        type: [dailyListSchema],
         default: []
     },
-    weeklys: { 
-        type: [dailyListSchema],    
+    weeklys: {
+        type: [dailyListSchema],
         default: []
     },
-    monthlys: { 
-        type: [dailyListSchema],    
+    monthlys: {
+        type: [dailyListSchema],
         default: []
+    },
+    resetTimes: {
+        type: resetTimeSchema,
+        default: {}
     }
 });
 

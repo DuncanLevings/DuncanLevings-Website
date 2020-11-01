@@ -8,6 +8,8 @@
 const { Daily, RSToolsUser } = require('../config/mongo');
 const { DAILY_ERRORS } = require('../consts/error_jsons');
 const mongoose = require('mongoose');
+const Moment = require('moment-timezone');
+const user_route_consts = require('../consts/route_consts/user_route_consts');
 
 /* Regular expressions for parameter validation. */
 const TYPE_REGEX = new RegExp(/^[0-2]+$/);
@@ -25,12 +27,82 @@ const getType = (type) => {
     }
 }
 
+const getTimeObj = (type) => {
+    switch (parseInt(type)) {
+        case 0:
+            return { fieldName: 'lastDayReset' }
+        case 1:
+            return { fieldName: 'lastWeekReset' }
+        case 2:
+            return { fieldName: 'lastMonthReset' }
+        default:
+            break;
+    }
+}
+
+const getLocalTime = (time) => {
+    return {
+        day: Moment(time.lastDayReset).tz('America/Toronto').day(),
+        week: Moment(time.lastWeekReset).tz('America/Toronto').week(),
+        weekDay: Moment(time.lastWeekReset).tz('America/Toronto').weekday(),
+        month: Moment(time.lastMonthReset).tz('America/Toronto').month()
+    } 
+}
+
+const getRSTime = () => {
+    return {
+        day: Moment().utc().day(),
+        week: Moment().utc().week(),
+        weekDay: Moment().utc().weekday(),
+        month: Moment().utc().month()
+    } 
+}
+
 /**
- * Check if users dailys that have been completed, have reset
+ * Check if users dailys that have been completed, need to be reset
  * @param {*} userId 
  */
 const checkReset = async (userId) => {
+    console.log(userId)
+    const user = await RSToolsUser.findOne({ userId: userId });
 
+    const localTime = getLocalTime(user.resetTimes)
+    const rsTime = getRSTime();
+
+    // if any of the following are true, flag this boolean to tell the client it should refetch the users list data
+    let refreshData = false;
+
+    // DAY
+
+    // if previous reset day is different day to runescapes server reset day, reset dailys
+    if (localTime.day !== rsTime.day) {
+        resetDailys(userId, 0);
+        refreshData = true;
+    }
+
+    // WEEK
+
+    // if previous reset time for week is different week to runescapes server reset week, reset weeklys
+    const weekDiff = rsTime.week - localTime.week;
+    if (weekDiff > 1) { // been more than a week since last weekly reset, ignore tuesday reset only
+        resetDailys(userId, 1);
+        refreshData = true;
+    } else if (weekDiff === 1) { // last weekly reset was previous week, must check if day is tuesday to reset weekly
+        if (localTime.weekDay === 2) {
+            resetDailys(userId, 1);
+            refreshData = true;
+        }
+    }
+
+    // MONTH
+
+    // if previous reset month is different month to runescapes server month, reset monthlys
+    if (localTime.month !== rsTime.month) {
+        resetDailys(userId, 2);
+        refreshData = true;
+    }
+
+    return refreshData;
 }
 
 /**
@@ -40,13 +112,32 @@ const checkReset = async (userId) => {
  */
 const resetDailys = async (userId, type) => {
     const typeObj = getType(type);
-    const user = await RSToolsUser.findOne({ userId: userId }, { [typeObj.fieldName]: 1 });
-    
+    const user = await RSToolsUser.findOne({ userId: userId }, { [typeObj.fieldName]: 1, resetTimes: 1 });
+
     for (const item of user[typeObj.fieldName]) {
         item.completed = false;
     }
 
+    // update last reset time for this type
+    const timeObj = getTimeObj(type);
+    user.resetTimes[timeObj.fieldName] = new Date();
+
     await user.save();
+}
+
+const setComplete = async (userId, dailyId, type) => {
+    const typeObj = getType(type);
+    const user = await RSToolsUser.findOne({ userId: userId }, { [typeObj.fieldName]: 1 });
+
+    const userDailyList = user[typeObj.fieldName].map(daily => daily.dailyId);
+    if (!userDailyList.includes(dailyId)) throw Error(DAILY_ERRORS.DAILY_NOT_IN_LIST);
+    
+    await RSToolsUser.updateOne(
+        { userId: userId, [`${typeObj.fieldName}.dailyId`]: dailyId },
+        { $set: { [`${typeObj.fieldName}.$.completed`]: true } }
+    )
+
+    return await getDailys(userId, type);
 }
 
 /**
@@ -55,23 +146,64 @@ const resetDailys = async (userId, type) => {
  * @param {*} type 
  */
 const getDailys = async (userId, type) => {
-    await checkReset(userId);
-
     const typeObj = getType(type);
-    const list = await RSToolsUser.findOne({
-        userId: userId, [`${typeObj.fieldName}.completed`]: false
-    },
-        { _id: 0, [typeObj.fieldName]: 1 })
-        .populate(`${typeObj.fieldName}.dailyId`);
+    const userIdc = mongoose.Types.ObjectId(userId);
 
-    // sort the list by position
-    if (list) list[typeObj.fieldName].sort((x, y) => (x.position > y.position) ? 1 : -1);
+    const listData =  await RSToolsUser.aggregate([
+        {
+            $match: { userId: userIdc }
+        },
+        {
+            $project: { [`${typeObj.fieldName}`]: 1 }
+        },
+        {
+            $unwind: `$${typeObj.fieldName}`
+        },
+        {
+            $match: { [`${typeObj.fieldName}.completed`]: false }
+        },
+        {
+            $sort: { [`${typeObj.fieldName}.position`]: 1 }
+        },
+        {
+            $group: {
+                _id: '$_id',
+                [typeObj.fieldName]: {
+                    $push: `$${typeObj.fieldName}`
+                }
+            }
+        },
+        {
+            $lookup: {
+                from: Daily.collection.name,
+                let: { dailyId: `$${typeObj.fieldName}.dailyId` },
+                pipeline: [
+                    {
+                        $match: {
+                            $expr: { $in: ["$_id", "$$dailyId"] }
+                        }
+                    }
+                ],
+                as: "listData"
+            }
+        }
+    ]);
 
-    if (list)
-        return list[typeObj.fieldName];
-    return [];
+    if (listData.length === 0) return [];
+
+    // rematching populated dailyId schema with correct dailyId list object to maintain sorting
+    for (const data of listData[0][typeObj.fieldName]) {
+        data.dailyId = listData[0].listData.filter(d => d._id.equals(data.dailyId))[0];
+    }
+    
+    return listData[0][typeObj.fieldName];
 }
 
+/**
+ * Retrieve a single Daily checking ownership
+ * @param {*} userId 
+ * @param {*} dailyId 
+ */
 const getDaily = async (userId, dailyId) => {
     const daily = await Daily.findOne({ _id: dailyId });
 
@@ -398,5 +530,6 @@ module.exports = {
     createDaily,
     editDaily,
     deleteDaily,
-    reOrder
+    reOrder,
+    setComplete
 }

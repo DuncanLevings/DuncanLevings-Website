@@ -7,7 +7,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getDaily, getWeekly, getMonthly, setDailyType } from 'store/actions/dailyActions';
+import { checkReset, setRefresh, getDaily, getWeekly, getMonthly, setDailyType } from 'store/actions/dailyActions';
 import { Tab, Tabs } from 'react-bootstrap';
 import { DAILY_CONSTS } from 'consts/RSTools_Consts';
 import Daily from './Daily/Daily.lazy';
@@ -21,12 +21,25 @@ class Dailys extends React.Component {
     }
 
     componentDidMount() {
+        this.props.checkReset();
         this.props.getDaily(DAILY_CONSTS.DAILY);
         this.props.getWeekly(DAILY_CONSTS.WEEKLY);
         this.props.getMonthly(DAILY_CONSTS.MONTHLY);
 
         // default
         this.setDataType(DAILY_CONSTS.DAILY);
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.dailyReducer.refresh !== prevProps.dailyReducer.refresh) {
+            // fetch new data
+            this.props.getDaily(DAILY_CONSTS.DAILY);
+            this.props.getWeekly(DAILY_CONSTS.WEEKLY);
+            this.props.getMonthly(DAILY_CONSTS.MONTHLY);
+
+            // reset refresh to false
+            this.props.setRefresh(false);
+        }
     }
 
     handleSelect = key => {
@@ -71,11 +84,19 @@ class Dailys extends React.Component {
 
 Dailys.propTypes = {
     setDailyType: PropTypes.func,
+    setRefresh: PropTypes.func,
+    checkReset: PropTypes.func,
     getDaily: PropTypes.func,
     getWeekly: PropTypes.func,
     getMonthly: PropTypes.func
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({ setDailyType, getDaily, getWeekly, getMonthly }, dispatch);
+const mapStateToProps = state => {
+    return {
+        dailyReducer: state.dailyReducer
+    };
+}
 
-export default connect(null, mapDispatchToProps)(Dailys);
+const mapDispatchToProps = dispatch => bindActionCreators({ checkReset, setRefresh, setDailyType, getDaily, getWeekly, getMonthly }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dailys);

@@ -62,19 +62,43 @@ const createRSToolsUser = async (userId) => {
     const rsToolUser = new RSToolsUser(
         new RSToolsUserBuilder()
             .withUserId(userId)
-        );
+    );
 
-    // retrieve all public dailys and add to users daily list
+    // retrieve all public dailys and add to users daily lists
     const dailys = [];
+    const weeklys = [];
+    const monthlys = [];
     const result = await Daily.find({ publicDaily: true }, { _id: 1, type: 1 });
     for (let i = 0; i < result.length; i++) {
-        dailys.push({
-            dailyId: result[i]._id,
-            type: result[i].type,
-            position: i
-        });
+        switch (result[i].type) {
+            case 0:
+                dailys.push({
+                    dailyId: result[i]._id,
+                    type: result[i].type,
+                    position: dailys.length
+                });
+                break;
+            case 1:
+                weeklys.push({
+                    dailyId: result[i]._id,
+                    type: result[i].type,
+                    position: weeklys.length
+                });
+                break;
+            case 2:
+                monthlys.push({
+                    dailyId: result[i]._id,
+                    type: result[i].type,
+                    position: monthlys.length
+                });
+                break;
+            default:
+                break;
+        }
     }
     rsToolUser.dailys = dailys;
+    rsToolUser.weeklys = weeklys;
+    rsToolUser.monthlys = monthlys;
 
     await rsToolUser.save();
 }
@@ -105,7 +129,7 @@ const clearOldToken = async (token) => {
 const serializeUser = (user, cb) => {
     cb(null, user);
 };
-  
+
 const deserializeUser = (id, cb) => {
     User.findById(id, (err, user) => {
         cb(err, user);
@@ -144,9 +168,9 @@ class RSToolsUserBuilder {
     }
 }
 
-module.exports = { 
-    authenticate, 
-    getUser, 
+module.exports = {
+    authenticate,
+    getUser,
     getUserByToken,
     registerUser,
     createRSToolsUser,

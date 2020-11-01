@@ -21,6 +21,7 @@ const {
 const { _userService, _utils } = require('../../service');
 const router = express.Router();
 
+// _userService.createRSToolsUser("5f9e5af77ee5133bb4e810bc");
 // returns user as well as checking if the user has valid access_token
 router.get(USER_ROUTES.USER_ROOT, auth.user, (req, res) => {
   if (!req.user) return res.status(400).send(USER_SERVER_ERRORS.LOGIN_REQUIRED);

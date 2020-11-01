@@ -6,6 +6,7 @@
 
 const _ROOT = '/daily';
 
+const CHECK_RESET = '/check_reset';
 const GET_DAILYS = '/get_dailys/:type';
 const GET_DAILY = '/get_daily/:id';
 const SEARCH_DAILYS = '/search_dailys/:type/:filter';
@@ -15,9 +16,11 @@ const CREATE = '/create';
 const EDIT = '/edit';
 const DELETE = '/delete/:id';
 const REORDER = '/reorder';
+const COMPLETE = '/complete_daily';
 
 module.exports = {
     _ROOT,
+    CHECK_RESET,
     GET_DAILYS,
     GET_DAILY,
     SEARCH_DAILYS,
@@ -26,5 +29,6 @@ module.exports = {
     CREATE,
     EDIT,
     DELETE,
-    REORDER
+    REORDER,
+    COMPLETE
 }

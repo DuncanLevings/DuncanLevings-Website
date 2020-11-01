@@ -6,6 +6,20 @@
 
 import * as actionTypes from '../actionTypes/dailyActionTypes';
 
+// RESET
+
+export function checkReset() {
+    return { type: actionTypes.CHECK_RESET };
+}
+
+export function checkResetSuccess(refresh) {
+    return { type: actionTypes.CHECK_RESET_SUCCESS, payload: refresh };
+}
+
+export function setRefresh(bool) {
+    return { type: actionTypes.SET_REFRESH, payload: bool };
+}
+
 // RETRIEVE
 
 export function getDaily(type) {
@@ -142,6 +156,32 @@ export function reorderDaily(list, type) {
 
 export function reorderDailySuccess(dailys) {
     return { type: actionTypes.REORDER_DAILY_SUCCESS, payload: dailys };
+}
+
+// COMPLETE
+
+export function completeDaily(id, type) {
+    return { type: actionTypes.COMPLETE_DAILY, payload: { id: id, type: type } };
+}
+
+export function completeDailySuccess(dailys) {
+    return { type: actionTypes.COMPLETE_DAILY_SUCCESS, payload: dailys };
+}
+
+export function completeWeekly(id, type) {
+    return { type: actionTypes.COMPLETE_WEEKLY, payload: { id: id, type: type } };
+}
+
+export function completeWeeklySuccess(weeklys) {
+    return { type: actionTypes.COMPLETE_WEEKLY_SUCCESS, payload: weeklys };
+}
+
+export function completeMonthly(id, type) {
+    return { type: actionTypes.COMPLETE_MONTHLY, payload: { id: id, type: type } };
+}
+
+export function completeMonthlySuccess(monthlys) {
+    return { type: actionTypes.COMPLETE_MONTHLY_SUCCESS, payload: monthlys };
 }
 
 // type

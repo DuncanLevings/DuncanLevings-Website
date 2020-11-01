@@ -10,7 +10,19 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { Accordion, Button, Card, Container, Modal, OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap';
 import { FaCheck, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
-import { getDaily, setDailyType, hideDaily, hideWeekly, hideMonthly, deleteDaily, deleteWeekly, deleteMonthly } from 'store/actions/dailyActions';
+import {
+    getDaily,
+    setDailyType,
+    hideDaily,
+    hideWeekly,
+    hideMonthly,
+    deleteDaily,
+    deleteWeekly,
+    deleteMonthly,
+    completeDaily,
+    completeWeekly,
+    completeMonthly
+} from 'store/actions/dailyActions';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import PropTypes from 'prop-types';
 import './Daily.scss';
@@ -27,7 +39,7 @@ class Daily extends React.Component {
 
     componentDidMount() {
     }
-
+    
     navigate = (route) => {
         this.props.history.push(route);
     }
@@ -106,7 +118,7 @@ class Daily extends React.Component {
         } else {
             this.props.deleteMonthly(selectedDaily.dailyId._id);
         }
-        
+
         this.setState({ showDelete: false });
     }
 
@@ -158,10 +170,17 @@ class Daily extends React.Component {
         );
     }
 
-    markComplete = (key) => e => {
+    markComplete = (daily) => e => {
         e.stopPropagation();
-        console.log(key)
-        console.log("mark as done")
+        const { dailyType } = this.props.dailyReducer;
+
+        if (dailyType === 0) {
+            this.props.completeDaily(daily.dailyId._id, dailyType);
+        } else if (dailyType === 1) {
+            this.props.completeWeekly(daily.dailyId._id, dailyType);
+        } else {
+            this.props.completeMonthly(daily.dailyId._id, dailyType);
+        }
     }
 
     render() {
@@ -190,10 +209,10 @@ class Daily extends React.Component {
                                 var cardKey = i.toString();
                                 var dailyData = daily.dailyId;
                                 return (
-                                    <Accordion defaultActiveKey={daily.collapsed ? "" : cardKey} key={i}>
+                                    <Accordion key={i}>
                                         <Card>
                                             <Accordion.Toggle as={Card.Header} eventKey={cardKey}>
-                                                <Button variant="button-primary" className="daily-complete" onClick={this.markComplete(i)}><FaCheck /></Button>
+                                                <Button variant="button-primary" className="daily-complete" onClick={this.markComplete(daily)}><FaCheck /></Button>
                                                 {dailyData.title}
                                                 <span className="actions">
                                                     <FaEdit size="0.75em" className="action-icon edit" onClick={this.setShowEdit(true, daily)} />
@@ -221,7 +240,7 @@ class Daily extends React.Component {
                                 );
                             })
                         ) :
-                        <p>Completed all {dailyTypeName} for this reset!</p>
+                            <p>Completed all {dailyTypeName} for this reset!</p>
                     )}
                 </div>
             </Container>
@@ -238,6 +257,9 @@ Daily.propTypes = {
     deleteDaily: PropTypes.func,
     deleteWeekly: PropTypes.func,
     deleteMonthly: PropTypes.func,
+    completeDaily: PropTypes.func,
+    completeWeekly: PropTypes.func,
+    completeMonthly: PropTypes.func,
     dailyReducer: PropTypes.object,
     userReducer: PropTypes.object
 };
@@ -249,6 +271,18 @@ const mapStateToProps = state => {
     };
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ setDailyType, getDaily, hideDaily, hideWeekly, hideMonthly, deleteDaily, deleteWeekly, deleteMonthly }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({
+    setDailyType, 
+    getDaily, 
+    hideDaily, 
+    hideWeekly, 
+    hideMonthly, 
+    deleteDaily, 
+    deleteWeekly, 
+    deleteMonthly,
+    completeDaily,
+    completeWeekly,
+    completeMonthly
+}, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Daily));
