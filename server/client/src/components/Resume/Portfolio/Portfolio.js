@@ -164,8 +164,8 @@ class Portfolio extends React.Component {
                     details: [
                         "Coming soon."
                     ],
-                    link: "",
-                    github: "",
+                    link: "https://duncanlevings.com/rs-tools",
+                    github: "https://github.com/DuncanLevings/personal_website/tree/master/server/client/src/components/RSTools",
                     completed: false,
                     date: "" // used for mongodb retrival
                 },
