@@ -65,7 +65,7 @@ const getRSTime = () => {
 const checkReset = async (userId) => {
     const user = await RSToolsUser.findOne({ userId: userId });
 
-    const localTime = getLocalTime(user.resetTimes)
+    const lastResetlocalTime = getLocalTime(user.resetTimes)
     const rsTime = getRSTime();
 
     // if any of the following are true, flag this boolean to tell the client it should refetch the users list data
@@ -74,29 +74,38 @@ const checkReset = async (userId) => {
     // DAY
 
     // if previous reset day is different day to runescapes server reset day, reset dailys
-    if (localTime.day !== rsTime.day) {
+    if (lastResetlocalTime.day !== rsTime.day) {
         resetDailys(userId, 0);
         refreshData = true;
     }
 
     // WEEK
 
+    const weekDayTuesday = 2;
+
     // if previous reset time for week is different week to runescapes server reset week, reset weeklys
-    const weekDiff = rsTime.week - localTime.week;
+    const weekDiff = rsTime.week - lastResetlocalTime.week;
     if (weekDiff > 1) { // been more than a week since last weekly reset, ignore tuesday reset only
         resetDailys(userId, 1);
         refreshData = true;
     } else if (weekDiff === 1) { // last weekly reset was previous week, must check if day is tuesday to reset weekly
-        if (localTime.weekDay === 2) {
+        if (rsTime.weekDay === weekDayTuesday) {
             resetDailys(userId, 1);
             refreshData = true;
+        }
+    } else { // last reset for weeklys was done on the same week as runescapes current week (ie. sunday/monday etc)
+        if (lastResetlocalTime.weekday < weekDayTuesday) { // check if last reset for weeklys was done prior to tuesday of same week
+            if (rsTime.weekday === weekDayTuesday) { // make sure it is reset day of the week
+                resetDailys(userId, 1);
+                refreshData = true;
+            }
         }
     }
 
     // MONTH
 
     // if previous reset month is different month to runescapes server month, reset monthlys
-    if (localTime.month !== rsTime.month) {
+    if (lastResetlocalTime.month !== rsTime.month) {
         resetDailys(userId, 2);
         refreshData = true;
     }
