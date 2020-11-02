@@ -81,7 +81,7 @@ const checkReset = async (userId) => {
 
     // WEEK
 
-    const weekDayTuesday = 2;
+    const weeklyResetDay = 3; // Wednesday
 
     // if previous reset time for week is different week to runescapes server reset week, reset weeklys
     const weekDiff = rsTime.week - lastResetlocalTime.week;
@@ -89,13 +89,13 @@ const checkReset = async (userId) => {
         resetDailys(userId, 1);
         refreshData = true;
     } else if (weekDiff === 1) { // last weekly reset was previous week, must check if day is tuesday to reset weekly
-        if (rsTime.weekDay === weekDayTuesday) {
+        if (rsTime.weekDay === weeklyResetDay) {
             resetDailys(userId, 1);
             refreshData = true;
         }
     } else { // last reset for weeklys was done on the same week as runescapes current week (ie. sunday/monday etc)
-        if (lastResetlocalTime.weekday < weekDayTuesday) { // check if last reset for weeklys was done prior to tuesday of same week
-            if (rsTime.weekday === weekDayTuesday) { // make sure it is reset day of the week
+        if (lastResetlocalTime.weekday < weeklyResetDay) { // check if last reset for weeklys was done prior to tuesday of same week
+            if (rsTime.weekday === weeklyResetDay) { // make sure it is reset day of the week
                 resetDailys(userId, 1);
                 refreshData = true;
             }
