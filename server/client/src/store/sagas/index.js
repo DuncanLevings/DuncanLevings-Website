@@ -6,65 +6,19 @@
 
 import { all } from 'redux-saga/effects';
 import {
-  getUserWatcher,
-  loginUserWatcher,
-  logoutUserWatcher,
-  signupUserWatcher
+  userSagas
 } from './userSaga';
-import { sendMailWatcher } from './emailSaga';
-import { uploadWatcher } from './imageSaga';
-import {
-  addDailyWatcher,
-  createDailyWatcher,
-  deleteDailyWatcher,
-  editDailyWatcher,
-  getDailyWatcher,
-  reorderDailyWatcher,
-  searchDailyWatcher,
-  hideDailyWatcher,
-  getSingleDailyWatcher,
-  getWeeklyWatcher,
-  getMonthlyWatcher,
-  hideMonthlyWatcher,
-  hideWeeklyWatcher,
-  deleteWeeklyWatcher,
-  deleteMonthlyWatcher,
-  completeDailyWatcher,
-  completeWeeklyWatcher,
-  completeMonthlyWatcher,
-  checkResetWatcher
-} from './dailySaga';
+import { emailSagas } from './emailSaga';
+import { imageSagas } from './imageSaga';
+import { dailySagas } from './dailySaga';
+import { activitySagas } from './activitySaga';
 
 export default function* rootSaga() {
   yield all([
-    // USER
-    getUserWatcher(),
-    loginUserWatcher(),
-    logoutUserWatcher(),
-    signupUserWatcher(),
-    sendMailWatcher(),
-    // IMAGE
-    uploadWatcher(),
-    // RSTOOLS
-    // DAILY
-    checkResetWatcher(),
-    getDailyWatcher(),
-    getWeeklyWatcher(),
-    getMonthlyWatcher(),
-    getSingleDailyWatcher(),
-    searchDailyWatcher(),
-    addDailyWatcher(),
-    hideDailyWatcher(),
-    hideWeeklyWatcher(),
-    hideMonthlyWatcher(),
-    createDailyWatcher(),
-    editDailyWatcher(),
-    deleteDailyWatcher(),
-    deleteWeeklyWatcher(),
-    deleteMonthlyWatcher(),
-    reorderDailyWatcher(),
-    completeDailyWatcher(),
-    completeWeeklyWatcher(),
-    completeMonthlyWatcher()
+    ...userSagas,
+    ...emailSagas,
+    ...imageSagas,
+    ...dailySagas,
+    ...activitySagas
   ]);
 }

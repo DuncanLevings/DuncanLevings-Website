@@ -205,78 +205,24 @@ function* completeMonthy(dailyAction) {
     }
 }
 
-export function* checkResetWatcher() {
-    yield takeLatest(actionTypes.CHECK_RESET, checkReset);
-}
-
-export function* getDailyWatcher() {
-    yield takeLatest(actionTypes.GET_DAILY, getDaily);
-}
-
-export function* getWeeklyWatcher() {
-    yield takeLatest(actionTypes.GET_WEEKLY, getWeekly);
-}
-
-export function* getMonthlyWatcher() {
-    yield takeLatest(actionTypes.GET_MONTHLY, getMonthly);
-}
-
-export function* getSingleDailyWatcher() {
-    yield takeLatest(actionTypes.GET_SINGLE_DAILY, getSingleDaily);
-}
-
-export function* searchDailyWatcher() {
-    yield takeLatest(actionTypes.SEARCH_DAILY, searchDaily);
-}
-
-export function* addDailyWatcher() {
-    yield takeLatest(actionTypes.ADD_DAILY, addDaily);
-}
-
-export function* hideDailyWatcher() {
-    yield takeLatest(actionTypes.HIDE_DAILY, hideDaily);
-}
-
-export function* hideWeeklyWatcher() {
-    yield takeLatest(actionTypes.HIDE_WEEKLY, hideWeekly);
-}
-
-export function* hideMonthlyWatcher() {
-    yield takeLatest(actionTypes.HIDE_MONTHLY, hideMonthly);
-}
-
-export function* createDailyWatcher() {
-    yield takeLatest(actionTypes.CREATE_DAILY, createDaily);
-}
-
-export function* editDailyWatcher() {
-    yield takeLatest(actionTypes.EDIT_DAILY, editDaily);
-}
-
-export function* deleteDailyWatcher() {
-    yield takeLatest(actionTypes.DELETE_DAILY, deleteDaily);
-}
-
-export function* deleteWeeklyWatcher() {
-    yield takeLatest(actionTypes.DELETE_WEEKLY, deleteWeekly);
-}
-
-export function* deleteMonthlyWatcher() {
-    yield takeLatest(actionTypes.DELETE_MONTHLY, deleteMonthly);
-}
-
-export function* reorderDailyWatcher() {
-    yield takeLatest(actionTypes.REORDER_DAILY, reorderDaily);
-}
-
-export function* completeDailyWatcher() {
-    yield takeLatest(actionTypes.COMPLETE_DAILY, completeDaily);
-}
-
-export function* completeWeeklyWatcher() {
-    yield takeLatest(actionTypes.COMPLETE_WEEKLY, completeWeekly);
-}
-
-export function* completeMonthlyWatcher() {
-    yield takeLatest(actionTypes.COMPLETE_MONTHLY, completeMonthy);
-}
+export const dailySagas = [
+    takeLatest(actionTypes.CHECK_RESET, checkReset),
+    takeLatest(actionTypes.GET_DAILY, getDaily),
+    takeLatest(actionTypes.GET_WEEKLY, getWeekly),
+    takeLatest(actionTypes.GET_MONTHLY, getMonthly),
+    takeLatest(actionTypes.GET_SINGLE_DAILY, getSingleDaily),
+    takeLatest(actionTypes.SEARCH_DAILY, searchDaily),
+    takeLatest(actionTypes.ADD_DAILY, addDaily),
+    takeLatest(actionTypes.HIDE_DAILY, hideDaily),
+    takeLatest(actionTypes.HIDE_WEEKLY, hideWeekly),
+    takeLatest(actionTypes.HIDE_MONTHLY, hideMonthly),
+    takeLatest(actionTypes.CREATE_DAILY, createDaily),
+    takeLatest(actionTypes.EDIT_DAILY, editDaily),
+    takeLatest(actionTypes.DELETE_DAILY, deleteDaily),
+    takeLatest(actionTypes.DELETE_WEEKLY, deleteWeekly),
+    takeLatest(actionTypes.DELETE_MONTHLY, deleteMonthly),
+    takeLatest(actionTypes.REORDER_DAILY, reorderDaily),
+    takeLatest(actionTypes.COMPLETE_DAILY, completeDaily),
+    takeLatest(actionTypes.COMPLETE_WEEKLY, completeWeekly),
+    takeLatest(actionTypes.COMPLETE_MONTHLY, completeMonthy)
+];

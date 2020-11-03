@@ -18,6 +18,6 @@ function* sendMail(mailAction) {
     }
 }
 
-export function* sendMailWatcher() {
-    yield takeLatest(actionTypes.SEND_MAIL, sendMail);
-}
+export const emailSagas = [
+    takeLatest(actionTypes.SEND_MAIL, sendMail)
+];

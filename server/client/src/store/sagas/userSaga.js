@@ -8,7 +8,6 @@ import { call, takeLatest, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import { getUserAPI, loginAPI, logoutAPI, signUpAPI } from '../api/userAPI';
-import { successNotification } from '../actions/notificationActions';
 import * as actionTypes from '../actionTypes/userActionTypes'
 import * as actionCreators from '../actions/userActions';
 
@@ -16,7 +15,6 @@ function* getUser() {
     try {
         const user = yield call(getUserAPI);
         yield put(actionCreators.getUserSuccess(user));
-        // yield put(successNotification("test"));
     } catch (error) {
         if (error.response.status === 401) {
             yield put(actionCreators.userError());
@@ -57,18 +55,9 @@ function* signupUser(signupAction) {
     }
 }
 
-export function* getUserWatcher() {
-    yield takeLatest(actionTypes.GET_USER, getUser);
-}
-
-export function* loginUserWatcher() {
-    yield takeLatest(actionTypes.LOGIN_USER, loginUser);
-}
-
-export function* logoutUserWatcher() {
-    yield takeLatest(actionTypes.LOGOUT_USER, logoutUser);
-}
-
-export function* signupUserWatcher() {
-    yield takeLatest(actionTypes.SIGNUP_USER, signupUser);
-}
+export const userSagas = [
+    takeLatest(actionTypes.GET_USER, getUser),
+    takeLatest(actionTypes.LOGIN_USER, loginUser),
+    takeLatest(actionTypes.LOGOUT_USER, logoutUser),
+    takeLatest(actionTypes.SIGNUP_USER, signupUser)
+];

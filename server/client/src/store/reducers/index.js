@@ -12,6 +12,7 @@ import navbarReducer from './navbarReducer';
 import emailReducer from './emailReducer';
 import imageReducer from './imageReducer';
 import dailyReducer from './dailyReducer';
+import activityReducer from './activityReducer';
 
 const createRootReducer = (history) => combineReducers({
     router: connectRouter(history),
@@ -20,7 +21,8 @@ const createRootReducer = (history) => combineReducers({
     navbarReducer: navbarReducer,
     emailReducer: emailReducer,
     imageReducer: imageReducer,
-    dailyReducer: dailyReducer
+    dailyReducer: dailyReducer,
+    activityReducer: activityReducer
 });
 
 export default createRootReducer;

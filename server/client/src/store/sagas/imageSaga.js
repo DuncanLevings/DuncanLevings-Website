@@ -5,7 +5,6 @@
  */
 
 import { call, takeLatest, put } from 'redux-saga/effects';
-import { push } from 'connected-react-router';
 import { uploadAPI } from '../api/imageAPI';
 import * as actionTypes from '../actionTypes/imageActionTypes'
 import * as actionCreators from '../actions/imageActions';
@@ -19,6 +18,6 @@ function* upload(imageAction) {
     }
 }
 
-export function* uploadWatcher() {
-    yield takeLatest(actionTypes.UPLOAD, upload);
-}
+export const imageSagas = [
+    takeLatest(actionTypes.UPLOAD, upload)
+];
