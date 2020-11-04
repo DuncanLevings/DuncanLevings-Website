@@ -9,7 +9,6 @@ const { Daily, RSToolsUser } = require('../config/mongo');
 const { DAILY_ERRORS } = require('../consts/error_jsons');
 const mongoose = require('mongoose');
 const Moment = require('moment-timezone');
-const user_route_consts = require('../consts/route_consts/user_route_consts');
 
 /* Regular expressions for parameter validation. */
 const TYPE_REGEX = new RegExp(/^[0-2]+$/);
@@ -42,7 +41,7 @@ const getTimeObj = (type) => {
 
 const getLocalTime = (time) => {
     return {
-        day: Moment(time.lastDayReset).tz('America/Toronto').day(),
+        day: Moment(time.lastDayReset).tz('America/Toronto').date(),
         week: Moment(time.lastWeekReset).tz('America/Toronto').week(),
         weekDay: Moment(time.lastWeekReset).tz('America/Toronto').weekday(),
         month: Moment(time.lastMonthReset).tz('America/Toronto').month()
@@ -51,7 +50,7 @@ const getLocalTime = (time) => {
 
 const getRSTime = () => {
     return {
-        day: Moment().utc().day(),
+        day: Moment().utc().date(),
         week: Moment().utc().week(),
         weekDay: Moment().utc().weekday(),
         month: Moment().utc().month()
@@ -72,7 +71,7 @@ const checkReset = async (userId) => {
     let refreshData = false;
 
     // DAY
-
+    
     // if previous reset day is different day to runescapes server reset day, reset dailys
     if (lastResetlocalTime.day < rsTime.day) {
         resetDailys(userId, 0);

@@ -23,6 +23,8 @@ import SearchDaily from 'components/RSTools/Dailys/SearchDaily/SearchDaily.lazy'
 import AddDaily from 'components/RSTools/Dailys/AddDaily/AddDaily.lazy';
 import EditOrder from 'components/RSTools/Dailys/EditOrder/EditOrder.lazy';
 import EditDaily from 'components/RSTools/Dailys/EditDaily/EditDaily.lazy';
+import Activity from 'components/RSTools/Activity/Activity.lazy';
+import VisNemi from 'components/RSTools/Activity/VisNemi/VisNemi.lazy';
 import Footer from 'components/navbar/Footer/Footer.lazy';
 import NotFound from 'errors/NotFound';
 import PropTypes from 'prop-types';
@@ -47,11 +49,16 @@ class RSRouter extends React.Component {
                     <Route exact path={RSTOOL_ROUTES.SIGNUP} component={SignUp} /> 
                     <Route exact path={RSTOOL_ROUTES.FORGOTPASS} component={ForgotPassword} /> 
                     <PrivateRoute exact path={RSTOOL_ROUTES.DASH} redirect={RSTOOL_ROUTES.LOGIN} component={RSDash} />
+                    {/* DAILYS */}
                     <PrivateRoute exact path={RSTOOL_ROUTES.DAILYS} redirect={RSTOOL_ROUTES.LOGIN} component={Dailys} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.DAILYSEARCH} redirect={RSTOOL_ROUTES.LOGIN} component={SearchDaily} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.ADDDAILY} redirect={RSTOOL_ROUTES.LOGIN} component={AddDaily} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.EDITORDER} redirect={RSTOOL_ROUTES.LOGIN} component={EditOrder} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.EDITDAILY} redirect={RSTOOL_ROUTES.LOGIN} component={EditDaily} />
+                    <PrivateRoute exact path={RSTOOL_ROUTES.EDITDAILY} redirect={RSTOOL_ROUTES.LOGIN} component={EditDaily} />
+                    {/* ACTIVITIES */}
+                    <PrivateRoute exact path={RSTOOL_ROUTES.ACTIVITIES} redirect={RSTOOL_ROUTES.LOGIN} component={Activity} />
+                    <PrivateRoute exact path={RSTOOL_ROUTES.VIS_NEMI} redirect={RSTOOL_ROUTES.LOGIN} component={VisNemi} />
                     <Route component={NotFound} />
                 </Switch>
                 <Footer type={LOGIN_TYPE.RS_TOOLS} />

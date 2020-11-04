@@ -3,11 +3,13 @@ const _userService = require('./userService');
 const _emailService = require('./emailService');
 const _imageService = require('./imageService');
 const _dailyService = require('./dailyService');
+const _activityService = require('./activityService');
 
 module.exports = {
     _utils,
     _userService,
     _emailService,
     _imageService,
-    _dailyService
+    _dailyService,
+    _activityService
 }

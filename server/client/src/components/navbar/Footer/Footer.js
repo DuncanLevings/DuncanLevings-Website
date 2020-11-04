@@ -29,7 +29,7 @@ class Footer extends React.Component {
         const { type } = this.props;
         return (
             <div className="main-footer">
-                <span>© 2020 by DuncanLevings <br /> Updated: July 2 2020</span>
+                <span>© 2020 by DuncanLevings <br /> Updated: Nov 03 2020</span>
                 {type === LOGIN_TYPE.ADMIN ? (
                     <div className="admin-login">
                         <Button variant="button-secondary" onClick={() => this.navAdminLogin()}>Admin Login</Button>

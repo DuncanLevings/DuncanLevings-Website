@@ -18,10 +18,6 @@ const Multer = multer({
   fileSize: 5 * 1024 * 1024
 });
 
-// _dailyService.resetDailys("5f0371760174273ce430c37d", 0);
-// _dailyService.resetDailys("5f0371760174273ce430c37d", 1);
-// _dailyService.resetDailys("5f0371760174273ce430c37d", 2);
-
 router.get(DAILY_ROUTES.CHECK_RESET, auth.user, (req, res) => {
   _dailyService
     .checkReset(req.user.id)

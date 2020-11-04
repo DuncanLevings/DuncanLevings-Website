@@ -1,0 +1,21 @@
+@import '../../../../assets/style/breakpoints';
+@import '../../../../assets/style/vars';
+@import '../../../../assets/style/colors';
+
+.VisNemi {
+    @include respond-to(xs) {
+        min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
+        min-height: $minHeightMobile;
+    }
+    
+    @include respond-to(m) {
+        min-height: $minHeightDesktop;
+    }
+
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+
+    .card {
+        background-color: $daily-card-background;
+    }
+}

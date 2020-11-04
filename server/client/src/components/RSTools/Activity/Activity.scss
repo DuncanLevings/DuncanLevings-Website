@@ -1,0 +1,45 @@
+@import '../../../assets/style/breakpoints';
+@import '../../../assets/style/vars';
+@import '../../../assets/style/colors';
+
+.Activity {
+    @include respond-to(xs) {
+        min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
+        min-height: $minHeightMobile;
+    }
+    
+    @include respond-to(m) {
+        min-height: $minHeightDesktop;
+    }
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    .card {
+        color: black;
+        background-color: $card-background;
+        padding: calc(3rem + 3vmin);
+        cursor: pointer;
+        min-width: unset;
+
+        @include respond-to(xs) {
+            margin: 1rem;
+        }
+
+        @include respond-to(lg) {
+            margin: 2rem;
+        }
+
+        .card-title.h5{
+            text-align: center;
+            font-family: 'Krona One', sans-serif;
+            font-size: calc(18px + 2vmin);
+        }
+    }
+
+    .card:hover {
+        background-color: $card-background-hover;
+    }
+}
