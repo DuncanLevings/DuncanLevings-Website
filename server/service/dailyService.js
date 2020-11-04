@@ -41,10 +41,10 @@ const getTimeObj = (type) => {
 
 const getLocalTime = (time) => {
     return {
-        day: Moment(time.lastDayReset).tz('America/Toronto').date(),
-        week: Moment(time.lastWeekReset).tz('America/Toronto').week(),
-        weekDay: Moment(time.lastWeekReset).tz('America/Toronto').weekday(),
-        month: Moment(time.lastMonthReset).tz('America/Toronto').month()
+        day: Moment(time.lastDayReset).utc().date(),
+        week: Moment(time.lastWeekReset).utc().week(),
+        weekDay: Moment(time.lastWeekReset).utc().weekday(),
+        month: Moment(time.lastMonthReset).utc().month()
     } 
 }
 
@@ -71,7 +71,7 @@ const checkReset = async (userId) => {
     let refreshData = false;
 
     // DAY
-    
+
     // if previous reset day is different day to runescapes server reset day, reset dailys
     if (lastResetlocalTime.day < rsTime.day) {
         resetDailys(userId, 0);
