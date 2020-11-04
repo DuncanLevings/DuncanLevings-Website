@@ -15,6 +15,19 @@
     margin-top: 2rem;
     margin-bottom: 2rem;
 
+    table {
+        text-align: center;
+        background-color: $daily-card-background;
+
+        td {
+            width: 33%;
+
+            img {
+                width: 48px;
+            }
+        }
+    }
+
     .card {
         background-color: $daily-card-background;
     }

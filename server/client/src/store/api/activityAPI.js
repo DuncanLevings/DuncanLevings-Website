@@ -6,6 +6,13 @@
 
 import api from './Instance';
 
+export function vixWaxAPI() {
+  return api.request({
+    method: 'get',
+    url: '/api/activity/vis_wax',
+  }).then(res => res.data);
+}
+
 export function nemiForestAPI() {
   return api.request({
     method: 'get',

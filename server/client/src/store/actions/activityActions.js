@@ -6,6 +6,16 @@
 
 import * as actionTypes from '../actionTypes/activityActionTypes';
 
+// GET VIX WAX
+
+export function getVixWax() {
+    return { type: actionTypes.VIS_WAX };
+}
+
+export function getVixWaxSuccess(data) {
+    return { type: actionTypes.VIS_WAX_SUCCESS, payload: data };
+}
+
 // GET NEMI FOREST
 
 export function getLastestNemi() {

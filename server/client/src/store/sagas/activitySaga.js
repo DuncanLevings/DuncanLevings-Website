@@ -5,9 +5,18 @@
  */
 
 import { call, takeLatest, put } from 'redux-saga/effects';
-import { nemiForestAPI } from '../api/activityAPI';
+import { nemiForestAPI, vixWaxAPI } from '../api/activityAPI';
 import * as actionTypes from '../actionTypes/activityActionTypes'
 import * as actionCreators from '../actions/activityActions';
+
+function* getVixWax(activityAction) {
+    try {
+        const visWaxData = yield call(vixWaxAPI, activityAction.payload);
+        yield put(actionCreators.getVixWaxSuccess(visWaxData));
+    } catch (error) {
+        yield put(actionCreators.activityError(error.response.data));
+    }
+}
 
 function* getLatestNemi(activityAction) {
     try {
@@ -19,5 +28,6 @@ function* getLatestNemi(activityAction) {
 }
 
 export const activitySagas = [
+    takeLatest(actionTypes.VIS_WAX, getVixWax),
     takeLatest(actionTypes.NEMI_FOREST, getLatestNemi)
 ];

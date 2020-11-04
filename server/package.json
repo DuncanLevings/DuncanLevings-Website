@@ -13,6 +13,7 @@
     "axios": "^0.19.2",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
+    "cheerio": "^1.0.0-rc.3",
     "clean-css": "^4.2.3",
     "connect-mongo": "^3.2.0",
     "constantinople": "^4.0.1",

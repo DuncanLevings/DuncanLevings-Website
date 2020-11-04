@@ -12,6 +12,13 @@ const { _activityService } = require('../../service');
 const auth = require('../auth');
 const router = express.Router();
 
+router.get(ACTIVITY_ROUTES.VIS_WAX, auth.user, (req, res) => {
+    _activityService
+        .scrapeVisWaxHtmlData()
+        .then(data => res.status(200).send(data))
+        .catch(err => res.status(400).send(err.message));
+});
+
 router.get(ACTIVITY_ROUTES.NEMI_FOREST, auth.user, (req, res) => {
     _activityService
         .getLatestNemiForest()
