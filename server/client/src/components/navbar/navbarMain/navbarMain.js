@@ -41,7 +41,7 @@ class navbarMain extends React.Component {
     }
 
     isActiveClass = (hashRoute, hash) => {
-        if (hashRoute === hash) return "is-active-link";
+        if (hash.includes(hashRoute)) return "is-active-link";
         return "";
     }
 
