@@ -2,7 +2,7 @@
 @import '../../../assets/style/vars';
 @import '../../../assets/style/colors';
 
-.Dailys {
+.Equipment {
     @include respond-to(xs) {
         min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
         min-height: $minHeightMobile;

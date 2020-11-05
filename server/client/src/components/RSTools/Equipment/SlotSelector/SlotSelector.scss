@@ -1,0 +1,143 @@
+@import '../../../../assets/style/colors';
+
+$left-slot1: 62px;
+$left-slot2: 114px;
+$left-slot3: 166px;
+$left-slot4: 36px;
+$left-slot5: 192px;
+$top-row1: 86px;
+$top-row2: 139px;
+$top-row3: 191px;
+$top-row4: 243px;
+$top-row5: 295px;
+
+.SlotSelector {
+
+    width: 500px;
+
+    h4 {
+        font-family: 'Roboto', sans-serif;
+        text-align: center;
+    }
+
+    .slotDiv {
+        float: left;
+
+        .slotContainer {
+            display: block;
+            background-image: url("/static_images/RSTools/Worn_equipment_interface.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 270px;
+            height: 427px;
+    
+            .slots {
+                position: relative;
+                height: 100%;
+    
+                .slot {
+                    display: block;
+                    position: absolute;
+                    border: unset;
+                    height: 44px;
+                    width: 44px;
+                }
+    
+                .selected {
+                    border: 2px solid $selected-slot-border;
+                }
+    
+                .slot:hover {
+                    background-color: $slot-hover;
+                }
+    
+                .left {
+                    &-1 {
+                        left: $left-slot1;
+                    }
+    
+                    &-2 {
+                        left: $left-slot2;
+                    }
+    
+                    &-3 {
+                        left: $left-slot3;
+                    }
+    
+                    &-4 {
+                        left: $left-slot4;
+                    }
+    
+                    &-5 {
+                        left: $left-slot5;
+                    }
+                }
+    
+                .top {
+                    &-1 {
+                        top: $top-row1;
+                    }
+    
+                    &-2 {
+                        top: $top-row2;
+                    }
+    
+                    &-3 {
+                        top: $top-row3;
+                    }
+    
+                    &-4 {
+                        top: $top-row4;
+                    }
+    
+                    &-5 {
+                        top: $top-row5;
+                    }
+                }
+            }
+        }
+    }
+
+    .inventoryDiv {
+        float: right;
+
+        .inventoryContainer {
+            display: block;
+            background-image: url("/static_images/RSTools/inventory_interface.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 220px;
+            height: 427px;
+    
+            .inventory {
+                position: relative;
+                height: 100%;
+
+                .clickableArea {
+                    display: block;
+                    position: absolute;
+                    border: unset;
+                    height: 324px;
+                    width: 205px;
+                    left: 11px;
+                    top: 50px;
+                }
+
+                .selected {
+                    border: 2px solid $selected-slot-border;
+                }
+    
+                .clickableArea:hover {
+                    background-color: $slot-hover;
+                }
+            }
+        }
+    }
+
+    .clear-filter {
+        clear: both;
+        padding-top: 1rem;
+        font-family: 'Roboto', sans-serif;
+        text-align: center;
+    }
+}

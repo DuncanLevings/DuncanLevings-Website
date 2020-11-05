@@ -26,8 +26,11 @@ const PVM = RSTOOL_ROOT + '/pvm';
 // ACTIVITIES
 
 const ACTIVITIES = RSTOOL_ROOT + '/activities';
-
 const VIS_NEMI = ACTIVITIES + '/vis-and-nemi'
+
+// EQUIPMENT
+
+const EQUIPMENT = RSTOOL_ROOT + '/equipment'
 
 export const RSTOOL_ROUTES = {
     DASH,
@@ -43,5 +46,6 @@ export const RSTOOL_ROUTES = {
     EDITORDER,
     EDITDAILY,
     EDITDAILY_PARAM,
-    VIS_NEMI
+    VIS_NEMI,
+    EQUIPMENT
 }

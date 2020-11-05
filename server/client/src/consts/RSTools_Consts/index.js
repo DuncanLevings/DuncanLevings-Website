@@ -6,8 +6,10 @@
 
 import { RSTOOL_ROUTES } from './routeConsts';
 import DAILY_CONSTS from './dailyConsts';
+import EQUIPMENT_CONSTS from './equipmentConsts';
 
 export {
     RSTOOL_ROUTES,
-    DAILY_CONSTS
+    DAILY_CONSTS,
+    EQUIPMENT_CONSTS
 }

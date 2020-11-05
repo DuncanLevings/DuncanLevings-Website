@@ -25,6 +25,7 @@ import EditOrder from 'components/RSTools/Dailys/EditOrder/EditOrder.lazy';
 import EditDaily from 'components/RSTools/Dailys/EditDaily/EditDaily.lazy';
 import Activity from 'components/RSTools/Activity/Activity.lazy';
 import VisNemi from 'components/RSTools/Activity/VisNemi/VisNemi.lazy';
+import Equipment from 'components/RSTools/Equipment/Equipment.lazy';
 import Footer from 'components/navbar/Footer/Footer.lazy';
 import NotFound from 'errors/NotFound';
 import PropTypes from 'prop-types';
@@ -59,6 +60,8 @@ class RSRouter extends React.Component {
                     {/* ACTIVITIES */}
                     <PrivateRoute exact path={RSTOOL_ROUTES.ACTIVITIES} redirect={RSTOOL_ROUTES.LOGIN} component={Activity} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.VIS_NEMI} redirect={RSTOOL_ROUTES.LOGIN} component={VisNemi} />
+                    {/* EQUIPMENT */}
+                    <PrivateRoute exact path={RSTOOL_ROUTES.EQUIPMENT} redirect={RSTOOL_ROUTES.LOGIN} component={Equipment} />
                     <Route component={NotFound} />
                 </Switch>
                 <Footer type={LOGIN_TYPE.RS_TOOLS} />
