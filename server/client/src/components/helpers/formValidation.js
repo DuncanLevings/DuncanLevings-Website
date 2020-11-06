@@ -98,3 +98,15 @@ export const dailySchema = yup.object().shape({
         })
     )
 });
+
+export const ItemSchema = yup.object().shape({
+    name: yup.string()
+        .required("*Name is required"),
+    wikiURL: yup.string()
+        .trim()
+        .url("Wiki link must be a valid URL"),
+    familiarSize: yup.number()
+        .typeError("Size must be a number")
+        .integer("Size must not contain decimals")
+        .required("*Size is required, can be 0")
+});

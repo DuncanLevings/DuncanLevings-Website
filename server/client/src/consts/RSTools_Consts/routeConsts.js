@@ -31,6 +31,9 @@ const VIS_NEMI = ACTIVITIES + '/vis-and-nemi'
 // EQUIPMENT
 
 const EQUIPMENT = RSTOOL_ROOT + '/equipment'
+const PRESETS = EQUIPMENT + '/presets'
+const ITEMS = EQUIPMENT + '/items'
+const ABILITYS = EQUIPMENT + '/abilitys'
 
 export const RSTOOL_ROUTES = {
     DASH,
@@ -47,5 +50,8 @@ export const RSTOOL_ROUTES = {
     EDITDAILY,
     EDITDAILY_PARAM,
     VIS_NEMI,
-    EQUIPMENT
+    EQUIPMENT,
+    PRESETS,
+    ITEMS,
+    ABILITYS
 }

@@ -5,10 +5,12 @@
  */
 
 import React from 'react';
+import { Button } from 'react-bootstrap';
+import { FaTimes } from 'react-icons/fa';
 import PropTypes from 'prop-types';
-import './SlotSelector.scss';
+import './SlotFilter.scss';
 
-class SlotSelector extends React.Component {
+class SlotFilter extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -65,29 +67,66 @@ class SlotSelector extends React.Component {
                     left: 5,
                     top: 5
                 }
-            ]
+            ],
+            filter: []
         }
     }
 
     componentDidMount() {
-
     }
 
-    selectSlot = (i) => {
-        this.props.setSelected(i);
+    filterSlot = (i) => {
+        // remove if already selected
+        if (this.state.filter.includes(i)) {
+            this.setState({
+                filter: this.state.filter.filter((slot) => {
+                    return slot !== i
+                })
+            },
+                () => {
+                    this.props.filterSelected(this.state.filter);
+                });
+        } else {
+            this.setState(prevState => ({
+                filter: [...prevState.filter, i]
+            }),
+                () => {
+                    this.props.filterSelected(this.state.filter);
+                });
+        }
     }
+
+    clearFilter = () => {
+        this.setState({
+            filter: []
+        }, () => {
+            this.props.filterSelected(this.state.filter);
+        });
+    };
 
     render() {
-        const { slots } = this.state;
+        const { slots, filter } = this.state;
 
         const slotList = slots.map((slot, i) => {
+            let selected = false;
+            if (filter.includes(i)) {
+                selected = true;
+            }
+
             return (
-                <div key={i} className={`slot left-${slot.left} top-${slot.top}`} onClick={() => this.selectSlot(i)}></div>
+                <div key={i} className={`slot left-${slot.left} top-${slot.top} ${selected ? 'selected' : ''}`} onClick={() => this.filterSlot(i)}></div>
             )
         });
 
+        let inventorySelected = false;
+        if (filter.includes(13)) inventorySelected = true;
+
+        let summonSelected = false;
+        if (filter.includes(14)) summonSelected = true;
+
         return (
-            <div className="SlotSelector">
+            <div className="SlotFilter">
+                <h4>Select slot(s) to filter</h4>
                 <div className="slotContainer">
                     <div className="slots">
                         {slotList}
@@ -95,21 +134,24 @@ class SlotSelector extends React.Component {
                 </div>
                 <div className="inventoryContainer">
                     <div className="inventory">
-                        <div className='clickableArea' onClick={() => this.selectSlot(13)} />
+                        <div className={`clickableArea ${inventorySelected ? 'selected' : ''}`} onClick={() => this.filterSlot(13)} />
                     </div>
                 </div>
                 <div className="summonContainer">
                     <div className="summonSlot">
-                        <div className='clickableArea' onClick={() => this.selectSlot(14)} />
+                        <div className={`clickableArea ${summonSelected ? 'selected' : ''}`} onClick={() => this.filterSlot(14)} />
                     </div>
+                </div>
+                <div className="clear-filter">
+                    <Button variant="button-secondary" onClick={() => this.clearFilter()}><FaTimes /> Clear</Button>
                 </div>
             </div>
         );
     }
 }
 
-SlotSelector.propTypes = {
-    setSelected: PropTypes.func.isRequired
+SlotFilter.propTypes = {
+    filterSelected: PropTypes.func.isRequired
 };
 
-export default SlotSelector;
+export default SlotFilter;

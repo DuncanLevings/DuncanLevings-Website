@@ -30,7 +30,7 @@ const uploadMultipleToBucket = (req, res, next) => {
     let promises = [];
     req.files.forEach((image, index) => {
         const imageName = req.user._id + "_" + Date.now();
-        const file = bucket.file(imageName)
+        const file = bucket.file(imageName);
 
         const promise = new Promise((resolve, reject) => {
             const stream = file.createWriteStream({
@@ -69,6 +69,40 @@ const uploadMultipleToBucket = (req, res, next) => {
         .catch(next);
 }
 
+const uploadSingleToBucket = (req, res, next) => {
+    if (!req.file) {
+        return next()
+    }
+
+    const imageName = req.user._id + "_" + Date.now();
+    const file = bucket.file(imageName);
+
+    const stream = file.createWriteStream({
+        metadata: {
+            contentType: req.file.mimetype
+        }
+    });
+
+    stream.on('finish', async () => {
+        try {
+            req.file.cloudStorageObject = imageName
+            await file.makePublic()
+            req.file.cloudStoragePublicUrl = getPublicUrl(imageName)
+            next();
+        } catch (error) {
+            throw Error(error);
+        }
+    });
+
+    stream.on('error', (err) => {
+        req.file.cloudStorageError = err
+        throw Error(err);
+    });
+
+    stream.end(req.file.buffer);
+}
+
 module.exports = {
-    uploadMultipleToBucket
+    uploadMultipleToBucket,
+    uploadSingleToBucket
 }

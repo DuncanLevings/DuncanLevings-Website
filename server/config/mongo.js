@@ -30,10 +30,12 @@ const { User } = require('../models/userModel');
 const { Token } = require('../models/tokenModel');
 const { Daily } = require('../models/dailyModel');
 const { RSToolsUser } = require('../models/rsToolsUserModel');
+const { Item } = require('../models/itemModel');
 
 module.exports = {
     User,
     Token,
     Daily,
-    RSToolsUser
+    RSToolsUser,
+    Item
 }

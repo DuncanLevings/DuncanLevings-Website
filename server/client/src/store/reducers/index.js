@@ -13,6 +13,7 @@ import emailReducer from './emailReducer';
 import imageReducer from './imageReducer';
 import dailyReducer from './dailyReducer';
 import activityReducer from './activityReducer';
+import equipmentReducer from './equipmentReducer';
 
 const createRootReducer = (history) => combineReducers({
     router: connectRouter(history),
@@ -22,7 +23,8 @@ const createRootReducer = (history) => combineReducers({
     emailReducer: emailReducer,
     imageReducer: imageReducer,
     dailyReducer: dailyReducer,
-    activityReducer: activityReducer
+    activityReducer: activityReducer,
+    equipmentReducer: equipmentReducer
 });
 
 export default createRootReducer;

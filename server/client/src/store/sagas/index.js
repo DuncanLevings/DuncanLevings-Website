@@ -12,6 +12,7 @@ import { emailSagas } from './emailSaga';
 import { imageSagas } from './imageSaga';
 import { dailySagas } from './dailySaga';
 import { activitySagas } from './activitySaga';
+import { equipmentSagas } from './equipmentSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -19,6 +20,7 @@ export default function* rootSaga() {
     ...emailSagas,
     ...imageSagas,
     ...dailySagas,
-    ...activitySagas
+    ...activitySagas,
+    ...equipmentSagas
   ]);
 }

@@ -7,7 +7,9 @@
 import React from 'react';
 import { Tab, Tabs } from 'react-bootstrap';
 import { EQUIPMENT_CONSTS } from 'consts/RSTools_Consts';
-import SlotSelector from './SlotSelector/SlotSelector.lazy';
+import Presets from './Presets/Presets.lazy';
+import Items from './Items/Items.lazy';
+import Abilitys from './Abilitys/Abilitys.lazy';
 import PropTypes from 'prop-types';
 import './Equipment.scss';
 
@@ -37,20 +39,18 @@ class Equipment extends React.Component {
         // }
     }
 
-    // test = (a) => {
-    //     console.log(a)
-    //     <SlotSelector filterSelected={a => this.test(a)} />
-    // }
-
     render() {
         return (
             <div className="Equipment">
-                <Tabs defaultActiveKey={EQUIPMENT_CONSTS.ITEMS} id="equipment-dash" onSelect={this.handleSelect}>
-                    <Tab eventKey={EQUIPMENT_CONSTS.PRESETS} title="PRESETS">
+                <Tabs defaultActiveKey={EQUIPMENT_CONSTS.types.ITEMS} id="equipment-dash" onSelect={this.handleSelect}>
+                    <Tab eventKey={EQUIPMENT_CONSTS.types.PRESETS} title="PRESETS">
+                        <Presets />
                     </Tab>
-                    <Tab eventKey={EQUIPMENT_CONSTS.ITEMS} title="ITEMS">
+                    <Tab eventKey={EQUIPMENT_CONSTS.types.ITEMS} title="ITEMS">
+                        <Items />
                     </Tab>
-                    <Tab eventKey={EQUIPMENT_CONSTS.ABILITYS} title="ABILITYS">
+                    <Tab eventKey={EQUIPMENT_CONSTS.types.ABILITYS} title="ABILITYS">
+                        <Abilitys />
                     </Tab>
                 </Tabs>
             </div>
