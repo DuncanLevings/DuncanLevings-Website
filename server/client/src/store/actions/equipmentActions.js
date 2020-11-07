@@ -61,6 +61,22 @@ export function deleteItemSuccess(items) {
 
 // ABILITYS
 
+export function searchAbilityBars(style) {
+    return { type: actionTypes.SEARCH_ABILITY_BARS, payload: style };
+}
+
+export function searchAbilityBarsSuccess(abilityBars) {
+    return { type: actionTypes.SEARCH_ABILITY_BARS_SUCCESS, payload: abilityBars };
+}
+
+export function createAbilityBar(formData, style) {
+    return { type: actionTypes.CREATE_ABILITY_BAR, payload: { formData: formData, style: style } };
+}
+
+export function createAbilityBarSuccess(abilityBars) {
+    return { type: actionTypes.CREATE_ABILITY_BAR_SUCCESS, payload: abilityBars };
+}
+
 // ERROR
 
 export function clearErrors() {

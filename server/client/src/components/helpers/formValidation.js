@@ -110,3 +110,10 @@ export const ItemSchema = yup.object().shape({
         .integer("Size must not contain decimals")
         .required("*Size is required, can be 0")
 });
+
+export const abilitySchema = yup.object().shape({
+    name: yup.string()
+        .required("*Name is required"),
+    styleType: yup.string()
+        .required("*Must select a main style")
+});

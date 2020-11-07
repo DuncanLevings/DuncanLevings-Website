@@ -31,11 +31,13 @@ const { Token } = require('../models/tokenModel');
 const { Daily } = require('../models/dailyModel');
 const { RSToolsUser } = require('../models/rsToolsUserModel');
 const { Item } = require('../models/itemModel');
+const { AbilityBar } = require('../models/abilityBarModel');
 
 module.exports = {
     User,
     Token,
     Daily,
     RSToolsUser,
-    Item
+    Item,
+    AbilityBar
 }

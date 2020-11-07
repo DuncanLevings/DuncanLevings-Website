@@ -36,10 +36,24 @@ router.get(EQUIPMENT_ROUTES.SEARCH_ITEMS, auth.user, (req, res) => {
         .catch(err => res.status(400).send(err.message));
 });
 
+router.get(EQUIPMENT_ROUTES.SEARCH_ABILITY_BARS, auth.user, (req, res) => {
+    _equipmentService
+        .searchAbilityBars(req.user._id, req.params.style)
+        .then(abilityBars => res.status(200).send(abilityBars))
+        .catch(err => res.status(400).send(err.message));
+});
+
 router.post(EQUIPMENT_ROUTES.CREATE_ITEM, Multer.single('image'), auth.user, _imageService.uploadSingleToBucket, (req, res) => {
     _equipmentService
         .createItem(req.user._id, req.body, req.file, req.params.slots)
         .then(items => res.status(200).send(items))
+        .catch(err => res.status(400).json(err.message));
+});
+
+router.post(EQUIPMENT_ROUTES.CREATE_ABILITY_BAR, Multer.any(), auth.user, (req, res) => {
+    _equipmentService
+        .createAbilityBar(req.user._id, req.body, req.params.style)
+        .then(abilityBars => res.status(200).send(abilityBars))
         .catch(err => res.status(400).json(err.message));
 });
 

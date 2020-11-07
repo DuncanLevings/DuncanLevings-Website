@@ -6,6 +6,7 @@
 
 import api from './Instance';
 
+// ITEMS
 export function getItemsAPI() {
   return api.request({
     method: 'get',
@@ -51,5 +52,22 @@ export function deleteItemAPI(itemId, slots) {
   return api.request({
     method: 'delete',
     url: `/api/equipment/delete/item/${itemId}/${slots}`
+  }).then(res => res.data);
+}
+
+// ABILITYS
+
+export function searchAbilityBarsAPI(style) {
+  return api.request({
+    method: 'get',
+    url: `/api/equipment/search/abilityBar/${style}`,
+  }).then(res => res.data);
+}
+
+export function createAbilityBarAPI(formData, style) {
+  return api.request({
+    method: 'post',
+    url: `/api/equipment/create/abilityBar/${style}`,
+    data: formData
   }).then(res => res.data);
 }

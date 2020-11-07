@@ -1,0 +1,27 @@
+@import '../../../../assets/style/colors';
+
+.AddAbilityBar {
+    color: $dark-theme;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+
+    .ability-error {
+        color: $error;
+        text-align: center;
+    }
+
+    .ability-button {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+
+    .ability-image {
+        width: 32px;
+        height: 32px;
+    }
+
+    .style-img {
+        width: 26px;
+        height: 26px;
+    }
+}

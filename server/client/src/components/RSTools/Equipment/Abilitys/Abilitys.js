@@ -7,9 +7,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Collapse, Container, Form, FormControl, Image, InputGroup, ListGroup, Modal, OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap';
+import { Button, Col, Collapse, Container, Form, FormControl, Image, InputGroup, ListGroup, Modal, OverlayTrigger, Row, Spinner, Tooltip } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { EQUIPMENT_CONSTS } from 'consts/RSTools_Consts';
+import { searchAbilityBars, createAbilityBar } from 'store/actions/equipmentActions';
+import AddAbilityBar from '../AddAbilityBar/AddAbilityBar.lazy';
 import PropTypes from 'prop-types';
 import './Abilitys.scss';
 
@@ -19,48 +21,57 @@ class Abilitys extends React.Component {
         this.state = {
             search: '',
             filterStyle: 0,
+            addAbilityBarShow: false,
             showConfirm: false
         }
     }
 
     componentDidMount() {
+        this.props.searchAbilityBars(this.state.filterStyle);
+    }
 
+    setAddAbilityBarShow = (bool) => {
+        this.setState({ addAbilityBarShow: bool });
     }
 
     setSearch = e => {
         this.setState({ search: e.target.value });
     }
 
-    render() {
-        const { search } = this.state;
-        const { searchAbilitys, isSearching } = this.props.equipmentReducer;
+    setFilter = e => {
+        this.setState({ filterStyle: e.target.value });
+        this.props.searchAbilityBars(e.target.value);
+    }
 
-        const searchResults = searchAbilitys
+    render() {
+        const { search, addAbilityBarShow, filterStyle } = this.state;
+        const { searchAbilityBars, isSearching } = this.props.equipmentReducer;
+
+        const searchResults = searchAbilityBars
             .filter(bar => search === '' || bar.name.includes(search))
-            .map((abilityBar, i) =>
+            .map((bar, i) =>
                 <ListGroup.Item key={i}>
-                    {abilityBar.name}
-                    {/* <span className="actions">
-                        {item.isOwner ?
-                            <>
-                                <FaEdit className="action-icon edit" onClick={() => this.setEditItemShow(true, item._id)} />
-                                <FaTrash className="action-icon delete" onClick={() => this.setShowConfirm(true, item._id)} />
-                            </>
-                            :
-                            <>
-                                <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Can only edit items YOU made.</Tooltip>}>
-                                    <span className="d-inline-block disabled-action">
-                                        <FaEdit disabled style={{ pointerEvents: 'none' }} />
-                                    </span>
+                    <Row>
+                        <Col xs={2}>{bar.name}</Col>
+                        <Col>
+                            {bar.abilityBar.map((ability, i) =>
+                                <OverlayTrigger
+                                    key={i}
+                                    placement="top"
+                                    delay={{ show: 500, hide: 250 }}
+                                    overlay={<Tooltip id="tooltip-disabled">{ability.name}</Tooltip>}
+                                >
+                                    <Image className="style-img" src={ability.image} />
                                 </OverlayTrigger>
-                                <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Can only delete items YOU made.</Tooltip>}>
-                                    <span className="d-inline-block disabled-action">
-                                        <FaTrash disabled style={{ pointerEvents: 'none' }} />
-                                    </span>
-                                </OverlayTrigger>
-                            </>
-                        }
-                    </span> */}
+                            )}
+                        </Col>
+                        <Col xs={2}>
+                            <span className="actions">
+                                <FaEdit className="action-icon edit" />
+                                <FaTrash className="action-icon delete" />
+                            </span>
+                        </Col>
+                    </Row>
                 </ListGroup.Item>
             );
 
@@ -78,7 +89,7 @@ class Abilitys extends React.Component {
                                     onChange={this.setSearch}
                                 />
                                 <InputGroup.Append>
-                                    <Button variant="button-primary">Add Ability Bar</Button>
+                                    <Button variant="button-primary" onClick={() => this.setAddAbilityBarShow(true)}>Add Ability Bar</Button>
                                 </InputGroup.Append>
                             </InputGroup>
                         </Form.Group>
@@ -113,7 +124,7 @@ class Abilitys extends React.Component {
                                 label={<span><Image className="style-img" src="/static_images/RSTools/styles/magic.png" /> Magic</span>}
                                 name="formSearchOptions"
                                 id="magic"
-                                value={2}
+                                value={3}
                                 onChange={this.setFilter}
                             />
                         </Form.Group>
@@ -127,14 +138,13 @@ class Abilitys extends React.Component {
                             </ListGroup> :
                             <p>No ability bars found...</p>
                     }
-                    {/* <AddItem
-                        show={addItemShow}
+                    <AddAbilityBar
+                        show={addAbilityBarShow}
                         equipmentReducer={this.props.equipmentReducer}
-                        createItem={data => this.props.createItem(data, filterSlots)}
-                        clearErrors={() => this.props.clearErrors()}
-                        onHide={() => this.setAddItemShow(false)}
+                        createAbilityBar={data => this.props.createAbilityBar(data, filterStyle)}
+                        onHide={() => this.setAddAbilityBarShow(false)}
                     />
-                    <EditItem
+                    {/* <EditItem
                         show={editItemShow}
                         equipmentReducer={this.props.equipmentReducer}
                         editItem={data => this.props.editItem(data, filterSlots)}
@@ -148,7 +158,9 @@ class Abilitys extends React.Component {
 }
 
 Abilitys.propTypes = {
-    equipmentReducer: PropTypes.object
+    equipmentReducer: PropTypes.object,
+    searchAbilityBars: PropTypes.func,
+    createAbilityBar: PropTypes.func
 };
 
 const mapStateToProps = state => {
@@ -157,6 +169,6 @@ const mapStateToProps = state => {
     };
 }
 
-// const mapDispatchToProps = dispatch => bindActionCreators({ searchItems, getItemSingle, createItem, editItem, deleteItem, clearErrors }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ searchAbilityBars, createAbilityBar }, dispatch);
 
-export default connect(mapStateToProps, null)(Abilitys);
+export default connect(mapStateToProps, mapDispatchToProps)(Abilitys);

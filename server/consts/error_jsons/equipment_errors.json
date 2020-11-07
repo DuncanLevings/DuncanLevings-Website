@@ -5,9 +5,12 @@
         "NAME_REQUIRED": "Name is required!",
         "SLOT_REQUIRED": "Slot is required!",
         "SLOT_REGEX_FAIL": "Slot is invalid!",
+        "STYLE_REQUIRED": "Style is required!",
+        "ABILITY_BAR_REQUIRED": "Ability bar is required!",
         "NEGATIVE_SUMMON_SIZE": "Familiar inventory size must be positive!",
         "INVALID_SUMMON_SIZE": "No familiar has inventory size over 32!",
         "NOT_OWNER_ITEM": "You are not the owner of that item!",
-        "ITEM_EXISTS": "An item with that name already exists!"
+        "ITEM_EXISTS": "An item with that name already exists!",
+        "ABILITY_BAR_EXISTS": "An ability bar with that name already exists!"
     }
 }

@@ -6,7 +6,7 @@
 
 import { call, takeLatest, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
-import { createItemAPI, deleteItemAPI, editItemAPI, getItemsAPI, getItemSingleAPI, searchItemsAPI } from '../api/equipmentAPI';
+import { createItemAPI, createAbilityBarAPI, deleteItemAPI, editItemAPI, getItemsAPI, getItemSingleAPI, searchItemsAPI, searchAbilityBarsAPI } from '../api/equipmentAPI';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import * as actionTypes from '../actionTypes/equipmentActionTypes'
 import * as actionCreators from '../actions/equipmentActions';
@@ -75,11 +75,33 @@ function* deleteItem(equipmentAction) {
     }
 }
 
+// ABILTIYS
+
+function* searchAbilityBars(equipmentAction) {
+    try {
+        const abilityBars = yield call(searchAbilityBarsAPI, equipmentAction.payload);
+        yield put(actionCreators.searchAbilityBarsSuccess(abilityBars));
+    } catch (error) {
+        yield put(actionCreators.equipmentError(error.response.data));
+    }
+}
+
+function* createAbilityBar(equipmentAction) {
+    try {
+        const abilityBars = yield call(createAbilityBarAPI, equipmentAction.payload.formData, equipmentAction.payload.style);
+        yield put(actionCreators.createAbilityBarSuccess(abilityBars));
+    } catch (error) {
+        yield put(actionCreators.equipmentError(error.response.data));
+    }
+}
+
 export const equipmentSagas = [
     takeLatest(actionTypes.GET_ITEMS, getItems),
     takeLatest(actionTypes.GET_ITEM_SINGLE, getItemSingle),
     takeLatest(actionTypes.SEARCH_ITEMS, searchItems),
     takeLatest(actionTypes.CREATE_ITEM, createItem),
     takeLatest(actionTypes.EDIT_ITEM, editItem),
-    takeLatest(actionTypes.DELETE_ITEM, deleteItem)
+    takeLatest(actionTypes.DELETE_ITEM, deleteItem),
+    takeLatest(actionTypes.SEARCH_ABILITY_BARS, searchAbilityBars),
+    takeLatest(actionTypes.CREATE_ABILITY_BAR, createAbilityBar)
 ];

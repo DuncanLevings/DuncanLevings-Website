@@ -9,7 +9,7 @@
 
 'use strict';
 const { EQUIPMENT_ERRORS } = require("../consts/error_jsons");
-const { Item } = require("../config/mongo");
+const { Item, AbilityBar } = require("../config/mongo");
 const mongoose = require('mongoose');
 
 /* Regular expressions for parameter validation. */
@@ -78,6 +78,13 @@ const searchItems = async (userId, slots) => {
     ]);
 }
 
+const searchAbilityBars = async (userId, style) => {
+    const userIdc = mongoose.Types.ObjectId(userId);
+    const style_n = parseInt(style);
+    if (style_n == 0) return await AbilityBar.find({ ownerId: userIdc });
+    else return await AbilityBar.find({ ownerId: userIdc, styleType: style_n });
+}
+
 const createItem = async (userId, data, image, slots) => {
     const itemCheck = await Item.countDocuments({ name: data.name });
     if (itemCheck > 0) throw Error(EQUIPMENT_ERRORS.ITEM_EXISTS);
@@ -98,6 +105,22 @@ const createItem = async (userId, data, image, slots) => {
     await item.save();
     
     return await searchItems(userId, slots);
+}
+
+const createAbilityBar = async (userId, data, style) => {
+    const abilityBarCheck = await AbilityBar.countDocuments({ ownerId: userId, name: data.name });
+    if (abilityBarCheck > 0) throw Error(EQUIPMENT_ERRORS.ABILITY_BAR_EXISTS);
+
+    const abilityBar = new AbilityBar(new AbilityBarBuilder()
+        .withOwner(userId)
+        .withName(data.name)
+        .withStyleType(data.styleType)
+        .withAbilityBar(JSON.parse(data.abilitys))
+    );
+
+    await abilityBar.save();
+    
+    return await searchAbilityBars(userId, style);
 }
 
 const editItem = async (userId, data, image, slots) => {
@@ -165,10 +188,38 @@ class ItemBuilder {
     }
 }
 
+class AbilityBarBuilder {
+    withOwner(id) {
+        if (!id) throw Error(EQUIPMENT_ERRORS.USER_REQUIRED);
+        this.ownerId = id;
+        return this;
+    }
+
+    withName(name) {
+        if (!name) throw Error(EQUIPMENT_ERRORS.NAME_REQUIRED);
+        this.name = name;
+        return this;
+    }
+
+    withStyleType(style) {
+        if (!style) throw Error(EQUIPMENT_ERRORS.STYLE_REQUIRED);
+        this.styleType = style;
+        return this;
+    }
+    
+    withAbilityBar(bar) {
+        if (!bar) throw Error(EQUIPMENT_ERRORS.ABILITY_BAR_REQUIRED);
+        this.abilityBar = bar;
+        return this;
+    }
+}
+
 module.exports = {
     getItem,
     searchItems,
+    searchAbilityBars,
     createItem,
+    createAbilityBar,
     editItem,
     deleteItem
 }

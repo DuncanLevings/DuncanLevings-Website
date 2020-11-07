@@ -11,7 +11,7 @@ const intialState = {
     items: [],
     searchItems: [],
     editItem: null,
-    searchAbilitys: [],
+    searchAbilityBars: [],
     isFetching: false, // loading state
     isCreating: false, // loading state
     isSearching: false, // loading state
@@ -20,6 +20,7 @@ const intialState = {
 
 export default (state = intialState, action) => {
     switch (action.type) {
+        // ITEMS
         case actionTypes.GET_ITEMS:
             return {
                 ...state,
@@ -53,6 +54,19 @@ export default (state = intialState, action) => {
                 isSearching: true,
                 isSaving: true
             };
+        // ABILITYS
+        case actionTypes.SEARCH_ABILITY_BARS:
+            return {
+                ...state,
+                isSearching: true
+            };
+        case actionTypes.CREATE_ABILITY_BAR:
+            return {
+                ...state,
+                isSearching: true,
+                isCreating: true
+            };
+        // ITEMS
         case actionTypes.GET_ITEMS_SUCCESS:
             return {
                 ...state,
@@ -97,6 +111,22 @@ export default (state = intialState, action) => {
                 error: "",
                 isSearching: false,
                 isSaving: false
+            };
+        // ABILITYS
+        case actionTypes.SEARCH_ABILITY_BARS_SUCCESS:
+            return {
+                ...state,
+                searchAbilityBars: action.payload,
+                error: "",
+                isSearching: false
+            };
+        case actionTypes.CREATE_ABILITY_BAR_SUCCESS:
+            return {
+                ...state,
+                searchAbilityBars: action.payload,
+                error: "",
+                isSearching: false,
+                isCreating: false
             };
         case actionTypes.CLEAR_ERRORS:
             return {
