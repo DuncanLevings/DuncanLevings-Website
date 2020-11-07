@@ -13,6 +13,13 @@ export function getItemsAPI() {
   }).then(res => res.data);
 }
 
+export function getItemSingleAPI(itemId) {
+  return api.request({
+    method: 'get',
+    url: `/api/equipment/item/${itemId}`,
+  }).then(res => res.data);
+}
+
 export function searchItemsAPI(slots) {
   if (slots.length === 0) slots = -1; // default is no filter selected
   return api.request({

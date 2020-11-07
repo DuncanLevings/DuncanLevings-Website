@@ -9,10 +9,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Collapse, Container, Form, FormControl, Image, InputGroup, ListGroup, Modal, OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import { searchItems, createItem, deleteItem, clearErrors } from 'store/actions/equipmentActions';
+import { searchItems, getItemSingle, createItem, editItem, deleteItem, clearErrors } from 'store/actions/equipmentActions';
 import { EQUIPMENT_CONSTS } from 'consts/RSTools_Consts';
 import SlotFilter from '../SlotFilter/SlotFilter.lazy';
 import AddItem from '../AddItem/AddItem.lazy';
+import EditItem from '../EditItem/EditItem.lazy';
 import _ from "lodash";
 import PropTypes from 'prop-types';
 import './Items.scss';
@@ -25,6 +26,7 @@ class Items extends React.Component {
             filterSlots: [],
             filterOpen: false,
             addItemShow: false,
+            editItemShow: false,
             showConfirm: false
         }
     }
@@ -55,9 +57,14 @@ class Items extends React.Component {
         this.setState({ addItemShow: bool });
     }
 
+    setEditItemShow = (bool, itemId = null) => {
+        this.setState({ editItemShow: bool });
+        if (itemId) this.props.getItemSingle(itemId);
+    }
+
     setShowConfirm = (bool, itemId = null) => {
-        this.setState({ 
-            showConfirm: bool, 
+        this.setState({
+            showConfirm: bool,
             selectedItemId: itemId ? itemId : this.state.selectedItemId
         });
     }
@@ -93,7 +100,7 @@ class Items extends React.Component {
     }
 
     render() {
-        const { search, filterOpen, addItemShow, filterSlots } = this.state;
+        const { search, filterOpen, addItemShow, editItemShow, filterSlots } = this.state;
         const { searchItems, isSearching } = this.props.equipmentReducer;
 
         const searchResults = searchItems
@@ -104,19 +111,19 @@ class Items extends React.Component {
                     <span className="actions">
                         {item.isOwner ?
                             <>
-                                <FaEdit className="action-icon edit" />
+                                <FaEdit className="action-icon edit" onClick={() => this.setEditItemShow(true, item._id)} />
                                 <FaTrash className="action-icon delete" onClick={() => this.setShowConfirm(true, item._id)} />
                             </>
                             :
                             <>
                                 <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Can only edit items YOU made.</Tooltip>}>
                                     <span className="d-inline-block disabled-action">
-                                        <FaEdit disabled style={{ pointerEvents: 'none' }}/>
+                                        <FaEdit disabled style={{ pointerEvents: 'none' }} />
                                     </span>
                                 </OverlayTrigger>
                                 <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Can only delete items YOU made.</Tooltip>}>
                                     <span className="d-inline-block disabled-action">
-                                        <FaTrash disabled style={{ pointerEvents: 'none' }}/>
+                                        <FaTrash disabled style={{ pointerEvents: 'none' }} />
                                     </span>
                                 </OverlayTrigger>
                             </>
@@ -177,6 +184,13 @@ class Items extends React.Component {
                         clearErrors={() => this.props.clearErrors()}
                         onHide={() => this.setAddItemShow(false)}
                     />
+                    <EditItem
+                        show={editItemShow}
+                        equipmentReducer={this.props.equipmentReducer}
+                        editItem={data => this.props.editItem(data, filterSlots)}
+                        clearErrors={() => this.props.clearErrors()}
+                        onHide={() => this.setEditItemShow(false)}
+                    />
                 </div>
             </Container>
         );
@@ -186,7 +200,9 @@ class Items extends React.Component {
 Items.propTypes = {
     equipmentReducer: PropTypes.object,
     searchItems: PropTypes.func,
+    getItemSingle: PropTypes.func,
     createItem: PropTypes.func,
+    editItem: PropTypes.func,
     deleteItem: PropTypes.func,
     clearErrors: PropTypes.func
 };
@@ -197,6 +213,6 @@ const mapStateToProps = state => {
     };
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ searchItems, createItem, deleteItem, clearErrors }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ searchItems, getItemSingle, createItem, editItem, deleteItem, clearErrors }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Items);

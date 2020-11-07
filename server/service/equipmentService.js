@@ -35,6 +35,19 @@ const equipmentSlots = {
 }
 
 /**
+ * Retrieves a single item and ensures user is owner
+ * @param {*} userId 
+ * @param {*} itemId 
+ */
+const getItem = async (userId, itemId) => {
+    const item = await Item.findOne({ _id: itemId });
+
+    if (!item.ownerId.equals(userId)) throw Error(EQUIPMENT_ERRORS.NOT_OWNER_ITEM);
+
+    return item;
+}
+
+/**
  * Searchs items based on userId and slot filter, if no slots then searches all items
  * @param {*} userId 
  * @param {*} slots string array consisting of #, #, #, etc...
@@ -66,7 +79,6 @@ const searchItems = async (userId, slots) => {
 }
 
 const createItem = async (userId, data, image, slots) => {
-
     const itemCheck = await Item.countDocuments({ name: data.name });
     if (itemCheck > 0) throw Error(EQUIPMENT_ERRORS.ITEM_EXISTS);
 
@@ -88,8 +100,25 @@ const createItem = async (userId, data, image, slots) => {
     return await searchItems(userId, slots);
 }
 
-const editItem = async () => {
+const editItem = async (userId, data, image, slots) => {
+    try {
+        const item = await Item.findOne({ _id: data.itemId });
+        if (!item.ownerId.equals(userId)) throw Error(EQUIPMENT_ERRORS.NOT_OWNER_ITEM);
+        if (item.name !== data.name) {
+            const itemCheck = await Item.countDocuments({ name: data.name });
+            if (itemCheck > 0) throw Error(EQUIPMENT_ERRORS.ITEM_EXISTS);
+        }
 
+        item.name = data.name;
+        item.wiki = data.wikiUrl;
+        if (image) item.imageUrl = image.cloudStoragePublicUrl;
+        if (item.slot === 14) item.familiarSize = data.familiarSize;
+
+        await item.save();
+        return await searchItems(userId, slots);
+    } catch (e) {
+        throw Error(e);
+    }
 }
 
 const deleteItem = async (userId, itemId, slots) => {
@@ -137,6 +166,7 @@ class ItemBuilder {
 }
 
 module.exports = {
+    getItem,
     searchItems,
     createItem,
     editItem,

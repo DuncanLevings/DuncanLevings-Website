@@ -22,6 +22,13 @@ router.get(EQUIPMENT_ROUTES.GET_ITEMS, auth.user, (req, res) => {
     // todo
 });
 
+router.get(EQUIPMENT_ROUTES.GET_ITEM_SINGLE, auth.user, (req, res) => {
+    _equipmentService
+        .getItem(req.user._id, req.params.itemId)
+        .then(item => res.status(200).send(item))
+        .catch(err => res.status(400).send(err.message));
+});
+
 router.get(EQUIPMENT_ROUTES.SEARCH_ITEMS, auth.user, (req, res) => {
     _equipmentService
         .searchItems(req.user._id, req.params.slots)
@@ -37,10 +44,10 @@ router.post(EQUIPMENT_ROUTES.CREATE_ITEM, Multer.single('image'), auth.user, _im
 });
 
 router.post(EQUIPMENT_ROUTES.EDIT_ITEM, Multer.single('image'), auth.user, _imageService.uploadSingleToBucket, (req, res) => {
-    // _dailyService
-    //     .editDaily(req.user._id, req.body, req.files)
-    //     .then(() => res.sendStatus(200))
-    //     .catch(err => res.status(400).json(err.message));
+    _equipmentService
+        .editItem(req.user._id, req.body, req.file, req.params.slots)
+        .then(items => res.status(200).send(items))
+        .catch(err => res.status(400).json(err.message));
 });
 
 router.delete(EQUIPMENT_ROUTES.DELETE_ITEM, auth.user, (req, res) => {

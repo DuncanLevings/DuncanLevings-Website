@@ -10,6 +10,8 @@ const intialState = {
     error: "",
     items: [],
     searchItems: [],
+    editItem: null,
+    searchAbilitys: [],
     isFetching: false, // loading state
     isCreating: false, // loading state
     isSearching: false, // loading state
@@ -19,6 +21,11 @@ const intialState = {
 export default (state = intialState, action) => {
     switch (action.type) {
         case actionTypes.GET_ITEMS:
+            return {
+                ...state,
+                isFetching: true
+            };
+        case actionTypes.GET_ITEM_SINGLE:
             return {
                 ...state,
                 isFetching: true
@@ -50,6 +57,13 @@ export default (state = intialState, action) => {
             return {
                 ...state,
                 items: action.payload,
+                error: "",
+                isFetching: false
+            };
+        case actionTypes.GET_ITEM_SINGLE_SUCCESS:
+            return {
+                ...state,
+                editItem: action.payload,
                 error: "",
                 isFetching: false
             };

@@ -19,6 +19,14 @@ export function getItemsSuccess(items) {
     return { type: actionTypes.GET_ITEMS_SUCCESS, payload: items };
 }
 
+export function getItemSingle(itemId) {
+    return { type: actionTypes.GET_ITEM_SINGLE, payload: itemId };
+}
+
+export function getItemSingleSuccess(item) {
+    return { type: actionTypes.GET_ITEM_SINGLE_SUCCESS, payload: item };
+}
+
 export function searchItems(slots) {
     return { type: actionTypes.SEARCH_ITEMS, payload: slots };
 }
@@ -28,15 +36,15 @@ export function searchItemsSuccess(items) {
 }
 
 export function createItem(formData, slots) {
-    return { type: actionTypes.CREATE_ITEM, payload: { formData: formData, slots: slots} };
+    return { type: actionTypes.CREATE_ITEM, payload: { formData: formData, slots: slots } };
 }
 
 export function createItemSuccess(items) {
     return { type: actionTypes.CREATE_ITEM_SUCCESS, payload: items };
 }
 
-export function editItem(formData) {
-    return { type: actionTypes.EDIT_ITEM, payload: formData  };
+export function editItem(formData, slots) {
+    return { type: actionTypes.EDIT_ITEM, payload: { formData: formData, slots: slots }  };
 }
 
 export function editItemSuccess(items) {
@@ -44,7 +52,7 @@ export function editItemSuccess(items) {
 }
 
 export function deleteItem(itemId, slots) {
-    return { type: actionTypes.DELETE_ITEM, payload: { itemId: itemId, slots: slots} };
+    return { type: actionTypes.DELETE_ITEM, payload: { itemId: itemId, slots: slots } };
 }
 
 export function deleteItemSuccess(items) {
