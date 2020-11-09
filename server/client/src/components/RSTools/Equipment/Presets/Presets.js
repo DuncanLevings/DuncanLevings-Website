@@ -5,6 +5,7 @@
  */
 
 import React from 'react';
+import { Container } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import './Presets.scss';
 
@@ -20,9 +21,12 @@ class Presets extends React.Component {
 
     render() {
         return (
-            <div className="Presets">
-                <h1>Presets component</h1>
-            </div>
+            <Container>
+                <div className="Presets">
+                    
+                </div>
+            </Container>
+
         );
     }
 }

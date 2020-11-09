@@ -42,7 +42,7 @@ class Equipment extends React.Component {
     render() {
         return (
             <div className="Equipment">
-                <Tabs defaultActiveKey={EQUIPMENT_CONSTS.types.ABILITYS} id="equipment-dash" onSelect={this.handleSelect}>
+                <Tabs defaultActiveKey={EQUIPMENT_CONSTS.types.PRESETS} id="equipment-dash" onSelect={this.handleSelect}>
                     <Tab eventKey={EQUIPMENT_CONSTS.types.PRESETS} title="PRESETS">
                         <Presets />
                     </Tab>

@@ -174,15 +174,27 @@ class EditItem extends React.Component {
                                                         <InputGroup.Prepend>
                                                             <InputGroup.Text>Familiar Inventory size:</InputGroup.Text>
                                                         </InputGroup.Prepend>
-                                                        <FormControl
+                                                        <Form.Control
+                                                            as="select"
                                                             name="familiarSize"
-                                                            placeholder="Inventory size of familiar"
                                                             aria-label="familiarSize"
                                                             aria-describedby="familiarSize"
                                                             value={values.familiarSize}
                                                             onChange={handleChange}
                                                             isInvalid={touched.familiarSize && !!errors.familiarSize}
-                                                        />
+                                                        >
+                                                            <option value={0}>Not a beast of burden</option>
+                                                            <option value={30}>30 - Pack yak</option>
+                                                            <option value={22}>22 - Spirit pack pig T3</option>
+                                                            <option value={18}>18 - War tortoise</option>
+                                                            <option value={12}>12 - Spirit terrorbird</option>
+                                                            <option value={9}>9 - Bull ant</option>
+                                                            <option value={8}>8 - Spirit pack pig T2</option>
+                                                            <option value={6}>6 - Spirit kalphite</option>
+                                                            <option value={4}>4 - Spirit pack pig T1</option>
+                                                            <option value={3}>3 - Thorny snail</option>
+                                                            <option value={32}>32 - Pack mammoth</option>
+                                                        </Form.Control>
                                                         <Form.Control.Feedback type="invalid">
                                                             {errors.familiarSize}
                                                         </Form.Control.Feedback>
