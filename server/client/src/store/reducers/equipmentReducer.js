@@ -11,6 +11,7 @@ const intialState = {
     items: [],
     searchItems: [],
     editItem: null,
+    editAbilityBar: null,
     searchAbilityBars: [],
     isFetching: false, // loading state
     isCreating: false, // loading state
@@ -55,6 +56,11 @@ export default (state = intialState, action) => {
                 isSaving: true
             };
         // ABILITYS
+        case actionTypes.GET_ABILITY_BAR_SINGLE:
+            return {
+                ...state,
+                isFetching: true
+            };
         case actionTypes.SEARCH_ABILITY_BARS:
             return {
                 ...state,
@@ -65,6 +71,18 @@ export default (state = intialState, action) => {
                 ...state,
                 isSearching: true,
                 isCreating: true
+            };
+        case actionTypes.EDIT_ABILITY_BAR:
+            return {
+                ...state,
+                isSearching: true,
+                isSaving: true
+            };
+        case actionTypes.DELETE_ABILITY_BAR:
+            return {
+                ...state,
+                isSearching: true,
+                isSaving: true
             };
         // ITEMS
         case actionTypes.GET_ITEMS_SUCCESS:
@@ -113,6 +131,13 @@ export default (state = intialState, action) => {
                 isSaving: false
             };
         // ABILITYS
+        case actionTypes.GET_ABILITY_BAR_SINGLE_SUCCESS:
+            return {
+                ...state,
+                editAbilityBar: action.payload,
+                error: "",
+                isFetching: false
+            };
         case actionTypes.SEARCH_ABILITY_BARS_SUCCESS:
             return {
                 ...state,
@@ -127,6 +152,22 @@ export default (state = intialState, action) => {
                 error: "",
                 isSearching: false,
                 isCreating: false
+            };
+        case actionTypes.EDIT_ABILITY_BAR_SUCCESS:
+            return {
+                ...state,
+                searchAbilityBars: action.payload,
+                error: "",
+                isSearching: false,
+                isSaving: false
+            };
+        case actionTypes.DELETE_ABILITY_BAR_SUCCESS:
+            return {
+                ...state,
+                searchAbilityBars: action.payload,
+                error: "",
+                isSearching: false,
+                isSaving: false
             };
         case actionTypes.CLEAR_ERRORS:
             return {

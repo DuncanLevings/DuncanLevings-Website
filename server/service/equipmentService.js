@@ -48,6 +48,19 @@ const getItem = async (userId, itemId) => {
 }
 
 /**
+ * Retrieves a single ability bar and ensures user is owner
+ * @param {*} userId 
+ * @param {*} abilityBarId 
+ */
+const getAbilityBar = async (userId, abilityBarId) => {
+    const abilityBar = await AbilityBar.findOne({ _id: abilityBarId });
+
+    if (!abilityBar.ownerId.equals(userId)) throw Error(EQUIPMENT_ERRORS.NOT_OWNER_ABILITY_BAR);
+
+    return abilityBar;
+}
+
+/**
  * Searchs items based on userId and slot filter, if no slots then searches all items
  * @param {*} userId 
  * @param {*} slots string array consisting of #, #, #, etc...
@@ -69,8 +82,8 @@ const searchItems = async (userId, slots) => {
         {
             $addFields: {
                 isOwner: {
-                    $cond: { 
-                        if: { $eq: ["$ownerId", userIdc] }, then: true, else: false 
+                    $cond: {
+                        if: { $eq: ["$ownerId", userIdc] }, then: true, else: false
                     }
                 }
             }
@@ -103,7 +116,7 @@ const createItem = async (userId, data, image, slots) => {
     item.imageUrl = "test.png" //FOR TESTING
 
     await item.save();
-    
+
     return await searchItems(userId, slots);
 }
 
@@ -119,7 +132,7 @@ const createAbilityBar = async (userId, data, style) => {
     );
 
     await abilityBar.save();
-    
+
     return await searchAbilityBars(userId, style);
 }
 
@@ -144,13 +157,42 @@ const editItem = async (userId, data, image, slots) => {
     }
 }
 
+const editAbilityBar = async (userId, data, style) => {
+    try {
+        const abilityBar = await AbilityBar.findOne({ _id: data.abilityBarId });
+        if (!abilityBar.ownerId.equals(userId)) throw Error(EQUIPMENT_ERRORS.NOT_OWNER_ABILITY_BAR);
+        if (abilityBar.name !== data.name) {
+            const abilityBarCheck = await AbilityBar.countDocuments({ ownerId: userId, name: data.name });
+            if (abilityBarCheck > 0) throw Error(EQUIPMENT_ERRORS.ABILITY_BAR_EXISTS);
+        }
+
+        abilityBar.name = data.name;
+        abilityBar.styleType = data.styleType;
+        abilityBar.abilityBar = JSON.parse(data.abilitys);
+
+        await abilityBar.save();
+        return await searchAbilityBars(userId, style);
+    } catch (e) {
+        throw Error(e);
+    }
+}
+
 const deleteItem = async (userId, itemId, slots) => {
-    const item = await Item.findOne({ _id: itemId }, { ownerId: 1});
-    if (item.ownerId != userId) throw Error(EQUIPMENT_ERRORS.NOT_OWNER_ITEM);
+    const item = await Item.findOne({ _id: itemId }, { ownerId: 1 });
+    if (!item.ownerId.equals(userId)) throw Error(EQUIPMENT_ERRORS.NOT_OWNER_ITEM);
 
     await Item.deleteOne({ _id: itemId });
 
     return await searchItems(userId, slots);
+}
+
+const deleteAbilityBar = async (userId, abilityBarId, style) => {
+    const abilityBar = await AbilityBar.findOne({ _id: abilityBarId }, { ownerId: 1 });
+    if (!abilityBar.ownerId.equals(userId)) throw Error(EQUIPMENT_ERRORS.NOT_OWNER_ABILITY_BAR);
+
+    await AbilityBar.deleteOne({ _id: abilityBarId });
+
+    return await searchAbilityBars(userId, style);
 }
 
 class ItemBuilder {
@@ -206,7 +248,7 @@ class AbilityBarBuilder {
         this.styleType = style;
         return this;
     }
-    
+
     withAbilityBar(bar) {
         if (!bar) throw Error(EQUIPMENT_ERRORS.ABILITY_BAR_REQUIRED);
         this.abilityBar = bar;
@@ -216,10 +258,13 @@ class AbilityBarBuilder {
 
 module.exports = {
     getItem,
+    getAbilityBar,
     searchItems,
     searchAbilityBars,
     createItem,
     createAbilityBar,
     editItem,
-    deleteItem
+    editAbilityBar,
+    deleteItem,
+    deleteAbilityBar
 }

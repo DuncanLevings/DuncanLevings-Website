@@ -6,7 +6,19 @@
 
 import { call, takeLatest, put } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
-import { createItemAPI, createAbilityBarAPI, deleteItemAPI, editItemAPI, getItemsAPI, getItemSingleAPI, searchItemsAPI, searchAbilityBarsAPI } from '../api/equipmentAPI';
+import {
+    createItemAPI,
+    createAbilityBarAPI,
+    deleteItemAPI,
+    editItemAPI,
+    getItemsAPI,
+    getItemSingleAPI,
+    getAbilityBarSingleAPI,
+    searchItemsAPI,
+    searchAbilityBarsAPI,
+    deleteAbilityBarAPI,
+    editAbilityBarAPI
+} from '../api/equipmentAPI';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import * as actionTypes from '../actionTypes/equipmentActionTypes'
 import * as actionCreators from '../actions/equipmentActions';
@@ -77,6 +89,15 @@ function* deleteItem(equipmentAction) {
 
 // ABILTIYS
 
+function* getAbilityBarSingle(equipmentAction) {
+    try {
+        const abilityBar = yield call(getAbilityBarSingleAPI, equipmentAction.payload);
+        yield put(actionCreators.getAbilityBarSingleSuccess(abilityBar));
+    } catch (error) {
+        yield put(actionCreators.equipmentError(error.response.data));
+    }
+}
+
 function* searchAbilityBars(equipmentAction) {
     try {
         const abilityBars = yield call(searchAbilityBarsAPI, equipmentAction.payload);
@@ -95,6 +116,24 @@ function* createAbilityBar(equipmentAction) {
     }
 }
 
+function* editAbilityBar(equipmentAction) {
+    try {
+        const abilityBars = yield call(editAbilityBarAPI, equipmentAction.payload.formData, equipmentAction.payload.style);
+        yield put(actionCreators.editAbilityBarSuccess(abilityBars));
+    } catch (error) {
+        yield put(actionCreators.equipmentError(error.response.data));
+    }
+}
+
+function* deleteAbilityBar(equipmentAction) {
+    try {
+        const abilityBars = yield call(deleteAbilityBarAPI, equipmentAction.payload.abilityBarId, equipmentAction.payload.style);
+        yield put(actionCreators.deleteAbilityBarSuccess(abilityBars));
+    } catch (error) {
+        yield put(actionCreators.equipmentError(error.response.data));
+    }
+}
+
 export const equipmentSagas = [
     takeLatest(actionTypes.GET_ITEMS, getItems),
     takeLatest(actionTypes.GET_ITEM_SINGLE, getItemSingle),
@@ -102,6 +141,9 @@ export const equipmentSagas = [
     takeLatest(actionTypes.CREATE_ITEM, createItem),
     takeLatest(actionTypes.EDIT_ITEM, editItem),
     takeLatest(actionTypes.DELETE_ITEM, deleteItem),
+    takeLatest(actionTypes.GET_ABILITY_BAR_SINGLE, getAbilityBarSingle),
     takeLatest(actionTypes.SEARCH_ABILITY_BARS, searchAbilityBars),
-    takeLatest(actionTypes.CREATE_ABILITY_BAR, createAbilityBar)
+    takeLatest(actionTypes.CREATE_ABILITY_BAR, createAbilityBar),
+    takeLatest(actionTypes.EDIT_ABILITY_BAR, editAbilityBar),
+    takeLatest(actionTypes.DELETE_ABILITY_BAR, deleteAbilityBar),
 ];

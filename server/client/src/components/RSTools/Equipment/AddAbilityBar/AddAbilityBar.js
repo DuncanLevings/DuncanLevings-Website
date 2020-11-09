@@ -223,8 +223,8 @@ class AddAbilityBar extends React.Component {
         const { isCreating, error } = equipmentReducer;
 
         let droppable, droppable1, droppable2, droppable3 = null;
+        droppable = this.createList("abilityBar", "droppable");
         if (style) {
-            droppable = this.createList("abilityBar", "droppable");
             droppable1 = this.createList("basics", "droppable1");
             droppable2 = this.createList("thresholds", "droppable2");
             droppable3 = this.createList("ultimates", "droppable3");
@@ -322,18 +322,20 @@ class AddAbilityBar extends React.Component {
                                         <div className="ability-error">
                                             Cannot have duplicate abilitys!
                                         </div> : null}
-                                    {style ?
-                                        <DragDropContext onDragEnd={this.onDragEnd}>
-                                            {droppable}
-                                            <br />
-                                            <p>Drag from below abilitys to your ability bar</p>
-                                            {droppable1}
-                                            <br />
-                                            {droppable2}
-                                            <br />
-                                            {droppable3}
-                                        </DragDropContext>
-                                        : null}
+                                    <DragDropContext onDragEnd={this.onDragEnd}>
+                                        {droppable}
+                                        <br />
+                                        {style ?
+                                            <>
+                                                <p>Drag from below abilitys to your ability bar</p>
+                                                {droppable1}
+                                                <br />
+                                                {droppable2}
+                                                <br />
+                                                {droppable3}
+                                            </>
+                                            : null}
+                                    </DragDropContext>
                                     <div className="ability-button">
                                         <Button
                                             variant="button-primary"

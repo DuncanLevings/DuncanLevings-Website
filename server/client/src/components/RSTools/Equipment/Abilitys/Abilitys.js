@@ -10,8 +10,9 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Collapse, Container, Form, FormControl, Image, InputGroup, ListGroup, Modal, OverlayTrigger, Row, Spinner, Tooltip } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { EQUIPMENT_CONSTS } from 'consts/RSTools_Consts';
-import { searchAbilityBars, createAbilityBar } from 'store/actions/equipmentActions';
+import { getAbilityBarSingle, searchAbilityBars, createAbilityBar, editAbilityBar, deleteAbilityBar } from 'store/actions/equipmentActions';
 import AddAbilityBar from '../AddAbilityBar/AddAbilityBar.lazy';
+import EditAbilityBar from '../EditAbilityBar/EditAbilityBar.lazy';
 import PropTypes from 'prop-types';
 import './Abilitys.scss';
 
@@ -22,6 +23,7 @@ class Abilitys extends React.Component {
             search: '',
             filterStyle: 0,
             addAbilityBarShow: false,
+            editAbilityBarShow: false,
             showConfirm: false
         }
     }
@@ -43,8 +45,50 @@ class Abilitys extends React.Component {
         this.props.searchAbilityBars(e.target.value);
     }
 
+    setShowConfirm = (bool, abilityBarId = null) => {
+        this.setState({
+            showConfirm: bool,
+            selectedAbilityBarId: abilityBarId ? abilityBarId : this.state.selectedAbilityBarId
+        });
+    }
+
+    deleteAbilityBar = () => {
+        this.props.deleteAbilityBar(this.state.selectedAbilityBarId, this.state.filterStyle)
+        this.setState({ showConfirm: false });
+    }
+
+    setEditAbilityBarShow = (bool, abilityBarId = null) => {
+        this.setState({ editAbilityBarShow: bool });
+        if (abilityBarId) this.props.getAbilityBarSingle(abilityBarId);
+    }
+
+    confirmModal = () => {
+        const { showConfirm } = this.state;
+
+        return (
+            <Modal
+                show={showConfirm}
+                onHide={() => this.setShowConfirm(false)}
+                aria-labelledby="contained-modal-title-vcenter"
+                dialogClassName="confirm-modal text"
+                centered
+            >
+                <Modal.Header>
+                    <Modal.Title>Confirm Delete</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>Are you sure you wish to delete this ability bar?</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="button-secondary" onClick={() => this.setShowConfirm(false)}>Cancel</Button>
+                    <Button variant="button-warning" onClick={() => this.deleteAbilityBar()}>Delete</Button>
+                </Modal.Footer>
+            </Modal>
+        );
+    }
+
     render() {
-        const { search, addAbilityBarShow, filterStyle } = this.state;
+        const { search, addAbilityBarShow, editAbilityBarShow, filterStyle } = this.state;
         const { searchAbilityBars, isSearching } = this.props.equipmentReducer;
 
         const searchResults = searchAbilityBars
@@ -67,8 +111,8 @@ class Abilitys extends React.Component {
                         </Col>
                         <Col xs={2}>
                             <span className="actions">
-                                <FaEdit className="action-icon edit" />
-                                <FaTrash className="action-icon delete" />
+                                <FaEdit className="action-icon edit" onClick={() => this.setEditAbilityBarShow(true, bar._id)} />
+                                <FaTrash className="action-icon delete" onClick={() => this.setShowConfirm(true, bar._id)} />
                             </span>
                         </Col>
                     </Row>
@@ -78,7 +122,7 @@ class Abilitys extends React.Component {
         return (
             <Container>
                 <div className="Abilitys">
-                    {/* {this.confirmModal()} */}
+                    {this.confirmModal()}
                     <Form>
                         <Form.Group controlId="formSearch">
                             <InputGroup>
@@ -144,13 +188,12 @@ class Abilitys extends React.Component {
                         createAbilityBar={data => this.props.createAbilityBar(data, filterStyle)}
                         onHide={() => this.setAddAbilityBarShow(false)}
                     />
-                    {/* <EditItem
-                        show={editItemShow}
+                    <EditAbilityBar
+                        show={editAbilityBarShow}
                         equipmentReducer={this.props.equipmentReducer}
-                        editItem={data => this.props.editItem(data, filterSlots)}
-                        clearErrors={() => this.props.clearErrors()}
-                        onHide={() => this.setEditItemShow(false)}
-                    /> */}
+                        editAbilityBar={data => this.props.editAbilityBar(data, filterStyle)}
+                        onHide={() => this.setEditAbilityBarShow(false)}
+                    />
                 </div>
             </Container>
         );
@@ -159,8 +202,11 @@ class Abilitys extends React.Component {
 
 Abilitys.propTypes = {
     equipmentReducer: PropTypes.object,
+    getAbilityBarSingle: PropTypes.func,
     searchAbilityBars: PropTypes.func,
-    createAbilityBar: PropTypes.func
+    createAbilityBar: PropTypes.func,
+    editAbilityBar: PropTypes.func,
+    deleteAbilityBar: PropTypes.func
 };
 
 const mapStateToProps = state => {
@@ -169,6 +215,6 @@ const mapStateToProps = state => {
     };
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ searchAbilityBars, createAbilityBar }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ getAbilityBarSingle, searchAbilityBars, createAbilityBar, editAbilityBar, deleteAbilityBar }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Abilitys);

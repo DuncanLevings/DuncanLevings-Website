@@ -29,6 +29,13 @@ router.get(EQUIPMENT_ROUTES.GET_ITEM_SINGLE, auth.user, (req, res) => {
         .catch(err => res.status(400).send(err.message));
 });
 
+router.get(EQUIPMENT_ROUTES.GET_ABILITY_BAR_SINGLE, auth.user, (req, res) => {
+    _equipmentService
+        .getAbilityBar(req.user._id, req.params.abilityBarId)
+        .then(abilityBar => res.status(200).send(abilityBar))
+        .catch(err => res.status(400).send(err.message));
+});
+
 router.get(EQUIPMENT_ROUTES.SEARCH_ITEMS, auth.user, (req, res) => {
     _equipmentService
         .searchItems(req.user._id, req.params.slots)
@@ -64,10 +71,24 @@ router.post(EQUIPMENT_ROUTES.EDIT_ITEM, Multer.single('image'), auth.user, _imag
         .catch(err => res.status(400).json(err.message));
 });
 
+router.post(EQUIPMENT_ROUTES.EDIT_ABILITY_BAR, Multer.any(), auth.user, (req, res) => {
+    _equipmentService
+        .editAbilityBar(req.user._id, req.body, req.params.style)
+        .then(abilityBars => res.status(200).send(abilityBars))
+        .catch(err => res.status(400).json(err.message));
+});
+
 router.delete(EQUIPMENT_ROUTES.DELETE_ITEM, auth.user, (req, res) => {
     _equipmentService
         .deleteItem(req.user.id, req.params.itemId, req.params.slots)
         .then(items => res.status(200).send(items))
+        .catch(err => res.status(400).json(err.message));
+});
+
+router.delete(EQUIPMENT_ROUTES.DELETE_ABILITY_BAR, auth.user, (req, res) => {
+    _equipmentService
+        .deleteAbilityBar(req.user.id, req.params.abilityBarId, req.params.style)
+        .then(abilityBars => res.status(200).send(abilityBars))
         .catch(err => res.status(400).json(err.message));
 });
 

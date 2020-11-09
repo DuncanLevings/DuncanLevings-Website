@@ -61,6 +61,14 @@ export function deleteItemSuccess(items) {
 
 // ABILITYS
 
+export function getAbilityBarSingle(abilityBarId) {
+    return { type: actionTypes.GET_ABILITY_BAR_SINGLE, payload: abilityBarId };
+}
+
+export function getAbilityBarSingleSuccess(abilityBar) {
+    return { type: actionTypes.GET_ABILITY_BAR_SINGLE_SUCCESS, payload: abilityBar };
+}
+
 export function searchAbilityBars(style) {
     return { type: actionTypes.SEARCH_ABILITY_BARS, payload: style };
 }
@@ -75,6 +83,22 @@ export function createAbilityBar(formData, style) {
 
 export function createAbilityBarSuccess(abilityBars) {
     return { type: actionTypes.CREATE_ABILITY_BAR_SUCCESS, payload: abilityBars };
+}
+
+export function editAbilityBar(formData, style) {
+    return { type: actionTypes.EDIT_ABILITY_BAR, payload: { formData: formData, style: style }  };
+}
+
+export function editAbilityBarSuccess(abilityBars) {
+    return { type: actionTypes.EDIT_ABILITY_BAR_SUCCESS, payload: abilityBars };
+}
+
+export function deleteAbilityBar(abilityBarId, style) {
+    return { type: actionTypes.DELETE_ABILITY_BAR, payload: { abilityBarId: abilityBarId, style: style } };
+}
+
+export function deleteAbilityBarSuccess(abilityBars) {
+    return { type: actionTypes.DELETE_ABILITY_BAR_SUCCESS, payload: abilityBars };
 }
 
 // ERROR

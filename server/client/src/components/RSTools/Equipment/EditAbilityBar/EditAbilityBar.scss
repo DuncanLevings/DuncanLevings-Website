@@ -1,6 +1,6 @@
 @import '../../../../assets/style/colors';
 
-.AddAbilityBar {
+.EditAbilityBar {
     color: $dark-theme;
     font-family: 'Roboto', sans-serif;
     text-align: center;
@@ -12,7 +12,6 @@
 
     .ability-button {
         margin-top: 1rem;
-        margin-bottom: 1rem;
     }
 
     .style-image {

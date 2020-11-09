@@ -537,6 +537,12 @@ const abilityData = {
     }
 }
 
+const styleTypes = {
+    1: "melee",
+    2: "range",
+    3: "magic"
+}
+
 const types = {
     PRESETS: 0,
     ITEMS: 1,
@@ -545,6 +551,7 @@ const types = {
 
 export default {
     slotTypes,
+    styleTypes,
     abilityData,
     types
 }

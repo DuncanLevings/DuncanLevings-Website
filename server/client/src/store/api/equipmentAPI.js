@@ -57,6 +57,13 @@ export function deleteItemAPI(itemId, slots) {
 
 // ABILITYS
 
+export function getAbilityBarSingleAPI(abilityBarId) {
+  return api.request({
+    method: 'get',
+    url: `/api/equipment/abilityBar/${abilityBarId}`,
+  }).then(res => res.data);
+}
+
 export function searchAbilityBarsAPI(style) {
   return api.request({
     method: 'get',
@@ -69,5 +76,20 @@ export function createAbilityBarAPI(formData, style) {
     method: 'post',
     url: `/api/equipment/create/abilityBar/${style}`,
     data: formData
+  }).then(res => res.data);
+}
+
+export function editAbilityBarAPI(formData, style) {
+  return api.request({
+    method: 'post',
+    url: `/api/equipment/edit/abilityBar/${style}`,
+    data: formData
+  }).then(res => res.data);
+}
+
+export function deleteAbilityBarAPI(abilityBarId, style) {
+  return api.request({
+    method: 'delete',
+    url: `/api/equipment/delete/abilityBar/${abilityBarId}/${style}`
   }).then(res => res.data);
 }
