@@ -23,10 +23,13 @@ import {
     completeWeekly,
     completeMonthly
 } from 'store/actions/dailyActions';
+import { getVixWax, getLastestNemi } from 'store/actions/activityActions';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
+import VisWax from '../CustomDaily/VisWax/VisWax.lazy';
 import _ from "lodash";
 import PropTypes from 'prop-types';
 import './Daily.scss';
+import NemiForest from '../CustomDaily/NemiForest/NemiForest.lazy';
 
 class Daily extends React.Component {
     constructor(props) {
@@ -35,7 +38,9 @@ class Daily extends React.Component {
             dailyIds: [],
             showDelete: false,
             showEdit: false,
-            selectedDaily: null
+            selectedDaily: null,
+            loadedVis: false,
+            loadedNemi: false
         }
     }
 
@@ -193,12 +198,51 @@ class Daily extends React.Component {
         }
 
         //clear list after above executes
-        this.setState({dailyIds: [] });
+        this.setState({ dailyIds: [] });
     }, 1500)
 
     checkCompleteClicked = (dailyId) => {
         if (this.state.dailyIds.includes(dailyId)) return true;
         return false;
+    }
+
+    dailyToggled = (daily) => {
+        if (daily.visWaxDaily && !this.state.loadedVis) {
+            this.setState({ loadedVis: true });
+            this.props.getVixWax();
+        } else if (daily.nemiDaily && !this.state.loadedNemi) {
+            this.setState({ loadedNemi: true });
+            this.props.getLastestNemi();
+        }
+    }
+
+    getDailyData = (daily) => {
+        if (daily.visWaxDaily) {
+            return (
+                <VisWax />
+            );
+        }
+
+        if (daily.nemiDaily) {
+            return (
+                <NemiForest />
+            );
+        }
+
+        return (
+            daily.steps.map((step, j) => {
+                return (
+                    <div className="step-container" key={j}>
+                        <Card.Text>
+                            <span className="step-number">{j + 1}.</span> {step.step}
+                        </Card.Text>
+                        {step.url ?
+                            <Card.Img src={step.url} />
+                            : null}
+                    </div>
+                );
+            })
+        );
     }
 
     render() {
@@ -229,7 +273,7 @@ class Daily extends React.Component {
                                 return (
                                     <Accordion key={i}>
                                         <Card>
-                                            <Accordion.Toggle as={Card.Header} eventKey={cardKey}>
+                                            <Accordion.Toggle as={Card.Header} eventKey={cardKey} onClick={() => this.dailyToggled(dailyData)}>
                                                 <Button variant="button-primary" hidden={this.checkCompleteClicked(daily.dailyId._id)} className="daily-complete" onClick={this.markComplete(daily)}><FaCheck /></Button>
                                                 {dailyData.title}
                                                 <span className="actions">
@@ -239,18 +283,7 @@ class Daily extends React.Component {
                                             </Accordion.Toggle>
                                             <Accordion.Collapse eventKey={cardKey}>
                                                 <Card.Body>
-                                                    {dailyData.steps.map((step, j) => {
-                                                        return (
-                                                            <div className="step-container" key={j}>
-                                                                <Card.Text>
-                                                                    <span className="step-number">{j + 1}.</span> {step.step}
-                                                                </Card.Text>
-                                                                {step.url ?
-                                                                    <Card.Img src={step.url} />
-                                                                    : null}
-                                                            </div>
-                                                        );
-                                                    })}
+                                                    {this.getDailyData(dailyData)}
                                                 </Card.Body>
                                             </Accordion.Collapse>
                                         </Card>
@@ -278,6 +311,8 @@ Daily.propTypes = {
     completeDaily: PropTypes.func,
     completeWeekly: PropTypes.func,
     completeMonthly: PropTypes.func,
+    getVixWax: PropTypes.func,
+    getLastestNemi: PropTypes.func,
     dailyReducer: PropTypes.object,
     userReducer: PropTypes.object
 };
@@ -300,7 +335,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
     deleteMonthly,
     completeDaily,
     completeWeekly,
-    completeMonthly
+    completeMonthly,
+    getVixWax,
+    getLastestNemi
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Daily));

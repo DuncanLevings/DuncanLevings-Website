@@ -16,6 +16,11 @@
     padding-bottom: 5vh;
     font-family: 'Roboto', sans-serif;
 
+    .scrollable-list {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+
     .list-group-item {
         background-color: $body-background;
         border-color: $hr-divider;

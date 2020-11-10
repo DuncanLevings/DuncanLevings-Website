@@ -1,0 +1,16 @@
+@import '../../../../../assets/style/colors';
+
+.VisWax {
+    table {
+        text-align: center;
+        background-color: $daily-card-background;
+
+        td {
+            width: 33%;
+
+            img {
+                width: 48px;
+            }
+        }
+    }
+}

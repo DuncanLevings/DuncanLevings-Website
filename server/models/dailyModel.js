@@ -13,7 +13,9 @@ const dailySchema = new mongoose.Schema({
     title: { type: String, required: true },
     type: { type: Number, required: true },
     steps: { type: Array, required: true },
-    publicDaily: { type: Boolean, default: false }
+    publicDaily: { type: Boolean, default: false },
+    visWaxDaily: { type: Boolean },
+    nemiDaily: { type: Boolean }
 });
 
 dailySchema.set('toJSON', { virtuals: true });

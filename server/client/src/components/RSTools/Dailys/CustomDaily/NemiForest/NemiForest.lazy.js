@@ -2,14 +2,14 @@ import React, { lazy, Suspense } from 'react';
 import ErrorBoundary from 'errors/ErrorBoundary';
 import { Spinner } from 'react-bootstrap';
 
-const LazyVisNemi = lazy(() => import('./VisNemi'));
+const LazyNemiForest = lazy(() => import('./NemiForest'));
 
-const VisNemi = props => (
+const NemiForest = props => (
   <ErrorBoundary>
     <Suspense fallback={<div className="loading"><Spinner animation="border" variant="light" /></div>}>
-      <LazyVisNemi {...props} />
+      <LazyNemiForest {...props} />
     </Suspense>
   </ErrorBoundary>
 );
 
-export default VisNemi;
+export default NemiForest;

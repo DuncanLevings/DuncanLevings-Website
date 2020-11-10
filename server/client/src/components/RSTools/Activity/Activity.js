@@ -29,14 +29,9 @@ class Activity extends React.Component {
             <Container>
                 <div className="Activity">
                     <CardDeck>
-                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.VIS_NEMI) }>
+                        <Card>
                             <Card.Body>
                                 <Card.Title>CLUE SETUPS</Card.Title>
-                            </Card.Body>
-                        </Card>
-                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.VIS_NEMI) }>
-                            <Card.Body>
-                                <Card.Title>VIX WAX AND NEMI FOREST</Card.Title>
                             </Card.Body>
                         </Card>
                     </CardDeck>

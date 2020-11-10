@@ -172,7 +172,7 @@ class Items extends React.Component {
                     {isSearching ?
                         <Spinner animation="border" variant="light" /> :
                         searchResults.length > 0 ?
-                            <ListGroup variant="flush">
+                            <ListGroup variant="flush" className="scrollable-list">
                                 {searchResults}
                             </ListGroup> :
                             <p>No items found...</p>
