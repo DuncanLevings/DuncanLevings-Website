@@ -90,7 +90,7 @@ router.post(DAILY_ROUTES.REORDER, auth.user, (req, res) => {
 
 router.post(DAILY_ROUTES.COMPLETE, auth.user, (req, res) => {
   _dailyService
-    .setComplete(req.user.id, req.body.id, req.body.type)
+    .setComplete(req.user.id, req.body.ids, req.body.type)
     .then(dailys => res.status(200).send(dailys))
     .catch(err => res.status(400).json(err.message));
 });

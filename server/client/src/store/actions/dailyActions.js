@@ -160,24 +160,24 @@ export function reorderDailySuccess(dailys) {
 
 // COMPLETE
 
-export function completeDaily(id, type) {
-    return { type: actionTypes.COMPLETE_DAILY, payload: { id: id, type: type } };
+export function completeDaily(ids, type) {
+    return { type: actionTypes.COMPLETE_DAILY, payload: { ids: ids, type: type } };
 }
 
 export function completeDailySuccess(dailys) {
     return { type: actionTypes.COMPLETE_DAILY_SUCCESS, payload: dailys };
 }
 
-export function completeWeekly(id, type) {
-    return { type: actionTypes.COMPLETE_WEEKLY, payload: { id: id, type: type } };
+export function completeWeekly(ids, type) {
+    return { type: actionTypes.COMPLETE_WEEKLY, payload: { ids: ids, type: type } };
 }
 
 export function completeWeeklySuccess(weeklys) {
     return { type: actionTypes.COMPLETE_WEEKLY_SUCCESS, payload: weeklys };
 }
 
-export function completeMonthly(id, type) {
-    return { type: actionTypes.COMPLETE_MONTHLY, payload: { id: id, type: type } };
+export function completeMonthly(ids, type) {
+    return { type: actionTypes.COMPLETE_MONTHLY, payload: { ids: ids, type: type } };
 }
 
 export function completeMonthlySuccess(monthlys) {

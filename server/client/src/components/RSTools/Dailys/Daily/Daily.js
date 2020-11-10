@@ -24,6 +24,7 @@ import {
     completeMonthly
 } from 'store/actions/dailyActions';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
+import _ from "lodash";
 import PropTypes from 'prop-types';
 import './Daily.scss';
 
@@ -31,6 +32,7 @@ class Daily extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            dailyIds: [],
             showDelete: false,
             showEdit: false,
             selectedDaily: null
@@ -39,7 +41,7 @@ class Daily extends React.Component {
 
     componentDidMount() {
     }
-    
+
     navigate = (route) => {
         this.props.history.push(route);
     }
@@ -172,16 +174,27 @@ class Daily extends React.Component {
 
     markComplete = (daily) => e => {
         e.stopPropagation();
+        this.setState(prevState => ({
+            dailyIds: [...prevState.dailyIds, daily.dailyId._id]
+        }), () => {
+            this.setComplete(this.state.dailyIds)
+        });
+    }
+
+    setComplete = _.debounce((dailyIds) => {
         const { dailyType } = this.props.dailyReducer;
 
         if (dailyType === 0) {
-            this.props.completeDaily(daily.dailyId._id, dailyType);
+            this.props.completeDaily(dailyIds, dailyType);
         } else if (dailyType === 1) {
-            this.props.completeWeekly(daily.dailyId._id, dailyType);
+            this.props.completeWeekly(dailyIds, dailyType);
         } else {
-            this.props.completeMonthly(daily.dailyId._id, dailyType);
+            this.props.completeMonthly(dailyIds, dailyType);
         }
-    }
+
+        //clear list after above executes
+        this.setState({dailyIds: [] });
+    }, 1500)
 
     render() {
         const { dailyTypeName, dailyType, dailys, weeklys, monthlys, isFetching } = this.props.dailyReducer;
@@ -272,13 +285,13 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-    setDailyType, 
-    getDaily, 
-    hideDaily, 
-    hideWeekly, 
-    hideMonthly, 
-    deleteDaily, 
-    deleteWeekly, 
+    setDailyType,
+    getDaily,
+    hideDaily,
+    hideWeekly,
+    hideMonthly,
+    deleteDaily,
+    deleteWeekly,
     deleteMonthly,
     completeDaily,
     completeWeekly,

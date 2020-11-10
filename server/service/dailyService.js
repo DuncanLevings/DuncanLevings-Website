@@ -45,7 +45,7 @@ const getLocalTime = (time) => {
         week: Moment(time.lastWeekReset).utc().week(),
         weekDay: Moment(time.lastWeekReset).utc().weekday(),
         month: Moment(time.lastMonthReset).utc().month()
-    } 
+    }
 }
 
 const getRSTime = () => {
@@ -54,7 +54,7 @@ const getRSTime = () => {
         week: Moment().utc().week(),
         weekDay: Moment().utc().weekday(),
         month: Moment().utc().month()
-    } 
+    }
 }
 
 /**
@@ -84,7 +84,7 @@ const checkReset = async (userId) => {
 
     // if previous reset time for week is different week to runescapes server reset week, reset weeklys
     const weekDiff = rsTime.week - lastResetlocalTime.week;
-    
+
     if (weekDiff > 1) { // been more than a week since last weekly reset, ignore tuesday reset only
         resetDailys(userId, 1);
         refreshData = true;
@@ -133,17 +133,22 @@ const resetDailys = async (userId, type) => {
     await user.save();
 }
 
-const setComplete = async (userId, dailyId, type) => {
+const setComplete = async (userId, dailyIds, type) => {
     const typeObj = getType(type);
     const user = await RSToolsUser.findOne({ userId: userId }, { [typeObj.fieldName]: 1 });
 
     const userDailyList = user[typeObj.fieldName].map(daily => daily.dailyId);
-    if (!userDailyList.includes(dailyId)) throw Error(DAILY_ERRORS.DAILY_NOT_IN_LIST);
-    
-    await RSToolsUser.updateOne(
-        { userId: userId, [`${typeObj.fieldName}.dailyId`]: dailyId },
-        { $set: { [`${typeObj.fieldName}.$.completed`]: true } }
-    )
+    dailyIds.forEach(daily => {
+        if (!userDailyList.includes(daily)) throw Error(DAILY_ERRORS.DAILY_NOT_IN_LIST);
+    });
+
+    for (const daily of user[`${typeObj.fieldName}`]) {
+        if (dailyIds.includes(daily.dailyId.toString())) {
+            daily.completed = true;
+        }
+    }
+
+    await user.save();
 
     return await getDailys(userId, type);
 }
@@ -157,7 +162,7 @@ const getDailys = async (userId, type) => {
     const typeObj = getType(type);
     const userIdc = mongoose.Types.ObjectId(userId);
 
-    const listData =  await RSToolsUser.aggregate([
+    const listData = await RSToolsUser.aggregate([
         {
             $match: { userId: userIdc }
         },
@@ -203,7 +208,7 @@ const getDailys = async (userId, type) => {
     for (const data of listData[0][typeObj.fieldName]) {
         data.dailyId = listData[0].listData.filter(d => d._id.equals(data.dailyId))[0];
     }
-    
+
     return listData[0][typeObj.fieldName];
 }
 
