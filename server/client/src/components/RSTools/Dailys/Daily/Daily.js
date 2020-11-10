@@ -196,6 +196,11 @@ class Daily extends React.Component {
         this.setState({dailyIds: [] });
     }, 1500)
 
+    checkCompleteClicked = (dailyId) => {
+        if (this.state.dailyIds.includes(dailyId)) return true;
+        return false;
+    }
+
     render() {
         const { dailyTypeName, dailyType, dailys, weeklys, monthlys, isFetching } = this.props.dailyReducer;
 
@@ -225,7 +230,7 @@ class Daily extends React.Component {
                                     <Accordion key={i}>
                                         <Card>
                                             <Accordion.Toggle as={Card.Header} eventKey={cardKey}>
-                                                <Button variant="button-primary" className="daily-complete" onClick={this.markComplete(daily)}><FaCheck /></Button>
+                                                <Button variant="button-primary" hidden={this.checkCompleteClicked(daily.dailyId._id)} className="daily-complete" onClick={this.markComplete(daily)}><FaCheck /></Button>
                                                 {dailyData.title}
                                                 <span className="actions">
                                                     <FaEdit size="0.75em" className="action-icon edit" onClick={this.setShowEdit(true, daily)} />
