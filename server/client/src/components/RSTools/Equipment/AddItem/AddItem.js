@@ -24,22 +24,32 @@ class AddItem extends React.Component {
             imgPreviewShow: false,
             imgPreviewURL: "",
             imageRequired: false,
+            augment: false,
             slot: null,
             reset: false
         }
     }
 
     componentDidMount() {
+    }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.selectedSlot !== prevProps.selectedSlot) {
+            this.setState({ slot: this.props.selectedSlot });
+        }
     }
 
     setSelected = (slot) => {
         this.setState({ slot: slot });
     }
 
+    setAugment = (bool) => {
+        this.setState({ augment: bool });
+    }
+
     clearSelected = () => {
         window.URL.revokeObjectURL(this.state.imgPreviewURL);
-        this.setState({ slot: null, reset: false });
+        this.setState({ slot: null, reset: false, augment: false });
         this.props.clearErrors();
     }
 
@@ -78,6 +88,12 @@ class AddItem extends React.Component {
         formData.append('wikiUrl', values.wikiURL);
         // formData.append('image', values.image.blob, `${values.name}-image`);
 
+        if (this.state.augment) {
+            formData.append('isAugmented', this.state.augment);
+            formData.append('gizmo1', values.gizmo1);
+            formData.append('gizmo2', values.gizmo2);
+        }
+
         // familiar type item only
         if (this.state.slot === 14) {
             formData.append('familiarSize', values.familiarSize);
@@ -90,8 +106,8 @@ class AddItem extends React.Component {
     }
 
     render() {
-        const { createItem, clearErrors, equipmentReducer, ...rest } = this.props;
-        const { imgCropShow, imgPreviewShow, imgPreviewURL, slot, imageRequired, reset } = this.state;
+        const { createItem, clearErrors, equipmentReducer, selectedSlot, ...rest } = this.props;
+        const { imgCropShow, imgPreviewShow, imgPreviewURL, slot, imageRequired, reset, augment } = this.state;
         const { isCreating, error } = equipmentReducer;
 
         return (
@@ -129,7 +145,9 @@ class AddItem extends React.Component {
                                     name: '',
                                     wikiURL: '',
                                     image: null,
-                                    familiarSize: 0
+                                    familiarSize: 0,
+                                    gizmo1: '',
+                                    gizmo2: ''
                                 }}
                             >
                                 {({
@@ -211,13 +229,49 @@ class AddItem extends React.Component {
                                                             {errors.familiarSize}
                                                         </Form.Control.Feedback>
                                                     </InputGroup>
-                                                </Form.Group> : null
-                                            }
-                                            {values.image && values.image.url ?
-                                                <Button variant="button-secondary" onClick={() => this.setPreviewImgShow(true, values.image.url)}><FaImage /> Preview Image</Button>
+                                                </Form.Group>
                                                 :
-                                                <Button variant="button-secondary" onClick={() => this.setImgCropShow(true)}><FaImage /> Add Image</Button>
+                                                slot > 5 && slot < 10 || slot === 13 ? // augmentable equipable slots
+                                                    augment ?
+                                                        <Form.Group controlId="formWiki">
+                                                            <InputGroup>
+                                                                <InputGroup.Prepend>
+                                                                    <InputGroup.Text>Gizmo Notes:</InputGroup.Text>
+                                                                </InputGroup.Prepend>
+                                                                <FormControl
+                                                                    name="gizmo1"
+                                                                    placeholder="Gizmo #1 notes..."
+                                                                    aria-label="gizmo1"
+                                                                    aria-describedby="gizmo1"
+                                                                    value={values.gizmo1}
+                                                                    onChange={handleChange}
+                                                                />
+                                                                <FormControl
+                                                                    name="gizmo2"
+                                                                    placeholder="Gizmo #2 notes..."
+                                                                    aria-label="gizmo2"
+                                                                    aria-describedby="gizmo2"
+                                                                    value={values.gizmo2}
+                                                                    onChange={handleChange}
+                                                                />
+                                                                <InputGroup.Append>
+                                                                    <Button variant="button-secondary" onClick={() => this.setAugment(false)}>Remove Augment</Button>
+                                                                </InputGroup.Append>
+                                                            </InputGroup>
+                                                        </Form.Group>
+                                                        :
+                                                        <div className="augment-button">
+                                                            <Button variant="button-secondary" onClick={() => this.setAugment(true)}>Augment Item</Button>
+                                                        </div>
+                                                    : null
                                             }
+                                            <div className="image-button">
+                                                {values.image && values.image.url ?
+                                                    <Button variant="button-secondary" onClick={() => this.setPreviewImgShow(true, values.image.url)}><FaImage /> Preview Image</Button>
+                                                    :
+                                                    <Button variant="button-secondary" onClick={() => this.setImgCropShow(true)}><FaImage /> Add Image</Button>
+                                                }
+                                            </div>
                                             <div className="item-button">
                                                 <Button
                                                     variant="button-primary"
@@ -255,7 +309,8 @@ class AddItem extends React.Component {
 AddItem.propTypes = {
     equipmentReducer: PropTypes.object.isRequired,
     createItem: PropTypes.func.isRequired,
-    clearErrors: PropTypes.func.isRequired
+    clearErrors: PropTypes.func.isRequired,
+    selectedSlot: PropTypes.number
 };
 
 export default AddItem;

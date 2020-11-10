@@ -6,6 +6,7 @@
 
 import React from 'react';
 import { Container } from 'react-bootstrap';
+import EquipmentPreset from '../PresetComponents/EquipmentPreset/EquipmentPreset.lazy';
 import PropTypes from 'prop-types';
 import './Presets.scss';
 
@@ -23,7 +24,7 @@ class Presets extends React.Component {
         return (
             <Container>
                 <div className="Presets">
-                    
+                    <EquipmentPreset />
                 </div>
             </Container>
 

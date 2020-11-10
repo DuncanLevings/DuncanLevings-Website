@@ -7,6 +7,7 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { FaTimes } from 'react-icons/fa';
+import { EQUIPMENT_CONSTS } from 'consts/RSTools_Consts';
 import PropTypes from 'prop-types';
 import './SlotFilter.scss';
 
@@ -14,60 +15,7 @@ class SlotFilter extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            slots: [
-                {
-                    left: 1,
-                    top: 1
-                },
-                {
-                    left: 2,
-                    top: 1
-                },
-                {
-                    left: 3,
-                    top: 1
-                },
-                {
-                    left: 1,
-                    top: 2
-                },
-                {
-                    left: 2,
-                    top: 2
-                },
-                {
-                    left: 3,
-                    top: 2
-                },
-                {
-                    left: 4,
-                    top: 3
-                },
-                {
-                    left: 2,
-                    top: 3
-                },
-                {
-                    left: 5,
-                    top: 3
-                },
-                {
-                    left: 2,
-                    top: 4
-                },
-                {
-                    left: 4,
-                    top: 5
-                },
-                {
-                    left: 2,
-                    top: 5
-                },
-                {
-                    left: 5,
-                    top: 5
-                }
-            ],
+            slots: EQUIPMENT_CONSTS.slotPositions,
             filter: []
         }
     }

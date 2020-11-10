@@ -22,6 +22,61 @@ const slotTypes = {
     14: "Familiar",
 }
 
+const slotPositions = [
+    {
+        left: 1,
+        top: 1
+    },
+    {
+        left: 2,
+        top: 1
+    },
+    {
+        left: 3,
+        top: 1
+    },
+    {
+        left: 1,
+        top: 2
+    },
+    {
+        left: 2,
+        top: 2
+    },
+    {
+        left: 3,
+        top: 2
+    },
+    {
+        left: 4,
+        top: 3
+    },
+    {
+        left: 2,
+        top: 3
+    },
+    {
+        left: 5,
+        top: 3
+    },
+    {
+        left: 2,
+        top: 4
+    },
+    {
+        left: 4,
+        top: 5
+    },
+    {
+        left: 2,
+        top: 5
+    },
+    {
+        left: 5,
+        top: 5
+    }
+];
+
 const abilityData = {
     melee: {
         basics: [
@@ -551,6 +606,7 @@ const types = {
 
 export default {
     slotTypes,
+    slotPositions,
     styleTypes,
     abilityData,
     types

@@ -109,6 +109,7 @@ const createItem = async (userId, data, image, slots) => {
         .withName(data.name)
         .withSlot(data.slot)
         .withWiki(data.wikiUrl)
+        .withAugmented(data.isAugmented, data.gizmo1, data.gizmo2)
         .withFamiliarSize(data.familiarSize)
     );
 
@@ -146,8 +147,33 @@ const editItem = async (userId, data, image, slots) => {
         }
 
         item.name = data.name;
-        item.wiki = data.wikiUrl;
+
+        if (data.wikiUrl !== '') {
+            item.wiki = data.wikiUrl;
+        }
+
         if (image) item.imageUrl = image.cloudStoragePublicUrl;
+
+        // check if edited item is still augmented
+        if (data.isAugmented) {
+            console.log(item)
+            // if gizmo data is empty, assume removal of augment
+            if (data.gizmo1 === '' && data.gizmo2 === '') {
+                item.augment = undefined;
+            } else if (item.augment && item.augment.isAugmented) { // item augment obj already exists, then update
+                item.augment.gizmo1 = data.gizmo1 || '';
+                item.augment.gizmo2 = data.gizmo2 || '';
+            } else {
+                item.augment = { // item has not been augmented before, create augment obj
+                    isAugmented: data.isAugmented,
+                    gizmo1: data.gizmo1 || '',
+                    gizmo2: data.gizmo2 || ''
+                }
+            }
+        } else {
+            item.augment = undefined;
+        }
+
         if (item.slot === 14) item.familiarSize = data.familiarSize;
 
         await item.save();
@@ -218,6 +244,16 @@ class ItemBuilder {
     withWiki(url) {
         if (url === '') return this;
         this.wikiUrl = url;
+        return this;
+    }
+
+    withAugmented(augmented, gizmo1, gizmo2) {
+        if (!augmented || (augmented && gizmo1 === '' && gizmo2 === '')) return this;
+        this.augment = {
+            isAugmented: augmented,
+            gizmo1: gizmo1 || '',
+            gizmo2: gizmo2 || ''
+        };
         return this;
     }
 
