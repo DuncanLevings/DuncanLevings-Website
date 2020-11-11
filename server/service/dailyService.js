@@ -213,6 +213,68 @@ const getDailys = async (userId, type) => {
 }
 
 /**
+ * Retrieve all dailys under users list
+ * @param {*} userId 
+ * @param {*} type 
+ * @param {*} completed 
+ */
+const getDailysReOrder = async (userId, type) => {
+    const typeObj = getType(type);
+    const userIdc = mongoose.Types.ObjectId(userId);
+
+    const listData = await RSToolsUser.aggregate([
+        {
+            $match: { userId: userIdc }
+        },
+        {
+            $project: { [`${typeObj.fieldName}`]: 1 }
+        },
+        {
+            $unwind: `$${typeObj.fieldName}`
+        },
+        {
+            $sort: { [`${typeObj.fieldName}.position`]: 1 }
+        },
+        {
+            $group: {
+                _id: '$_id',
+                [typeObj.fieldName]: {
+                    $push: `$${typeObj.fieldName}`
+                }
+            }
+        },
+        {
+            $lookup: {
+                from: Daily.collection.name,
+                let: { dailyId: `$${typeObj.fieldName}.dailyId` },
+                pipeline: [
+                    {
+                        $match: {
+                            $expr: { $in: ["$_id", "$$dailyId"] }
+                        },
+                    },
+                    {
+                        $project: {
+                            title: 1
+                        }
+                    }
+                ],
+                as: "listData"
+            }
+        }
+    ]);
+
+    if (listData.length === 0) return [];
+
+    // rematching populated dailyId schema with correct dailyId list object to maintain sorting
+    for (const data of listData[0][typeObj.fieldName]) {
+        data.dailyId = listData[0].listData.filter(d => d._id.equals(data.dailyId))[0];
+    }
+
+    return listData[0][typeObj.fieldName];
+}
+
+/**
  * Retrieve a single Daily checking ownership
  * @param {*} userId 
  * @param {*} dailyId 
@@ -536,6 +598,7 @@ module.exports = {
     checkReset,
     resetDailys,
     getDailys,
+    getDailysReOrder,
     getDaily,
     searchDailys,
     addDaily,

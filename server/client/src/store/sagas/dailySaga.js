@@ -17,7 +17,8 @@ import {
     addDailyAPI,
     hideDailyAPI,
     completeDailyAPI,
-    checkResetAPI
+    checkResetAPI,
+    getDailyReOrderAPI
 } from '../api/dailyAPI';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import * as actionTypes from '../actionTypes/dailyActionTypes'
@@ -36,6 +37,15 @@ function* getDaily(dailyAction) {
     try {
         const dailys = yield call(getDailyAPI, dailyAction.payload);
         yield put(actionCreators.getDailySuccess(dailys));
+    } catch (error) {
+        yield put(actionCreators.dailyError(error.response.data));
+    }
+}
+
+function* getDailyReOrder(dailyAction) {
+    try {
+        const dailys = yield call(getDailyReOrderAPI, dailyAction.payload);
+        yield put(actionCreators.getDailyReOrderSuccess(dailys));
     } catch (error) {
         yield put(actionCreators.dailyError(error.response.data));
     }
@@ -208,6 +218,7 @@ function* completeMonthy(dailyAction) {
 export const dailySagas = [
     takeLatest(actionTypes.CHECK_RESET, checkReset),
     takeLatest(actionTypes.GET_DAILY, getDaily),
+    takeLatest(actionTypes.GET_DAILY_REORDER, getDailyReOrder),
     takeLatest(actionTypes.GET_WEEKLY, getWeekly),
     takeLatest(actionTypes.GET_MONTHLY, getMonthly),
     takeLatest(actionTypes.GET_SINGLE_DAILY, getSingleDaily),

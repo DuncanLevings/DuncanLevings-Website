@@ -7,6 +7,7 @@
 const _ROOT = '/daily';
 
 const CHECK_RESET = '/check_reset';
+const GET_DAILYS_REORDER = '/get_dailys/re_order/:type';
 const GET_DAILYS = '/get_dailys/:type';
 const GET_DAILY = '/get_daily/:id';
 const SEARCH_DAILYS = '/search_dailys/:type/:filter';
@@ -22,6 +23,7 @@ module.exports = {
     _ROOT,
     CHECK_RESET,
     GET_DAILYS,
+    GET_DAILYS_REORDER,
     GET_DAILY,
     SEARCH_DAILYS,
     ADD,

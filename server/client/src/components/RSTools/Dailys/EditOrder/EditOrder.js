@@ -8,7 +8,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Container, Spinner } from 'react-bootstrap';
-import { getDaily, setDailyType, reorderDaily } from 'store/actions/dailyActions';
+import { getDailyReOrder, setDailyType, reorderDaily } from 'store/actions/dailyActions';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import PropTypes from 'prop-types';
 import './EditOrder.scss';
@@ -45,35 +45,14 @@ class EditOrder extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.dailyReducer.dailys.length === 0) {
-            const type = parseInt(localStorage.getItem("type"));
-
-            this.props.setDailyType(type);
-            this.props.getDaily(type);
-        } else {
-            this.setList(this.props.dailyReducer.dailyType);
-        }
+        const type = parseInt(localStorage.getItem("type"));
+        this.props.setDailyType(type);
+        this.props.getDailyReOrder(type);
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.dailyReducer.dailys !== prevProps.dailyReducer.dailys) {
-            this.setList(this.props.dailyReducer.dailyType);
-        }
-    }
-
-    setList = (type) => {
-        switch (type) {
-            case 0:
-                this.setState({ items: this.props.dailyReducer.dailys });
-                break;
-            case 1:
-                this.setState({ items: this.props.dailyReducer.weeklys });
-                break;
-            case 2:
-                this.setState({ items: this.props.dailyReducer.monthlys });
-                break;
-            default:
-                break;
+        if (this.props.dailyReducer.dailyReOrder !== prevProps.dailyReducer.dailyReOrder) {
+            this.setState({ items: this.props.dailyReducer.dailyReOrder });
         }
     }
 
@@ -159,7 +138,7 @@ class EditOrder extends React.Component {
 
 EditOrder.propTypes = {
     setDailyType: PropTypes.func,
-    getDaily: PropTypes.func,
+    getDailyReOrder: PropTypes.func,
     reorderDaily: PropTypes.func,
     dailyReducer: PropTypes.object
 };
@@ -171,6 +150,6 @@ const mapStateToProps = state => {
     };
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ setDailyType, getDaily, reorderDaily }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ setDailyType, getDailyReOrder, reorderDaily }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditOrder);

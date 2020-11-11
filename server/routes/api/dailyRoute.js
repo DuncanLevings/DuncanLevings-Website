@@ -32,6 +32,13 @@ router.get(DAILY_ROUTES.GET_DAILYS, auth.user, (req, res) => {
     .catch(err => res.status(400).send(err.message));
 });
 
+router.get(DAILY_ROUTES.GET_DAILYS_REORDER, auth.user, (req, res) => {
+  _dailyService
+    .getDailysReOrder(req.user.id, req.params.type)
+    .then(dailys => res.status(200).send(dailys))
+    .catch(err => res.status(400).send(err.message));
+});
+
 router.get(DAILY_ROUTES.GET_DAILY, auth.user, (req, res) => {
   _dailyService
     .getDaily(req.user.id, req.params.id)

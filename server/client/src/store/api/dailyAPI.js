@@ -20,6 +20,13 @@ export function getDailyAPI(type) {
   }).then(res => res.data);
 }
 
+export function getDailyReOrderAPI(type) {
+  return api.request({
+    method: 'get',
+    url: `/api/daily/get_dailys/re_order/${type}`,
+  }).then(res => res.data);
+}
+
 export function getSingleDailyAPI(dailyId) {
   return api.request({
     method: 'get',

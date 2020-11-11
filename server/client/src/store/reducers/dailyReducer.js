@@ -15,6 +15,7 @@ const intialState = {
     monthlys: [],
     editDaily: null,
     searchDailys: [],
+    dailyReOrder: [],
     refresh: false,
     isAdding: false, // loading state
     isSaving: false, // loading state
@@ -30,6 +31,11 @@ export default (state = intialState, action) => {
                 ...state
             };
         case actionTypes.GET_DAILY:
+            return {
+                ...state,
+                isFetching: true
+            };
+        case actionTypes.GET_DAILY_REORDER:
             return {
                 ...state,
                 isFetching: true
@@ -140,6 +146,13 @@ export default (state = intialState, action) => {
             return {
                 ...state,
                 dailys: action.payload,
+                error: "",
+                isFetching: false
+            };
+        case actionTypes.GET_DAILY_REORDER_SUCCESS:
+            return {
+                ...state,
+                dailyReOrder: action.payload,
                 error: "",
                 isFetching: false
             };

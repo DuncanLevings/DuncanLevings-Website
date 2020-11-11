@@ -30,6 +30,14 @@ export function getDailySuccess(dailys) {
     return { type: actionTypes.GET_DAILY_SUCCESS, payload: dailys };
 }
 
+export function getDailyReOrder(type) {
+    return { type: actionTypes.GET_DAILY_REORDER, payload: type };
+}
+
+export function getDailyReOrderSuccess(dailys) {
+    return { type: actionTypes.GET_DAILY_REORDER_SUCCESS, payload: dailys };
+}
+
 export function getWeekly(type) {
     return { type: actionTypes.GET_WEEKLY, payload: type };
 }
