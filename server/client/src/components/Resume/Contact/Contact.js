@@ -7,7 +7,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { sendMail } from 'store/actions/emailActions';
+import { sendMail } from 'store/actions/Resume/emailActions';
 import { Container, Row, Form, InputGroup, FormControl, Button } from 'react-bootstrap';
 import { contactSchema } from 'components/helpers/formValidation';
 import { Formik } from 'formik';

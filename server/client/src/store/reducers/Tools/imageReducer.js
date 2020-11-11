@@ -4,31 +4,31 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-import * as actionTypes from '../actionTypes/emailActionTypes';
+import * as actionTypes from '../../actionTypes/Tools/imageActionTypes';
 
 const intialState = {
     error: "",
-    isSending: false, // loading state
+    isUploading: false, // loading state
 };
 
 export default (state = intialState, action) => {
     switch (action.type) {
-        case actionTypes.SEND_MAIL:
+        case actionTypes.UPLOAD:
             return {
                 ...state,
-                isSending: true
+                isUploading: true
             };
-        case actionTypes.SEND_MAIL_SUCCESS:
+        case actionTypes.UPLOAD_SUCCESS:
             return {
                 ...state,
                 error: "",
-                isSending: false
+                isUploading: false
             };
         case actionTypes.ERROR:
             return {
                 ...state,
                 error: action.payload,
-                isSending: false
+                isUploading: false
             };
         default:
             return state;

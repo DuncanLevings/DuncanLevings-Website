@@ -4,7 +4,7 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-import api from './Instance';
+import api from '../Instance';
 
 export function vixWaxAPI() {
   return api.request({

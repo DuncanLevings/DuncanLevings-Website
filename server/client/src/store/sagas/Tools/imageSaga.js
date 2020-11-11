@@ -5,9 +5,9 @@
  */
 
 import { call, takeLatest, put } from 'redux-saga/effects';
-import { uploadAPI } from '../api/imageAPI';
-import * as actionTypes from '../actionTypes/imageActionTypes'
-import * as actionCreators from '../actions/imageActions';
+import { uploadAPI } from '../../api/Tools/imageAPI';
+import * as actionTypes from '../../actionTypes/Tools/imageActionTypes'
+import * as actionCreators from '../../actions/Tools/imageActions';
 
 function* upload(imageAction) {
     try {

@@ -5,9 +5,9 @@
  */
 
 import { call, takeLatest, put } from 'redux-saga/effects';
-import { sendMailAPI } from '../api/emailAPI';
-import * as actionTypes from '../actionTypes/emailActionTypes'
-import * as actionCreators from '../actions/emailActions';
+import { sendMailAPI } from '../../api/Resume/emailAPI';
+import * as actionTypes from '../../actionTypes/Resume/emailActionTypes'
+import * as actionCreators from '../../actions/Resume/emailActions';
 
 function* sendMail(mailAction) {
     try {

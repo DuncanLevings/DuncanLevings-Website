@@ -4,7 +4,7 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-import * as actionTypes from '../actionTypes/imageActionTypes';
+import * as actionTypes from '../../actionTypes/Tools/imageActionTypes';
 
 // UPLOAD
 

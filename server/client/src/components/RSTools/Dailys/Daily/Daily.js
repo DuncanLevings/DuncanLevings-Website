@@ -22,8 +22,8 @@ import {
     completeDaily,
     completeWeekly,
     completeMonthly
-} from 'store/actions/dailyActions';
-import { getVixWax, getLastestNemi } from 'store/actions/activityActions';
+} from 'store/actions/RSTools/dailyActions';
+import { getVixWax, getLastestNemi } from 'store/actions/RSTools/activityActions';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import VisWax from '../CustomDaily/VisWax/VisWax.lazy';
 import _ from "lodash";

@@ -8,7 +8,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Container, Spinner } from 'react-bootstrap';
-import { getDailyReOrder, setDailyType, reorderDaily } from 'store/actions/dailyActions';
+import { getDailyReOrder, setDailyType, reorderDaily } from 'store/actions/RSTools/dailyActions';
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import PropTypes from 'prop-types';
 import './EditOrder.scss';

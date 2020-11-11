@@ -4,7 +4,7 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-import * as actionTypes from '../actionTypes/activityActionTypes';
+import * as actionTypes from '../../actionTypes/RSTools/activityActionTypes';
 
 const intialState = {
     error: "",

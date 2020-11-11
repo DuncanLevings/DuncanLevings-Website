@@ -11,7 +11,7 @@ import { Button, Col, Container, Form, FormControl, InputGroup, ListGroup, Spinn
 import { ErrorMessage, Field, FieldArray, Formik } from 'formik';
 import { dailySchema } from 'components/helpers/formValidation';
 import { FaImage, FaPlus, FaTrash } from 'react-icons/fa';
-import { getSingleDaily, editDaily } from 'store/actions/dailyActions';
+import { getSingleDaily, editDaily } from 'store/actions/RSTools/dailyActions';
 import ImgCrop from 'components/tools/ImgCrop/ImgCrop.lazy';
 import ImgPreview from 'components/tools/ImgPreview/ImgPreview.lazy';
 import FormData from 'form-data';

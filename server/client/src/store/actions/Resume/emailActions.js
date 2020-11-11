@@ -4,7 +4,7 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-import * as actionTypes from '../actionTypes/emailActionTypes';
+import * as actionTypes from '../../actionTypes/Resume/emailActionTypes';
 
 // SEND MAIL
 

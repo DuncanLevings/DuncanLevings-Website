@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Collapse, Container, Form, FormControl, Image, InputGroup, ListGroup, Modal, OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import { searchItems, getItemSingle, createItem, editItem, deleteItem, clearErrors } from 'store/actions/equipmentActions';
+import { searchItems, getItemSingle, createItem, editItem, deleteItem, clearErrors } from 'store/actions/RSTools/equipmentActions';
 import { EQUIPMENT_CONSTS } from 'consts/RSTools_Consts';
 import SlotFilter from '../../SlotFilter/SlotFilter.lazy';
 import AddItem from '../AddItem/AddItem.lazy';

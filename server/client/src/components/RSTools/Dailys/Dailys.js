@@ -7,7 +7,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { checkReset, setRefresh, getDaily, getWeekly, getMonthly, setDailyType } from 'store/actions/dailyActions';
+import { checkReset, setRefresh, getDaily, getWeekly, getMonthly, setDailyType } from 'store/actions/RSTools/dailyActions';
 import { Tab, Tabs } from 'react-bootstrap';
 import { DAILY_CONSTS } from 'consts/RSTools_Consts';
 import Daily from './Daily/Daily.lazy';

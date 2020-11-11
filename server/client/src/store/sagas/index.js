@@ -8,11 +8,11 @@ import { all } from 'redux-saga/effects';
 import {
   userSagas
 } from './userSaga';
-import { emailSagas } from './emailSaga';
-import { imageSagas } from './imageSaga';
-import { dailySagas } from './dailySaga';
-import { activitySagas } from './activitySaga';
-import { equipmentSagas } from './equipmentSaga';
+import { emailSagas } from './Resume/emailSaga';
+import { imageSagas } from './Tools/imageSaga';
+import { dailySagas } from './RSTools/dailySaga';
+import { activitySagas } from './RSTools/activitySaga';
+import { equipmentSagas } from './RSTools/equipmentSaga';
 
 export default function* rootSaga() {
   yield all([

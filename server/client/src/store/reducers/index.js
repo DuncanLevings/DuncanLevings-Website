@@ -7,13 +7,13 @@
 import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
 import userReducer from './userReducer'
-import notificationReducer from './notificationReducer';
+import notificationReducer from './Tools/notificationReducer';
 import navbarReducer from './navbarReducer';
-import emailReducer from './emailReducer';
-import imageReducer from './imageReducer';
-import dailyReducer from './dailyReducer';
-import activityReducer from './activityReducer';
-import equipmentReducer from './equipmentReducer';
+import emailReducer from './Resume/emailReducer';
+import imageReducer from './Tools/imageReducer';
+import dailyReducer from './RSTools/dailyReducer';
+import activityReducer from './RSTools/activityReducer';
+import equipmentReducer from './RSTools/equipmentReducer';
 
 const createRootReducer = (history) => combineReducers({
     router: connectRouter(history),

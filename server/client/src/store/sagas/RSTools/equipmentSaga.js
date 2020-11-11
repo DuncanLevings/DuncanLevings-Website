@@ -18,10 +18,10 @@ import {
     searchAbilityBarsAPI,
     deleteAbilityBarAPI,
     editAbilityBarAPI
-} from '../api/equipmentAPI';
+} from '../../api/RSTools/equipmentAPI';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
-import * as actionTypes from '../actionTypes/equipmentActionTypes'
-import * as actionCreators from '../actions/equipmentActions';
+import * as actionTypes from '../../actionTypes/RSTools/equipmentActionTypes'
+import * as actionCreators from '../../actions/RSTools/equipmentActions';
 
 // ITEMS
 

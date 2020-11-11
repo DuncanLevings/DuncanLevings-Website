@@ -10,7 +10,7 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { Accordion, Button, Card, Container, Form, FormControl, InputGroup, Spinner } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
-import { searchDaily, addDaily } from 'store/actions/dailyActions';
+import { searchDaily, addDaily } from 'store/actions/RSTools/dailyActions';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import PropTypes from 'prop-types';
 import './SearchDaily.scss';

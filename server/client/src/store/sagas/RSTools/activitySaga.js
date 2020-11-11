@@ -5,9 +5,9 @@
  */
 
 import { call, takeLatest, put } from 'redux-saga/effects';
-import { nemiForestAPI, vixWaxAPI } from '../api/activityAPI';
-import * as actionTypes from '../actionTypes/activityActionTypes'
-import * as actionCreators from '../actions/activityActions';
+import { nemiForestAPI, vixWaxAPI } from '../../api/RSTools/activityAPI';
+import * as actionTypes from '../../actionTypes/RSTools/activityActionTypes'
+import * as actionCreators from '../../actions/RSTools/activityActions';
 
 function* getVixWax(activityAction) {
     try {

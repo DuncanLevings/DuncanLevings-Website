@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import AddItem from '../../Item/AddItem/AddItem.lazy';
 import EditItem from '../../Item/EditItem/EditItem.lazy';
-import { searchItems, getItemSingle, createItem, editItem, deleteItem, clearErrors } from 'store/actions/equipmentActions';
+import { searchItems, getItemSingle, createItem, editItem, deleteItem, clearErrors } from 'store/actions/RSTools/equipmentActions';
 import { Button, Col, Container, Form, FormControl, Image, InputGroup, ListGroup, Modal, OverlayTrigger, Row, Spinner, Tooltip } from 'react-bootstrap';
 import { FaCheckSquare, FaEdit, FaTrash } from 'react-icons/fa';
 import { EQUIPMENT_CONSTS } from 'consts/RSTools_Consts';

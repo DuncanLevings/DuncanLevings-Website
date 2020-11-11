@@ -4,7 +4,7 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-import * as actionTypes from '../actionTypes/dailyActionTypes';
+import * as actionTypes from '../../actionTypes/RSTools/dailyActionTypes';
 
 // RESET
 

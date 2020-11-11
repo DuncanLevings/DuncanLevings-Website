@@ -19,10 +19,10 @@ import {
     completeDailyAPI,
     checkResetAPI,
     getDailyReOrderAPI
-} from '../api/dailyAPI';
+} from '../../api/RSTools/dailyAPI';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
-import * as actionTypes from '../actionTypes/dailyActionTypes'
-import * as actionCreators from '../actions/dailyActions';
+import * as actionTypes from '../../actionTypes/RSTools/dailyActionTypes'
+import * as actionCreators from '../../actions/RSTools/dailyActions';
 
 function* checkReset() {
     try {

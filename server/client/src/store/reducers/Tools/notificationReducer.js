@@ -4,7 +4,7 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-import * as actionTypes from '../actionTypes/notificationActionTypes';
+import * as actionTypes from '../../actionTypes/Tools/notificationActionTypes';
 
 const intialState = {
     notification_list: []
