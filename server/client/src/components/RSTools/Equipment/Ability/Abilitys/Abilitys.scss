@@ -1,6 +1,6 @@
-@import '../../../../assets/style/breakpoints';
-@import '../../../../assets/style/vars';
-@import '../../../../assets/style/colors';
+@import '../../../../../assets/style/breakpoints';
+@import '../../../../../assets/style/vars';
+@import '../../../../../assets/style/colors';
 
 .Abilitys {
     @include respond-to(xs) {
