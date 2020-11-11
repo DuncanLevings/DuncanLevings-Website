@@ -4,6 +4,146 @@
 
 .PresetOverview {
     font-family: 'Roboto', sans-serif;
+    margin-left: 5vw;
+    margin-right: 5vw;
+
+    .row-container {
+        display: inline-flex;
+        justify-content: center;
+        width: 100%;
+    }
+
+    .slot-container {
+        .slotContainer {
+            display: inline-block;
+            background-image: url("/static_images/RSTools/Worn_equipment_interface.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 270px;
+            height: 427px;
+
+            .slots {
+                position: relative;
+                height: 100%;
+
+                .slot-image {
+                    height: 44px;
+                    width: 44px;
+                }
+
+                .slot {
+                    display: block;
+                    position: absolute;
+                    border: unset;
+                    height: 44px;
+                    width: 44px;
+                }
+    
+                .slotSet {
+                    background-color: #061821;
+                }
+    
+                .slot:hover {
+                    background-color: $slot-hover;
+                }
+
+                .left {
+                    &-1 {
+                        left: slot(left-slot1);
+                    }
+
+                    &-2 {
+                        left: slot(left-slot2);
+                    }
+
+                    &-3 {
+                        left: slot(left-slot3);
+                    }
+
+                    &-4 {
+                        left: slot(left-slot4);
+                    }
+
+                    &-5 {
+                        left: slot(left-slot5);
+                    }
+                }
+
+                .top {
+                    &-1 {
+                        top: slot(top-row1);
+                    }
+
+                    &-2 {
+                        top: slot(top-row2);
+                    }
+
+                    &-3 {
+                        top: slot(top-row3);
+                    }
+
+                    &-4 {
+                        top: slot(top-row4);
+                    }
+
+                    &-5 {
+                        top: slot(top-row5);
+                    }
+                }
+            }
+        }
+    }
+
+    .inventory-container {
+        padding-left: 10px;
+
+        .inventoryContainer {
+            display: inline-block;
+            background-image: url("/static_images/RSTools/inventory_interface.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 226px;
+            height: 427px;
+    
+            .inventory {
+                position: relative;
+                height: 100%;
+    
+                .clickableArea {
+                    display: block;
+                    position: absolute;
+                    border: unset;
+                    height: 324px;
+                    width: 205px;
+                    left: 11px;
+                    top: 50px;
+                }
+    
+                .clickableArea:hover {
+                    background-color: $slot-hover;
+                }
+            }
+        }
+    }
+
+    .summon-container {
+        display: inline-flex;
+        padding-left: 10px;
+
+        .summon-inventory-container {
+            .summon-slot {
+                background-image: url("/static_images/RSTools/Familiar_inventory_interface.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+                width: 50px;
+                height: 44px;
+            }
+        }
+
+        .summon-image-container {
+            padding-left: 10px;
+        }
+    }
 }
 
 .step-button {

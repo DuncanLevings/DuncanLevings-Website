@@ -17,8 +17,18 @@
     font-family: 'Roboto', sans-serif;
     overflow: hidden;
 
+    .preset-error {
+        color: $error;
+        text-align: center;
+    }
+
     .input-preset-name {
         margin-left: 15rem;
         margin-right: 15rem;
+    }
+
+    .submit-button {
+        margin-top: 1rem;
+        text-align: center;
     }
 }

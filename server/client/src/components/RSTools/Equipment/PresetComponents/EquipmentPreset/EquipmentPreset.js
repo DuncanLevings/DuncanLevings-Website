@@ -118,7 +118,7 @@ class EquipmentPreset extends React.Component {
         _slots[selectedSlot] = _slot;
 
         this.setState({ slots: _slots });
-        // update prop
+        this.props.updateEquipData(_slots);
     }
 
     clearItemSlot = () => {
@@ -136,7 +136,7 @@ class EquipmentPreset extends React.Component {
         _slots[selectedSlot] = _slot;
 
         this.setState({ slots: _slots });
-        // update prop
+        this.props.updateEquipData(_slots);
     }
 
     generateSearchResult = () => {
@@ -223,8 +223,8 @@ class EquipmentPreset extends React.Component {
         );
     }
 
-    setEquipmentPresetData = () => {
-        
+    enableEquipment = (bool) => {
+        this.setState({ hasEquipment: bool });
     }
 
     nextWizardStep = () => {
@@ -242,7 +242,7 @@ class EquipmentPreset extends React.Component {
                     <Button variant="button-secondary" onClick={() => this.nextWizardStep()}>Skip</Button>
                 </div>
                 <div className="activate-component">
-                    <Button variant="button-primary" onClick={() => this.setState({ hasEquipment: true })}>Set Equipment Slots</Button>
+                    <Button variant="button-primary" onClick={() => this.enableEquipment(true)}>Set Equipment Slots</Button>
                 </div>
             </div>
         );
@@ -324,6 +324,7 @@ EquipmentPreset.propTypes = {
     editItem: PropTypes.func,
     deleteItem: PropTypes.func,
     clearErrors: PropTypes.func,
+    updateEquipData: PropTypes.func,
     setCurrentStep: PropTypes.func
 };
 
