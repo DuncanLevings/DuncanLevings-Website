@@ -28,6 +28,7 @@ import Equipment from 'components/RSTools/Equipment/Equipment.lazy';
 import Presets from 'components/RSTools/Equipment/Presets/Presets.lazy';
 import Items from 'components/RSTools/Equipment/Items/Items.lazy';
 import Abilitys from 'components/RSTools/Equipment/Abilitys/Abilitys.lazy';
+import PresetWizard from 'components/RSTools/Equipment/PresetWizard/PresetWizard.lazy';
 import Footer from 'components/navbar/Footer/Footer.lazy';
 import NotFound from 'errors/NotFound';
 import PropTypes from 'prop-types';
@@ -65,6 +66,7 @@ class RSRouter extends React.Component {
                     {/* EQUIPMENT */}
                     <PrivateRoute exact path={RSTOOL_ROUTES.EQUIPMENT} redirect={RSTOOL_ROUTES.LOGIN} component={Equipment} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.PRESETS} redirect={RSTOOL_ROUTES.LOGIN} component={Presets} />
+                    <PrivateRoute exact path={RSTOOL_ROUTES.PRESET_BUILDER} redirect={RSTOOL_ROUTES.LOGIN} component={PresetWizard} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.ITEMS} redirect={RSTOOL_ROUTES.LOGIN} component={Items} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.ABILITYS} redirect={RSTOOL_ROUTES.LOGIN} component={Abilitys} />
                     <Route component={NotFound} />

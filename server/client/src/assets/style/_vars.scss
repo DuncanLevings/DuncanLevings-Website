@@ -6,3 +6,25 @@
 
  $minHeightDesktop: calc(100vh - 77px);
  $minHeightMobile: calc((var(--vh, 1vh) * 100) - 77px);
+
+ $slots: (
+    left-slot1: 62px,
+    left-slot2: 114px,
+    left-slot3: 166px,
+    left-slot4: 36px,
+    left-slot5: 192px,
+    top-row1: 86px,
+    top-row2: 139px,
+    top-row3: 191px,
+    top-row4: 243px,
+    top-row5: 295px
+);
+
+@function slot($key) {
+    @if map-has-key($slots, $key) {
+      @return map-get($slots, $key);
+    }
+  
+    @warn "Unknown `#{$key}` in $slots.";
+    @return null;
+}

@@ -32,6 +32,7 @@ const VIS_NEMI = ACTIVITIES + '/vis-and-nemi'
 
 const EQUIPMENT = RSTOOL_ROOT + '/equipment'
 const PRESETS = EQUIPMENT + '/presets'
+const PRESET_BUILDER = PRESETS + '/builder'
 const ITEMS = EQUIPMENT + '/items'
 const ABILITYS = EQUIPMENT + '/abilitys'
 
@@ -52,6 +53,7 @@ export const RSTOOL_ROUTES = {
     VIS_NEMI,
     EQUIPMENT,
     PRESETS,
+    PRESET_BUILDER,
     ITEMS,
     ABILITYS
 }

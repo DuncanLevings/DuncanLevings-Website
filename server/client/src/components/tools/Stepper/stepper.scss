@@ -1,0 +1,43 @@
+.RSPBprogressBar {
+    margin-left: 5rem;
+    margin-right: 5rem;
+    margin-bottom: 5rem;
+    background-color: #949eaa88;
+
+    .RSPBprogression {
+        background-color: #00bd3d;
+    }
+
+    .RSPBstep {
+        width: 128px;
+        height: 64px;
+        text-align: center;
+    }
+
+    .container-check {
+        text-align: center;
+        font-family: 'Roboto', sans-serif;
+
+        .stepper-check {
+            display: inline-block;
+            position: relative;
+            top: 16px;
+            height: 32px;
+            width: 32px;
+            background-color: #333B50;
+            border: 2px solid;
+            border-radius: 50%;
+        }
+
+        .stepper-icon {
+            position: relative;
+            top: 6px;
+            font-weight: bold;
+        }
+
+        .stepper-text {
+            position: relative;
+            top: 24px;
+        }
+    }
+}

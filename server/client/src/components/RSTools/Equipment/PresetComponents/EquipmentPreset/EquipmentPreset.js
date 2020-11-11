@@ -13,6 +13,7 @@ import { searchItems, getItemSingle, createItem, editItem, deleteItem, clearErro
 import { Button, Col, Container, Form, FormControl, Image, InputGroup, ListGroup, Modal, OverlayTrigger, Row, Spinner, Tooltip } from 'react-bootstrap';
 import { FaCheckSquare, FaEdit, FaTrash } from 'react-icons/fa';
 import { EQUIPMENT_CONSTS } from 'consts/RSTools_Consts';
+import _ from "lodash";
 import PropTypes from 'prop-types';
 import './EquipmentPreset.scss';
 
@@ -25,18 +26,23 @@ class EquipmentPreset extends React.Component {
             selectedSlot: -1,
             addItemShow: false,
             editItemShow: false,
-            showConfirm: false
+            showConfirm: false,
+            hasEquipment: false
         }
     }
 
     componentDidMount() {
-
+        console.log("loaded")
     }
 
     setSelected = (slot) => {
         this.setState({ selectedSlot: slot });
-        this.props.searchItems(slot);
+        this.searchItems(slot);
     }
+
+    searchItems = _.debounce((slot) => {
+        this.props.searchItems(slot);
+    }, 250)
 
     setSearch = e => {
         this.setState({ search: e.target.value });
@@ -103,6 +109,7 @@ class EquipmentPreset extends React.Component {
         let _slots = [...slots];
         let _slot = {
             ..._slots[selectedSlot],
+            slot: selectedSlot,
             name: item.name,
             image: item.imageUrl,
             wiki: item.wiki ? item.wiki : null,
@@ -111,6 +118,7 @@ class EquipmentPreset extends React.Component {
         _slots[selectedSlot] = _slot;
 
         this.setState({ slots: _slots });
+        // update prop
     }
 
     clearItemSlot = () => {
@@ -119,14 +127,16 @@ class EquipmentPreset extends React.Component {
         let _slots = [...slots];
         let _slot = slots[selectedSlot];
 
+        delete _slot.slot;
         delete _slot.name;
         delete _slot.image;
         delete _slot.wiki;
         delete _slot.augment;
 
         _slots[selectedSlot] = _slot;
-        
+
         this.setState({ slots: _slots });
+        // update prop
     }
 
     generateSearchResult = () => {
@@ -213,9 +223,29 @@ class EquipmentPreset extends React.Component {
         );
     }
 
+    setEquipmentPresetData = () => {
+        
+    }
+
+    nextWizardStep = () => {
+        this.props.setCurrentStep(this.props.currentStep + 1);
+        this.props.nextStep();
+    }
+
     render() {
-        const { addItemShow, editItemShow, selectedSlot } = this.state;
+        const { addItemShow, editItemShow, selectedSlot, hasEquipment } = this.state;
         const { isSearching } = this.props.equipmentReducer;
+
+        if (!hasEquipment) return (
+            <div>
+                <div className="step-button">
+                    <Button variant="button-secondary" onClick={() => this.nextWizardStep()}>Skip</Button>
+                </div>
+                <div className="activate-component">
+                    <Button variant="button-primary" onClick={() => this.setState({ hasEquipment: true })}>Set Equipment Slots</Button>
+                </div>
+            </div>
+        );
 
         const searchResults = this.generateSearchResult();
 
@@ -277,6 +307,9 @@ class EquipmentPreset extends React.Component {
                         clearErrors={() => this.props.clearErrors()}
                         onHide={() => this.setEditItemShow(false)}
                     />
+                    <div className="step-button">
+                        <Button variant="button-secondary" hidden={selectedSlot < 0} onClick={() => this.nextWizardStep()}>Next</Button>
+                    </div>
                 </div>
             </Container>
         );
@@ -290,7 +323,8 @@ EquipmentPreset.propTypes = {
     createItem: PropTypes.func,
     editItem: PropTypes.func,
     deleteItem: PropTypes.func,
-    clearErrors: PropTypes.func
+    clearErrors: PropTypes.func,
+    setCurrentStep: PropTypes.func
 };
 
 const mapStateToProps = state => {
