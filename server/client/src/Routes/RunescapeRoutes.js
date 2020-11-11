@@ -26,7 +26,7 @@ import EditDaily from 'components/RSTools/Dailys/EditDaily/EditDaily.lazy';
 import Activity from 'components/RSTools/Activity/Activity.lazy';
 import Equipment from 'components/RSTools/Equipment/Equipment.lazy';
 import Presets from 'components/RSTools/Equipment/Presets/Presets.lazy';
-import Items from 'components/RSTools/Equipment/Items/Items.lazy';
+import Items from 'components/RSTools/Equipment/Item/Items/Items.lazy';
 import Abilitys from 'components/RSTools/Equipment/Ability/Abilitys/Abilitys.lazy';
 import PresetWizard from 'components/RSTools/Equipment/PresetWizard/PresetWizard.lazy';
 import Footer from 'components/navbar/Footer/Footer.lazy';

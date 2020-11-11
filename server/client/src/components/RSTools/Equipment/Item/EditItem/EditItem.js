@@ -19,8 +19,6 @@ class EditItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            item: null,
-            augment: false,
             imgCropShow: false,
             imgPreviewShow: false,
             imgPreviewURL: "",
@@ -32,22 +30,14 @@ class EditItem extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.equipmentReducer.editItem !== prevProps.equipmentReducer.editItem) {
-            const item = this.props.equipmentReducer.editItem;
-            this.setState({ 
-                item: item,  
-                augment: item.augment ? item.augment.isAugmented : false
-            });
-        }
-
         if (this.props.equipmentReducer.searchItems !== prevProps.equipmentReducer.searchItems) {
-            this.setState({ item: null });
             this.props.onHide();
         }
     }
 
-    setAugment = (bool) => {
-        this.setState({ augment: bool });
+    setAugment = (bool, values, setValues) => {
+        const isAugmented = bool;
+        setValues({ ...values, isAugmented });
     }
 
     setImgCropShow = (bool) => {
@@ -76,23 +66,24 @@ class EditItem extends React.Component {
     }
 
     submitItem = values => {
+        const { editItemObj } = this.props.equipmentReducer;
         // if (!values.image) return this.setState({ imageRequired: true });
 
         let formData = new FormData();
 
-        formData.append('itemId', this.state.item._id);
+        formData.append('itemId', editItemObj._id);
         formData.append('name', values.name);
         formData.append('wikiUrl', values.wikiURL);
         // formData.append('image', values.image.blob, `${values.name}-image`);
 
-        if (this.state.augment) {
-            formData.append('isAugmented', this.state.augment);
+        if (values.isAugmented) {
+            formData.append('isAugmented', values.isAugmented);
             formData.append('gizmo1', values.gizmo1);
             formData.append('gizmo2', values.gizmo2);
         }
 
         // familiar type item only
-        if (this.state.item.slot === 14) {
+        if (editItemObj.slot === 14) {
             formData.append('familiarSize', values.familiarSize);
         }
 
@@ -103,8 +94,8 @@ class EditItem extends React.Component {
 
     render() {
         const { editItem, clearErrors, equipmentReducer, ...rest } = this.props;
-        const { item, imgCropShow, imgPreviewShow, imgPreviewURL, imageRequired, augment } = this.state;
-        const { isSaving, isFetching, error } = equipmentReducer;
+        const { imgCropShow, imgPreviewShow, imgPreviewURL, imageRequired } = this.state;
+        const { editItemObj, isSaving, isFetching, error } = equipmentReducer;
 
         return (
             <Modal
@@ -115,26 +106,27 @@ class EditItem extends React.Component {
                 centered
             >
                 <Modal.Header>
-                    <Modal.Title>Add Item</Modal.Title>
+                    <Modal.Title>Edit Item</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <p>Editing: <b>{item ? EQUIPMENT_CONSTS.slotTypes[item.slot] : null}</b></p>
+                    <p>Editing: <b>{editItemObj ? EQUIPMENT_CONSTS.slotTypes[editItemObj.slot] : null}</b></p>
                     <div className="item-error">
                         <p>{error}</p>
                         <p>{imageRequired ? "Image missing!" : ''}</p>
                     </div>
                     {isFetching ? <Spinner animation="border" variant="dark" /> :
-                        item ?
+                        editItemObj ?
                             <Formik
                                 validationSchema={ItemSchema}
                                 onSubmit={this.submitItem}
                                 initialValues={{
-                                    name: item.name,
-                                    wikiURL: item.wiki || '',
-                                    image: { url: item.imageUrl },
-                                    familiarSize: item.familiarSize || 0,
-                                    gizmo1: item.augment ? item.augment.gizmo1 : '',
-                                    gizmo2: item.augment ? item.augment.gizmo2 : ''
+                                    name: editItemObj.name,
+                                    wikiURL: editItemObj.wiki || '',
+                                    image: { url: editItemObj.imageUrl },
+                                    familiarSize: editItemObj.familiarSize || 0,
+                                    isAugmented: editItemObj.augment ? editItemObj.augment.isAugmented : false,
+                                    gizmo1: editItemObj.augment ? editItemObj.augment.gizmo1 : '',
+                                    gizmo2: editItemObj.augment ? editItemObj.augment.gizmo2 : ''
                                 }}
                             >
                                 {({
@@ -185,7 +177,7 @@ class EditItem extends React.Component {
                                                     </Form.Control.Feedback>
                                                 </InputGroup>
                                             </Form.Group>
-                                            {item.slot === 14 ?
+                                            {editItemObj.slot === 14 ?
                                                 <Form.Group controlId="formFamiliarSize">
                                                     <InputGroup>
                                                         <InputGroup.Prepend>
@@ -216,10 +208,10 @@ class EditItem extends React.Component {
                                                             {errors.familiarSize}
                                                         </Form.Control.Feedback>
                                                     </InputGroup>
-                                                </Form.Group> 
+                                                </Form.Group>
                                                 :
-                                                item.slot > 5 && item.slot < 10 || item.slot === 13 ? // augmentable equipable slots
-                                                    augment ?
+                                                editItemObj.slot > 5 && editItemObj.slot < 10 || editItemObj.slot === 13 ? // augmentable equipable slots
+                                                    values.isAugmented ?
                                                         <Form.Group controlId="formWiki">
                                                             <InputGroup>
                                                                 <InputGroup.Prepend>
@@ -242,13 +234,13 @@ class EditItem extends React.Component {
                                                                     onChange={handleChange}
                                                                 />
                                                                 <InputGroup.Append>
-                                                                    <Button variant="button-secondary" onClick={() => this.setAugment(false)}>Remove Augment</Button>
+                                                                    <Button variant="button-secondary" onClick={() => this.setAugment(false, values, setValues)}>Remove Augment</Button>
                                                                 </InputGroup.Append>
                                                             </InputGroup>
                                                         </Form.Group>
                                                         :
                                                         <div className="augment-button">
-                                                            <Button variant="button-secondary" onClick={() => this.setAugment(true)}>Augment Item</Button>
+                                                            <Button variant="button-secondary" onClick={() => this.setAugment(true, values, setValues)}>Augment Item</Button>
                                                         </div>
                                                     : null
                                             }

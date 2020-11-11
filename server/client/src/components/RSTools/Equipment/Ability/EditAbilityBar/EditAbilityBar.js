@@ -91,16 +91,14 @@ class EditAbilityBar extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props.equipmentReducer.editAbilityBar !== prevProps.equipmentReducer.editAbilityBar) {
+        if (this.props.equipmentReducer.editAbilityBarObj !== prevProps.equipmentReducer.editAbilityBarObj) {
             this.setState({
-                editAbilityBarObj: this.props.equipmentReducer.editAbilityBar,
-                abilityBar: this.props.equipmentReducer.editAbilityBar.abilityBar
+                abilityBar: this.props.equipmentReducer.editAbilityBarObj.abilityBar
             });
         }
 
         if (this.props.equipmentReducer.searchAbilityBars !== prevProps.equipmentReducer.searchAbilityBars) {
             this.setState({ 
-                editAbilityBarObj: null,
                 style: null,
                 abilityBar: []
             });
@@ -218,12 +216,14 @@ class EditAbilityBar extends React.Component {
     }
 
     submitAbilityBar = values => {
+        const { editAbilityBarObj } = this.props.equipmentReducer;
+
         if (this.state.abilityBar.length < 1) return this.setState({ abilitysRequired: true });
         else this.setState({ abilitysRequired: false });
 
         let formData = new FormData();
 
-        formData.append('abilityBarId', this.state.editAbilityBarObj._id);
+        formData.append('abilityBarId', editAbilityBarObj._id);
         formData.append('name', values.name);
         formData.append('styleType', values.styleType);
         formData.append('abilitys', JSON.stringify(this.state.abilityBar));
@@ -233,8 +233,8 @@ class EditAbilityBar extends React.Component {
 
     render() {
         const { editAbilityBar, equipmentReducer, ...rest } = this.props;
-        const { editAbilityBarObj, style, abilitysRequired, lengthError, duplicateError } = this.state;
-        const { isSaving, isFetching, error } = equipmentReducer;
+        const { style, abilitysRequired, lengthError, duplicateError } = this.state;
+        const { editAbilityBarObj, isSaving, isFetching, error } = equipmentReducer;
 
         let droppable, droppable1, droppable2, droppable3 = null;
         if (editAbilityBarObj) droppable = this.createList("abilityBar", "droppable");

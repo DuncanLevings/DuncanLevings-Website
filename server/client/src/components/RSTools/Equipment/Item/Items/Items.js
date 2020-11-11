@@ -11,7 +11,7 @@ import { Button, Collapse, Container, Form, FormControl, Image, InputGroup, List
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { searchItems, getItemSingle, createItem, editItem, deleteItem, clearErrors } from 'store/actions/equipmentActions';
 import { EQUIPMENT_CONSTS } from 'consts/RSTools_Consts';
-import SlotFilter from '../SlotFilter/SlotFilter.lazy';
+import SlotFilter from '../../SlotFilter/SlotFilter.lazy';
 import AddItem from '../AddItem/AddItem.lazy';
 import EditItem from '../EditItem/EditItem.lazy';
 import _ from "lodash";

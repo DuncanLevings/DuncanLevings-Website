@@ -6,7 +6,7 @@
 
 import React from 'react';
 import { Button, Form, FormControl, InputGroup, Modal, Spinner } from 'react-bootstrap';
-import SlotSelector from '../SlotSelector/SlotSelector.lazy';
+import SlotSelector from '../../SlotSelector/SlotSelector.lazy';
 import ImgPreview from 'components/tools/ImgPreview/ImgPreview.lazy';
 import ImgCrop from 'components/tools/ImgCrop/ImgCrop.lazy';
 import { EQUIPMENT_CONSTS } from 'consts/RSTools_Consts';

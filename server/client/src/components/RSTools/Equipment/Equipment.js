@@ -8,7 +8,7 @@ import React from 'react';
 import { Tab, Tabs } from 'react-bootstrap';
 import { EQUIPMENT_CONSTS } from 'consts/RSTools_Consts';
 import Presets from './Presets/Presets.lazy';
-import Items from './Items/Items.lazy';
+import Items from './Item/Items/Items.lazy';
 import Abilitys from './Ability/Abilitys/Abilitys.lazy';
 import PropTypes from 'prop-types';
 import './Equipment.scss';

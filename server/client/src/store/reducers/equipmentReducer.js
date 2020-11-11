@@ -10,8 +10,8 @@ const intialState = {
     error: "",
     items: [],
     searchItems: [],
-    editItem: null,
-    editAbilityBar: null,
+    editItemObj: null,
+    editAbilityBarObj: null,
     searchAbilityBars: [],
     isFetching: false, // loading state
     isCreating: false, // loading state
@@ -95,7 +95,7 @@ export default (state = intialState, action) => {
         case actionTypes.GET_ITEM_SINGLE_SUCCESS:
             return {
                 ...state,
-                editItem: action.payload,
+                editItemObj: action.payload,
                 error: "",
                 isFetching: false
             };
@@ -134,7 +134,7 @@ export default (state = intialState, action) => {
         case actionTypes.GET_ABILITY_BAR_SINGLE_SUCCESS:
             return {
                 ...state,
-                editAbilityBar: action.payload,
+                editAbilityBarObj: action.payload,
                 error: "",
                 isFetching: false
             };
