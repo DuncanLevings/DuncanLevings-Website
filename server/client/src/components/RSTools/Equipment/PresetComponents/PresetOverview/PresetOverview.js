@@ -101,10 +101,10 @@ class PresetOverview extends React.Component {
             summonCol = (
                 <div className="summon-container">
                     {false ?
-                            <div className="summon-inventory-container">
-                                <div className="summon-slot"></div>
-                            </div>
-                            : null}
+                        <div className="summon-inventory-container">
+                            <div className="summon-slot"></div>
+                        </div>
+                        : null}
                     <div className="summon-image-container">
                         <Image src={"https://storage.googleapis.com/duncanlevings.appspot.com/5f0371760174273ce430c37d_1604963204155"} />
                     </div>
@@ -126,13 +126,22 @@ class PresetOverview extends React.Component {
         this.props.previousStep();
     }
 
+    previousButton = () => {
+        if (this.props.createOrEdit) {
+            return (
+                <div className="step-button">
+                    <Button variant="button-secondary" onClick={() => this.previousStep()}>Previous</Button>
+                </div>
+            );
+        }
+        return null;
+    }
+
     render() {
         return (
             <Container>
                 <div className="PresetOverview">
-                    <div className="step-button">
-                        <Button variant="button-secondary" onClick={() => this.previousStep()}>Previous</Button>
-                    </div>
+                    {this.previousButton()}
                     {this.generateSections()}
                     <Row>
                         <Col xs={8}><div className="col-container"></div></Col>

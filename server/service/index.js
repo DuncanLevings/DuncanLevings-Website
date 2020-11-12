@@ -5,6 +5,7 @@ const _imageService = require('./imageService');
 const _dailyService = require('./dailyService');
 const _activityService = require('./activityService');
 const _equipmentService = require('./equipmentService');
+const _presetService = require('./presetService');
 
 module.exports = {
     _utils,
@@ -13,5 +14,6 @@ module.exports = {
     _imageService,
     _dailyService,
     _activityService,
-    _equipmentService
+    _equipmentService,
+    _presetService
 }

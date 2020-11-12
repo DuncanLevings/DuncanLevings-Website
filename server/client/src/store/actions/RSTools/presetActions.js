@@ -1,9 +1,55 @@
 /*
- * Filename: c:\Users\Tatsu\Documents\personal_website\server\client\src\store\actions\presetActions.js
- * Path: c:\Users\Tatsu\Documents\personal_website\server\client
- * Created Date: Wednesday, November 11th 2020, 5:33:10 pm
  * Author: Duncan Levings
  * 
  * Copyright (c) 2020 DuncanLevings
  */
 
+import * as actionTypes from '../../actionTypes/RSTools/presetActionTypes';
+
+// PRESETS
+
+export function getPresets() {
+    return { type: actionTypes.GET_PRESETS };
+}
+
+export function getPresetsSuccess(presets) {
+    return { type: actionTypes.GET_PRESETS_SUCCESS, payload: presets };
+}
+
+export function getPresetSingle(presetId) {
+    return { type: actionTypes.GET_PRESET_SINGLE, payload: presetId };
+}
+
+export function getPresetSingleSuccess(preset) {
+    return { type: actionTypes.GET_PRESET_SINGLE_SUCCESS, payload: preset };
+}
+
+export function createPreset(data) {
+    return { type: actionTypes.CREATE_PRESET, payload: data };
+}
+
+export function createPresetSuccess() {
+    return { type: actionTypes.CREATE_PRESET_SUCCESS };
+}
+
+export function editPreset(data) {
+    return { type: actionTypes.EDIT_PRESET, payload: data };
+}
+
+export function editPresetSuccess() {
+    return { type: actionTypes.EDIT_PRESET_SUCCESS };
+}
+
+export function deletePreset(presetId) {
+    return { type: actionTypes.DELETE_PRESET, payload: presetId };
+}
+
+export function deletePresetSuccess(presets) {
+    return { type: actionTypes.DELETE_PRESET_SUCCESS, payload: presets };
+}
+
+// ERROR
+
+export function presetError(error) {
+    return { type: actionTypes.ERROR, payload: error };
+}

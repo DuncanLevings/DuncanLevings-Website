@@ -6,6 +6,7 @@ const AUTH_ERROR = require('./auth_errors.json').UNAUTHORIZED;
 const DAILY_ERRORS = require('./daily_errors.json').server_errors;
 const ACTIVITY_ERRORS = require('./activity_errors.json').server_errors;
 const EQUIPMENT_ERRORS = require('./equipment_errors.json').server_errors;
+const PRESET_ERRORS = require('./preset_errors.json').server_errors;
 
 module.exports = {
     USER_CLIENT_ERRORS,
@@ -14,5 +15,6 @@ module.exports = {
     DAILY_ERRORS,
     ACTIVITY_ERRORS,
     EQUIPMENT_ERRORS,
+    PRESET_ERRORS,
     AUTH_ERROR,
 }

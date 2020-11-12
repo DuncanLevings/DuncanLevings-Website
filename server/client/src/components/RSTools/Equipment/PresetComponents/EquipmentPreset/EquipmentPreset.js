@@ -32,7 +32,19 @@ class EquipmentPreset extends React.Component {
     }
 
     componentDidMount() {
-        console.log("loaded")
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.editMode) {
+            if (this.props.equipSlotData !== prevProps.equipSlotData) {
+                this.setState({
+                    hasEquipment: this.props.equipSlotData.length > 0 ? true : false,
+                    slots: this.props.equipSlotData.length === 0 ? EQUIPMENT_CONSTS.slotPositions : this.props.equipSlotData
+                });
+
+                if (this.props.equipSlotData.length > 0) this.setSelected(0);
+            }
+        }
     }
 
     setSelected = (slot) => {
@@ -225,6 +237,13 @@ class EquipmentPreset extends React.Component {
 
     enableEquipment = (bool) => {
         this.setState({ hasEquipment: bool });
+        if (!bool) {
+            this.props.updateEquipData([]);
+            this.setState({ 
+                slots: EQUIPMENT_CONSTS.slotPositions,
+                selectedSlot: -1
+            });
+        }
     }
 
     nextWizardStep = () => {
@@ -235,6 +254,7 @@ class EquipmentPreset extends React.Component {
     render() {
         const { addItemShow, editItemShow, selectedSlot, hasEquipment } = this.state;
         const { isSearching } = this.props.equipmentReducer;
+        const { editMode, equipSlotData } = this.props;
 
         if (!hasEquipment) return (
             <div>
@@ -242,7 +262,7 @@ class EquipmentPreset extends React.Component {
                     <Button variant="button-secondary" onClick={() => this.nextWizardStep()}>Skip</Button>
                 </div>
                 <div className="activate-component">
-                    <Button variant="button-primary" onClick={() => this.enableEquipment(true)}>Set Equipment Slots</Button>
+                    <Button variant="button-primary" onClick={() => this.enableEquipment(true)}>Add Equipment</Button>
                 </div>
             </div>
         );
@@ -252,6 +272,9 @@ class EquipmentPreset extends React.Component {
         return (
             <Container>
                 <div className="EquipmentPreset">
+                    <div className="activate-component">
+                        <Button variant="button-secondary" onClick={() => this.enableEquipment(false)}>Remove Equipment</Button>
+                    </div>
                     <h5>Select a slot:</h5>
                     <div className="slot-container">
                         <div className="slotContainer">

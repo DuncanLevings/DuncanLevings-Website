@@ -5,7 +5,10 @@
  */
 
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { Button, Container, Form, FormControl, InputGroup, Spinner } from 'react-bootstrap';
+import { getPresetSingle, createPreset, editPreset } from 'store/actions/RSTools/presetActions';
 import EquipmentPreset from '../PresetComponents/EquipmentPreset/EquipmentPreset.lazy';
 import PresetOverview from '../PresetComponents/PresetOverview/PresetOverview.lazy';
 import Stepper from 'components/tools/Stepper/Stepper';
@@ -17,16 +20,36 @@ class PresetWizard extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            editMode: false,
             step: 1,
             progress: 1,
-            stepData: ['Equipment', 'Inventory', 'Familiar', 'Prayer', 'Overview'],
+            stepData: ['Equipment', 'Inventory', 'Familiar', 'Abilitys', 'Prayer', 'Overview'],
             name: '',
-            equipSlotData: []
+            equipSlotData: [],
+            inventorySlotData: [],
+            familiar: null,
+            familiarInventorySlotData: [],
+            abilityBarData: [],
+            // prayerData: []
         }
     }
 
     componentDidMount() {
+        if (this.props.location.state && this.props.location.state.editMode) {
+            this.setState({ editMode: this.props.location.state.editMode });
+            this.props.getPresetSingle(this.props.location.state.presetId)
+        }
+    }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.presetReducer.editPresetObj !== prevProps.presetReducer.editPresetObj) {
+            if (this.state.editMode) {
+                this.setState({
+                    name: this.props.presetReducer.editPresetObj.name,
+                    equipSlotData: this.props.presetReducer.editPresetObj.equipSlotData
+                });
+            }
+        }
     }
 
     setName = e => {
@@ -41,7 +64,7 @@ class PresetWizard extends React.Component {
         let progress = 0;
         switch (step) {
             case 2:
-                progress = 25;
+                progress = 20;
                 break;
             default:
                 break;
@@ -52,8 +75,76 @@ class PresetWizard extends React.Component {
         });
     }
 
+    generateForm = () => {
+        const { editMode, name } = this.state;
+        const { editPresetObj, isFetchingSingle } = this.props.presetReducer;
+
+        const form = (
+            <Form>
+                <Form.Group controlId="formSearch">
+                    <InputGroup>
+                        <InputGroup.Prepend>
+                            <InputGroup.Text>Preset Name:</InputGroup.Text>
+                        </InputGroup.Prepend >
+                        <FormControl
+                            placeholder="name..."
+                            aria-label="name"
+                            aria-describedby="name"
+                            value={name}
+                            onChange={this.setName}
+                        />
+                    </InputGroup >
+                </Form.Group >
+            </Form>
+        );
+
+        if (editMode) {
+            if (isFetchingSingle) {
+                return (
+                    <Spinner animation="border" variant="light" />
+                );
+            } else if (editPresetObj) {
+                return form;
+            }
+        }
+
+        return form;
+    }
+
+    generateStepWizard = () => {
+        const { step, editMode, equipSlotData } = this.state;
+        const { editPresetObj, isFetchingSingle } = this.props.presetReducer;
+
+        const stepWizard = (
+            <StepWizard initialStep={step}>
+                <EquipmentPreset
+                    editMode={editMode}
+                    equipSlotData={equipSlotData}
+                    updateEquipData={data => this.updateEquipData(data)}
+                    setCurrentStep={step => this.setCurrentStep(step)}
+                />
+                <PresetOverview
+                    equipSlotData={equipSlotData}
+                    createOrEdit={true}
+                    setCurrentStep={step => this.setCurrentStep(step)}
+                />
+            </StepWizard>
+        );
+
+        if (editMode) {
+            if (isFetchingSingle) {
+                return null;
+            } else if (editPresetObj) {
+                return stepWizard;
+            }
+        }
+
+        return stepWizard;
+    }
+
     submitCheck = () => {
         const { step, stepData, equipSlotData } = this.state;
+        const { isCreating } = this.props.presetReducer;
 
         if (step === 2) {
             // there must be at least one of the following true
@@ -63,7 +154,7 @@ class PresetWizard extends React.Component {
                         <Button
                             variant="button-primary"
                             onClick={() => this.submit()}
-                            disabled={false}>Submit {false ? <Spinner animation="border" variant="light" size="sm" /> : null}</Button>
+                            disabled={isCreating}>Submit {isCreating ? <Spinner animation="border" variant="light" size="sm" /> : null}</Button>
                     </div>
                 );
             }
@@ -71,7 +162,7 @@ class PresetWizard extends React.Component {
     }
 
     submit = () => {
-        const { name, equipSlotData } = this.state;
+        const { editMode, name, equipSlotData } = this.state;
 
         if (name === '') return this.setState({ missingName: true });
         this.setState({ missingName: false });
@@ -81,11 +172,13 @@ class PresetWizard extends React.Component {
             equipSlotData: equipSlotData
         }
 
-        // this.props.createPreset(data);
+        if (editMode) this.props.editPreset(data);
+        else this.props.createPreset(data);
     }
 
     render() {
-        const { step, progress, stepData, missingName } = this.state;
+        const { progress, stepData, missingName } = this.state;
+        const { error } = this.props.presetReducer;
 
         return (
             <Container>
@@ -95,34 +188,12 @@ class PresetWizard extends React.Component {
                         <div className="spacer-h-3" />
                         <div className="input-preset-name">
                             <div className="preset-error">
+                                <p>{error}</p>
                                 <p>{missingName ? "Name is missing!" : ''}</p>
                             </div>
-                            <Form>
-                                <Form.Group controlId="formSearch">
-                                    <InputGroup>
-                                        <InputGroup.Prepend>
-                                            <InputGroup.Text>Preset Name:</InputGroup.Text>
-                                        </InputGroup.Prepend>
-                                        <FormControl
-                                            placeholder="name..."
-                                            aria-label="name"
-                                            aria-describedby="name"
-                                            onChange={this.setName}
-                                        />
-                                    </InputGroup>
-                                </Form.Group>
-                            </Form>
+                            {this.generateForm()}
                         </div>
-                        <StepWizard initialStep={step}>
-                            <EquipmentPreset
-                                updateEquipData={data => this.updateEquipData(data)}
-                                setCurrentStep={step => this.setCurrentStep(step)}
-                            />
-                            <PresetOverview
-                                equipSlotData={this.state.equipSlotData}
-                                setCurrentStep={step => this.setCurrentStep(step)}
-                            />
-                        </StepWizard>
+                        {this.generateStepWizard()}
                         {this.submitCheck()}
                     </div>
                 </div>
@@ -131,8 +202,19 @@ class PresetWizard extends React.Component {
     }
 }
 
-PresetWizard.propTypes = {};
+PresetWizard.propTypes = {
+    presetReducer: PropTypes.object,
+    getPresetSingle: PropTypes.func,
+    createPreset: PropTypes.func,
+    editPreset: PropTypes.func
+};
 
-PresetWizard.defaultProps = {};
+const mapStateToProps = state => {
+    return {
+        presetReducer: state.presetReducer
+    };
+}
 
-export default PresetWizard;
+const mapDispatchToProps = dispatch => bindActionCreators({ getPresetSingle, createPreset, editPreset }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(PresetWizard);

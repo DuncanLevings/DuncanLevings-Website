@@ -32,6 +32,7 @@ const { Daily } = require('../models/dailyModel');
 const { RSToolsUser } = require('../models/rsToolsUserModel');
 const { Item } = require('../models/itemModel');
 const { AbilityBar } = require('../models/abilityBarModel');
+const { Preset } = require('../models/presetModel');
 
 module.exports = {
     User,
@@ -39,5 +40,6 @@ module.exports = {
     Daily,
     RSToolsUser,
     Item,
-    AbilityBar
+    AbilityBar,
+    Preset
 }
