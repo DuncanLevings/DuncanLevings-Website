@@ -23,4 +23,5 @@ export const DELETE_PRESET_SUCCESS = 'DELETE_PRESET_SUCCESS';
 
 // ERROR
 
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const ERROR = 'EQUIPMENT_ERROR';

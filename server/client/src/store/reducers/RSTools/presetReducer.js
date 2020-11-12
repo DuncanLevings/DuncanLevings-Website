@@ -78,6 +78,11 @@ export default (state = intialState, action) => {
                 isSaving: false,
                 isFetching: false
             };
+        case actionTypes.CLEAR_ERRORS:
+            return {
+                ...state,
+                error: ""
+            };
         case actionTypes.ERROR:
             return {
                 ...state,

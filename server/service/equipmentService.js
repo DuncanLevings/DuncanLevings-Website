@@ -156,7 +156,6 @@ const editItem = async (userId, data, image, slots) => {
 
         // check if edited item is still augmented
         if (data.isAugmented) {
-            console.log(item)
             // if gizmo data is empty, assume removal of augment
             if (data.gizmo1 === '' && data.gizmo2 === '') {
                 item.augment = undefined;

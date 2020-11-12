@@ -9,7 +9,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Container, Form, FormControl, Image, InputGroup, ListGroup, Modal, Row, Spinner } from 'react-bootstrap';
-import { getPresets } from 'store/actions/RSTools/presetActions';
+import { getPresets, getPresetSingle, deletePreset } from 'store/actions/RSTools/presetActions';
 import PresetOverview from '../PresetComponents/PresetOverview/PresetOverview.lazy';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import { FaEdit, FaEye, FaTrash } from 'react-icons/fa';
@@ -22,6 +22,7 @@ class Presets extends React.Component {
         this.state = {
             search: '',
             viewPreset: false,
+            showConfirm: false,
             selectedPresetId: null
         }
     }
@@ -84,6 +85,43 @@ class Presets extends React.Component {
         this.navigate(RSTOOL_ROUTES.PRESET_BUILDER, true, presetId);
     }
 
+    setShowConfirm = (bool, presetId = null) => {
+        this.setState({
+            showConfirm: bool,
+            selectedPresetId: presetId ? presetId : this.state.selectedPresetId
+        });
+    }
+
+    deletePreset = () => {
+        this.props.deletePreset(this.state.selectedPresetId)
+        this.setState({ showConfirm: false });
+    }
+
+    confirmModal = () => {
+        const { showConfirm } = this.state;
+
+        return (
+            <Modal
+                show={showConfirm}
+                onHide={() => this.setShowConfirm(false)}
+                aria-labelledby="contained-modal-title-vcenter"
+                dialogClassName="preset-modal text"
+                centered
+            >
+                <Modal.Header>
+                    <Modal.Title>Confirm Delete</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>Are you sure you wish to delete this preset?</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="button-secondary" onClick={() => this.setShowConfirm(false)}>Cancel</Button>
+                    <Button variant="button-warning" onClick={() => this.deletePreset()}>Delete</Button>
+                </Modal.Footer>
+            </Modal>
+        );
+    }
+
     render() {
         const { search } = this.state;
         const { presets, isFetching } = this.props.presetReducer;
@@ -111,7 +149,7 @@ class Presets extends React.Component {
                         <Col>
                             <span className="actions">
                                 <FaEdit className="action-icon edit" onClick={() => this.editSelected(preset._id)} />
-                                <FaTrash className="action-icon delete" />
+                                <FaTrash className="action-icon delete" onClick={() => this.setShowConfirm(true, preset._id)} />
                             </span>
                         </Col>
                     </Row>
@@ -122,6 +160,7 @@ class Presets extends React.Component {
             <Container>
                 <div className="Presets">
                     {this.viewPresetModal()}
+                    {this.confirmModal()}
                     <Form>
                         <Form.Group controlId="formSearch">
                             <InputGroup>
@@ -154,7 +193,9 @@ class Presets extends React.Component {
 
 Presets.propTypes = {
     presetReducer: PropTypes.object,
-    getPresets: PropTypes.func
+    getPresets: PropTypes.func,
+    getPresetSingle: PropTypes.func,
+    deletePreset: PropTypes.func
 };
 
 const mapStateToProps = state => {
@@ -163,6 +204,6 @@ const mapStateToProps = state => {
     };
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ getPresets }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ getPresets, getPresetSingle, deletePreset }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Presets));

@@ -50,6 +50,10 @@ export function deletePresetSuccess(presets) {
 
 // ERROR
 
+export function clearErrors() {
+    return { type: actionTypes.CLEAR_ERRORS };
+}
+
 export function presetError(error) {
     return { type: actionTypes.ERROR, payload: error };
 }

@@ -45,7 +45,7 @@ class PresetOverview extends React.Component {
                 <OverlayTrigger
                     key={i}
                     placement="top"
-                    delay={{ show: 500, hide: 1000 }}
+                    delay={{ show: 500, hide: 750 }}
                     overlay={
                         <Tooltip id="tooltip-disabled">
                             <span className="item-slot-name">{slot.name}</span>

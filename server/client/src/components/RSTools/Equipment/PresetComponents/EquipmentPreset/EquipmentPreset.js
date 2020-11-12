@@ -32,18 +32,13 @@ class EquipmentPreset extends React.Component {
     }
 
     componentDidMount() {
-    }
-
-    componentDidUpdate(prevProps) {
         if (this.props.editMode) {
-            if (this.props.equipSlotData !== prevProps.equipSlotData) {
-                this.setState({
-                    hasEquipment: this.props.equipSlotData.length > 0 ? true : false,
-                    slots: this.props.equipSlotData.length === 0 ? EQUIPMENT_CONSTS.slotPositions : this.props.equipSlotData
-                });
+            this.setState({
+                hasEquipment: this.props.equipSlotData.length > 0 ? true : false,
+                slots: this.props.equipSlotData.length > 0 ? this.props.equipSlotData: EQUIPMENT_CONSTS.slotPositions
+            });
 
-                if (this.props.equipSlotData.length > 0) this.setSelected(0);
-            }
+            if (this.props.equipSlotData.length > 0) this.setSelected(0);
         }
     }
 
@@ -254,7 +249,6 @@ class EquipmentPreset extends React.Component {
     render() {
         const { addItemShow, editItemShow, selectedSlot, hasEquipment } = this.state;
         const { isSearching } = this.props.equipmentReducer;
-        const { editMode, equipSlotData } = this.props;
 
         if (!hasEquipment) return (
             <div>

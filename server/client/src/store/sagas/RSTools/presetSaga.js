@@ -57,7 +57,7 @@ function* editPreset(presetAction) {
 
 function* deletePreset(presetAction) {
     try {
-        const presets = yield call(deletePresetAPI, presetAction.payload.presetId);
+        const presets = yield call(deletePresetAPI, presetAction.payload);
         yield put(actionCreators.deletePresetSuccess(presets));
     } catch (error) {
         yield put(actionCreators.presetError(error.response.data));

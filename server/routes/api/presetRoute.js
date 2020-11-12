@@ -34,18 +34,17 @@ router.post(PRESET_ROUTES.CREATE_PRESET, auth.user, (req, res) => {
 });
 
 router.post(PRESET_ROUTES.EDIT_PRESET, auth.user, (req, res) => {
-    console.log(req.body)
-    // _equipmentService
-    //     .editItem(req.user._id, req.body, req.file, req.params.slots)
-    //     .then(items => res.status(200).send(items))
-    //     .catch(err => res.status(400).json(err.message));
+    _presetService
+        .editPreset(req.user._id, req.body)
+        .then(() => res.sendStatus(200))
+        .catch(err => res.status(400).json(err.message));
 });
 
-// router.delete(PRESET_ROUTES.DELETE_ITEM, auth.user, (req, res) => {
-//     _equipmentService
-//         .deleteItem(req.user.id, req.params.itemId, req.params.slots)
-//         .then(items => res.status(200).send(items))
-//         .catch(err => res.status(400).json(err.message));
-// });
+router.delete(PRESET_ROUTES.DELETE_PRESET, auth.user, (req, res) => {
+    _presetService
+        .deletePreset(req.user.id, req.params.presetId)
+        .then(presets => res.status(200).send(presets))
+        .catch(err => res.status(400).json(err.message));
+});
 
 module.exports = router;
