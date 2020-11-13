@@ -69,8 +69,40 @@ class PresetOverview extends React.Component {
         return null;
     }
 
+    generateInventorySlots = () => {
+        const { inventorySlotData } = this.props;
+
+        return inventorySlotData.map((slot, index) =>
+            slot.name && slot.image ?
+                <OverlayTrigger
+                    key={index}
+                    placement="top"
+                    delay={{ show: 500, hide: 750 }}
+                    overlay={
+                    <Tooltip id="tooltip-disabled">
+                        <span className="item-slot-name">{slot.name}</span>
+                        {slot.wiki ? <a target="_" href={slot.wiki}> Wiki</a> : null}
+                        <br />
+                        {slot.augment && slot.augment.isAugmented ?
+                            <div className="item-slot-perks">
+                                {slot.augment.gizmo1}
+                                <br />
+                                {slot.augment.gizmo2}
+                            </div>
+                            : null}
+                    </Tooltip>}
+                >
+                    <div className='inventory-slot'>
+                        <Image className="inventory-img" src={"https://storage.googleapis.com/duncanlevings.appspot.com/5f0371760174273ce430c37d_1604963204155"} />
+                    </div>
+                </OverlayTrigger>
+                :
+                <div key={index} className='inventory-slot' />
+        );
+    }
+
     generateSections = () => {
-        const { equipSlotData } = this.props;
+        const { equipSlotData, inventorySlotData } = this.props;
         let equipCol, invenCol, summonCol = null;
 
         if (equipSlotData.length > 0) {
@@ -85,12 +117,12 @@ class PresetOverview extends React.Component {
             );
         }
 
-        if (false) {
+        if (inventorySlotData.length > 0) {
             invenCol = (
                 <div className="inventory-container">
                     <div className="inventoryContainer">
-                        <div className="inventory">
-                            <div className='clickableArea' />
+                        <div className="inventory-slots-container">
+                            {this.generateInventorySlots()}
                         </div>
                     </div>
                 </div>
@@ -154,7 +186,8 @@ class PresetOverview extends React.Component {
 }
 
 PresetOverview.propTypes = {
-    equipSlotData: PropTypes.array,
+    equipSlotData: PropTypes.array.isRequired,
+    inventorySlotData: PropTypes.array.isRequired,
     setCurrentStep: PropTypes.func
 };
 

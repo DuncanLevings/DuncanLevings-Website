@@ -15,6 +15,7 @@ import Stepper from 'components/tools/Stepper/Stepper';
 import StepWizard from 'react-step-wizard';
 import PropTypes from 'prop-types';
 import './PresetWizard.scss';
+import InventoryPreset from '../PresetComponents/InventoryPreset/InventoryPreset.lazy';
 
 class PresetWizard extends React.Component {
     constructor(props) {
@@ -47,7 +48,8 @@ class PresetWizard extends React.Component {
                 this.setState({
                     editRetrieved: true, // to tell render the states have been set for edit object
                     name: preset.name,
-                    equipSlotData: preset.equipSlotData
+                    equipSlotData: preset.equipSlotData,
+                    inventorySlotData: preset.inventorySlotData
                 });
             }
         }
@@ -65,11 +67,18 @@ class PresetWizard extends React.Component {
         this.setState({ equipSlotData: data });
     }
 
+    updateInventoryData = (data) => {
+        this.setState({ inventorySlotData: data });
+    }
+
     setCurrentStep = (step) => {
         let progress = 0;
         switch (step) {
             case 2:
                 progress = 20;
+                break;
+            case 3:
+                progress = 40;
                 break;
             default:
                 break;
@@ -118,7 +127,7 @@ class PresetWizard extends React.Component {
     }
 
     generateStepWizard = () => {
-        const { step, editRetrieved, equipSlotData } = this.state;
+        const { step, editRetrieved, equipSlotData, inventorySlotData } = this.state;
         const { isFetchingSingle } = this.props.presetReducer;
 
         if (this.checkEditMode()) {
@@ -133,8 +142,15 @@ class PresetWizard extends React.Component {
                             updateEquipData={data => this.updateEquipData(data)}
                             setCurrentStep={step => this.setCurrentStep(step)}
                         />
+                        <InventoryPreset
+                            editMode={true}
+                            inventorySlotData={inventorySlotData}
+                            updateInventoryData={data => this.updateInventoryData(data)}
+                            setCurrentStep={step => this.setCurrentStep(step)}
+                        />
                         <PresetOverview
                             equipSlotData={equipSlotData}
+                            inventorySlotData={inventorySlotData}
                             createOrEdit={true}
                             setCurrentStep={step => this.setCurrentStep(step)}
                         />
@@ -149,8 +165,13 @@ class PresetWizard extends React.Component {
                     updateEquipData={data => this.updateEquipData(data)}
                     setCurrentStep={step => this.setCurrentStep(step)}
                 />
+                <InventoryPreset
+                    updateInventoryData={data => this.updateInventoryData(data)}
+                    setCurrentStep={step => this.setCurrentStep(step)}
+                />
                 <PresetOverview
                     equipSlotData={equipSlotData}
+                    inventorySlotData={inventorySlotData}
                     createOrEdit={true}
                     setCurrentStep={step => this.setCurrentStep(step)}
                 />
@@ -159,12 +180,13 @@ class PresetWizard extends React.Component {
     }
 
     submitCheck = () => {
-        const { step, stepData, equipSlotData } = this.state;
+        const { step, stepData, equipSlotData, inventorySlotData } = this.state;
         const { isCreating, isSaving } = this.props.presetReducer;
 
-        if (step === 2) {
+        if (step === 3) {
             // there must be at least one of the following true
-            if (equipSlotData.length > 0) {
+            if (equipSlotData.length > 0 ||
+                inventorySlotData.length > 0) {
                 return (
                     <div className="submit-button">
                         <Button
@@ -179,14 +201,15 @@ class PresetWizard extends React.Component {
 
     submit = () => {
         const { editPresetObj } = this.props.presetReducer;
-        const { name, equipSlotData } = this.state;
+        const { name, equipSlotData, inventorySlotData } = this.state;
 
         if (name === '') return this.setState({ missingName: true });
         this.setState({ missingName: false });
 
         const data = {
             name: name,
-            equipSlotData: equipSlotData
+            equipSlotData: equipSlotData,
+            inventorySlotData: inventorySlotData
         }
 
         if (this.checkEditMode()) {

@@ -43,10 +43,6 @@
                     background-color: #061821;
                 }
     
-                .slot:hover {
-                    background-color: $slot-hover;
-                }
-
                 .left {
                     &-1 {
                         left: slot(left-slot1);
@@ -104,23 +100,34 @@
             background-size: cover;
             width: 226px;
             height: 427px;
-    
-            .inventory {
+            
+            .inventory-slots-container {
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
                 position: relative;
-                height: 100%;
-    
-                .clickableArea {
-                    display: block;
-                    position: absolute;
-                    border: unset;
-                    height: 324px;
-                    width: 205px;
-                    left: 11px;
-                    top: 50px;
-                }
-    
-                .clickableArea:hover {
-                    background-color: $slot-hover;
+                top: 51px;
+                left: 11px;
+                width: 204px;
+                height: 333px;
+
+                .inventory-slot {
+                    text-align: center;
+                    width: 48px;
+                    height: 41px;
+                    margin-bottom: 6px;
+                    margin-right: 4px;
+            
+                    .inventory-img {
+                        text-align: center;
+                        padding: 3px 3px 0 3px;
+                        width: 42px;
+                        height: 38px;
+                    }
+            
+                    &.selected {
+                        outline: 2px solid $selected-slot-border;
+                    }
                 }
             }
         }

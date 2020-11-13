@@ -31,6 +31,7 @@ class AddItem extends React.Component {
     }
 
     componentDidMount() {
+        if (this.props.selectedSlot) this.setState({ slot: this.props.selectedSlot });
     }
 
     componentDidUpdate(prevProps) {

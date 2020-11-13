@@ -22,7 +22,8 @@ const getPreset = async (userId, presetId) => {
 
 const createPreset = async (userId, data) => {
     // ensure preset has some needed data
-    if (!data.equipSlotData && !data.inventorySlotData) throw Error(PRESET_ERRORS.NO_DATA);
+    if (!data.equipSlotData && 
+        !data.inventorySlotData) throw Error(PRESET_ERRORS.NO_DATA);
 
     const presetNameCheck = await Preset.countDocuments({ ownerId: userId, name: data.name });
     if (presetNameCheck > 0) throw Error(PRESET_ERRORS.PRESET_EXISTS);
@@ -31,6 +32,7 @@ const createPreset = async (userId, data) => {
         .withOwner(userId)
         .withName(data.name)
         .withEquipSlotData(data.equipSlotData)
+        .withInventorySlotData(data.inventorySlotData)
     );
 
     return await preset.save();
@@ -46,10 +48,11 @@ const editPreset = async (userId, data) => {
         }
 
         preset.name = data.name;
-        if (data.equipSlotData.length > 0) {
-            checkEquipSlot(data.equipSlotData);
-            preset.equipSlotData = data.equipSlotData;
-        }
+        preset.equipSlotData = data.equipSlotData;
+        preset.inventorySlotData = data.inventorySlotData;
+
+        if (data.equipSlotData.length > 0) checkEquipSlot(data.equipSlotData);
+        if (data.inventorySlotData.length > 0) checkInventorySlot(data.inventorySlotData);
         //do same for rest
 
         return await preset.save();
@@ -78,6 +81,17 @@ const checkEquipSlot = (equipSlotData) => {
     if (!hasSlotData) throw Error(PRESET_ERRORS.EQUIP_ERROR);
 }
 
+const checkInventorySlot = (inventorySlotData) => {
+    let hasSlotData = false;
+    for (const slot of inventorySlotData) {
+        if (slot.name && slot.image) {
+            hasSlotData = true;
+        }
+    }
+    // equipment slot data was activated by user but all slots empty
+    if (!hasSlotData) throw Error(PRESET_ERRORS.INVENTORY_ERROR);
+}
+
 class PresetBuilder {
     withOwner(id) {
         if (!id) throw Error(PRESET_ERRORS.USER_REQUIRED);
@@ -95,6 +109,13 @@ class PresetBuilder {
         if (equipSlotData.length < 1) return this;
         checkEquipSlot(equipSlotData);
         this.equipSlotData = equipSlotData;
+        return this;
+    }
+
+    withInventorySlotData(inventorySlotData) {
+        if (inventorySlotData.length < 1) return this;
+        checkInventorySlot(inventorySlotData);
+        this.inventorySlotData = inventorySlotData;
         return this;
     }
 }

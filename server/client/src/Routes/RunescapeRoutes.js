@@ -29,6 +29,7 @@ import Presets from 'components/RSTools/Equipment/Presets/Presets.lazy';
 import Items from 'components/RSTools/Equipment/Item/Items/Items.lazy';
 import Abilitys from 'components/RSTools/Equipment/Ability/Abilitys/Abilitys.lazy';
 import PresetWizard from 'components/RSTools/Equipment/PresetWizard/PresetWizard.lazy';
+import PresetViewer from 'components/RSTools/Equipment/PresetComponents/PresetViewer/PresetViewer.lazy';
 import Footer from 'components/navbar/Footer/Footer.lazy';
 import NotFound from 'errors/NotFound';
 import PropTypes from 'prop-types';
@@ -60,13 +61,13 @@ class RSRouter extends React.Component {
                     <PrivateRoute exact path={RSTOOL_ROUTES.ADDDAILY} redirect={RSTOOL_ROUTES.LOGIN} component={AddDaily} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.EDITORDER} redirect={RSTOOL_ROUTES.LOGIN} component={EditOrder} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.EDITDAILY} redirect={RSTOOL_ROUTES.LOGIN} component={EditDaily} />
-                    <PrivateRoute exact path={RSTOOL_ROUTES.EDITDAILY} redirect={RSTOOL_ROUTES.LOGIN} component={EditDaily} />
                     {/* ACTIVITIES */}
                     <PrivateRoute exact path={RSTOOL_ROUTES.ACTIVITIES} redirect={RSTOOL_ROUTES.LOGIN} component={Activity} />
                     {/* EQUIPMENT */}
                     <PrivateRoute exact path={RSTOOL_ROUTES.EQUIPMENT} redirect={RSTOOL_ROUTES.LOGIN} component={Equipment} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.PRESETS} redirect={RSTOOL_ROUTES.LOGIN} component={Presets} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.PRESET_BUILDER} redirect={RSTOOL_ROUTES.LOGIN} component={PresetWizard} />
+                    <PrivateRoute exact path={RSTOOL_ROUTES.PRESET_VIEWER} redirect={RSTOOL_ROUTES.LOGIN} component={PresetViewer} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.ITEMS} redirect={RSTOOL_ROUTES.LOGIN} component={Items} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.ABILITYS} redirect={RSTOOL_ROUTES.LOGIN} component={Abilitys} />
                     <Route component={NotFound} />

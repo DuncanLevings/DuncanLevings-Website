@@ -157,6 +157,15 @@
     }
 }
 
+.confirm-modal {
+    font-family: 'Roboto', sans-serif;
+    color: $dark-theme;
+
+    .modal-title {
+        font-size: calc(12px + 2vmin);
+    }
+}
+
 .activate-component {
     text-align: center;
     margin-bottom: 2rem;

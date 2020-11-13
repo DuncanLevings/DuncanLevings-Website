@@ -5,6 +5,7 @@
         "NO_DATA": "Preset needs some data!",
         "NOT_OWNER_PRESET": "You are not the owner of that preset!",
         "PRESET_EXISTS": "A preset with that name already exists!",
-        "EQUIP_ERROR": "Equipment was added but all slots are empty!"
+        "EQUIP_ERROR": "Equipment was added but all slots are empty!",
+        "INVENTORY_ERROR": "Inventory was added but all slots are empty!"
     }
 }

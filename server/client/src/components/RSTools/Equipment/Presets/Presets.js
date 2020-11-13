@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Col, Container, Form, FormControl, Image, InputGroup, ListGroup, Modal, Row, Spinner } from 'react-bootstrap';
 import { getPresets, getPresetSingle, deletePreset } from 'store/actions/RSTools/presetActions';
-import PresetOverview from '../PresetComponents/PresetOverview/PresetOverview.lazy';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import { FaEdit, FaEye, FaTrash } from 'react-icons/fa';
 import PropTypes from 'prop-types';
@@ -34,7 +33,7 @@ class Presets extends React.Component {
     navigate = (route, bool = false, presetId = null) => {
         this.props.history.push({
             pathname: route,
-            state: { 
+            state: {
                 editMode: bool,
                 presetId: presetId
             }
@@ -43,42 +42,6 @@ class Presets extends React.Component {
 
     setSearch = e => {
         this.setState({ search: e.target.value });
-    }
-
-    setViewPreset = (bool, presetId = null) => {
-        this.setState({ viewPreset: bool });
-
-        if (presetId) this.props.getPresetSingle(presetId);
-    }
-
-    viewPresetModal = () => {
-        const { viewPreset } = this.state;
-        const { editPresetObj, isFetchingSingle } = this.props.presetReducer;
-
-        return (
-            <Modal
-                show={viewPreset}
-                onHide={() => this.setViewPreset(false)}
-                aria-labelledby="contained-modal-title-vcenter"
-                dialogClassName="preset-modal text"
-                centered
-            >
-                <Modal.Header>
-                    <Modal.Title>{editPresetObj ? editPresetObj.name : 'View Preset'}</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    {!editPresetObj || isFetchingSingle ? <Spinner animation="border" variant="dark" />
-                        :
-                        <PresetOverview
-                            equipSlotData={editPresetObj.equipSlotData}
-                        />
-                    }
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="button-secondary" onClick={() => this.setViewPreset(false)}>Close</Button>
-                </Modal.Footer>
-            </Modal>
-        );
     }
 
     editSelected = (presetId) => {
@@ -133,7 +96,7 @@ class Presets extends React.Component {
                     <Row>
                         <Col xs={1}>
                             <span className="actions">
-                                <FaEye className="action-icon edit" onClick={() => this.setViewPreset(true, preset._id)} />
+                                <FaEye className="action-icon edit" onClick={() => this.navigate(RSTOOL_ROUTES.PRESET_VIEWER_PARAM + preset._id)} />
                             </span>
                         </Col>
                         <Col xs={3}>
@@ -141,7 +104,7 @@ class Presets extends React.Component {
                         </Col>
                         <Col xs={3}>
                             {preset.equipSlotData.length > 0 ? <Image src={"/static_images/RSTools/equipment_icon.png"} /> : null}
-                            {/* {preset.inventorySlotData.length > 0 ? <Image src={"/static_images/RSTools/inventory_icon.png"} /> : null} */}
+                            {preset.inventorySlotData.length > 0 ? <Image src={"/static_images/RSTools/inventory_icon.png"} /> : null}
                             {/* {preset.familiar ? <Image src={"/static_images/RSTools/familiar_icon.png"} /> : null} */}
                             {/* {preset.abilityBarData.length > 0 ? <Image src={"/static_images/RSTools/abilitys_icon.png"} /> : null} */}
                             {/* {preset.prayerData.length > 0 ? <Image src={"/static_images/RSTools/prayer_icon.png"} /> : null} */}
@@ -159,7 +122,6 @@ class Presets extends React.Component {
         return (
             <Container>
                 <div className="Presets">
-                    {this.viewPresetModal()}
                     {this.confirmModal()}
                     <Form>
                         <Form.Group controlId="formSearch">
