@@ -41,6 +41,8 @@ class PresetViewer extends React.Component {
                         <PresetOverview
                             equipSlotData={editPresetObj.equipSlotData}
                             inventorySlotData={editPresetObj.inventorySlotData}
+                            familiar={editPresetObj.familiar}
+                            familiarSlotData={editPresetObj.familiarSlotData}
                         />
                     </div>
                 </div>

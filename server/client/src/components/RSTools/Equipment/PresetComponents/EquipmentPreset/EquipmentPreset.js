@@ -267,7 +267,7 @@ class EquipmentPreset extends React.Component {
             <Container>
                 <div className="EquipmentPreset">
                     <div className="activate-component">
-                        <Button variant="button-secondary" onClick={() => this.enableEquipment(false)}>Remove Equipment</Button>
+                        <Button variant="button-secondary" hidden={selectedSlot < 0} onClick={() => this.nextWizardStep()}>Next</Button>
                     </div>
                     <h5>Select a slot:</h5>
                     <div className="slot-container">
@@ -325,7 +325,7 @@ class EquipmentPreset extends React.Component {
                         onHide={() => this.setEditItemShow(false)}
                     />
                     <div className="step-button">
-                        <Button variant="button-secondary" hidden={selectedSlot < 0} onClick={() => this.nextWizardStep()}>Next</Button>
+                        <Button variant="button-warning" onClick={() => this.enableEquipment(false)}>Remove Equipment</Button>
                     </div>
                 </div>
             </Container>

@@ -50,7 +50,9 @@ class PresetWizard extends React.Component {
                     editRetrieved: true, // to tell render the states have been set for edit object
                     name: preset.name,
                     equipSlotData: preset.equipSlotData,
-                    inventorySlotData: preset.inventorySlotData
+                    inventorySlotData: preset.inventorySlotData,
+                    familiar: preset.familiar || null,
+                    familiarSlotData: preset.familiarSlotData
                 });
             }
         }
@@ -112,7 +114,7 @@ class PresetWizard extends React.Component {
                     <InputGroup>
                         <InputGroup.Prepend>
                             <InputGroup.Text>Preset Name:</InputGroup.Text>
-                        </InputGroup.Prepend >
+                        </InputGroup.Prepend>
                         <FormControl
                             placeholder="name..."
                             aria-label="name"
@@ -160,10 +162,20 @@ class PresetWizard extends React.Component {
                             updateInventoryData={data => this.updateInventoryData(data)}
                             setCurrentStep={step => this.setCurrentStep(step)}
                         />
+                        <FamiliarPreset
+                            editMode={true}
+                            familiar={familiar}
+                            familiarSlotData={familiarSlotData}
+                            updateFamiliarData={data => this.updateFamiliarData(data)}
+                            updateFamiliarSlotData={data => this.updateFamiliarSlotData(data)}
+                            setCurrentStep={step => this.setCurrentStep(step)}
+                        />
                         <PresetOverview
                             createOrEdit={true}
                             equipSlotData={equipSlotData}
                             inventorySlotData={inventorySlotData}
+                            familiar={familiar}
+                            familiarSlotData={familiarSlotData}
                             setCurrentStep={step => this.setCurrentStep(step)}
                         />
                     </StepWizard>

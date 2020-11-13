@@ -29,18 +29,37 @@ class FamiliarPreset extends React.Component {
             addItemShow: false,
             editItemShow: false,
             showConfirm: false,
+            familiarSet: false,
             hasFamiliar: false
         }
     }
 
     componentDidMount() {
-        this.props.searchItems(14);
+        if (this.props.editMode) {
+            this.setState({
+                hasFamiliar: this.props.familiar ? true : false,
+                familiarSet: this.props.familiar ? true : false,
+                familiar: this.props.familiar,
+                familiarSlotData: this.props.familiarSlotData.length > 0 ? this.props.familiarSlotData : EQUIPMENT_CONSTS.familiarSlotData
+            });
+
+            if (this.props.familiarSlotData.length > 0) this.setSelected('slot1');
+        } else {
+            this.props.searchItems(14);
+        }
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.currentStep !== prevProps.currentStep) {
             if (this.props.currentStep === 3) {
-                this.props.searchItems(14);
+                if (this.state.familiarSet) {
+                    if (this.state.familiar.familiarSize > 0) {
+                        this.props.searchItems(13);
+                    }
+                }
+                else {
+                    this.props.searchItems(14);
+                }
             }
         }
     }
@@ -73,7 +92,7 @@ class FamiliarPreset extends React.Component {
     }
 
     swapBoxes = (fromSlot, toSlot) => {
-        let slots = this.state.inventorySlotData.slice();
+        let slots = this.state.familiarSlotData.slice();
         let fromIndex = -1;
         let toIndex = -1;
 
@@ -92,8 +111,8 @@ class FamiliarPreset extends React.Component {
             slots[fromIndex] = { id: fromSlot.id, ...toRest };
             slots[toIndex] = { id: toSlot.id, ...fromRest };
 
-            this.setState({ inventorySlotData: slots });
-            this.props.updateInventoryData(slots);
+            this.setState({ familiarSlotData: slots });
+            this.props.updateFamiliarSlotData(slots);
         }
     };
 
@@ -147,7 +166,7 @@ class FamiliarPreset extends React.Component {
 
     createList = () => {
         const { selectedSlot, familiarSlotData, familiar } = this.state;
- 
+
         return familiarSlotData.map((slot, index) => (
             index < familiar.familiarSize ?
                 slot.name && slot.image ?
@@ -187,9 +206,7 @@ class FamiliarPreset extends React.Component {
                         onClick={() => this.setSelected(slot.id)}
                         onDragOver={this.handleDragOver()}
                         onDrop={this.handleDrop(slot.id)}
-                    >
-                        {/* <div className="inventory-img" /> */}
-                    </div>
+                    />
                 : null
         ));
     }
@@ -203,13 +220,33 @@ class FamiliarPreset extends React.Component {
     }
 
     setFamiliar = (familiar) => {
-        this.setState({ familiar: familiar });
+        this.setState({
+            familiarSet: true,
+            familiar: familiar,
+            selectedSlot: '',
+            familiarSlotData: EQUIPMENT_CONSTS.familiarSlotData
+        });
+
+        if (familiar.familiarSize > 0) {
+            this.props.searchItems(13);
+        }
+
+        this.props.updateFamiliarData(familiar);
+    }
+
+    clearFamiliar = () => {
+        this.setState({
+            familiarSet: false,
+            familiar: null
+        });
+        this.props.searchItems(14);
+        this.props.updateFamiliarData(null);
     }
 
     equipSlot = (item) => {
-        const { selectedSlot, inventorySlotData } = this.state;
+        const { selectedSlot, familiarSlotData } = this.state;
 
-        let _slots = [...inventorySlotData];
+        let _slots = [...familiarSlotData];
         let _slot = {
             ..._slots.find(row => row.id === selectedSlot),
             name: item.name,
@@ -220,14 +257,14 @@ class FamiliarPreset extends React.Component {
 
         _slots[_slots.findIndex(row => row.id === selectedSlot)] = _slot;
 
-        this.setState({ inventorySlotData: _slots });
-        this.props.updateInventoryData(_slots);
+        this.setState({ familiarSlotData: _slots });
+        this.props.updateFamiliarSlotData(_slots);
     }
 
     clearItemSlot = () => {
-        const { selectedSlot, inventorySlotData } = this.state;
+        const { selectedSlot, familiarSlotData } = this.state;
 
-        let _slots = [...inventorySlotData];
+        let _slots = [...familiarSlotData];
         let _slot = _slots[_slots.findIndex(row => row.id === selectedSlot)];
 
         delete _slot.name;
@@ -237,8 +274,8 @@ class FamiliarPreset extends React.Component {
 
         _slots[_slots.findIndex(row => row.id === selectedSlot)] = _slot;
 
-        this.setState({ inventorySlotData: _slots });
-        this.props.updateInventoryData(_slots);
+        this.setState({ familiarSlotData: _slots });
+        this.props.updateFamiliarSlotData(_slots);
     }
 
     generateFamiliarSearchResult = () => {
@@ -368,7 +405,7 @@ class FamiliarPreset extends React.Component {
     }
 
     render() {
-        const { addItemShow, editItemShow, hasFamiliar, selectedSlot, addItemSlot, familiar } = this.state;
+        const { addItemShow, editItemShow, hasFamiliar, familiarSet, selectedSlot, addItemSlot, familiar } = this.state;
         const { isSearching } = this.props.equipmentReducer;
 
         if (!hasFamiliar) return (
@@ -384,9 +421,9 @@ class FamiliarPreset extends React.Component {
         );
 
         const searchFamiliarResults = this.generateFamiliarSearchResult();
-        let familiarInventorySlots = [];
+        let familiarInventorySlots, searchItemResults = [];
         if (familiar && familiar.familiarSize > 0) {
-            const searchItemResults = this.generateItemSearchResult();
+            searchItemResults = this.generateItemSearchResult();
             familiarInventorySlots = this.createList();
         }
 
@@ -395,34 +432,42 @@ class FamiliarPreset extends React.Component {
                 <div className="FamiliarPreset">
                     <div className="activate-component">
                         <Button variant="button-secondary" className="previous-button" onClick={() => this.previousStep()}>Previous</Button>
-                        <Button variant="button-secondary" hidden={selectedSlot === ''} onClick={() => this.nextWizardStep()}>Next</Button>
+                        <Button variant="button-secondary" hidden={!familiar} onClick={() => this.nextWizardStep()}>Next</Button>
                     </div>
                     <h5>Pick a familiar:</h5>
                     <div className="spacer-h-2" />
-                    {this.showFamiliar()}
                     {this.confirmModal()}
-                    <Form>
-                        <Form.Group controlId="formSearch">
-                            <InputGroup>
-                                <FormControl
-                                    placeholder="Search..."
-                                    aria-label="search"
-                                    aria-describedby="search"
-                                    onChange={this.setSearchFamiliar}
-                                />
-                                <InputGroup.Append>
-                                    <Button variant="button-primary" onClick={() => this.setAddItemShow(true)}>Add Familiar</Button>
-                                </InputGroup.Append>
-                            </InputGroup>
-                        </Form.Group>
-                    </Form>
-                    {isSearching ?
-                        <Spinner animation="border" variant="light" /> :
-                        searchFamiliarResults.length > 0 ?
-                            <ListGroup variant="flush" className="scrollable-list">
-                                {searchFamiliarResults}
-                            </ListGroup> :
-                            <p>No familiars found...</p>
+                    {this.showFamiliar()}
+                    {familiarSet ?
+                        <div className="activate-component">
+                            <Button variant="button-secondary" onClick={() => this.clearFamiliar()}>Change Familiar</Button>
+                        </div>
+                        :
+                        <div>
+                            <Form>
+                                <Form.Group controlId="formSearch">
+                                    <InputGroup>
+                                        <FormControl
+                                            placeholder="Search..."
+                                            aria-label="search"
+                                            aria-describedby="search"
+                                            onChange={this.setSearchFamiliar}
+                                        />
+                                        <InputGroup.Append>
+                                            <Button variant="button-primary" onClick={() => this.setAddItemShow(true, 14)}>Add Familiar</Button>
+                                        </InputGroup.Append>
+                                    </InputGroup>
+                                </Form.Group>
+                            </Form>
+                            {isSearching ?
+                                <Spinner animation="border" variant="light" /> :
+                                searchFamiliarResults.length > 0 ?
+                                    <ListGroup variant="flush" className="scrollable-list">
+                                        {searchFamiliarResults}
+                                    </ListGroup> :
+                                    <p>No familiars found...</p>
+                            }
+                        </div>
                     }
                     <div className="spacer-h-3" />
                     {familiar && familiar.familiarSize > 0 ?
@@ -434,19 +479,39 @@ class FamiliarPreset extends React.Component {
                                     {familiarInventorySlots}
                                 </div>
                             </div>
+                            <div className="spacer-h-2" />
+                            {selectedSlot !== '' ?
+                                <>
+                                    <div className="clear-slot">
+                                        <Button variant="button-secondary" onClick={() => this.clearItemSlot()}>Clear selected slot</Button>
+                                    </div>
+                                    <Form>
+                                        <Form.Group controlId="formSearch">
+                                            <InputGroup>
+                                                <FormControl
+                                                    placeholder="Search..."
+                                                    aria-label="search"
+                                                    aria-describedby="search"
+                                                    onChange={this.setSearch}
+                                                />
+                                                <InputGroup.Append>
+                                                    <Button variant="button-primary" onClick={() => this.setAddItemShow(true, 13)}>Add Item</Button>
+                                                </InputGroup.Append>
+                                            </InputGroup>
+                                        </Form.Group>
+                                    </Form>
+                                    {isSearching ?
+                                        <Spinner animation="border" variant="light" /> :
+                                        searchItemResults.length > 0 ?
+                                            <ListGroup variant="flush" className="scrollable-list">
+                                                {searchItemResults}
+                                            </ListGroup> :
+                                            <p>No items found...</p>
+                                    }
+                                </>
+                                : null}
                         </div>
                         : null}
-
-
-                    {/* <div className="spacer-h-2" />
-                    <div className="clear-slot">
-                        <Button variant="button-secondary" onClick={() => this.clearItemSlot()}>Clear selected slot</Button>
-                    </div>
-                    {selectedSlot !== '' ?
-                        <>
-
-                        </>
-                        : null} */}
                     <AddItem
                         show={addItemShow}
                         selectedSlot={addItemSlot}

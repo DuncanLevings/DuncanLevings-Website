@@ -79,18 +79,18 @@ class PresetOverview extends React.Component {
                     placement="top"
                     delay={{ show: 500, hide: 750 }}
                     overlay={
-                    <Tooltip id="tooltip-disabled">
-                        <span className="item-slot-name">{slot.name}</span>
-                        {slot.wiki ? <a target="_" href={slot.wiki}> Wiki</a> : null}
-                        <br />
-                        {slot.augment && slot.augment.isAugmented ?
-                            <div className="item-slot-perks">
-                                {slot.augment.gizmo1}
-                                <br />
-                                {slot.augment.gizmo2}
-                            </div>
-                            : null}
-                    </Tooltip>}
+                        <Tooltip id="tooltip-disabled">
+                            <span className="item-slot-name">{slot.name}</span>
+                            {slot.wiki ? <a target="_" href={slot.wiki}> Wiki</a> : null}
+                            <br />
+                            {slot.augment && slot.augment.isAugmented ?
+                                <div className="item-slot-perks">
+                                    {slot.augment.gizmo1}
+                                    <br />
+                                    {slot.augment.gizmo2}
+                                </div>
+                                : null}
+                        </Tooltip>}
                 >
                     <div className='inventory-slot'>
                         <Image className="inventory-img" src={"https://storage.googleapis.com/duncanlevings.appspot.com/5f0371760174273ce430c37d_1604963204155"} />
@@ -101,12 +101,45 @@ class PresetOverview extends React.Component {
         );
     }
 
+    generateFamiliarInventorySlots = () => {
+        const { familiar, familiarSlotData } = this.props;
+
+        return familiarSlotData.map((slot, index) => (
+            index < familiar.familiarSize ?
+                slot.name && slot.image ?
+                    <OverlayTrigger
+                        key={index}
+                        placement="top"
+                        delay={{ show: 750, hide: 500 }}
+                        overlay={<Tooltip id="tooltip-disabled">
+                            <span className="item-slot-name">{slot.name}</span>
+                            {slot.wiki ? <a target="_" href={slot.wiki}> Wiki</a> : null}
+                            <br />
+                            {slot.augment && slot.augment.isAugmented ?
+                                <div className="item-slot-perks">
+                                    {slot.augment.gizmo1}
+                                    <br />
+                                    {slot.augment.gizmo2}
+                                </div>
+                                : null}
+                        </Tooltip>}
+                    >
+                        <div className='summon-slot'>
+                            <Image className="inventory-img" src={"https://storage.googleapis.com/duncanlevings.appspot.com/5f0371760174273ce430c37d_1604963204155"} />
+                        </div>
+                    </OverlayTrigger>
+                    :
+                    <div key={index} className='summon-slot' />
+                : null
+        ));
+    }
+
     generateSections = () => {
-        const { equipSlotData, inventorySlotData } = this.props;
-        let equipCol, invenCol, summonCol = null;
+        const { equipSlotData, inventorySlotData, familiar, familiarSlotData } = this.props;
+        let equipment, inventory, summon, summonInventory = null;
 
         if (equipSlotData.length > 0) {
-            equipCol = (
+            equipment = (
                 <div className="slot-container">
                     <div className="slotContainer">
                         <div className="slots">
@@ -118,7 +151,7 @@ class PresetOverview extends React.Component {
         }
 
         if (inventorySlotData.length > 0) {
-            invenCol = (
+            inventory = (
                 <div className="inventory-container">
                     <div className="inventoryContainer">
                         <div className="inventory-slots-container">
@@ -129,26 +162,46 @@ class PresetOverview extends React.Component {
             );
         }
 
-        if (false) {
-            summonCol = (
-                <div className="summon-container">
-                    {false ?
-                        <div className="summon-inventory-container">
-                            <div className="summon-slot"></div>
+        if (familiar) {
+            if (familiarSlotData.length > 0) {
+                summonInventory = (
+                    <div className="summon-container">
+                        <div className="summon-inventoryContainer">
+                            {this.generateFamiliarInventorySlots()}
                         </div>
-                        : null}
-                    <div className="summon-image-container">
-                        <Image src={"https://storage.googleapis.com/duncanlevings.appspot.com/5f0371760174273ce430c37d_1604963204155"} />
                     </div>
+                );
+            }
+
+            summon = (
+                <div className="summon-container">
+                    <OverlayTrigger
+                        placement="top"
+                        delay={{ show: 750, hide: 500 }}
+                        overlay={<Tooltip id="tooltip-disabled">
+                            <span className="item-slot-name">{familiar.name}</span>
+                            {familiar.wiki ? <a target="_" href={familiar.wiki}> Wiki</a> : null}
+                        </Tooltip>}
+                    >
+                        <div className="summon-image-container">
+                            <Image src={"https://storage.googleapis.com/duncanlevings.appspot.com/5f0371760174273ce430c37d_1604963204155"} />
+                        </div>
+                    </OverlayTrigger>
                 </div>
             );
         }
 
         return (
-            <div className="row-container">
-                {equipCol}
-                {invenCol}
-                {summonCol}
+            <div>
+                <div className="row-container">
+                    {equipment}
+                    {inventory}
+                    {summonInventory}
+                    {summon}
+                </div>
+                {/* <div className="row-container">
+                    {summonCol}
+                </div> */}
             </div>
         )
     }

@@ -33,6 +33,8 @@ const createPreset = async (userId, data) => {
         .withName(data.name)
         .withEquipSlotData(data.equipSlotData)
         .withInventorySlotData(data.inventorySlotData)
+        .withFamiliar(data.familiar)
+        .withfamiliarSlotData(data.familiarSlotData)
     );
 
     return await preset.save();
@@ -50,6 +52,8 @@ const editPreset = async (userId, data) => {
         preset.name = data.name;
         preset.equipSlotData = data.equipSlotData;
         preset.inventorySlotData = data.inventorySlotData;
+        preset.familiar = data.familiar;
+        preset.familiarSlotData = data.familiarSlotData;
 
         if (data.equipSlotData.length > 0) checkEquipSlot(data.equipSlotData);
         if (data.inventorySlotData.length > 0) checkInventorySlot(data.inventorySlotData);
@@ -77,7 +81,6 @@ const checkEquipSlot = (equipSlotData) => {
             hasSlotData = true;
         }
     }
-    // equipment slot data was activated by user but all slots empty
     if (!hasSlotData) throw Error(PRESET_ERRORS.EQUIP_ERROR);
 }
 
@@ -88,7 +91,6 @@ const checkInventorySlot = (inventorySlotData) => {
             hasSlotData = true;
         }
     }
-    // equipment slot data was activated by user but all slots empty
     if (!hasSlotData) throw Error(PRESET_ERRORS.INVENTORY_ERROR);
 }
 
@@ -116,6 +118,19 @@ class PresetBuilder {
         if (inventorySlotData.length < 1) return this;
         checkInventorySlot(inventorySlotData);
         this.inventorySlotData = inventorySlotData;
+        return this;
+    }
+
+    withFamiliar(familiar) {
+        if (!familiar) return this;
+        this.familiar = familiar;
+        return this;
+    }
+
+    // familiar is allowed to have all empty slots
+    withfamiliarSlotData(familiarSlotData) {
+        if (familiarSlotData.length < 1) return this;
+        this.familiarSlotData = familiarSlotData;
         return this;
     }
 }
