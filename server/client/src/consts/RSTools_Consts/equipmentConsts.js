@@ -679,6 +679,105 @@ const inventorySlotData = [
     }
 ]
 
+const familiarSlotData = [
+    {
+        id: "slot1"
+    },
+    {
+        id: "slot2"
+    },
+    {
+        id: "slot3"
+    },
+    {
+        id: "slot4"
+    },
+    {
+        id: "slot5"
+    },
+    {
+        id: "slot6"
+    },
+    {
+        id: "slot7"
+    },
+    {
+        id: "slot8"
+    },
+    {
+        id: "slot9"
+    },
+    {
+        id: "slot10"
+    },
+    {
+        id: "slot11"
+    },
+    {
+        id: "slot12"
+    },
+    {
+        id: "slot13"
+    },
+    {
+        id: "slot14"
+    },
+    {
+        id: "slot15"
+    },
+    {
+        id: "slot16"
+    },
+    {
+        id: "slot17"
+    },
+    {
+        id: "slot18"
+    },
+    {
+        id: "slot19"
+    },
+    {
+        id: "slot20"
+    },
+    {
+        id: "slot21"
+    },
+    {
+        id: "slot22"
+    },
+    {
+        id: "slot23"
+    },
+    {
+        id: "slot24"
+    },
+    {
+        id: "slot25"
+    },
+    {
+        id: "slot26"
+    },
+    {
+        id: "slot27"
+    },
+    {
+        id: "slot28"
+    },
+    {
+        id: "slot29"
+    },
+    {
+        id: "slot30"
+    },
+    {
+        id: "slot31"
+    },
+    {
+        id: "slot32"
+    }
+]
+
 const styleTypes = {
     1: "melee",
     2: "range",
@@ -697,5 +796,6 @@ export default {
     styleTypes,
     abilityData,
     inventorySlotData,
+    familiarSlotData,
     types
 }

@@ -5,30 +5,491 @@
  */
 
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { searchItems, getItemSingle, createItem, editItem, deleteItem, clearErrors } from 'store/actions/RSTools/equipmentActions';
+import { Button, Col, Container, Form, FormControl, Image, InputGroup, ListGroup, Modal, OverlayTrigger, Row, Spinner, Tooltip } from 'react-bootstrap';
+import { FaCheckSquare, FaEdit, FaTrash } from 'react-icons/fa';
+import { EQUIPMENT_CONSTS } from 'consts/RSTools_Consts';
+import AddItem from '../../Item/AddItem/AddItem.lazy';
+import EditItem from '../../Item/EditItem/EditItem.lazy';
 import PropTypes from 'prop-types';
 import './FamiliarPreset.scss';
 
 class FamiliarPreset extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {}
+        this.state = {
+            searchFamiliar: '',
+            search: '',
+            familiar: null,
+            familiarSlotData: EQUIPMENT_CONSTS.familiarSlotData,
+            selectedSlot: '',
+            addItemSlot: 14,
+            addItemShow: false,
+            editItemShow: false,
+            showConfirm: false,
+            hasFamiliar: false
+        }
     }
 
     componentDidMount() {
+        this.props.searchItems(14);
+    }
 
+    componentDidUpdate(prevProps) {
+        if (this.props.currentStep !== prevProps.currentStep) {
+            if (this.props.currentStep === 3) {
+                this.props.searchItems(14);
+            }
+        }
+    }
+
+    enableFamiliar = (bool) => {
+        this.setState({ hasFamiliar: bool });
+        if (!bool) {
+            this.props.updateFamiliarData(null);
+            this.props.updateFamiliarSlotData([]);
+            this.setState({
+                familiar: null,
+                familiarSlotData: EQUIPMENT_CONSTS.familiarSlotData,
+                selectedSlot: ''
+            });
+        }
+    }
+
+    nextWizardStep = () => {
+        this.props.setCurrentStep(this.props.currentStep + 1);
+        this.props.nextStep();
+    }
+
+    previousStep = () => {
+        this.props.setCurrentStep(this.props.currentStep - 1);
+        this.props.previousStep();
+    }
+
+    setSelected = (slot) => {
+        this.setState({ selectedSlot: slot });
+    }
+
+    swapBoxes = (fromSlot, toSlot) => {
+        let slots = this.state.inventorySlotData.slice();
+        let fromIndex = -1;
+        let toIndex = -1;
+
+        for (let i = 0; i < slots.length; i++) {
+            if (slots[i].id === fromSlot.id) {
+                fromIndex = i;
+            }
+            if (slots[i].id === toSlot.id) {
+                toIndex = i;
+            }
+        }
+
+        if (fromIndex != -1 && toIndex != -1) {
+            let { fromId, ...fromRest } = slots[fromIndex];
+            let { toId, ...toRest } = slots[toIndex];
+            slots[fromIndex] = { id: fromSlot.id, ...toRest };
+            slots[toIndex] = { id: toSlot.id, ...fromRest };
+
+            this.setState({ inventorySlotData: slots });
+            this.props.updateInventoryData(slots);
+        }
+    };
+
+    handleDragStart = id => event => {
+        let fromSlot = JSON.stringify({ id: id });
+        event.dataTransfer.setData("dragContent", fromSlot);
+    };
+
+    handleDragOver = () => event => {
+        event.preventDefault(); // Necessary. Allows us to drop.
+        return false;
+    };
+
+    handleDrop = id => event => {
+        event.preventDefault();
+
+        if (!event.dataTransfer.getData("dragContent")) return false;
+        let fromSlot = JSON.parse(event.dataTransfer.getData("dragContent"));
+        let toSlot = { id: id };
+
+        this.swapBoxes(fromSlot, toSlot);
+        return false;
+    };
+
+    showFamiliar = () => {
+        const { familiar } = this.state;
+
+        if (familiar) {
+            return (
+                <OverlayTrigger
+                    placement="top"
+                    delay={{ show: 750, hide: 500 }}
+                    overlay={<Tooltip id="tooltip-disabled">
+                        <span className="item-slot-name">{familiar.name}</span>
+                        {familiar.wiki ? <a target="_" href={familiar.wiki}> Wiki</a> : null}
+                    </Tooltip>}
+                >
+                    <div className="familiar-container">
+                        <Image className="inventory-img" src={"https://storage.googleapis.com/duncanlevings.appspot.com/5f0371760174273ce430c37d_1604963204155"} />
+                    </div>
+                </OverlayTrigger>
+            );
+        }
+
+        return (
+            <div className="familiar-container">
+                <Image className="familiar-img" src={"/static_images/RSTools/Summoning.png"} />
+            </div>
+        );
+    }
+
+    createList = () => {
+        const { selectedSlot, familiarSlotData, familiar } = this.state;
+ 
+        return familiarSlotData.map((slot, index) => (
+            index < familiar.familiarSize ?
+                slot.name && slot.image ?
+                    <OverlayTrigger
+                        key={index}
+                        placement="top"
+                        delay={{ show: 750, hide: 500 }}
+                        overlay={<Tooltip id="tooltip-disabled">
+                            <span className="item-slot-name">{slot.name}</span>
+                            {slot.wiki ? <a target="_" href={slot.wiki}> Wiki</a> : null}
+                            <br />
+                            {slot.augment && slot.augment.isAugmented ?
+                                <div className="item-slot-perks">
+                                    {slot.augment.gizmo1}
+                                    <br />
+                                    {slot.augment.gizmo2}
+                                </div>
+                                : null}
+                        </Tooltip>}
+                    >
+                        <div
+                            className={`inventory-slot ${selectedSlot === slot.id ? 'selected' : ''}`}
+                            onClick={() => this.setSelected(slot.id)}
+                            draggable="true"
+                            onDragStart={this.handleDragStart(slot.id)}
+                            onDragOver={this.handleDragOver()}
+                            onDrop={this.handleDrop(slot.id)}
+                        >
+                            <Image className="inventory-img" src={"https://storage.googleapis.com/duncanlevings.appspot.com/5f0371760174273ce430c37d_1604963204155"} />
+                        </div>
+                    </OverlayTrigger>
+                    :
+                    <div
+                        key={index}
+                        className={`inventory-slot ${selectedSlot === slot.id ? 'selected' : ''}`}
+                        draggable="false"
+                        onClick={() => this.setSelected(slot.id)}
+                        onDragOver={this.handleDragOver()}
+                        onDrop={this.handleDrop(slot.id)}
+                    >
+                        {/* <div className="inventory-img" /> */}
+                    </div>
+                : null
+        ));
+    }
+
+    setSearchFamiliar = e => {
+        this.setState({ searchFamiliar: e.target.value });
+    }
+
+    setSearch = e => {
+        this.setState({ search: e.target.value });
+    }
+
+    setFamiliar = (familiar) => {
+        this.setState({ familiar: familiar });
+    }
+
+    equipSlot = (item) => {
+        const { selectedSlot, inventorySlotData } = this.state;
+
+        let _slots = [...inventorySlotData];
+        let _slot = {
+            ..._slots.find(row => row.id === selectedSlot),
+            name: item.name,
+            image: item.imageUrl,
+            wiki: item.wiki ? item.wiki : null,
+            augment: item.augment ? item.augment : null
+        }
+
+        _slots[_slots.findIndex(row => row.id === selectedSlot)] = _slot;
+
+        this.setState({ inventorySlotData: _slots });
+        this.props.updateInventoryData(_slots);
+    }
+
+    clearItemSlot = () => {
+        const { selectedSlot, inventorySlotData } = this.state;
+
+        let _slots = [...inventorySlotData];
+        let _slot = _slots[_slots.findIndex(row => row.id === selectedSlot)];
+
+        delete _slot.name;
+        delete _slot.image;
+        delete _slot.wiki;
+        delete _slot.augment;
+
+        _slots[_slots.findIndex(row => row.id === selectedSlot)] = _slot;
+
+        this.setState({ inventorySlotData: _slots });
+        this.props.updateInventoryData(_slots);
+    }
+
+    generateFamiliarSearchResult = () => {
+        const { searchFamiliar } = this.state;
+        const { searchItems } = this.props.equipmentReducer;
+
+        return searchItems
+            .filter(item => searchFamiliar === '' || item.name.includes(searchFamiliar))
+            .map((item, i) =>
+                <ListGroup.Item key={i}>
+                    <Row>
+                        <Col xs={2}><FaCheckSquare className="action-icon add" onClick={() => this.setFamiliar(item)} /></Col>
+                        <Col xs={1}><Image src={item.imageUrl} /></Col>
+                        <Col xs={6}>{item.name}</Col>
+                        <Col><span className="actions">
+                            {item.isOwner ?
+                                <>
+                                    <FaEdit className="action-icon edit" onClick={() => this.setEditItemShow(true, item._id)} />
+                                    <FaTrash className="action-icon delete" onClick={() => this.setShowConfirm(true, item._id)} />
+                                </>
+                                :
+                                <>
+                                    <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Can only edit items YOU made.</Tooltip>}>
+                                        <span className="d-inline-block disabled-action">
+                                            <FaEdit disabled style={{ pointerEvents: 'none' }} />
+                                        </span>
+                                    </OverlayTrigger>
+                                    <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Can only delete items YOU made.</Tooltip>}>
+                                        <span className="d-inline-block disabled-action">
+                                            <FaTrash disabled style={{ pointerEvents: 'none' }} />
+                                        </span>
+                                    </OverlayTrigger>
+                                </>
+                            }
+                        </span></Col>
+                    </Row>
+                </ListGroup.Item>
+            );
+    }
+
+    generateItemSearchResult = () => {
+        const { search } = this.state;
+        const { searchItems } = this.props.equipmentReducer;
+
+        return searchItems
+            .filter(item => search === '' || item.name.includes(search))
+            .map((item, i) =>
+                <ListGroup.Item key={i}>
+                    <Row>
+                        <Col xs={2}><FaCheckSquare className="action-icon add" onClick={() => this.equipSlot(item)} /></Col>
+                        <Col xs={1}><Image src={item.imageUrl} /></Col>
+                        <Col xs={6}>{item.name}</Col>
+                        <Col><span className="actions">
+                            {item.isOwner ?
+                                <>
+                                    <FaEdit className="action-icon edit" onClick={() => this.setEditItemShow(true, item._id, 13)} />
+                                    <FaTrash className="action-icon delete" onClick={() => this.setShowConfirm(true, item._id, 13)} />
+                                </>
+                                :
+                                <>
+                                    <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Can only edit items YOU made.</Tooltip>}>
+                                        <span className="d-inline-block disabled-action">
+                                            <FaEdit disabled style={{ pointerEvents: 'none' }} />
+                                        </span>
+                                    </OverlayTrigger>
+                                    <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Can only delete items YOU made.</Tooltip>}>
+                                        <span className="d-inline-block disabled-action">
+                                            <FaTrash disabled style={{ pointerEvents: 'none' }} />
+                                        </span>
+                                    </OverlayTrigger>
+                                </>
+                            }
+                        </span></Col>
+                    </Row>
+                </ListGroup.Item>
+            );
+    }
+
+    setAddItemShow = (bool, slot = null) => {
+        this.setState({
+            addItemShow: bool,
+            addItemSlot: slot ? slot : this.state.addItemSlot
+        });
+    }
+
+    setEditItemShow = (bool, itemId = null) => {
+        this.setState({ editItemShow: bool });
+        if (itemId) this.props.getItemSingle(itemId);
+    }
+
+    setShowConfirm = (bool, itemId = null, slot = null) => {
+        this.setState({
+            showConfirm: bool,
+            selectedItemId: itemId ? itemId : this.state.selectedItemId,
+            addItemSlot: slot ? slot : this.state.addItemSlot
+        });
+    }
+
+    deleteItem = () => {
+        this.props.deleteItem(this.state.selectedItemId, this.state.addItemSlot)
+        this.setState({ showConfirm: false });
+    }
+
+    confirmModal = () => {
+        const { showConfirm } = this.state;
+
+        return (
+            <Modal
+                show={showConfirm}
+                onHide={() => this.setShowConfirm(false)}
+                aria-labelledby="contained-modal-title-vcenter"
+                dialogClassName="confirm-modal text"
+                centered
+            >
+                <Modal.Header>
+                    <Modal.Title>Confirm Delete</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>Are you sure you wish to delete this item?</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="button-secondary" onClick={() => this.setShowConfirm(false)}>Cancel</Button>
+                    <Button variant="button-warning" onClick={() => this.deleteItem()}>Delete</Button>
+                </Modal.Footer>
+            </Modal>
+        );
     }
 
     render() {
-        return (
-            <div className="FamiliarPreset">
-                <h1>FamiliarPreset component</h1>
+        const { addItemShow, editItemShow, hasFamiliar, selectedSlot, addItemSlot, familiar } = this.state;
+        const { isSearching } = this.props.equipmentReducer;
+
+        if (!hasFamiliar) return (
+            <div>
+                <div className="step-button">
+                    <Button variant="button-secondary" className="previous-button" onClick={() => this.previousStep()}>Previous</Button>
+                    <Button variant="button-secondary" onClick={() => this.nextWizardStep()}>Skip</Button>
+                </div>
+                <div className="activate-component">
+                    <Button variant="button-primary" onClick={() => this.enableFamiliar(true)}>Add Familiar</Button>
+                </div>
             </div>
+        );
+
+        const searchFamiliarResults = this.generateFamiliarSearchResult();
+        let familiarInventorySlots = [];
+        if (familiar && familiar.familiarSize > 0) {
+            const searchItemResults = this.generateItemSearchResult();
+            familiarInventorySlots = this.createList();
+        }
+
+        return (
+            <Container>
+                <div className="FamiliarPreset">
+                    <div className="activate-component">
+                        <Button variant="button-secondary" className="previous-button" onClick={() => this.previousStep()}>Previous</Button>
+                        <Button variant="button-secondary" hidden={selectedSlot === ''} onClick={() => this.nextWizardStep()}>Next</Button>
+                    </div>
+                    <h5>Pick a familiar:</h5>
+                    <div className="spacer-h-2" />
+                    {this.showFamiliar()}
+                    {this.confirmModal()}
+                    <Form>
+                        <Form.Group controlId="formSearch">
+                            <InputGroup>
+                                <FormControl
+                                    placeholder="Search..."
+                                    aria-label="search"
+                                    aria-describedby="search"
+                                    onChange={this.setSearchFamiliar}
+                                />
+                                <InputGroup.Append>
+                                    <Button variant="button-primary" onClick={() => this.setAddItemShow(true)}>Add Familiar</Button>
+                                </InputGroup.Append>
+                            </InputGroup>
+                        </Form.Group>
+                    </Form>
+                    {isSearching ?
+                        <Spinner animation="border" variant="light" /> :
+                        searchFamiliarResults.length > 0 ?
+                            <ListGroup variant="flush" className="scrollable-list">
+                                {searchFamiliarResults}
+                            </ListGroup> :
+                            <p>No familiars found...</p>
+                    }
+                    <div className="spacer-h-3" />
+                    {familiar && familiar.familiarSize > 0 ?
+                        <div>
+                            <h5>Pick a slot:</h5>
+                            <div className="spacer-h-2" />
+                            <div className="familiar-inventory-container">
+                                <div className="familiar-inventoryContainer">
+                                    {familiarInventorySlots}
+                                </div>
+                            </div>
+                        </div>
+                        : null}
+
+
+                    {/* <div className="spacer-h-2" />
+                    <div className="clear-slot">
+                        <Button variant="button-secondary" onClick={() => this.clearItemSlot()}>Clear selected slot</Button>
+                    </div>
+                    {selectedSlot !== '' ?
+                        <>
+
+                        </>
+                        : null} */}
+                    <AddItem
+                        show={addItemShow}
+                        selectedSlot={addItemSlot}
+                        equipmentReducer={this.props.equipmentReducer}
+                        createItem={data => this.props.createItem(data, addItemSlot)}
+                        clearErrors={() => this.props.clearErrors()}
+                        onHide={() => this.setAddItemShow(false)}
+                    />
+                    <EditItem
+                        show={editItemShow}
+                        equipmentReducer={this.props.equipmentReducer}
+                        editItem={data => this.props.editItem(data, addItemSlot)}
+                        clearErrors={() => this.props.clearErrors()}
+                        onHide={() => this.setEditItemShow(false)}
+                    />
+                    <div className="step-button">
+                        <Button variant="button-warning" onClick={() => this.enableFamiliar(false)}>Remove Familiar</Button>
+                    </div>
+                </div>
+            </Container>
         );
     }
 }
 
-FamiliarPreset.propTypes = {};
+FamiliarPreset.propTypes = {
+    equipmentReducer: PropTypes.object,
+    searchItems: PropTypes.func,
+    getItemSingle: PropTypes.func,
+    createItem: PropTypes.func,
+    editItem: PropTypes.func,
+    deleteItem: PropTypes.func,
+    clearErrors: PropTypes.func,
+    updateFamiliarData: PropTypes.func,
+    updateFamiliarSlotData: PropTypes.func,
+    setCurrentStep: PropTypes.func
+};
 
-FamiliarPreset.defaultProps = {};
+const mapStateToProps = state => {
+    return {
+        equipmentReducer: state.equipmentReducer
+    };
+}
 
-export default FamiliarPreset;
+const mapDispatchToProps = dispatch => bindActionCreators({ searchItems, getItemSingle, createItem, editItem, deleteItem, clearErrors }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(FamiliarPreset);

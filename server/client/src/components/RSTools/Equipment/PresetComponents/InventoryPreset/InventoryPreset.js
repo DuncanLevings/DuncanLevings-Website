@@ -51,10 +51,6 @@ class InventoryPreset extends React.Component {
         }
     }
 
-    setRows = () => {
-
-    }
-
     enableInventory = (bool) => {
         this.setState({ hasInventory: bool });
         if (!bool) {
@@ -110,7 +106,7 @@ class InventoryPreset extends React.Component {
         event.dataTransfer.setData("dragContent", fromSlot);
     };
 
-    handleDragOver = data => event => {
+    handleDragOver = () => event => {
         event.preventDefault(); // Necessary. Allows us to drop.
         return false;
     };
@@ -118,6 +114,7 @@ class InventoryPreset extends React.Component {
     handleDrop = id => event => {
         event.preventDefault();
 
+        if (!event.dataTransfer.getData("dragContent")) return false;
         let fromSlot = JSON.parse(event.dataTransfer.getData("dragContent"));
         let toSlot = { id: id };
 
@@ -152,7 +149,7 @@ class InventoryPreset extends React.Component {
                         onClick={() => this.setSelected(slot.id)}
                         draggable="true"
                         onDragStart={this.handleDragStart(slot.id)}
-                        onDragOver={this.handleDragOver(slot.id)}
+                        onDragOver={this.handleDragOver()}
                         onDrop={this.handleDrop(slot.id)}
                     >
                         <Image className="inventory-img" src={"https://storage.googleapis.com/duncanlevings.appspot.com/5f0371760174273ce430c37d_1604963204155"} />
@@ -164,7 +161,7 @@ class InventoryPreset extends React.Component {
                     className={`inventory-slot ${selectedSlot === slot.id ? 'selected' : ''}`}
                     draggable="false"
                     onClick={() => this.setSelected(slot.id)}
-                    onDragOver={this.handleDragOver(slot.id)}
+                    onDragOver={this.handleDragOver()}
                     onDrop={this.handleDrop(slot.id)}
                 />
         );
@@ -264,7 +261,7 @@ class InventoryPreset extends React.Component {
     }
 
     deleteItem = () => {
-        this.props.deleteItem(this.state.selectedItemId, this.state.selectedSlot)
+        this.props.deleteItem(this.state.selectedItemId, 13)
         this.setState({ showConfirm: false });
     }
 
@@ -317,7 +314,7 @@ class InventoryPreset extends React.Component {
                 <div className="InventoryPreset">
                     <div className="activate-component">
                         <Button variant="button-secondary" className="previous-button" onClick={() => this.previousStep()}>Previous</Button>
-                        <Button variant="button-secondary" onClick={() => this.enableInventory(false)}>Remove Inventory</Button>
+                        <Button variant="button-secondary" hidden={selectedSlot === ''} onClick={() => this.nextWizardStep()}>Next</Button>
                     </div>
                     <h5>Select a slot:</h5>
                     <div className="inventory-container">
@@ -375,11 +372,10 @@ class InventoryPreset extends React.Component {
                         onHide={() => this.setEditItemShow(false)}
                     />
                     <div className="step-button">
-                        <Button variant="button-secondary" hidden={selectedSlot === ''} onClick={() => this.nextWizardStep()}>Next</Button>
+                        <Button variant="button-warning" onClick={() => this.enableInventory(false)}>Remove Inventory</Button>
                     </div>
                 </div>
             </Container>
-
         );
     }
 }

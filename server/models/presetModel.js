@@ -14,8 +14,7 @@ const presetSchema = new mongoose.Schema({
     equipSlotData: { type: Array },
     inventorySlotData: { type: Array },
     familiar: { type: Object },
-    equipSlotData: { type: Array },
-    familiarInventorySlotData: { type: Array },
+    familiarSlotData: { type: Array },
     abilityBarData: { type: Array },
     // prayerData: { type: Array }
 });
