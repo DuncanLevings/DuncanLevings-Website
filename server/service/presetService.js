@@ -22,7 +22,7 @@ const getPreset = async (userId, presetId) => {
 
 const createPreset = async (userId, data) => {
     // ensure preset has some needed data
-    if (!data.equipSlotData && 
+    if (!data.equipSlotData &&
         !data.inventorySlotData) throw Error(PRESET_ERRORS.NO_DATA);
 
     const presetNameCheck = await Preset.countDocuments({ ownerId: userId, name: data.name });
@@ -35,6 +35,8 @@ const createPreset = async (userId, data) => {
         .withInventorySlotData(data.inventorySlotData)
         .withFamiliar(data.familiar)
         .withfamiliarSlotData(data.familiarSlotData)
+        .withAbilityBarData(data.abilityBarData)
+        .withPresetAbilityBar(data.presetAbilityBar, data.originalBarEdited)
     );
 
     return await preset.save();
@@ -52,8 +54,11 @@ const editPreset = async (userId, data) => {
         preset.name = data.name;
         preset.equipSlotData = data.equipSlotData;
         preset.inventorySlotData = data.inventorySlotData;
-        preset.familiar = data.familiar;
+        if (data.familiar) preset.familiar = data.familiar;
         preset.familiarSlotData = data.familiarSlotData;
+        preset.abilityBarData = data.abilityBarData;
+        if (data.presetAbilityBar && !data.originalBarEdited) preset.presetAbilityBar = data.presetAbilityBar;
+        else preset.presetAbilityBar = undefined;
 
         if (data.equipSlotData.length > 0) checkEquipSlot(data.equipSlotData);
         if (data.inventorySlotData.length > 0) checkInventorySlot(data.inventorySlotData);
@@ -131,6 +136,18 @@ class PresetBuilder {
     withfamiliarSlotData(familiarSlotData) {
         if (familiarSlotData.length < 1) return this;
         this.familiarSlotData = familiarSlotData;
+        return this;
+    }
+
+    withAbilityBarData(abilityBarData) {
+        if (abilityBarData.length < 1) return this;
+        this.abilityBarData = abilityBarData;
+        return this;
+    }
+
+    withPresetAbilityBar(presetAbilityBar, originalBarEdited) {
+        if (!presetAbilityBar || originalBarEdited) return this;
+        this.presetAbilityBar = presetAbilityBar;
         return this;
     }
 }

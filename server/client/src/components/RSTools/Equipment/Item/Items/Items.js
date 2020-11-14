@@ -7,7 +7,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Collapse, Container, Form, FormControl, Image, InputGroup, ListGroup, Modal, OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap';
+import { Button, Col, Collapse, Container, Form, FormControl, Image, InputGroup, ListGroup, Modal, OverlayTrigger, Row, Spinner, Tooltip } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { searchItems, getItemSingle, createItem, editItem, deleteItem, clearErrors } from 'store/actions/RSTools/equipmentActions';
 import { EQUIPMENT_CONSTS } from 'consts/RSTools_Consts';
@@ -107,28 +107,34 @@ class Items extends React.Component {
             .filter(item => search === '' || item.name.includes(search))
             .map((item, i) =>
                 <ListGroup.Item key={i}>
-                    <Image src={item.imageUrl} /> {item.name} - {EQUIPMENT_CONSTS.slotTypes[item.slot]}
-                    <span className="actions">
-                        {item.isOwner ?
-                            <>
-                                <FaEdit className="action-icon edit" onClick={() => this.setEditItemShow(true, item._id)} />
-                                <FaTrash className="action-icon delete" onClick={() => this.setShowConfirm(true, item._id)} />
-                            </>
-                            :
-                            <>
-                                <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Can only edit items YOU made.</Tooltip>}>
-                                    <span className="d-inline-block disabled-action">
-                                        <FaEdit disabled style={{ pointerEvents: 'none' }} />
-                                    </span>
-                                </OverlayTrigger>
-                                <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Can only delete items YOU made.</Tooltip>}>
-                                    <span className="d-inline-block disabled-action">
-                                        <FaTrash disabled style={{ pointerEvents: 'none' }} />
-                                    </span>
-                                </OverlayTrigger>
-                            </>
-                        }
-                    </span>
+                    <Row>
+                        <Col xs={item.slot === 14 ? 4 : 1}><Image src={item.imageUrl} /></Col>
+                        <Col xs={3}>{item.name}</Col>
+                        <Col xs={2}>{EQUIPMENT_CONSTS.slotTypes[item.slot]}</Col>
+                        <Col>
+                            <span className="actions">
+                                {item.isOwner ?
+                                    <>
+                                        <FaEdit className="action-icon edit" onClick={() => this.setEditItemShow(true, item._id)} />
+                                        <FaTrash className="action-icon delete" onClick={() => this.setShowConfirm(true, item._id)} />
+                                    </>
+                                    :
+                                    <>
+                                        <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Can only edit items YOU made.</Tooltip>}>
+                                            <span className="d-inline-block disabled-action">
+                                                <FaEdit disabled style={{ pointerEvents: 'none' }} />
+                                            </span>
+                                        </OverlayTrigger>
+                                        <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Can only delete items YOU made.</Tooltip>}>
+                                            <span className="d-inline-block disabled-action">
+                                                <FaTrash disabled style={{ pointerEvents: 'none' }} />
+                                            </span>
+                                        </OverlayTrigger>
+                                    </>
+                                }
+                            </span>
+                        </Col>
+                    </Row>
                 </ListGroup.Item>
             );
 

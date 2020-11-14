@@ -9,7 +9,7 @@
 
 'use strict';
 const { EQUIPMENT_ERRORS } = require("../consts/error_jsons");
-const { Item, AbilityBar } = require("../config/mongo");
+const { Item, AbilityBar, Preset } = require("../config/mongo");
 const mongoose = require('mongoose');
 
 /* Regular expressions for parameter validation. */
@@ -87,6 +87,11 @@ const searchItems = async (userId, slots) => {
                     }
                 }
             }
+        },
+        {
+            $sort: {
+                slot: 1
+            }
         }
     ]);
 }
@@ -102,7 +107,7 @@ const createItem = async (userId, data, image, slots) => {
     const itemCheck = await Item.countDocuments({ name: data.name });
     if (itemCheck > 0) throw Error(EQUIPMENT_ERRORS.ITEM_EXISTS);
 
-    // if (!image) throw Error(EQUIPMENT_ERRORS.MISSING_IMAGE);
+    if (!image) throw Error(EQUIPMENT_ERRORS.MISSING_IMAGE);
 
     const item = new Item(new ItemBuilder()
         .withOwner(userId)
@@ -113,8 +118,7 @@ const createItem = async (userId, data, image, slots) => {
         .withFamiliarSize(data.familiarSize)
     );
 
-    // item.imageUrl = image.cloudStoragePublicUrl
-    item.imageUrl = "test.png" //FOR TESTING
+    item.imageUrl = image.cloudStoragePublicUrl;
 
     await item.save();
 
@@ -195,10 +199,25 @@ const editAbilityBar = async (userId, data, style) => {
         abilityBar.styleType = data.styleType;
         abilityBar.abilityBar = JSON.parse(data.abilitys);
 
+        if (data.updateAll) {
+            await updateAllPresetAbilityBars(data.abilityBarId, abilityBar);
+        }
+
         await abilityBar.save();
         return await searchAbilityBars(userId, style);
     } catch (e) {
         throw Error(e);
+    }
+}
+
+const updateAllPresetAbilityBars = async (abilityBarId, abilityBar) => {
+    const presets = await Preset.find({"presetAbilityBar._id": abilityBarId});
+
+    for (const preset of presets) {
+        preset.presetAbilityBar = abilityBar;
+        preset.abilityBarData = abilityBar.abilityBar;
+
+        await preset.save();
     }
 }
 
@@ -215,9 +234,21 @@ const deleteAbilityBar = async (userId, abilityBarId, style) => {
     const abilityBar = await AbilityBar.findOne({ _id: abilityBarId }, { ownerId: 1 });
     if (!abilityBar.ownerId.equals(userId)) throw Error(EQUIPMENT_ERRORS.NOT_OWNER_ABILITY_BAR);
 
+    await deleteAllPresetAbilityBars(abilityBarId);
+
     await AbilityBar.deleteOne({ _id: abilityBarId });
 
     return await searchAbilityBars(userId, style);
+}
+
+const deleteAllPresetAbilityBars = async (abilityBarId) => {
+    const presets = await Preset.find({"presetAbilityBar._id": mongoose.Types.ObjectId(abilityBarId) });
+
+    for (const preset of presets) {
+        preset.presetAbilityBar = undefined;
+
+        await preset.save();
+    }
 }
 
 class ItemBuilder {
@@ -242,7 +273,7 @@ class ItemBuilder {
 
     withWiki(url) {
         if (url === '') return this;
-        this.wikiUrl = url;
+        this.wiki = url;
         return this;
     }
 

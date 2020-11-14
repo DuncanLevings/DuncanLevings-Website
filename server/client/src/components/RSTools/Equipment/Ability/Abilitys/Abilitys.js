@@ -7,9 +7,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { Button, Col, Collapse, Container, Form, FormControl, Image, InputGroup, ListGroup, Modal, OverlayTrigger, Row, Spinner, Tooltip } from 'react-bootstrap';
+import { Button, Col, Container, Form, FormControl, Image, InputGroup, ListGroup, Modal, OverlayTrigger, Row, Spinner, Tooltip } from 'react-bootstrap';
 import { FaEdit, FaTrash } from 'react-icons/fa';
-import { EQUIPMENT_CONSTS } from 'consts/RSTools_Consts';
 import { getAbilityBarSingle, searchAbilityBars, createAbilityBar, editAbilityBar, deleteAbilityBar } from 'store/actions/RSTools/equipmentActions';
 import AddAbilityBar from '../AddAbilityBar/AddAbilityBar.lazy';
 import EditAbilityBar from '../EditAbilityBar/EditAbilityBar.lazy';

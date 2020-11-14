@@ -39,7 +39,7 @@ function* createPreset(presetAction) {
     try {
         yield call(createPresetAPI, presetAction.payload);
         yield put(actionCreators.createPresetSuccess());
-        // yield put(push(RSTOOL_ROUTES.PRESETS));
+        yield put(push(RSTOOL_ROUTES.EQUIPMENT));
     } catch (error) {
         yield put(actionCreators.presetError(error.response.data));
     }
@@ -49,7 +49,7 @@ function* editPreset(presetAction) {
     try {
         yield call(editPresetAPI, presetAction.payload);
         yield put(actionCreators.editPresetSuccess());
-        yield put(push(RSTOOL_ROUTES.PRESETS));
+        yield put(push(RSTOOL_ROUTES.EQUIPMENT));
     } catch (error) {
         yield put(actionCreators.presetError(error.response.data));
     }

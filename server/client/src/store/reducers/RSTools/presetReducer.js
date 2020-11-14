@@ -90,6 +90,7 @@ export default (state = intialState, action) => {
                 isCreating: false,
                 isSaving: false,
                 isFetching: false,
+                isFetchingSingle: false
             };
         default:
             return state;

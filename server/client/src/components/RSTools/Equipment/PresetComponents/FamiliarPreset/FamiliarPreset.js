@@ -70,6 +70,9 @@ class FamiliarPreset extends React.Component {
             this.props.updateFamiliarData(null);
             this.props.updateFamiliarSlotData([]);
             this.setState({
+                search: '',
+                searchFamiliar: '',
+                familiarSet: false,
                 familiar: null,
                 familiarSlotData: EQUIPMENT_CONSTS.familiarSlotData,
                 selectedSlot: ''
@@ -105,7 +108,7 @@ class FamiliarPreset extends React.Component {
             }
         }
 
-        if (fromIndex != -1 && toIndex != -1) {
+        if (fromIndex !== -1 && toIndex !== -1) {
             let { fromId, ...fromRest } = slots[fromIndex];
             let { toId, ...toRest } = slots[toIndex];
             slots[fromIndex] = { id: fromSlot.id, ...toRest };
@@ -151,7 +154,7 @@ class FamiliarPreset extends React.Component {
                     </Tooltip>}
                 >
                     <div className="familiar-container">
-                        <Image className="inventory-img" src={"https://storage.googleapis.com/duncanlevings.appspot.com/5f0371760174273ce430c37d_1604963204155"} />
+                        <Image className="inventory-img" src={familiar.imageUrl} />
                     </div>
                 </OverlayTrigger>
             );
@@ -195,7 +198,7 @@ class FamiliarPreset extends React.Component {
                             onDragOver={this.handleDragOver()}
                             onDrop={this.handleDrop(slot.id)}
                         >
-                            <Image className="inventory-img" src={"https://storage.googleapis.com/duncanlevings.appspot.com/5f0371760174273ce430c37d_1604963204155"} />
+                            <Image className="inventory-img" src={slot.image} />
                         </div>
                     </OverlayTrigger>
                     :
@@ -283,13 +286,13 @@ class FamiliarPreset extends React.Component {
         const { searchItems } = this.props.equipmentReducer;
 
         return searchItems
-            .filter(item => searchFamiliar === '' || item.name.includes(searchFamiliar))
+            .filter(item => searchFamiliar === '' || item.name.toLowerCase().includes(searchFamiliar.toLowerCase()))
             .map((item, i) =>
                 <ListGroup.Item key={i}>
                     <Row>
-                        <Col xs={2}><FaCheckSquare className="action-icon add" onClick={() => this.setFamiliar(item)} /></Col>
-                        <Col xs={1}><Image src={item.imageUrl} /></Col>
-                        <Col xs={6}>{item.name}</Col>
+                        <Col xs={1}><FaCheckSquare className="action-icon add" onClick={() => this.setFamiliar(item)} /></Col>
+                        <Col xs={4}><Image src={item.imageUrl} /></Col>
+                        <Col xs={4}>{item.name}</Col>
                         <Col><span className="actions">
                             {item.isOwner ?
                                 <>
@@ -434,8 +437,6 @@ class FamiliarPreset extends React.Component {
                         <Button variant="button-secondary" className="previous-button" onClick={() => this.previousStep()}>Previous</Button>
                         <Button variant="button-secondary" hidden={!familiar} onClick={() => this.nextWizardStep()}>Next</Button>
                     </div>
-                    <h5>Pick a familiar:</h5>
-                    <div className="spacer-h-2" />
                     {this.confirmModal()}
                     {this.showFamiliar()}
                     {familiarSet ?
@@ -444,6 +445,8 @@ class FamiliarPreset extends React.Component {
                         </div>
                         :
                         <div>
+                            <h5>Select familiar:</h5>
+                            <div className="spacer-h-2" />
                             <Form>
                                 <Form.Group controlId="formSearch">
                                     <InputGroup>

@@ -101,6 +101,10 @@ export function deleteAbilityBarSuccess(abilityBars) {
     return { type: actionTypes.DELETE_ABILITY_BAR_SUCCESS, payload: abilityBars };
 }
 
+export function clearAbilityBarObj() {
+    return { type: actionTypes.CLEAR_ABILITY_BAR_OBJ };
+}
+
 // ERROR
 
 export function clearErrors() {

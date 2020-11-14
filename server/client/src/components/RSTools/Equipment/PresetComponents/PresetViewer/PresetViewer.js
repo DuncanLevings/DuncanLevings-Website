@@ -26,9 +26,19 @@ class PresetViewer extends React.Component {
     render() {
         const { editPresetObj, isFetchingSingle } = this.props.presetReducer;
 
-        if (!editPresetObj || isFetchingSingle) {
+        if (isFetchingSingle) {
             return (
-                <Spinner animation="border" variant="light" />
+                <div className="PresetViewer">
+                    <Spinner animation="border" variant="light" />
+                </div>
+            );
+        }
+
+        if (!editPresetObj && !isFetchingSingle) {
+            return (
+                <div className="PresetViewer">
+                    <div className="error">Failed to fetch preset!</div>
+                </div>
             );
         }
 
@@ -43,6 +53,7 @@ class PresetViewer extends React.Component {
                             inventorySlotData={editPresetObj.inventorySlotData}
                             familiar={editPresetObj.familiar}
                             familiarSlotData={editPresetObj.familiarSlotData}
+                            abilityBarData={editPresetObj.abilityBarData}
                         />
                     </div>
                 </div>

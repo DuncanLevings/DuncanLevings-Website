@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { Button, Col, Container, Image, OverlayTrigger, Row, Tooltip } from 'react-bootstrap';
+import { Button, Container, Image, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import './PresetOverview.scss';
 
@@ -61,7 +61,7 @@ class PresetOverview extends React.Component {
                         </Tooltip>
                     }
                 >
-                    <Image className="slot-image" src={"https://storage.googleapis.com/duncanlevings.appspot.com/5f0371760174273ce430c37d_1604963204155"} />
+                    <Image className="slot-image" src={slot.image} />
                 </OverlayTrigger>
             );
         }
@@ -93,7 +93,7 @@ class PresetOverview extends React.Component {
                         </Tooltip>}
                 >
                     <div className='inventory-slot'>
-                        <Image className="inventory-img" src={"https://storage.googleapis.com/duncanlevings.appspot.com/5f0371760174273ce430c37d_1604963204155"} />
+                        <Image className="inventory-img" src={slot.image} />
                     </div>
                 </OverlayTrigger>
                 :
@@ -125,7 +125,7 @@ class PresetOverview extends React.Component {
                         </Tooltip>}
                     >
                         <div className='summon-slot'>
-                            <Image className="inventory-img" src={"https://storage.googleapis.com/duncanlevings.appspot.com/5f0371760174273ce430c37d_1604963204155"} />
+                            <Image className="inventory-img" src={slot.image} />
                         </div>
                     </OverlayTrigger>
                     :
@@ -134,9 +134,26 @@ class PresetOverview extends React.Component {
         ));
     }
 
+    generateAbilityBar = () => {
+        const { abilityBarData } = this.props;
+        
+        return (
+            abilityBarData.map((ability, i) =>
+                <OverlayTrigger
+                    key={i}
+                    placement="top"
+                    delay={{ show: 500, hide: 250 }}
+                    overlay={<Tooltip id="tooltip-disabled"><span className="item-slot-name">{ability.name}</span></Tooltip>}
+                >
+                    <Image className="style-img" src={ability.image} />
+                </OverlayTrigger>
+            )
+        );
+    }
+
     generateSections = () => {
-        const { equipSlotData, inventorySlotData, familiar, familiarSlotData } = this.props;
-        let equipment, inventory, summon, summonInventory = null;
+        const { equipSlotData, inventorySlotData, familiar, familiarSlotData, abilityBarData } = this.props;
+        let equipment, inventory, summon, summonInventory, abilitys, prayer = null;
 
         if (equipSlotData.length > 0) {
             equipment = (
@@ -184,9 +201,21 @@ class PresetOverview extends React.Component {
                         </Tooltip>}
                     >
                         <div className="summon-image-container">
-                            <Image src={"https://storage.googleapis.com/duncanlevings.appspot.com/5f0371760174273ce430c37d_1604963204155"} />
+                            <Image src={familiar.imageUrl} />
                         </div>
                     </OverlayTrigger>
+                </div>
+            );
+        }
+
+        if (abilityBarData.length > 0) {
+            abilitys = (
+                <div className="abilityBar-container">
+                    <div className="abilityBar">
+                        <div className="style-img-container">
+                            {this.generateAbilityBar()}
+                        </div>
+                    </div>
                 </div>
             );
         }
@@ -199,9 +228,11 @@ class PresetOverview extends React.Component {
                     {summonInventory}
                     {summon}
                 </div>
-                {/* <div className="row-container">
-                    {summonCol}
-                </div> */}
+                <div className="spacer-h-1" />
+                <div className="row-container">
+                    {abilitys}
+                    {prayer}
+                </div>
             </div>
         )
     }
@@ -228,10 +259,6 @@ class PresetOverview extends React.Component {
                 <div className="PresetOverview">
                     {this.previousButton()}
                     {this.generateSections()}
-                    <Row>
-                        <Col xs={8}><div className="col-container"></div></Col>
-                        <Col><div className="col-container"></div></Col>
-                    </Row>
                 </div>
             </Container>
         );

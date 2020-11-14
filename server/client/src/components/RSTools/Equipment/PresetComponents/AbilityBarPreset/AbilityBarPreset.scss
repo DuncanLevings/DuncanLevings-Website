@@ -1,1 +1,121 @@
-.AbilityBarPreset {}
+@import '../../../../../assets/style/breakpoints';
+@import '../../../../../assets/style/colors';
+@import '../../../../../assets/style/vars';
+
+.AbilityBarPreset {
+    font-family: 'Roboto', sans-serif;
+    padding-left: 15vh;
+    padding-right: 15vh;
+
+    h5 {
+        text-align: center;
+    }
+
+    .abilityBar-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 2rem;
+
+        .abilityBar {
+            background-image: url("/static_images/RSTools/Empty_action_bar.png");
+            background-repeat: no-repeat;
+            background-size: cover;
+            width: 530px;
+            height: 76px;
+
+            .style-img-container {
+                margin-top: 41px;
+                margin-left: 7px;
+
+                .style-img {
+                    margin-right: 6px;
+                }
+            }
+            
+        }
+    }
+
+    .clear-slot {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    .scrollable-list {
+        max-height: 25vh;
+        overflow-y: auto;
+    }
+
+    .list-group-item {
+        background-color: $body-background;
+        border-color: $hr-divider;
+
+        @include respond-to(xs) {
+            font-size: calc(8px + 2vmin);
+        }
+        
+        @include respond-to(m) {
+            font-size: calc(8px + 1vmin);
+        }
+    }
+
+    .list-group-item:hover {
+        background-color: $contact-background;
+    }
+
+    .action-icon.add {
+        color: $link-active;
+    }
+
+    .action-icon.add:hover {
+        color: white;
+        cursor: pointer;
+    }
+
+    .actions {
+        float: right;
+
+        .action-icon {
+            margin-left: 1rem;
+        }
+
+        .action-icon.edit:hover {
+            color: $link-active;
+        }
+
+        .action-icon.delete:hover {
+            color: $error;
+        }
+
+        .disabled-action {
+            color: $hr-divider;
+            margin-left: 1rem;
+        }
+    }
+}
+
+.confirm-modal {
+    font-family: 'Roboto', sans-serif;
+    color: $dark-theme;
+
+    .modal-title {
+        font-size: calc(12px + 2vmin);
+    }
+}
+
+.activate-component {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.step-button {
+    margin: 2rem;
+    text-align: center;
+}
+
+.previous-button {
+    margin-right: 1rem;
+}
+
+.item-slot-name {
+    color: #c3e8a3
+}

@@ -13,10 +13,13 @@ import EquipmentPreset from '../PresetComponents/EquipmentPreset/EquipmentPreset
 import PresetOverview from '../PresetComponents/PresetOverview/PresetOverview.lazy';
 import InventoryPreset from '../PresetComponents/InventoryPreset/InventoryPreset.lazy';
 import FamiliarPreset from '../PresetComponents/FamiliarPreset/FamiliarPreset.lazy';
+import AbilityBarPreset from '../PresetComponents/AbilityBarPreset/AbilityBarPreset.lazy';
+import PrayerPreset from '../PresetComponents/PrayerPreset/PrayerPreset.lazy';
 import Stepper from 'components/tools/Stepper/Stepper';
 import StepWizard from 'react-step-wizard';
 import PropTypes from 'prop-types';
 import './PresetWizard.scss';
+
 
 class PresetWizard extends React.Component {
     constructor(props) {
@@ -32,6 +35,8 @@ class PresetWizard extends React.Component {
             familiar: null,
             familiarSlotData: [],
             abilityBarData: [],
+            presetAbilityBar: null,
+            originalBarEdited: false,
             // prayerData: []
         }
     }
@@ -52,7 +57,9 @@ class PresetWizard extends React.Component {
                     equipSlotData: preset.equipSlotData,
                     inventorySlotData: preset.inventorySlotData,
                     familiar: preset.familiar || null,
-                    familiarSlotData: preset.familiarSlotData
+                    familiarSlotData: preset.familiarSlotData,
+                    abilityBarData: preset.abilityBarData,
+                    presetAbilityBar: preset.presetAbilityBar
                 });
             }
         }
@@ -82,6 +89,14 @@ class PresetWizard extends React.Component {
         this.setState({ familiarSlotData: data });
     }
 
+    updateAbilityBarData = (data, presetAbilityBar, changed = false) => {
+        this.setState({
+            abilityBarData: data,
+            presetAbilityBar: presetAbilityBar,
+            originalBarEdited: changed
+        });
+    }
+
     setCurrentStep = (step) => {
         let progress = 0;
         switch (step) {
@@ -93,6 +108,12 @@ class PresetWizard extends React.Component {
                 break;
             case 4:
                 progress = 60;
+                break;
+            case 5:
+                progress = 80;
+                break;
+            case 6:
+                progress = 100;
                 break;
             default:
                 break;
@@ -141,7 +162,7 @@ class PresetWizard extends React.Component {
     }
 
     generateStepWizard = () => {
-        const { step, editRetrieved, equipSlotData, inventorySlotData, familiar, familiarSlotData } = this.state;
+        const { step, editRetrieved, equipSlotData, inventorySlotData, familiar, familiarSlotData, abilityBarData, presetAbilityBar } = this.state;
         const { isFetchingSingle } = this.props.presetReducer;
 
         if (this.checkEditMode()) {
@@ -170,12 +191,23 @@ class PresetWizard extends React.Component {
                             updateFamiliarSlotData={data => this.updateFamiliarSlotData(data)}
                             setCurrentStep={step => this.setCurrentStep(step)}
                         />
+                        <AbilityBarPreset
+                            editMode={true}
+                            abilityBarData={abilityBarData}
+                            presetAbilityBar={presetAbilityBar}
+                            updateAbilityBarData={(data, abilityBar, edited) => this.updateAbilityBarData(data, abilityBar, edited)}
+                            setCurrentStep={step => this.setCurrentStep(step)}
+                        />
+                        <PrayerPreset
+                            setCurrentStep={step => this.setCurrentStep(step)}
+                        />
                         <PresetOverview
                             createOrEdit={true}
                             equipSlotData={equipSlotData}
                             inventorySlotData={inventorySlotData}
                             familiar={familiar}
                             familiarSlotData={familiarSlotData}
+                            abilityBarData={abilityBarData}
                             setCurrentStep={step => this.setCurrentStep(step)}
                         />
                     </StepWizard>
@@ -198,12 +230,20 @@ class PresetWizard extends React.Component {
                     updateFamiliarSlotData={data => this.updateFamiliarSlotData(data)}
                     setCurrentStep={step => this.setCurrentStep(step)}
                 />
+                <AbilityBarPreset
+                    updateAbilityBarData={(data, abilityBar, edited) => this.updateAbilityBarData(data, abilityBar, edited)}
+                    setCurrentStep={step => this.setCurrentStep(step)}
+                />
+                <PrayerPreset
+                    setCurrentStep={step => this.setCurrentStep(step)}
+                />
                 <PresetOverview
                     createOrEdit={true}
                     equipSlotData={equipSlotData}
                     inventorySlotData={inventorySlotData}
                     familiar={familiar}
                     familiarSlotData={familiarSlotData}
+                    abilityBarData={abilityBarData}
                     setCurrentStep={step => this.setCurrentStep(step)}
                 />
             </StepWizard>
@@ -211,14 +251,15 @@ class PresetWizard extends React.Component {
     }
 
     submitCheck = () => {
-        const { step, stepData, equipSlotData, inventorySlotData, familiar, familiarSlotData } = this.state;
+        const { step, stepData, equipSlotData, inventorySlotData, familiar, familiarSlotData, abilityBarData } = this.state;
         const { isCreating, isSaving } = this.props.presetReducer;
 
-        if (step === 4) {
+        if (step === stepData.length) {
             // there must be at least one of the following true
             if (equipSlotData.length > 0 ||
                 inventorySlotData.length > 0 ||
-                familiar || familiarSlotData.length > 0) {
+                familiar || familiarSlotData.length > 0 ||
+                abilityBarData.length > 0) {
                 return (
                     <div className="submit-button">
                         <Button
@@ -233,7 +274,7 @@ class PresetWizard extends React.Component {
 
     submit = () => {
         const { editPresetObj } = this.props.presetReducer;
-        const { name, equipSlotData, inventorySlotData, familiar, familiarSlotData } = this.state;
+        const { name, equipSlotData, inventorySlotData, familiar, familiarSlotData, abilityBarData, presetAbilityBar, originalBarEdited } = this.state;
 
         if (name === '') return this.setState({ missingName: true });
         this.setState({ missingName: false });
@@ -243,7 +284,10 @@ class PresetWizard extends React.Component {
             equipSlotData: equipSlotData,
             inventorySlotData: inventorySlotData,
             familiar: familiar,
-            familiarSlotData: familiarSlotData
+            familiarSlotData: familiarSlotData,
+            abilityBarData: abilityBarData,
+            presetAbilityBar: presetAbilityBar,
+            originalBarEdited: originalBarEdited
         }
 
         if (this.checkEditMode()) {

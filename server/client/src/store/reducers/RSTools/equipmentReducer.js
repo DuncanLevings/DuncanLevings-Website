@@ -169,6 +169,11 @@ export default (state = intialState, action) => {
                 isSearching: false,
                 isSaving: false
             };
+        case actionTypes.CLEAR_ABILITY_BAR_OBJ:
+            return {
+                ...state,
+                editAbilityBarObj: null
+            };
         case actionTypes.CLEAR_ERRORS:
             return {
                 ...state,

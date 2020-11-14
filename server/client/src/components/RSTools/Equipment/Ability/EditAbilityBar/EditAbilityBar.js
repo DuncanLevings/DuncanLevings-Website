@@ -82,26 +82,29 @@ class EditAbilityBar extends React.Component {
                 droppable1: 'basics',
                 droppable2: 'thresholds',
                 droppable3: 'ultimates'
-            }
+            },
+            showUpdateAll: false
         }
     }
 
     componentDidMount() {
-
+        if (this.props.editFromPreset) this.setState({ abilityBar: this.props.barSlots });
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.equipmentReducer.editAbilityBarObj !== prevProps.equipmentReducer.editAbilityBarObj) {
-            this.setState({
-                abilityBar: this.props.equipmentReducer.editAbilityBarObj.abilityBar
-            });
+            if (this.props.editFromPreset) this.setState({ abilityBar: this.props.barSlots });
+            else if (this.props.equipmentReducer.editAbilityBarObj) this.setState({ abilityBar: this.props.equipmentReducer.editAbilityBarObj.abilityBar });
         }
 
         if (this.props.equipmentReducer.searchAbilityBars !== prevProps.equipmentReducer.searchAbilityBars) {
-            this.setState({ 
-                style: null,
-                abilityBar: []
-            });
+            if (!this.props.editFromPreset) {
+                this.setState({
+                    style: null,
+                    abilityBar: []
+                });
+            }
+
             this.props.onHide();
         }
     }
@@ -215,6 +218,48 @@ class EditAbilityBar extends React.Component {
         );
     }
 
+    setShowUpdateAll = (bool) => {
+        this.setState({ showUpdateAll: bool });
+    }
+
+    submitData = (updateAll = false) => {
+        this.setShowUpdateAll(false)
+        const formData = this.state.formData;
+
+        if (updateAll) {
+            formData.append("updateAll", updateAll);
+        }
+
+        this.props.editAbilityBar(formData);
+    }
+
+    updateAllModal = () => {
+        const { showUpdateAll } = this.state;
+
+        return (
+            <Modal
+                show={showUpdateAll}
+                onHide={() => this.setShowUpdateAll(false)}
+                aria-labelledby="contained-modal-title-vcenter"
+                dialogClassName="confirm-modal text"
+                centered
+            >
+                <Modal.Header>
+                    <Modal.Title>Confirm Action</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>Update all presets that use this ability bar?</p>
+                    <p className="small-text">Note: Will only affect presets with an un-edited version of this ability bar</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="button-secondary" onClick={() => this.submitData(true)}>Yes</Button>
+                    <Button variant="button-secondary" onClick={() => this.submitData()}>No</Button>
+                    <Button variant="button-secondary" onClick={() => this.setShowUpdateAll(false)}>Cancel</Button>
+                </Modal.Footer>
+            </Modal>
+        );
+    }
+
     submitAbilityBar = values => {
         const { editAbilityBarObj } = this.props.equipmentReducer;
 
@@ -228,21 +273,142 @@ class EditAbilityBar extends React.Component {
         formData.append('styleType', values.styleType);
         formData.append('abilitys', JSON.stringify(this.state.abilityBar));
 
-        this.props.editAbilityBar(formData);
+        if (this.props.editFromPreset) this.props.setBarSlots(this.state.abilityBar);
+
+        this.setState({ formData: formData });
+        this.setShowUpdateAll(true);
+
+        // this.props.editAbilityBar(formData);
     }
 
-    render() {
-        const { editAbilityBar, equipmentReducer, ...rest } = this.props;
-        const { style, abilitysRequired, lengthError, duplicateError } = this.state;
-        const { editAbilityBarObj, isSaving, isFetching, error } = equipmentReducer;
+    sendToPreset = () => {
+        this.props.setBarSlots(this.state.abilityBar, true);
+        this.props.onHide();
+    }
+
+    getInitialValues = () => {
+        const { editAbilityBarObj } = this.props.equipmentReducer;
+        const { editFromPreset, abilityBarFromPreset } = this.props;
+
+        if (!editAbilityBarObj) return null;
+
+        let values = {};
+        if (editFromPreset && abilityBarFromPreset) {
+            values = {
+                name: abilityBarFromPreset.name,
+                styleType: abilityBarFromPreset.styleType
+            }
+        } else {
+            values = {
+                name: editAbilityBarObj.name,
+                styleType: editAbilityBarObj.styleType
+            }
+        }
+
+        return values;
+    }
+
+    showAbilityBar = () => {
+        const { abilityBar, style, lengthError, duplicateError } = this.state;
+        const { editAbilityBarObj } = this.props.equipmentReducer;
 
         let droppable, droppable1, droppable2, droppable3 = null;
-        if (editAbilityBarObj) droppable = this.createList("abilityBar", "droppable");
+        if (editAbilityBarObj || abilityBar.length > 0) droppable = this.createList("abilityBar", "droppable");
         if (style) {
             droppable1 = this.createList("basics", "droppable1");
             droppable2 = this.createList("thresholds", "droppable2");
             droppable3 = this.createList("ultimates", "droppable3");
         }
+
+        return (
+            <div>
+                <DropdownButton id="dropdown-style" title="Load Style" variant="button-secondary" onSelect={this.handleStyleSelect}>
+                    <Dropdown.Item eventKey="melee"><span><Image className="style-img" src="/static_images/RSTools/styles/melee.png" /> Melee</span></Dropdown.Item>
+                    <Dropdown.Item eventKey="range"><span><Image className="style-img" src="/static_images/RSTools/styles/range.png" /> Range</span></Dropdown.Item>
+                    <Dropdown.Item eventKey="magic"><span><Image className="style-img" src="/static_images/RSTools/styles/magic.png" /> Magic</span></Dropdown.Item>
+                    <Dropdown.Item eventKey="other"><span><Image className="style-img" src="/static_images/RSTools/styles/defence_abilities.png" /> Other</span></Dropdown.Item>
+                </DropdownButton>
+                <div className="spacer-h-2" />
+                {
+                    lengthError ?
+                        <div className="ability-error">
+                            Reached limit of a single ability bar!
+                        </div>
+                        : null
+                }
+                {
+                    duplicateError ?
+                        <div className="ability-error">
+                            Cannot have duplicate abilitys!
+                        </div>
+                        : null
+                }
+                <DragDropContext onDragEnd={this.onDragEnd}>
+                    {droppable}
+                    <br />
+                    {style ?
+                        <>
+                            <p>Drag from below abilitys to your ability bar</p>
+                            {droppable1}
+                            <br />
+                            {droppable2}
+                            <br />
+                            {droppable3}
+                        </>
+                        : null}
+                </DragDropContext>
+            </div>
+        );
+    }
+
+    showSubmit = () => {
+        const { editFromPreset, abilityBarFromPreset } = this.props;
+        const { isSaving } = this.props.equipmentReducer;
+
+        if (editFromPreset) {
+            if (!abilityBarFromPreset) {
+                return (
+                    <div className="ability-button">
+                        <Button className="presetSubmit" variant="button-primary" onClick={() => this.sendToPreset()}>Submit</Button>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="ability-button">
+                    <Button className="presetSubmit" variant="button-primary" onClick={() => this.sendToPreset()}>Submit</Button>
+                    <OverlayTrigger
+                        placement="top"
+                        delay={{ show: 250, hide: 250 }}
+                        overlay={<Tooltip id="tooltip-disabled">Overwrite and save selected ability bar</Tooltip>}
+                    >
+                        <Button
+                            variant="button-primary"
+                            type="submit"
+                            disabled={isSaving}>Submit Current {isSaving ? <Spinner animation="border" variant="light" size="sm" /> : null}
+                        </Button>
+                    </OverlayTrigger>
+                </div>
+            );
+        }
+
+        return (
+            <div className="ability-button">
+                <Button
+                    variant="button-primary"
+                    type="submit"
+                    disabled={isSaving}>Submit {isSaving ? <Spinner animation="border" variant="light" size="sm" /> : null}
+                </Button>
+            </div >
+        );
+    }
+
+    render() {
+        const { editAbilityBar, clearAbilityBarObj, equipmentReducer, abilityBarFromPreset, editFromPreset, barSlots, setBarSlots, ...rest } = this.props;
+        const { abilitysRequired } = this.state;
+        const { editAbilityBarObj, isFetching, error } = equipmentReducer;
+
+        const initialValues = this.getInitialValues();
 
         return (
             <Modal
@@ -256,6 +422,7 @@ class EditAbilityBar extends React.Component {
                     <Modal.Title>Add Ability Bar</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    {this.updateAllModal()}
                     <div className="ability-error">
                         <p>{error}</p>
                         <p>{abilitysRequired ? "Ability bar is empty! Load a style to begin." : ''}</p>
@@ -265,10 +432,7 @@ class EditAbilityBar extends React.Component {
                             <Formik
                                 validationSchema={abilitySchema}
                                 onSubmit={this.submitAbilityBar}
-                                initialValues={{
-                                    name: editAbilityBarObj.name,
-                                    styleType: editAbilityBarObj.styleType
-                                }}
+                                initialValues={initialValues}
                             >
                                 {({
                                     handleSubmit,
@@ -323,45 +487,16 @@ class EditAbilityBar extends React.Component {
                                                     </Form.Control.Feedback>
                                                 </InputGroup>
                                             </Form.Group>
-                                            <DropdownButton id="dropdown-style" title="Load Style" variant="button-secondary" onSelect={this.handleStyleSelect}>
-                                                <Dropdown.Item eventKey="melee"><span><Image className="style-img" src="/static_images/RSTools/styles/melee.png" /> Melee</span></Dropdown.Item>
-                                                <Dropdown.Item eventKey="range"><span><Image className="style-img" src="/static_images/RSTools/styles/range.png" /> Range</span></Dropdown.Item>
-                                                <Dropdown.Item eventKey="magic"><span><Image className="style-img" src="/static_images/RSTools/styles/magic.png" /> Magic</span></Dropdown.Item>
-                                                <Dropdown.Item eventKey="other"><span><Image className="style-img" src="/static_images/RSTools/styles/defence_abilities.png" /> Other</span></Dropdown.Item>
-                                            </DropdownButton>
-                                            <div className="spacer-h-2" />
-                                            {lengthError ?
-                                                <div className="ability-error">
-                                                    Reached limit of a single ability bar!
-                                                </div> : null}
-                                            {duplicateError ?
-                                                <div className="ability-error">
-                                                    Cannot have duplicate abilitys!
-                                                </div> : null}
-                                            <DragDropContext onDragEnd={this.onDragEnd}>
-                                                {droppable}
-                                                <br />
-                                                {style ?
-                                                    <>
-                                                        <p>Drag from below abilitys to your ability bar</p>
-                                                        {droppable1}
-                                                        <br />
-                                                        {droppable2}
-                                                        <br />
-                                                        {droppable3}
-                                                    </>
-                                                    : null}
-                                            </DragDropContext>
-                                            <div className="ability-button">
-                                                <Button
-                                                    variant="button-primary"
-                                                    type="submit"
-                                                    disabled={isSaving}>Submit {isSaving ? <Spinner animation="border" variant="light" size="sm" /> : null}</Button>
-                                            </div>
+                                            {this.showAbilityBar()}
+                                            {this.showSubmit()}
                                         </Form>
                                     )}
                             </Formik>
-                            : null
+                            :
+                            <div>
+                                {this.showAbilityBar()}
+                                {this.showSubmit()}
+                            </div>
                     }
                 </Modal.Body>
                 <Modal.Footer>
@@ -374,7 +509,10 @@ class EditAbilityBar extends React.Component {
 
 EditAbilityBar.propTypes = {
     equipmentReducer: PropTypes.object.isRequired,
-    editAbilityBar: PropTypes.func.isRequired
+    editAbilityBar: PropTypes.func.isRequired,
+    clearAbilityBarObj: PropTypes.func,
+    editFromPreset: PropTypes.bool,
+    barSlots: PropTypes.array
 };
 
 export default EditAbilityBar;

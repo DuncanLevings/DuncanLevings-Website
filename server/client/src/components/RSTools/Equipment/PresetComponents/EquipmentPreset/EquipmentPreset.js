@@ -102,7 +102,7 @@ class EquipmentPreset extends React.Component {
                         </Tooltip>
                     }
                 >
-                    <Image className="slot-image" src={"https://storage.googleapis.com/duncanlevings.appspot.com/5f0371760174273ce430c37d_1604963204155"} />
+                    <Image className="slot-image" src={slot.image} />
                 </OverlayTrigger>
             );
         }
@@ -235,6 +235,7 @@ class EquipmentPreset extends React.Component {
         if (!bool) {
             this.props.updateEquipData([]);
             this.setState({ 
+                search: '',
                 slots: EQUIPMENT_CONSTS.slotPositions,
                 selectedSlot: -1
             });

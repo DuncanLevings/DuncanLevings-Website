@@ -67,14 +67,17 @@ class EditItem extends React.Component {
 
     submitItem = values => {
         const { editItemObj } = this.props.equipmentReducer;
-        // if (!values.image) return this.setState({ imageRequired: true });
+        if (!values.image) return this.setState({ imageRequired: true });
 
         let formData = new FormData();
 
         formData.append('itemId', editItemObj._id);
         formData.append('name', values.name);
         formData.append('wikiUrl', values.wikiURL);
-        // formData.append('image', values.image.blob, `${values.name}-image`);
+
+        if (values.image.blob) {
+            formData.append('image', values.image.blob, `${values.name}-image`);
+        }
 
         if (values.isAugmented) {
             formData.append('isAugmented', values.isAugmented);
@@ -87,7 +90,7 @@ class EditItem extends React.Component {
             formData.append('familiarSize', values.familiarSize);
         }
 
-        // window.URL.revokeObjectURL(values.image.url);
+        window.URL.revokeObjectURL(values.image.url);
 
         this.props.editItem(formData);
     }

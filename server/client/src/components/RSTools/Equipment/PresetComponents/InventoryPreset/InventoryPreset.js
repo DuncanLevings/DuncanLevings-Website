@@ -56,6 +56,7 @@ class InventoryPreset extends React.Component {
         if (!bool) {
             this.props.updateInventoryData([]);
             this.setState({
+                search: '',
                 inventorySlotData: EQUIPMENT_CONSTS.inventorySlotData,
                 selectedSlot: ''
             });
@@ -152,7 +153,7 @@ class InventoryPreset extends React.Component {
                         onDragOver={this.handleDragOver()}
                         onDrop={this.handleDrop(slot.id)}
                     >
-                        <Image className="inventory-img" src={"https://storage.googleapis.com/duncanlevings.appspot.com/5f0371760174273ce430c37d_1604963204155"} />
+                        <Image className="inventory-img" src={slot.image} />
                     </div>
                 </OverlayTrigger>
                 :

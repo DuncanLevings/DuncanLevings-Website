@@ -106,7 +106,7 @@ class Presets extends React.Component {
                             {preset.equipSlotData.length > 0 ? <Image src={"/static_images/RSTools/equipment_icon.png"} /> : null}
                             {preset.inventorySlotData.length > 0 ? <Image src={"/static_images/RSTools/inventory_icon.png"} /> : null}
                             {preset.familiar ? <Image src={"/static_images/RSTools/familiar_icon.png"} /> : null}
-                            {/* {preset.abilityBarData.length > 0 ? <Image src={"/static_images/RSTools/abilitys_icon.png"} /> : null} */}
+                            {preset.abilityBarData.length > 0 ? <Image src={"/static_images/RSTools/abilitys_icon.png"} /> : null}
                             {/* {preset.prayerData.length > 0 ? <Image src={"/static_images/RSTools/prayer_icon.png"} /> : null} */}
                         </Col>
                         <Col>

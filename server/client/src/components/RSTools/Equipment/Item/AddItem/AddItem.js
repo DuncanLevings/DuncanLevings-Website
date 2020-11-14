@@ -80,14 +80,14 @@ class AddItem extends React.Component {
     }
 
     submitItem = values => {
-        // if (!values.image) return this.setState({ imageRequired: true });
+        if (!values.image) return this.setState({ imageRequired: true });
 
         let formData = new FormData();
 
         formData.append('slot', this.state.slot);
         formData.append('name', values.name);
         formData.append('wikiUrl', values.wikiURL);
-        // formData.append('image', values.image.blob, `${values.name}-image`);
+        formData.append('image', values.image.blob, `${values.name}-image`);
 
         if (this.state.augment) {
             formData.append('isAugmented', this.state.augment);
@@ -100,7 +100,7 @@ class AddItem extends React.Component {
             formData.append('familiarSize', values.familiarSize);
         }
 
-        // window.URL.revokeObjectURL(values.image.url);
+        window.URL.revokeObjectURL(values.image.url);
 
         this.props.createItem(formData);
         this.setState({ reset: true });
