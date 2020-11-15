@@ -54,6 +54,7 @@ class PresetViewer extends React.Component {
                             familiar={editPresetObj.familiar}
                             familiarSlotData={editPresetObj.familiarSlotData}
                             abilityBarData={editPresetObj.abilityBarData}
+                            prayerData={editPresetObj.prayerData}
                         />
                     </div>
                 </div>

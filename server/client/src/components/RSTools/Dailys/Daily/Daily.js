@@ -274,7 +274,9 @@ class Daily extends React.Component {
                                     <Accordion key={i}>
                                         <Card>
                                             <Accordion.Toggle as={Card.Header} eventKey={cardKey} onClick={() => this.dailyToggled(dailyData)}>
-                                                <Button variant="button-primary" hidden={this.checkCompleteClicked(daily.dailyId._id)} className="daily-complete" onClick={this.markComplete(daily)}><FaCheck /></Button>
+                                                <Button variant="button-primary" hidden={this.checkCompleteClicked(daily.dailyId._id)} className="daily-complete" onClick={this.markComplete(daily)}>
+                                                    <FaCheck className="fa-lg" />
+                                                </Button>
                                                 {dailyData.title}
                                                 <span className="actions">
                                                     <FaEdit size="0.75em" className="action-icon edit" onClick={this.setShowEdit(true, daily)} />

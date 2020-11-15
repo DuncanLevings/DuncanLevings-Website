@@ -136,7 +136,7 @@ class PresetOverview extends React.Component {
 
     generateAbilityBar = () => {
         const { abilityBarData } = this.props;
-        
+
         return (
             abilityBarData.map((ability, i) =>
                 <OverlayTrigger
@@ -151,8 +151,25 @@ class PresetOverview extends React.Component {
         );
     }
 
+    generatePrayer = () => {
+        const { prayerData } = this.props;
+
+        return prayerData.map((prayer, i) =>
+            prayer.selected ?
+                <OverlayTrigger
+                    key={i}
+                    placement="top"
+                    delay={{ show: 500, hide: 250 }}
+                    overlay={<Tooltip id="tooltip-disabled"><span className="item-slot-name">{prayer.name}</span></Tooltip>}
+                >
+                    <Image className='prayer-img' src={prayer.image} />
+                </OverlayTrigger>
+                : null
+        );
+    }
+
     generateSections = () => {
-        const { equipSlotData, inventorySlotData, familiar, familiarSlotData, abilityBarData } = this.props;
+        const { equipSlotData, inventorySlotData, familiar, familiarSlotData, abilityBarData, prayerData } = this.props;
         let equipment, inventory, summon, summonInventory, abilitys, prayer = null;
 
         if (equipSlotData.length > 0) {
@@ -220,6 +237,16 @@ class PresetOverview extends React.Component {
             );
         }
 
+        if (prayerData.length > 0) {
+            prayer = (
+                <div className="prayer-container">
+                    <div className="prayerContainer">
+                        {this.generatePrayer()}
+                    </div>
+                </div>
+            )
+        }
+
         return (
             <div>
                 <div className="row-container">
@@ -228,11 +255,16 @@ class PresetOverview extends React.Component {
                     {summonInventory}
                     {summon}
                 </div>
-                <div className="spacer-h-1" />
-                <div className="row-container">
-                    {abilitys}
-                    {prayer}
-                </div>
+                {abilitys ?
+                    <div className="row-container">
+                        {abilitys}
+                    </div>
+                    : null}
+                {prayer ?
+                    <div className="row-container">
+                        {prayer}
+                    </div>
+                    : null}
             </div>
         )
     }

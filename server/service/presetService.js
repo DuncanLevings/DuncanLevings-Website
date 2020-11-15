@@ -37,6 +37,7 @@ const createPreset = async (userId, data) => {
         .withfamiliarSlotData(data.familiarSlotData)
         .withAbilityBarData(data.abilityBarData)
         .withPresetAbilityBar(data.presetAbilityBar, data.originalBarEdited)
+        .withPrayerData(data.prayerData, data.prayerType)
     );
 
     return await preset.save();
@@ -54,11 +55,18 @@ const editPreset = async (userId, data) => {
         preset.name = data.name;
         preset.equipSlotData = data.equipSlotData;
         preset.inventorySlotData = data.inventorySlotData;
+
         if (data.familiar) preset.familiar = data.familiar;
+        else preset.familiar = undefined;
         preset.familiarSlotData = data.familiarSlotData;
+
         preset.abilityBarData = data.abilityBarData;
         if (data.presetAbilityBar && !data.originalBarEdited) preset.presetAbilityBar = data.presetAbilityBar;
         else preset.presetAbilityBar = undefined;
+
+        preset.prayerData = data.prayerData;
+        if (data.prayerType) preset.prayerType = data.prayerType;
+        else preset.prayerType = undefined;
 
         if (data.equipSlotData.length > 0) checkEquipSlot(data.equipSlotData);
         if (data.inventorySlotData.length > 0) checkInventorySlot(data.inventorySlotData);
@@ -148,6 +156,13 @@ class PresetBuilder {
     withPresetAbilityBar(presetAbilityBar, originalBarEdited) {
         if (!presetAbilityBar || originalBarEdited) return this;
         this.presetAbilityBar = presetAbilityBar;
+        return this;
+    }
+
+    withPrayerData(prayerData, prayerType) {
+        if (prayerData.length < 1) return this;
+        this.prayerData = prayerData;
+        this.prayerType = prayerType;
         return this;
     }
 }

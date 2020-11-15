@@ -433,14 +433,14 @@ class FamiliarPreset extends React.Component {
         return (
             <Container>
                 <div className="FamiliarPreset">
-                    <div className="activate-component">
+                    <div className="step-button">
                         <Button variant="button-secondary" className="previous-button" onClick={() => this.previousStep()}>Previous</Button>
                         <Button variant="button-secondary" hidden={!familiar} onClick={() => this.nextWizardStep()}>Next</Button>
                     </div>
                     {this.confirmModal()}
                     {this.showFamiliar()}
                     {familiarSet ?
-                        <div className="activate-component">
+                        <div className="step-button">
                             <Button variant="button-secondary" onClick={() => this.clearFamiliar()}>Change Familiar</Button>
                         </div>
                         :

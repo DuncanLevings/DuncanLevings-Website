@@ -254,18 +254,18 @@ class AbilityBarPreset extends React.Component {
         return (
             <Container>
                 <div className="AbilityBarPreset">
-                    <div className="activate-component">
+                    <div className="step-button">
                         <Button variant="button-secondary" className="previous-button" onClick={() => this.previousStep()}>Previous</Button>
                         <Button variant="button-secondary" hidden={!abilityBarSet} onClick={() => this.nextWizardStep()}>Next</Button>
                     </div>
                     {this.confirmModal()}
                     {abilityBarSet ?
                         <div>
-                            <div className="activate-component">
+                            <div className="step-button">
                                 <Button variant="button-secondary" onClick={() => this.clearAbilityBar()}>Change Ability Bar</Button>
                             </div>
                             {this.displayAbilityBar()}
-                            <div className="activate-component">
+                            <div className="step-button">
                                 <Button variant="button-secondary" onClick={() => this.editBar()}>Edit Ability Bar</Button>
                             </div>
                         </div>

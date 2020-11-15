@@ -313,7 +313,7 @@ class InventoryPreset extends React.Component {
         return (
             <Container>
                 <div className="InventoryPreset">
-                    <div className="activate-component">
+                    <div className="step-button">
                         <Button variant="button-secondary" className="previous-button" onClick={() => this.previousStep()}>Previous</Button>
                         <Button variant="button-secondary" hidden={selectedSlot === ''} onClick={() => this.nextWizardStep()}>Next</Button>
                     </div>

@@ -11,6 +11,59 @@
         text-align: center;
     }
 
+    .prayer-selection {
+        text-align: center;
+
+        .prayer {
+            &-regular {
+                background-color: #f7861b;
+                border-color: #f7861b;
+                margin-right: 1rem;
+                padding: 1rem;
+                font-size: calc(12px + 1vmin);
+                font-weight: 600;
+            }
+    
+            &-ancient {
+                background-color:#6bc71f;
+                border-color:#6bc71f;
+                padding: 1rem;
+                font-size: calc(12px + 1vmin);
+                font-weight: 600;
+            }
+        }
+    }
+
+    .prayer-container {
+        display: flex;
+        justify-content: center;
+
+        .prayerContainer {
+            width: 75%;
+            margin-top: 3rem;
+            margin-bottom: 3rem;
+            padding: 1rem;
+            text-align: center;
+            background-color: rgb(65, 74, 97);
+
+            .prayer-img {
+                width: 34px;
+                height: 34px;
+                margin-right: 5px;
+                border: 2px solid transparent;
+                border-radius: 50%;
+            }
+
+            .selected {
+                border-color: #fcea94;
+            }
+
+            .prayer-img:hover {
+                border-color: #fceb948f;
+            }
+        }
+    }
+
     .clear-slot {
         text-align: center;
         margin-bottom: 1rem;

@@ -778,6 +778,177 @@ const familiarSlotData = [
     }
 ]
 
+const prayerData = {
+    prayers: [
+        {
+            name: 'Protect Item',
+            image: '/static_images/RSTools/prayer/regular/Protect_Item.png'
+        },
+        {
+            name: 'Steel Skin',
+            image: '/static_images/RSTools/prayer/regular/Steel_Skin.png'
+        },
+        {
+            name: 'Ultimate Strength',
+            image: '/static_images/RSTools/prayer/regular/Ultimate_Strength.png'
+        },
+        {
+            name: 'Incredible Reflexes',
+            image: '/static_images/RSTools/prayer/regular/Incredible_Reflexes.png'
+        },
+        {
+            name: 'Protect from Magic',
+            image: '/static_images/RSTools/prayer/regular/Protect_from_Magic.png'
+        },
+        {
+            name: 'Protect from Missiles',
+            image: '/static_images/RSTools/prayer/regular/Protect_from_Missiles.png'
+        },
+        {
+            name: 'Protect from Melee',
+            image: '/static_images/RSTools/prayer/regular/Protect_from_Melee.png'
+        },
+        {
+            name: 'Overpowering Force',
+            image: '/static_images/RSTools/prayer/regular/Overpowering_Force.png'
+        },
+        {
+            name: 'Eagle Eye',
+            image: '/static_images/RSTools/prayer/regular/Eagle_Eye.png'
+        },
+        {
+            name: 'Overcharge',
+            image: '/static_images/RSTools/prayer/regular/Overcharge.png'
+        },
+        {
+            name: 'Mystic Might',
+            image: '/static_images/RSTools/prayer/regular/Mystic_Might.png'
+        },
+        {
+            name: 'Piety',
+            image: '/static_images/RSTools/prayer/regular/Piety.png'
+        },
+        {
+            name: 'Augury',
+            image: '/static_images/RSTools/prayer/regular/Augury.png'
+        },
+        {
+            name: 'Rigour',
+            image: '/static_images/RSTools/prayer/regular/Rigour.png'
+        }
+    ],
+    curses: [
+        {
+            name: 'Protect Item',
+            image: '/static_images/RSTools/prayer/curses/Protect_Item.png'
+        },
+        {
+            name: 'Berserker',
+            image: '/static_images/RSTools/prayer/curses/Berserker.png'
+        },
+        {
+            name: 'Deflect_Magic',
+            image: '/static_images/RSTools/prayer/curses/Deflect_Magic.png'
+        },
+        {
+            name: 'Deflect Missiles',
+            image: '/static_images/RSTools/prayer/curses/Deflect_Missiles.png'
+        },
+        {
+            name: 'Deflect Melee',
+            image: '/static_images/RSTools/prayer/curses/Deflect_Melee.png'
+        },
+        {
+            name: 'Leech Attack',
+            image: '/static_images/RSTools/prayer/curses/Leech_Attack.png'
+        },
+        {
+            name: 'Leech Ranged',
+            image: '/static_images/RSTools/prayer/curses/Leech_Ranged.png'
+        },
+        {
+            name: 'Leech Range Strength',
+            image: '/static_images/RSTools/prayer/curses/Leech_Range_Strength.png'
+        },
+        {
+            name: 'Leech Magic',
+            image: '/static_images/RSTools/prayer/curses/Leech_Magic.png'
+        },
+        {
+            name: 'Leech Magic Strength',
+            image: '/static_images/RSTools/prayer/curses/Leech_Magic_Strength.png'
+        },
+        {
+            name: 'Leech Defence',
+            image: '/static_images/RSTools/prayer/curses/Leech_Defence.png'
+        },
+        {
+            name: 'Light Form',
+            image: '/static_images/RSTools/prayer/curses/Light_Form.png'
+        },
+        {
+            name: 'Dark Form',
+            image: '/static_images/RSTools/prayer/curses/Dark_Form.png'
+        },
+        {
+            name: 'Leech Strength',
+            image: '/static_images/RSTools/prayer/curses/Leech_Strength.png'
+        },
+        {
+            name: 'Leech Adrenaline',
+            image: '/static_images/RSTools/prayer/curses/Leech_Adrenaline.png'
+        },
+        {
+            name: 'Chronicle Absorption',
+            image: '/static_images/RSTools/prayer/curses/Chronicle_Absorption.png'
+        },
+        {
+            name: 'Soul Link',
+            image: '/static_images/RSTools/prayer/curses/Soul_Link.png'
+        },
+        {
+            name: 'Teamwork Protection',
+            image: '/static_images/RSTools/prayer/curses/Teamwork_Protection.png'
+        },
+        {
+            name: 'Superheat Form',
+            image: '/static_images/RSTools/prayer/curses/Superheat_Form.png'
+        },
+        {
+            name: 'Soul Split',
+            image: '/static_images/RSTools/prayer/curses/Soul_Split.png'
+        },
+        {
+            name: 'Fortitude',
+            image: '/static_images/RSTools/prayer/curses/Fortitude.png'
+        },
+        {
+            name: 'Turmoil',
+            image: '/static_images/RSTools/prayer/curses/Turmoil.png'
+        },
+        {
+            name: 'Anguish',
+            image: '/static_images/RSTools/prayer/curses/Anguish.png'
+        },
+        {
+            name: 'Torment',
+            image: '/static_images/RSTools/prayer/curses/Torment.png'
+        },
+        {
+            name: 'Malevolence',
+            image: '/static_images/RSTools/prayer/curses/Malevolence.png'
+        },
+        {
+            name: 'Desolation',
+            image: '/static_images/RSTools/prayer/curses/Desolation.png'
+        },
+        {
+            name: 'Affliction',
+            image: '/static_images/RSTools/prayer/curses/Affliction.png'
+        }
+    ]
+}
+
 const styleTypes = {
     1: "melee",
     2: "range",
@@ -797,5 +968,6 @@ export default {
     abilityData,
     inventorySlotData,
     familiarSlotData,
+    prayerData,
     types
 }

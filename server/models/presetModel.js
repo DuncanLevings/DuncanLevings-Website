@@ -17,7 +17,8 @@ const presetSchema = new mongoose.Schema({
     familiarSlotData: { type: Array },
     abilityBarData: { type: Array },
     presetAbilityBar: { type: Object },
-    // prayerData: { type: Array }
+    prayerData: { type: Array },
+    prayerType: { type: Number }
 });
 
 presetSchema.set('toJSON', { virtuals: true });

@@ -267,7 +267,7 @@ class EquipmentPreset extends React.Component {
         return (
             <Container>
                 <div className="EquipmentPreset">
-                    <div className="activate-component">
+                    <div className="step-button">
                         <Button variant="button-secondary" hidden={selectedSlot < 0} onClick={() => this.nextWizardStep()}>Next</Button>
                     </div>
                     <h5>Select a slot:</h5>
