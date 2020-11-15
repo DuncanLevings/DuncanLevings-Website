@@ -104,12 +104,12 @@
             
             .inventory-slots-container {
                 display: flex;
-                flex-direction: column;
+                flex-direction: row;
                 flex-wrap: wrap;
                 position: relative;
                 top: 51px;
                 left: 11px;
-                width: 204px;
+                width: 210px;
                 height: 333px;
 
                 .inventory-slot {

@@ -22,7 +22,7 @@ class InventoryPreset extends React.Component {
         this.state = {
             search: '',
             inventorySlotData: EQUIPMENT_CONSTS.inventorySlotData,
-            selectedSlot: '',
+            selectedSlots: [],
             addItemShow: false,
             editItemShow: false,
             showConfirm: false,
@@ -58,7 +58,7 @@ class InventoryPreset extends React.Component {
             this.setState({
                 search: '',
                 inventorySlotData: EQUIPMENT_CONSTS.inventorySlotData,
-                selectedSlot: ''
+                selectedSlots: []
             });
         }
     }
@@ -73,8 +73,40 @@ class InventoryPreset extends React.Component {
         this.props.previousStep();
     }
 
-    setSelected = (slot) => {
-        this.setState({ selectedSlot: slot });
+    setSelected = (slot, event) => {
+        const { selectedSlots, inventorySlotData } = this.state;
+
+        if (event && event.ctrlKey) {
+            this.setState({ selectedSlots: [...selectedSlots, slot] });
+        } else if (event && event.shiftKey) {
+            let startIndex = 0;
+            if (selectedSlots.length > 0) startIndex = inventorySlotData.findIndex(s => s.id === selectedSlots[0]);
+            
+            const endIndex = inventorySlotData.findIndex(s => s.id === slot);
+            const slots = this.setSelectedMultiple(startIndex, endIndex);
+            this.setState({ selectedSlots: slots });
+        } else {
+            this.setState({ selectedSlots: [slot] });
+        }
+    }
+
+    setSelectedMultiple = (start, end) => {
+        const { inventorySlotData } = this.state;
+        let _start = start;
+        let _end = end;
+
+        // reverse order
+        if (start > end) {
+            let temp_end = end;
+            _start = temp_end;
+            _end = start;
+        }
+
+        const slots = [];
+        for (let i = _start; i <= _end; i++) {
+            slots.push(inventorySlotData[i].id)
+        }
+        return slots;
     }
 
     swapBoxes = (fromSlot, toSlot) => {
@@ -124,7 +156,7 @@ class InventoryPreset extends React.Component {
     };
 
     createList = () => {
-        const { selectedSlot, inventorySlotData } = this.state;
+        const { selectedSlots, inventorySlotData } = this.state;
 
         return inventorySlotData.map((slot, index) =>
             slot.name && slot.image ?
@@ -146,8 +178,8 @@ class InventoryPreset extends React.Component {
                     </Tooltip>}
                 >
                     <div
-                        className={`inventory-slot ${selectedSlot === slot.id ? 'selected' : ''}`}
-                        onClick={() => this.setSelected(slot.id)}
+                        className={`inventory-slot ${selectedSlots.includes(slot.id) ? 'selected' : ''}`}
+                        onClick={(e) => this.setSelected(slot.id, e)}
                         draggable="true"
                         onDragStart={this.handleDragStart(slot.id)}
                         onDragOver={this.handleDragOver()}
@@ -159,9 +191,9 @@ class InventoryPreset extends React.Component {
                 :
                 <div
                     key={index}
-                    className={`inventory-slot ${selectedSlot === slot.id ? 'selected' : ''}`}
+                    className={`inventory-slot ${selectedSlots.includes(slot.id) ? 'selected' : ''}`}
                     draggable="false"
-                    onClick={() => this.setSelected(slot.id)}
+                    onClick={(e) => this.setSelected(slot.id, e)}
                     onDragOver={this.handleDragOver()}
                     onDrop={this.handleDrop(slot.id)}
                 />
@@ -173,35 +205,38 @@ class InventoryPreset extends React.Component {
     }
 
     equipSlot = (item) => {
-        const { selectedSlot, inventorySlotData } = this.state;
+        const { selectedSlots, inventorySlotData } = this.state;
 
         let _slots = [...inventorySlotData];
-        let _slot = {
-            ..._slots.find(row => row.id === selectedSlot),
-            name: item.name,
-            image: item.imageUrl,
-            wiki: item.wiki ? item.wiki : null,
-            augment: item.augment ? item.augment : null
+        for (const slot of selectedSlots) {
+            let _slot = {
+                ..._slots.find(row => row.id === slot),
+                name: item.name,
+                image: item.imageUrl,
+                wiki: item.wiki ? item.wiki : null,
+                augment: item.augment ? item.augment : null
+            }
+            _slots[_slots.findIndex(row => row.id === slot)] = _slot;
         }
-
-        _slots[_slots.findIndex(row => row.id === selectedSlot)] = _slot;
 
         this.setState({ inventorySlotData: _slots });
         this.props.updateInventoryData(_slots);
     }
 
     clearItemSlot = () => {
-        const { selectedSlot, inventorySlotData } = this.state;
+        const { selectedSlots, inventorySlotData } = this.state;
 
         let _slots = [...inventorySlotData];
-        let _slot = _slots[_slots.findIndex(row => row.id === selectedSlot)];
+        for (const slot of selectedSlots) {
+            let _slot = _slots[_slots.findIndex(row => row.id === slot)];
 
-        delete _slot.name;
-        delete _slot.image;
-        delete _slot.wiki;
-        delete _slot.augment;
+            delete _slot.name;
+            delete _slot.image;
+            delete _slot.wiki;
+            delete _slot.augment;
 
-        _slots[_slots.findIndex(row => row.id === selectedSlot)] = _slot;
+            _slots[_slots.findIndex(row => row.id === slot)] = _slot;
+        }
 
         this.setState({ inventorySlotData: _slots });
         this.props.updateInventoryData(_slots);
@@ -292,7 +327,7 @@ class InventoryPreset extends React.Component {
     }
 
     render() {
-        const { addItemShow, editItemShow, hasInventory, selectedSlot } = this.state;
+        const { addItemShow, editItemShow, hasInventory, selectedSlots } = this.state;
         const { isSearching } = this.props.equipmentReducer;
 
         if (!hasInventory) return (
@@ -315,9 +350,11 @@ class InventoryPreset extends React.Component {
                 <div className="InventoryPreset">
                     <div className="step-button">
                         <Button variant="button-secondary" className="previous-button" onClick={() => this.previousStep()}>Previous</Button>
-                        <Button variant="button-secondary" hidden={selectedSlot === ''} onClick={() => this.nextWizardStep()}>Next</Button>
+                        <Button variant="button-secondary" hidden={selectedSlots.length === 0} onClick={() => this.nextWizardStep()}>Next</Button>
                     </div>
                     <h5>Select a slot:</h5>
+                    <div className="slot-hint">Ctrl/Shift click for multiple</div>
+                    <div className="spacer-h-2" />
                     <div className="inventory-container">
                         <div className="inventoryContainer">
                             <div className="inventory-slots-container">
@@ -327,7 +364,7 @@ class InventoryPreset extends React.Component {
                     </div>
                     <div className="spacer-h-2" />
                     {this.confirmModal()}
-                    {selectedSlot !== '' ?
+                    {selectedSlots.length > 0 ?
                         <>
                             <div className="clear-slot">
                                 <Button variant="button-secondary" onClick={() => this.clearItemSlot()}>Clear selected slot</Button>
