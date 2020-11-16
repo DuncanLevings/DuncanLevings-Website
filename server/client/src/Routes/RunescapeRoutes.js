@@ -23,6 +23,9 @@ import SearchDaily from 'components/RSTools/Dailys/SearchDaily/SearchDaily.lazy'
 import AddDaily from 'components/RSTools/Dailys/AddDaily/AddDaily.lazy';
 import EditOrder from 'components/RSTools/Dailys/EditOrder/EditOrder.lazy';
 import EditDaily from 'components/RSTools/Dailys/EditDaily/EditDaily.lazy';
+import FarmRuns from 'components/RSTools/FarmRuns/FarmRuns.lazy';
+import FarmRun from 'components/RSTools/FarmRuns/FarmRun/FarmRun.lazy';
+import FarmRunBuilder from 'components/RSTools/FarmRuns/FarmRunBuilder/FarmRunBuilder.lazy';
 import Activity from 'components/RSTools/Activity/Activity.lazy';
 import Equipment from 'components/RSTools/Equipment/Equipment.lazy';
 import Presets from 'components/RSTools/Equipment/Presets/Presets.lazy';
@@ -61,6 +64,10 @@ class RSRouter extends React.Component {
                     <PrivateRoute exact path={RSTOOL_ROUTES.ADDDAILY} redirect={RSTOOL_ROUTES.LOGIN} component={AddDaily} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.EDITORDER} redirect={RSTOOL_ROUTES.LOGIN} component={EditOrder} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.EDITDAILY} redirect={RSTOOL_ROUTES.LOGIN} component={EditDaily} />
+                    {/* FARM RUNS */}
+                    <PrivateRoute exact path={RSTOOL_ROUTES.FARMRUNS} redirect={RSTOOL_ROUTES.LOGIN} component={FarmRuns} />
+                    <PrivateRoute exact path={RSTOOL_ROUTES.FARMRUN_TYPE} redirect={RSTOOL_ROUTES.LOGIN} component={FarmRun} />
+                    <PrivateRoute exact path={RSTOOL_ROUTES.FARMRUN_BUILDER} redirect={RSTOOL_ROUTES.LOGIN} component={FarmRunBuilder} />
                     {/* ACTIVITIES */}
                     <PrivateRoute exact path={RSTOOL_ROUTES.ACTIVITIES} redirect={RSTOOL_ROUTES.LOGIN} component={Activity} />
                     {/* EQUIPMENT */}

@@ -123,7 +123,7 @@ class InventoryPreset extends React.Component {
             }
         }
 
-        if (fromIndex != -1 && toIndex != -1) {
+        if (fromIndex !== -1 && toIndex !== -1) {
             let { fromId, ...fromRest } = slots[fromIndex];
             let { toId, ...toRest } = slots[toIndex];
             slots[fromIndex] = { id: fromSlot.id, ...toRest };

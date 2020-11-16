@@ -20,7 +20,15 @@ const EDITORDER = DAILYS + "/edit-order";
 const EDITDAILY = DAILYS + "/edit/:dailyId";
 const EDITDAILY_PARAM = DAILYS + "/edit/";
 
+// FARM RUNS
+
 const FARMRUNS = RSTOOL_ROOT + '/farmruns';
+const FARMRUN_TYPE = FARMRUNS + '/type';
+const FARMRUN_BUILDER_PARAM = FARMRUNS + '/type/builder/';
+const FARMRUN_BUILDER = FARMRUNS + '/type/builder/:farmType';
+
+// PVM
+
 const PVM = RSTOOL_ROOT + '/pvm';
 
 // ACTIVITIES
@@ -59,5 +67,8 @@ export const RSTOOL_ROUTES = {
     PRESET_VIEWER,
     PRESET_VIEWER_PARAM,
     ITEMS,
-    ABILITYS
+    ABILITYS,
+    FARMRUN_TYPE,
+    FARMRUN_BUILDER_PARAM,
+    FARMRUN_BUILDER
 }

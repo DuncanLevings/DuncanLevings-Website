@@ -56,7 +56,7 @@ class Presets extends React.Component {
     }
 
     deletePreset = () => {
-        this.props.deletePreset(this.state.selectedPresetId)
+        this.props.deletePreset(this.state.selectedPresetId);
         this.setState({ showConfirm: false });
     }
 

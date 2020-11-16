@@ -9,6 +9,7 @@ import * as actionTypes from '../../actionTypes/RSTools/presetActionTypes';
 const intialState = {
     error: "",
     presets: [],
+    savedPreset: null,
     editPresetObj: null,
     isFetching: false, // loading state
     isFetchingSingle: false, // loading state
@@ -77,6 +78,16 @@ export default (state = intialState, action) => {
                 error: "",
                 isSaving: false,
                 isFetching: false
+            };
+        case actionTypes.SAVE_PRESET:
+            return {
+                ...state,
+                savedPreset: action.payload
+            };
+        case actionTypes.CLEAR_PRESET:
+            return {
+                ...state,
+                savedPreset: null
             };
         case actionTypes.CLEAR_ERRORS:
             return {

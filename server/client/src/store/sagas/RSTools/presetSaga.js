@@ -39,7 +39,8 @@ function* createPreset(presetAction) {
     try {
         yield call(createPresetAPI, presetAction.payload);
         yield put(actionCreators.createPresetSuccess());
-        yield put(push(RSTOOL_ROUTES.EQUIPMENT));
+        if (presetAction.redirect) yield put(push(presetAction.redirect));
+        else yield put(push(RSTOOL_ROUTES.EQUIPMENT));
     } catch (error) {
         yield put(actionCreators.presetError(error.response.data));
     }
@@ -49,7 +50,8 @@ function* editPreset(presetAction) {
     try {
         yield call(editPresetAPI, presetAction.payload);
         yield put(actionCreators.editPresetSuccess());
-        yield put(push(RSTOOL_ROUTES.EQUIPMENT));
+        if (presetAction.redirect) yield put(push(presetAction.redirect));
+        else yield put(push(RSTOOL_ROUTES.EQUIPMENT));
     } catch (error) {
         yield put(actionCreators.presetError(error.response.data));
     }
@@ -64,10 +66,15 @@ function* deletePreset(presetAction) {
     }
 }
 
+function* savePreset(presetAction) {
+    yield put(push(presetAction.redirect));
+}
+
 export const presetSagas = [
     takeLatest(actionTypes.GET_PRESETS, getPresets),
     takeLatest(actionTypes.GET_PRESET_SINGLE, getPresetSingle),
     takeLatest(actionTypes.CREATE_PRESET, createPreset),
     takeLatest(actionTypes.EDIT_PRESET, editPreset),
     takeLatest(actionTypes.DELETE_PRESET, deletePreset),
+    takeLatest(actionTypes.SAVE_PRESET, savePreset),
 ];

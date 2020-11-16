@@ -24,16 +24,16 @@ export function getPresetSingleSuccess(preset) {
     return { type: actionTypes.GET_PRESET_SINGLE_SUCCESS, payload: preset };
 }
 
-export function createPreset(data) {
-    return { type: actionTypes.CREATE_PRESET, payload: data };
+export function createPreset(data, from = null) {
+    return { type: actionTypes.CREATE_PRESET, payload: data, redirect: from };
 }
 
 export function createPresetSuccess() {
     return { type: actionTypes.CREATE_PRESET_SUCCESS };
 }
 
-export function editPreset(data) {
-    return { type: actionTypes.EDIT_PRESET, payload: data };
+export function editPreset(data, from = null) {
+    return { type: actionTypes.EDIT_PRESET, payload: data, redirect: from };
 }
 
 export function editPresetSuccess() {
@@ -46,6 +46,14 @@ export function deletePreset(presetId) {
 
 export function deletePresetSuccess(presets) {
     return { type: actionTypes.DELETE_PRESET_SUCCESS, payload: presets };
+}
+
+export function savePreset(preset, from) {
+    return { type: actionTypes.SAVE_PRESET, payload: preset, redirect: from };
+}
+
+export function clearPreset() {
+    return { type: actionTypes.CLEAR_PRESET };
 }
 
 // ERROR

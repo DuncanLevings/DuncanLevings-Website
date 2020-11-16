@@ -117,3 +117,12 @@ export const abilitySchema = yup.object().shape({
     styleType: yup.string()
         .required("*Must select a main style")
 });
+
+export const farmRunSchema = yup.object().shape({
+    webURL: yup.string()
+        .trim()
+        .url("Web guide must be a valid URL"),
+    youtubeURL: yup.string()
+        .trim()
+        .url("Youtube guide must be a valid URL"),
+});

@@ -1,0 +1,32 @@
+@import '../../../../assets/style/breakpoints';
+@import '../../../../assets/style/vars';
+@import '../../../../assets/style/colors';
+
+.FarmRun {
+    @include respond-to(xs) {
+        min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
+        min-height: $minHeightMobile;
+    }
+    
+    @include respond-to(m) {
+        min-height: $minHeightDesktop;
+    }
+
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+
+    .farm-header {
+        display: flow-root;
+        margin-bottom: 2rem;
+
+        h3 {
+            display: inline-block;
+        }
+
+        .edit {
+            float: right;
+        }
+    }
+}

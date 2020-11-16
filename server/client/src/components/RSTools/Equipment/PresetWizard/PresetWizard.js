@@ -8,7 +8,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Button, Container, Form, FormControl, InputGroup, Spinner } from 'react-bootstrap';
-import { getPresetSingle, createPreset, editPreset, clearErrors } from 'store/actions/RSTools/presetActions';
+import { getPresetSingle, createPreset, editPreset, clearErrors, savePreset } from 'store/actions/RSTools/presetActions';
 import EquipmentPreset from '../PresetComponents/EquipmentPreset/EquipmentPreset.lazy';
 import PresetOverview from '../PresetComponents/PresetOverview/PresetOverview.lazy';
 import InventoryPreset from '../PresetComponents/InventoryPreset/InventoryPreset.lazy';
@@ -44,7 +44,11 @@ class PresetWizard extends React.Component {
 
     componentDidMount() {
         if (this.checkEditMode()) {
-            this.props.getPresetSingle(this.props.location.state.presetId)
+            if (this.checkActivityEdit()) {
+                this.storePresetInState(this.props.location.state.preset);
+            } else {
+                this.props.getPresetSingle(this.props.location.state.presetId)
+            }
         }
     }
 
@@ -52,24 +56,44 @@ class PresetWizard extends React.Component {
         if (this.props.presetReducer.editPresetObj !== prevProps.presetReducer.editPresetObj) {
             if (this.checkEditMode()) {
                 const preset = this.props.presetReducer.editPresetObj;
-                this.setState({
-                    editRetrieved: true, // to tell render the states have been set for edit object
-                    name: preset.name,
-                    equipSlotData: preset.equipSlotData,
-                    inventorySlotData: preset.inventorySlotData,
-                    familiar: preset.familiar || null,
-                    familiarSlotData: preset.familiarSlotData,
-                    abilityBarData: preset.abilityBarData,
-                    presetAbilityBar: preset.presetAbilityBar,
-                    prayerData: preset.prayerData,
-                    prayerType: preset.prayerType
-                });
+                this.storePresetInState(preset);
             }
         }
     }
 
+    storePresetInState = (preset) => {
+        this.setState({
+            editRetrieved: true, // to tell render the states have been set for edit object
+            name: preset.name,
+            equipSlotData: preset.equipSlotData,
+            inventorySlotData: preset.inventorySlotData,
+            familiar: preset.familiar || null,
+            familiarSlotData: preset.familiarSlotData,
+            abilityBarData: preset.abilityBarData,
+            presetAbilityBar: preset.presetAbilityBar,
+            prayerData: preset.prayerData,
+            prayerType: preset.prayerType
+        });
+    }
+
     checkEditMode = () => {
         return this.props.location.state && this.props.location.state.editMode;
+    }
+
+    checkActivityAdd = () => {
+        return this.props.location.state && this.props.location.state.activityAddPreset;
+    }
+
+    checkActivityEditExisting = () => {
+        return this.props.location.state && this.props.location.state.activityEditExisting;
+    }
+
+    checkActivityEdit = () => {
+        return this.props.location.state && this.props.location.state.activityEdit;
+    }
+
+    checkActivityEmpty = () => {
+        return this.props.location.state && this.props.location.state.activityUseEmpty;
     }
 
     setName = e => {
@@ -165,6 +189,7 @@ class PresetWizard extends React.Component {
             }
         }
 
+        if (this.checkActivityEmpty() || this.checkActivityEdit()) return null;
         return form;
     }
 
@@ -291,7 +316,9 @@ class PresetWizard extends React.Component {
         const { editPresetObj } = this.props.presetReducer;
         const { name, equipSlotData, inventorySlotData, familiar, familiarSlotData, abilityBarData, presetAbilityBar, originalBarEdited, prayerData, prayerType } = this.state;
 
-        if (name === '') return this.setState({ missingName: true });
+        if (this.checkActivityEmpty() === false && 
+        this.checkActivityEdit() === false && 
+        name === '') return this.setState({ missingName: true });
         this.setState({ missingName: false });
 
         const data = {
@@ -308,10 +335,26 @@ class PresetWizard extends React.Component {
         }
 
         if (this.checkEditMode()) {
-            data.presetId = editPresetObj._id;
-            this.props.editPreset(data);
+            if (this.checkActivityEdit()) {
+                this.props.savePreset(data, this.props.location.state.from);
+            } else {
+                data.presetId = editPresetObj._id;
+                if (this.checkActivityEditExisting()) {
+                    this.props.editPreset(data, this.props.location.state.from);
+                } else {
+                    this.props.editPreset(data);
+                }
+            }
         } else {
-            this.props.createPreset(data);
+            if (this.checkActivityEmpty()) {
+                this.props.savePreset(data, this.props.location.state.from);
+            } else {
+                if (this.checkActivityAddPresetMode()) {
+                    this.props.createPreset(data, this.props.location.state.from);
+                } else {
+                    this.props.createPreset(data);
+                }
+            }
         }
     }
 
@@ -346,7 +389,8 @@ PresetWizard.propTypes = {
     getPresetSingle: PropTypes.func,
     createPreset: PropTypes.func,
     editPreset: PropTypes.func,
-    clearErrors: PropTypes.func
+    clearErrors: PropTypes.func,
+    savePreset: PropTypes.func
 };
 
 const mapStateToProps = state => {
@@ -355,6 +399,6 @@ const mapStateToProps = state => {
     };
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ getPresetSingle, createPreset, editPreset, clearErrors }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ getPresetSingle, createPreset, editPreset, clearErrors, savePreset }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(PresetWizard);
