@@ -282,7 +282,7 @@ const getDailysReOrder = async (userId, type) => {
 const getDaily = async (userId, dailyId) => {
     const daily = await Daily.findOne({ _id: dailyId });
 
-    if (daily.ownerId != userId) throw Error(DAILY_ERRORS.NOT_OWNER);
+    if (!daily.ownerId.equals(userId)) throw Error(DAILY_ERRORS.NOT_OWNER);
 
     return daily;
 }
@@ -468,7 +468,7 @@ const editDaily = async (userId, data, images) => {
 
 const deleteDaily = async (userId, dailyId) => {
     const daily = await Daily.findOne({ _id: dailyId });
-    if (daily.ownerId != userId) {
+    if (!daily.ownerId.equals(userId)) {
         throw Error(DAILY_ERRORS.NOT_OWNER);
     }
     // to retrieve updated set of dailys assuming type from selected deletion one

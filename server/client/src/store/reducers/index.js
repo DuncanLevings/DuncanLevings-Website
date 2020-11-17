@@ -15,6 +15,7 @@ import dailyReducer from './RSTools/dailyReducer';
 import activityReducer from './RSTools/activityReducer';
 import equipmentReducer from './RSTools/equipmentReducer';
 import presetReducer from './RSTools/presetReducer';
+import farmRunReducer from './RSTools/farmRunReducer';
 
 const createRootReducer = (history) => combineReducers({
     router: connectRouter(history),
@@ -26,7 +27,8 @@ const createRootReducer = (history) => combineReducers({
     dailyReducer: dailyReducer,
     activityReducer: activityReducer,
     equipmentReducer: equipmentReducer,
-    presetReducer: presetReducer
+    presetReducer: presetReducer,
+    farmRunReducer: farmRunReducer
 });
 
 export default createRootReducer;

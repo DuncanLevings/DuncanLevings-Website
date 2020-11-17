@@ -14,6 +14,7 @@ import { dailySagas } from './RSTools/dailySaga';
 import { activitySagas } from './RSTools/activitySaga';
 import { equipmentSagas } from './RSTools/equipmentSaga';
 import { presetSagas } from './RSTools/presetSaga';
+import { farmRunSagas } from './RSTools/farmRunSaga';
 
 export default function* rootSaga() {
   yield all([
@@ -23,6 +24,7 @@ export default function* rootSaga() {
     ...dailySagas,
     ...activitySagas,
     ...equipmentSagas,
-    ...presetSagas
+    ...presetSagas,
+    ...farmRunSagas
   ]);
 }

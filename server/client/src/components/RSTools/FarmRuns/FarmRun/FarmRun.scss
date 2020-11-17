@@ -15,18 +15,55 @@
     padding-top: 5vh;
     padding-bottom: 5vh;
     font-family: 'Roboto', sans-serif;
-    text-align: center;
+
+    h3 {
+        text-align: center;
+    }
 
     .farm-header {
+        width: 100%;
         display: flow-root;
-        margin-bottom: 2rem;
 
-        h3 {
-            display: inline-block;
+        .edit { 
+            float: right;
+        }
+    }
+
+    .step-icon {
+        margin-right: 1rem;
+    }
+
+    .web {
+        text-align: end;
+    }
+
+    .notes {
+        text-align: center;
+        font-size: calc(8px + 1.5vmin);
+    }
+
+    .card {
+        background-color: $daily-card-background;
+
+        .card-header {
+            font-size: calc(8px + 2vmin);
         }
 
-        .edit {
-            float: right;
+        .card-header:hover {
+            background-color: $daily-card-title-hover;
+        }
+
+        .card-text {
+            font-size: calc(8px + 1.5vmin);
+        }
+
+        .step-number {
+            color: $section-number;
+            font-size: calc(8px + .75vmin);
+        }
+
+        .card-img {
+            width: unset;
         }
     }
 }

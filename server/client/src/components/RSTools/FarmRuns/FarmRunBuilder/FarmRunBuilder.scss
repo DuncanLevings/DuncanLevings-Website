@@ -43,10 +43,18 @@
         }
     }
 
-    .list-group-item:hover {
+    .preset-list-group-item:hover {
         background-color: $contact-background;
     }
 
+    .step-list-item {
+        padding: 0;
+    }
+
+    .step-list-item:hover {
+        background-color: unset;
+    }
+    
     .action-icon.add {
         color: $link-active;
     }

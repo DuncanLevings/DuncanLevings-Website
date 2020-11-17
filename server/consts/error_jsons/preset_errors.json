@@ -1,5 +1,6 @@
 {
     "server_errors": {
+        "PRESET_REQUIRED": "Preset is required!",
         "USER_REQUIRED": "User ID is required!",
         "NAME_REQUIRED": "Name is required!",
         "NO_DATA": "Preset needs some data!",

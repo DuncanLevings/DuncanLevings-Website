@@ -39,8 +39,6 @@ class InventoryPreset extends React.Component {
 
             if (this.props.inventorySlotData.length > 0) this.setSelected('slot1');
         }
-
-        this.props.searchItems(13);
     }
 
     componentDidUpdate(prevProps) {

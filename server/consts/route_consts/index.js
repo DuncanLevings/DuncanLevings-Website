@@ -6,6 +6,7 @@ const DAILY_ROUTES = require('./daily_route_consts');
 const ACTIVITY_ROUTES = require('./activity_route_consts');
 const EQUIPMENT_ROUTES = require('./equipment_route_consts');
 const PRESET_ROUTES = require('./preset_route_consts');
+const FARM_RUN_ROUTES = require('./farm_run_route_consts');
 
 module.exports = {
     USER_ROUTES,
@@ -14,5 +15,6 @@ module.exports = {
     DAILY_ROUTES,
     ACTIVITY_ROUTES,
     EQUIPMENT_ROUTES,
-    PRESET_ROUTES
+    PRESET_ROUTES,
+    FARM_RUN_ROUTES
 }

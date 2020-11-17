@@ -1,0 +1,14 @@
+{
+    "server_errors": {
+        "USER_REQUIRED": "User ID is required!",
+        "STEPS_REQUIRED": "Steps is required!",
+        "STEPS_LENGTH": "At least one step is required!",
+        "TITLE_MISSING": "Step title text is missing!",
+        "STEP_MISSING": "Step text is missing!",
+        "ALL_FARM_TYPE_MISSING": "Each step of an all farm run requires type category set!",
+        "TYPE_MISSING": "Type is missing!",
+        "NOT_OWNER": "You are not the owner!",
+        "FARM_RUN_EXISTS": "You already created that farm run!",
+        "TYPE_REGEX_FAIL": "Invalid farm type!"
+    }
+}

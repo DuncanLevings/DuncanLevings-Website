@@ -33,6 +33,7 @@ const { RSToolsUser } = require('../models/rsToolsUserModel');
 const { Item } = require('../models/itemModel');
 const { AbilityBar } = require('../models/abilityBarModel');
 const { Preset } = require('../models/presetModel');
+const { FarmRun } = require('../models/farmRunModel');
 
 module.exports = {
     User,
@@ -41,5 +42,6 @@ module.exports = {
     RSToolsUser,
     Item,
     AbilityBar,
-    Preset
+    Preset,
+    FarmRun
 }

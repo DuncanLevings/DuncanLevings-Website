@@ -9,25 +9,30 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getPresets, getPresetSingle, deletePreset, clearPreset } from 'store/actions/RSTools/presetActions';
+import { getFarmRun, createFarmRun, editFarmRun, clearError } from 'store/actions/RSTools/farmRunActions';
 import { Button, Col, Container, Form, FormControl, Image, InputGroup, ListGroup, Modal, Row, Spinner } from 'react-bootstrap';
-import { FaCheckSquare, FaEdit, FaTrash } from 'react-icons/fa';
+import { FaCheckSquare, FaEdit, FaImage, FaPlus, FaTrash } from 'react-icons/fa';
 import { FARM_CONSTS, RSTOOL_ROUTES } from 'consts/RSTools_Consts';
-import { farmRunSchema } from 'components/helpers/formValidation';
-import { Formik } from 'formik';
+import { farmRunAllSchema, farmRunSchema } from 'components/helpers/formValidation';
+import { ErrorMessage, Field, FieldArray, Formik } from 'formik';
 import PresetOverview from 'components/RSTools/Equipment/PresetComponents/PresetOverview/PresetOverview.lazy';
 import ImgCrop from 'components/tools/ImgCrop/ImgCrop.lazy';
 import ImgPreview from 'components/tools/ImgPreview/ImgPreview.lazy';
 import PropTypes from 'prop-types';
 import './FarmRunBuilder.scss';
+import { json } from 'body-parser';
 
 
 class FarmRunBuilder extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            editMode: false,
+            farmRunObj: null,
             search: '',
             farmType: -1,
             presetSet: false,
+            pressingMissing: false,
             useExistingPreset: false,
             showConfirm: false,
             selectedPresetId: null,
@@ -40,13 +45,68 @@ class FarmRunBuilder extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({ farmType: this.props.match.params.farmType });
+        this.props.clearError();
+        if (this.checkEditMode()) {
+            if (this.props.farmRunReducer.farmRun) {
+                this.setEdit();
+            } else {
+                this.props.getFarmRun(this.props.match.params.farmType);
+            }
+        } else {
+            this.setState({ farmType: this.props.match.params.farmType });
+        }
+
         if (this.props.presetReducer.savedPreset) {
             this.setState({
                 preset: this.props.presetReducer.savedPreset,
                 presetSet: true
             });
         }
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.farmRunReducer.farmRun !== prevProps.farmRunReducer.farmRun) {
+            if (this.checkEditMode()) {
+                if (this.props.farmRunReducer.farmRun) {
+                    this.setEdit();
+                }
+            }
+        }
+    }
+
+    setEdit = () => {
+        const data = this.props.farmRunReducer.farmRun;
+
+        const stepArray = [];
+        for (const step of data.steps) {
+            const stepData = {
+                title: step.title,
+                step: step.step,
+                img: {
+                    url: step.url
+                }
+            }
+
+            if (step.type) stepData.type = step.type;
+
+            stepArray.push(stepData);
+        }
+        data.steps = stepArray;
+
+        this.setState({
+            farmType: this.props.match.params.farmType,
+            presetSet: true,
+            farmRunObj: data,
+            preset: this.props.presetReducer.savedPreset ? null : data.preset
+        });
+    }
+
+    checkEditMode = () => {
+        return this.props.location.state && this.props.location.state.editMode;
+    }
+
+    checkFrom = () => {
+        return this.props.location.state && this.props.location.state.from;
     }
 
     navigateUseEmpty = (route) => {
@@ -56,7 +116,9 @@ class FarmRunBuilder extends React.Component {
             pathname: route,
             state: {
                 activityUseEmpty: true,
-                from: pathname
+                from: pathname,
+                activityEditMode: this.checkEditMode(),
+                activityFrom: this.props.location.state.from || null
             }
         });
     }
@@ -68,7 +130,9 @@ class FarmRunBuilder extends React.Component {
             pathname: route,
             state: {
                 activityAddPreset: true,
-                from: pathname
+                from: pathname,
+                activityEditMode: this.checkEditMode(),
+                activityFrom: this.props.location.state.from || null
             }
         });
     }
@@ -82,7 +146,9 @@ class FarmRunBuilder extends React.Component {
                 activityEditExisting: true,
                 from: pathname,
                 editMode: true,
-                presetId: presetId
+                presetId: presetId,
+                activityEditMode: this.checkEditMode(),
+                activityFrom: this.props.location.state.from || null
             }
         });
     }
@@ -96,7 +162,9 @@ class FarmRunBuilder extends React.Component {
                 preset: presetObj,
                 activityEdit: true,
                 from: pathname,
-                editMode: true
+                editMode: true,
+                activityEditMode: this.checkEditMode(),
+                activityFrom: this.props.location.state.from || null
             }
         });
     }
@@ -112,6 +180,7 @@ class FarmRunBuilder extends React.Component {
 
     setExistingPreset = (preset) => {
         this.setState({
+            pressingMissing: false,
             preset: preset,
             useExistingPreset: false,
             presetSet: true
@@ -126,7 +195,7 @@ class FarmRunBuilder extends React.Component {
             const results = presets
                 .filter(preset => search === '' || preset.name.includes(search))
                 .map((preset, i) =>
-                    <ListGroup.Item key={i}>
+                    <ListGroup.Item key={i} className="preset-list-group-item">
                         <Row>
                             <Col xs={1}>
                                 <span className="actions">
@@ -186,6 +255,7 @@ class FarmRunBuilder extends React.Component {
 
     changePreset = () => {
         this.setState({
+            pressingMissing: false,
             presetSet: false,
             preset: null
         });
@@ -258,28 +328,148 @@ class FarmRunBuilder extends React.Component {
         );
     }
 
+    setImgCropShow = (bool, i) => {
+        this.setState({
+            imgCropShow: bool,
+            selectedStep: i == undefined ? this.state.selectedStep : i
+        });
+    }
+
+    setPreviewImgShow = (bool, i, img) => {
+        this.setState({
+            imgPreviewShow: bool,
+            selectedStep: i == undefined ? this.state.selectedStep : i,
+            imgPreviewURL: img == undefined ? "" : img
+        });
+    }
+
+    addStep = (field, values, setValues) => e => {
+        const { farmType } = this.state;
+        const steps = [...values.steps];
+        const step = { title: '', step: '', img: '', type: '' };
+        if (farmType == 0) step.type = '';
+        steps.push(step);
+        setValues({ ...values, steps });
+        field.onChange(e);
+    }
+
+    removeStep = (i, field, values, setValues) => e => {
+        var steps = [...values.steps];
+        steps = steps.filter((_, index) => index !== i);
+        setValues({ ...values, steps });
+        field.onChange(e);
+    }
+
+    setImage = (img, values, setValues) => {
+        this.setImgCropShow(false);
+        const steps = [...values.steps];
+        steps[this.state.selectedStep].img = img;
+        setValues({ ...values, steps });
+    }
+
+    removeImg = (values, setValues) => {
+        this.setPreviewImgShow(false);
+        const steps = [...values.steps];
+        window.URL.revokeObjectURL(this.state.imgPreviewURL);
+        steps[this.state.selectedStep].img = {};
+        setValues({ ...values, steps });
+    }
+
+    getInitalValues = () => {
+        const { farmType, farmRunObj } = this.state;
+
+        if (this.checkEditMode()) {
+            if (farmType == 0) {
+                return {
+                    webURL: farmRunObj.webURL || '',
+                    youtubeURL: farmRunObj.youtubeURL || '',
+                    notes: farmRunObj.notes || '',
+                    hide: farmRunObj.hidden || ["0"],
+                    steps: farmRunObj.steps || [{ title: '', step: '', img: {}, type: '' }]
+                }
+            }
+            return {
+                webURL: farmRunObj.webURL || '',
+                youtubeURL: farmRunObj.youtubeURL || '',
+                notes: farmRunObj.notes || '',
+                steps: farmRunObj.steps || [{ title: '', step: '', img: {} }]
+            }
+        } else {
+            if (farmType == 0) {
+                return {
+                    webURL: '',
+                    youtubeURL: '',
+                    notes: '',
+                    hide: ["0"],
+                    steps: [{ title: '', step: '', img: {}, type: '' }]
+                }
+            }
+
+            return {
+                webURL: '',
+                youtubeURL: '',
+                notes: '',
+                steps: [{ title: '', step: '', img: {} }]
+            }
+        }
+    }
+
     submit = values => {
-        console.log(values)
-        // let formData = new FormData();
+        const { farmType, farmRunObj, preset } = this.state;
+        if (!preset) return this.setState({ pressingMissing: true });
+        this.setState({ pressingMissing: false });
 
-        // formData.append('title', values.title);
-        // formData.append('type', this.props.dailyReducer.dailyType);
+        let formData = new FormData();
 
-        // values.steps.forEach((step, i) => {
-        //     formData.append('steps', step.step);
+        if (this.checkEditMode()) formData.append('farmRunId', farmRunObj._id);
+        formData.append('preset', JSON.stringify(preset));
+        formData.append('type', farmType);
+        if (farmType == 0) formData.append('hidden', values.hide);
+        formData.append('webURL', values.webURL);
+        formData.append('youtubeURL', values.youtubeURL);
+        formData.append('notes', values.notes);
 
-        //     if (step.img.blob) {
-        //         formData.append('images', step.img.blob, `step_${i}`);
-        //         window.URL.revokeObjectURL(step.img.url);
-        //     }
-        // });
+        values.steps.forEach((step, i) => {
+            if (this.checkEditMode()) {
+                let stepData = {
+                    title: step.title,
+                    step: step.step,
+                    url: step.img.url && step.img.url.split(':')[0] !== "blob" ? step.img.url : null
+                };
+                if (step.type) stepData.type = step.type;
+                formData.append('steps', JSON.stringify(stepData));
+            } else {
+                formData.append('titles', step.title);
+                formData.append('steps', step.step);
+                if (step.type) formData.append('types', step.type);
+                if (step.img.blob) {
+                    formData.append('images', step.img.blob, `step_${i}`);
+                    window.URL.revokeObjectURL(step.img.url);
+                }
+            }
+        });
 
-        // this.props.createDaily(formData);
+        let from = RSTOOL_ROUTES.FARMRUNS;
+        if (this.checkFrom()) from = this.props.location.state.from;
+        if (this.checkEditMode()) {
+            this.props.editFarmRun(formData, from);
+        } else {
+            this.props.createFarmRun(formData, from);
+        }
     }
 
     render() {
-        const { farmType, presetSet, useExistingPreset, imgCropShow, imgPreviewShow, imgPreviewURL } = this.state;
-        console.log(farmType)
+        const { farmType, presetSet, pressingMissing, useExistingPreset, imgCropShow, imgPreviewShow, imgPreviewURL } = this.state;
+        const { isFetching, isCreating, isSaving, error } = this.props.farmRunReducer;
+
+        if (isFetching) {
+            return (
+                <div className="FarmRunBuilder">
+                    <Spinner animation="border" variant="light" />
+                </div>
+            );
+        }
+
         return (
             <Container>
                 <div className="FarmRunBuilder">
@@ -297,178 +487,202 @@ class FarmRunBuilder extends React.Component {
                     {this.generateSelectPreset()}
                     {this.showPreset()}
                     <hr className="divider" />
-                    {/* <div className="farm-error">
+                    <div className="farm-error">
                         <p>{error}</p>
-                    </div> */}
-                    <Formik
-                        validationSchema={farmRunSchema}
-                        onSubmit={this.submit}
-                        initialValues={{
-                            webURL: '',
-                            youtubeURL: '',
-                            notes: '',
-                            hide: ["0"]
-                        }}
-                    >
-                        {({
-                            handleSubmit,
-                            handleChange,
-                            setValues,
-                            values,
-                            touched,
-                            errors
-                        }) => (
-                                <Form noValidate onSubmit={handleSubmit}>
-                                    <Form.Group controlId="formWeb">
-                                        <InputGroup>
-                                            <InputGroup.Prepend>
-                                                <InputGroup.Text>Web Guide (optional):</InputGroup.Text>
-                                            </InputGroup.Prepend>
-                                            <FormControl
-                                                name="webURL"
-                                                placeholder="Web site url..."
-                                                aria-label="webURL"
-                                                aria-describedby="webURL"
-                                                value={values.webURL}
-                                                onChange={handleChange}
-                                                isInvalid={touched.webURL && !!errors.webURL}
-                                                autoFocus
-                                            />
-                                            <Form.Control.Feedback type="invalid">
-                                                {errors.webURL}
-                                            </Form.Control.Feedback>
-                                        </InputGroup>
-                                    </Form.Group>
-                                    <Form.Group controlId="formYoutube">
-                                        <InputGroup>
-                                            <InputGroup.Prepend>
-                                                <InputGroup.Text>Youtube Guide (optional):</InputGroup.Text>
-                                            </InputGroup.Prepend>
-                                            <FormControl
-                                                name="youtubeURL"
-                                                placeholder="Web site url..."
-                                                aria-label="youtubeURL"
-                                                aria-describedby="youtubeURL"
-                                                value={values.youtubeURL}
-                                                onChange={handleChange}
-                                                isInvalid={touched.youtubeURL && !!errors.youtubeURL}
-                                            />
-                                            <Form.Control.Feedback type="invalid">
-                                                {errors.youtubeURL}
-                                            </Form.Control.Feedback>
-                                        </InputGroup>
-                                    </Form.Group>
-                                    <Form.Group controlId="formNotes">
-                                        <InputGroup>
-                                            <InputGroup.Prepend>
-                                                <InputGroup.Text>Notes (optional):</InputGroup.Text>
-                                            </InputGroup.Prepend>
-                                            <FormControl
-                                                as="textarea"
-                                                name="notes"
-                                                placeholder="Notes..."
-                                                aria-label="notes"
-                                                aria-describedby="notes"
-                                                value={values.notes}
-                                                onChange={handleChange}
-                                            />
-                                        </InputGroup>
-                                    </Form.Group>
-                                    {farmType == 0 ?
-                                        <Form.Group controlId="formHide">
+                        {pressingMissing ?
+                            <p>Must setup a preset!</p>
+                            : null}
+                    </div>
+                    {farmType > -1 ?
+                        <Formik
+                            validationSchema={farmType == 0 ? farmRunAllSchema : farmRunSchema}
+                            onSubmit={this.submit}
+                            initialValues={this.getInitalValues()}
+                        >
+                            {({
+                                handleSubmit,
+                                handleChange,
+                                setValues,
+                                values,
+                                touched,
+                                errors
+                            }) => (
+                                    <Form noValidate onSubmit={handleSubmit}>
+                                        <Form.Group controlId="formWeb">
                                             <InputGroup>
                                                 <InputGroup.Prepend>
-                                                    <InputGroup.Text>Hide Category(s):</InputGroup.Text>
+                                                    <InputGroup.Text>Web Guide (optional):</InputGroup.Text>
                                                 </InputGroup.Prepend>
                                                 <FormControl
-                                                    as="select"
-                                                    multiple
-                                                    name="hide"
-                                                    aria-label="hide"
-                                                    aria-describedby="hide"
-                                                    value={values.hide}
+                                                    name="webURL"
+                                                    placeholder="Web site url..."
+                                                    aria-label="webURL"
+                                                    aria-describedby="webURL"
+                                                    value={values.webURL}
                                                     onChange={handleChange}
-                                                >
-                                                    <option value={FARM_CONSTS.farmTypes.ALL}>None</option>
-                                                    <option value={FARM_CONSTS.farmTypes.HERB}>Herb</option>
-                                                    <option value={FARM_CONSTS.farmTypes.TREE}>Tree</option>
-                                                    <option value={FARM_CONSTS.farmTypes.FRUIT}>Fruit</option>
-                                                    <option value={FARM_CONSTS.farmTypes.BUSH}>Bush</option>
-                                                    <option value={FARM_CONSTS.farmTypes.CACTUS}>Cactus</option>
-                                                    <option value={FARM_CONSTS.farmTypes.MUSHROOM}>Mushroom</option>
-                                                </FormControl>
+                                                    isInvalid={touched.webURL && !!errors.webURL}
+                                                    autoFocus
+                                                />
+                                                <Form.Control.Feedback type="invalid">
+                                                    {errors.webURL}
+                                                </Form.Control.Feedback>
                                             </InputGroup>
                                         </Form.Group>
-                                        : null}
-                                    <hr className="divider" />
-                                    {/* <FieldArray name="steps">
-                                        {() => (values.steps.map((step, i) => {
-                                            const stepErrors = (errors.steps?.length && errors.steps[i]) || {};
-                                            const stepTouched = (touched.steps?.length && touched.steps[i]) || {};
-                                            return (
-                                                <ListGroup variant="flush" key={i}>
-                                                    <ListGroup.Item>
-                                                        <Form.Row>
-                                                            <Col>
-                                                                <Form.Group>
-                                                                    <InputGroup>
-                                                                        <InputGroup.Prepend>
-                                                                            <InputGroup.Text>Step {i + 1}:</InputGroup.Text>
-                                                                        </InputGroup.Prepend>
-                                                                        <Field name={`steps.${i}.step`} type="text" className={'form-control' + (stepErrors.step && stepTouched.step ? ' is-invalid' : '')} />
-                                                                        <InputGroup.Append>
-                                                                            {step.img.url ?
-                                                                                <Button variant="button-secondary" onClick={() => this.setPreviewImgShow(true, i, step.img.url)}><FaImage /> Preview Image</Button>
-                                                                                :
-                                                                                <Button variant="button-secondary" onClick={() => this.setImgCropShow(true, i)}><FaImage /> Add Image</Button>
-                                                                            }
-                                                                            {i < 1 ?
-                                                                                null :
-                                                                                <Field name="stepTotal">
-                                                                                    {({ field }) => (
-                                                                                        <Button {...field} variant="button-warning-dull" onClick={this.removeStep(i, field, values, setValues)}><FaTrash /> Remove Step</Button>
-                                                                                    )}
-                                                                                </Field>
-                                                                            }
-                                                                        </InputGroup.Append>
-                                                                        <ErrorMessage name={`steps.${i}.step`} component="div" className="invalid-feedback" />
-                                                                    </InputGroup>
-                                                                </Form.Group>
-                                                            </Col>
-                                                        </Form.Row>
-                                                    </ListGroup.Item>
-                                                </ListGroup>
-                                            );
-                                        }))}
-                                    </FieldArray>
-                                    <Form.Group controlId="formAddStep">
-                                        <Field name="stepTotal">
-                                            {({ field }) => (
-                                                <Button {...field} variant="button-primary" onClick={this.addStep(field, values, setValues)}><FaPlus /> Add Step</Button>
-                                            )}
-                                        </Field>
-                                    </Form.Group> */}
-                                    <hr className="divider" />
-                                    <div className="farm-submit">
-                                        <Button
-                                            variant="button-primary"
-                                            type="submit"
-                                            disabled={false}>Submit {false ? <Spinner animation="border" variant="light" size="sm" /> : null}</Button>
-                                    </div>
-                                    <ImgCrop
-                                        show={imgCropShow}
-                                        onHide={() => this.setImgCropShow(false)}
-                                        onConfirm={img => this.setImage(img, values, setValues)}
-                                    />
-                                    <ImgPreview
-                                        show={imgPreviewShow}
-                                        onHide={() => this.setPreviewImgShow(false)}
-                                        croppedImageUrl={imgPreviewURL}
-                                        removeImg={() => this.removeImg(values, setValues)}
-                                    />
-                                </Form>
-                            )}
-                    </Formik>
+                                        <Form.Group controlId="formYoutube">
+                                            <InputGroup>
+                                                <InputGroup.Prepend>
+                                                    <InputGroup.Text>Youtube Guide (optional):</InputGroup.Text>
+                                                </InputGroup.Prepend>
+                                                <FormControl
+                                                    name="youtubeURL"
+                                                    placeholder="Web site url..."
+                                                    aria-label="youtubeURL"
+                                                    aria-describedby="youtubeURL"
+                                                    value={values.youtubeURL}
+                                                    onChange={handleChange}
+                                                    isInvalid={touched.youtubeURL && !!errors.youtubeURL}
+                                                />
+                                                <Form.Control.Feedback type="invalid">
+                                                    {errors.youtubeURL}
+                                                </Form.Control.Feedback>
+                                            </InputGroup>
+                                        </Form.Group>
+                                        <Form.Group controlId="formNotes">
+                                            <InputGroup>
+                                                <InputGroup.Prepend>
+                                                    <InputGroup.Text>Notes (optional):</InputGroup.Text>
+                                                </InputGroup.Prepend>
+                                                <FormControl
+                                                    as="textarea"
+                                                    name="notes"
+                                                    placeholder="Notes..."
+                                                    aria-label="notes"
+                                                    aria-describedby="notes"
+                                                    value={values.notes}
+                                                    onChange={handleChange}
+                                                />
+                                            </InputGroup>
+                                        </Form.Group>
+                                        {farmType == 0 ?
+                                            <Form.Group controlId="formHide">
+                                                <InputGroup>
+                                                    <InputGroup.Prepend>
+                                                        <InputGroup.Text>Hide Category(s):</InputGroup.Text>
+                                                    </InputGroup.Prepend>
+                                                    <FormControl
+                                                        as="select"
+                                                        multiple
+                                                        name="hide"
+                                                        aria-label="hide"
+                                                        aria-describedby="hide"
+                                                        value={values.hide}
+                                                        onChange={handleChange}
+                                                    >
+                                                        <option value={FARM_CONSTS.farmTypes.ALL}>None</option>
+                                                        <option value={FARM_CONSTS.farmTypes.HERB}>Herb</option>
+                                                        <option value={FARM_CONSTS.farmTypes.TREE}>Tree</option>
+                                                        <option value={FARM_CONSTS.farmTypes.FRUIT}>Fruit</option>
+                                                        <option value={FARM_CONSTS.farmTypes.BUSH}>Bush</option>
+                                                        <option value={FARM_CONSTS.farmTypes.CACTUS}>Cactus</option>
+                                                        <option value={FARM_CONSTS.farmTypes.MUSHROOM}>Mushroom</option>
+                                                    </FormControl>
+                                                </InputGroup>
+                                            </Form.Group>
+                                            : null}
+                                        <hr className="divider" />
+                                        <FieldArray name="steps">
+                                            {() => (values.steps.map((step, i) => {
+                                                const stepErrors = (errors.steps?.length && errors.steps[i]) || {};
+                                                const stepTouched = (touched.steps?.length && touched.steps[i]) || {};
+                                                return (
+                                                    <ListGroup variant="flush" key={i}>
+                                                        <ListGroup.Item className="step-list-item">
+                                                            <Form.Row>
+                                                                <Col>
+                                                                    <Form.Group>
+                                                                        <InputGroup>
+                                                                            <InputGroup.Prepend>
+                                                                                <InputGroup.Text>Step {i + 1}:</InputGroup.Text>
+                                                                                {farmType == 0 ?
+                                                                                    <Field
+                                                                                        as="select"
+                                                                                        name={`steps.${i}.type`}
+                                                                                        className={'form-control' + (stepErrors.type && stepTouched.type ? ' is-invalid' : '')}
+                                                                                    >
+                                                                                        <option value={''}>None</option>
+                                                                                        <option value={FARM_CONSTS.farmTypes.HERB}>Herb</option>
+                                                                                        <option value={FARM_CONSTS.farmTypes.TREE}>Tree</option>
+                                                                                        <option value={FARM_CONSTS.farmTypes.FRUIT}>Fruit</option>
+                                                                                        <option value={FARM_CONSTS.farmTypes.BUSH}>Bush</option>
+                                                                                        <option value={FARM_CONSTS.farmTypes.CACTUS}>Cactus</option>
+                                                                                        <option value={FARM_CONSTS.farmTypes.MUSHROOM}>Mushroom</option>
+                                                                                    </Field>
+                                                                                    : null}
+                                                                            </InputGroup.Prepend>
+                                                                            <Field name={`steps.${i}.title`} type="text" placeholder="title..." className={'form-control' + (stepErrors.title && stepTouched.title ? ' is-invalid' : '')} />
+                                                                            <Field name={`steps.${i}.step`} type="text" placeholder="step details..." className={'form-control' + (stepErrors.step && stepTouched.step ? ' is-invalid' : '')} />
+                                                                            <InputGroup.Append>
+                                                                                {step.img.url ?
+                                                                                    <Button variant="button-secondary" onClick={() => this.setPreviewImgShow(true, i, step.img.url)}><FaImage /> Preview Image</Button>
+                                                                                    :
+                                                                                    <Button variant="button-secondary" onClick={() => this.setImgCropShow(true, i)}><FaImage /> Add Image</Button>
+                                                                                }
+                                                                                {i < 1 ?
+                                                                                    null :
+                                                                                    <Field name="stepTotal">
+                                                                                        {({ field }) => (
+                                                                                            <Button {...field} variant="button-warning-dull" onClick={this.removeStep(i, field, values, setValues)}><FaTrash /> Remove Step</Button>
+                                                                                        )}
+                                                                                    </Field>
+                                                                                }
+                                                                            </InputGroup.Append>
+                                                                            {farmType == 0 ?
+                                                                                <ErrorMessage name={`steps.${i}.type`} component="div" className="invalid-feedback" />
+                                                                                : null}
+                                                                            <ErrorMessage name={`steps.${i}.title`} component="div" className="invalid-feedback" />
+                                                                            <ErrorMessage name={`steps.${i}.step`} component="div" className="invalid-feedback" />
+                                                                        </InputGroup>
+                                                                    </Form.Group>
+                                                                </Col>
+                                                            </Form.Row>
+                                                        </ListGroup.Item>
+                                                    </ListGroup>
+                                                );
+                                            }))}
+                                        </FieldArray>
+                                        <div className="farm-submit">
+                                            <Form.Group controlId="formAddStep">
+                                                <Field name="stepTotal">
+                                                    {({ field }) => (
+                                                        <Button {...field} variant="button-primary" onClick={this.addStep(field, values, setValues)}><FaPlus /> Add Step</Button>
+                                                    )}
+                                                </Field>
+                                            </Form.Group>
+                                        </div>
+                                        <hr className="divider" />
+                                        <div className="farm-submit">
+                                            <Button
+                                                variant="button-primary"
+                                                type="submit"
+                                                disabled={isCreating || isSaving}>Submit {isCreating || isSaving ? <Spinner animation="border" variant="light" size="sm" /> : null}</Button>
+                                        </div>
+                                        <ImgCrop
+                                            show={imgCropShow}
+                                            onHide={() => this.setImgCropShow(false)}
+                                            onConfirm={img => this.setImage(img, values, setValues)}
+                                        />
+                                        <ImgPreview
+                                            show={imgPreviewShow}
+                                            onHide={() => this.setPreviewImgShow(false)}
+                                            croppedImageUrl={imgPreviewURL}
+                                            removeImg={() => this.removeImg(values, setValues)}
+                                        />
+                                    </Form>
+                                )}
+                        </Formik>
+                        :
+                        <Spinner animation="border" variant="dark" />
+                    }
                 </div>
             </Container>
         );
@@ -477,18 +691,24 @@ class FarmRunBuilder extends React.Component {
 
 FarmRunBuilder.propTypes = {
     presetReducer: PropTypes.object,
+    farmRunReducer: PropTypes.object,
     getPresets: PropTypes.func,
     getPresetSingle: PropTypes.func,
     deletePreset: PropTypes.func,
-    clearPreset: PropTypes.func
+    clearPreset: PropTypes.func,
+    getFarmRun: PropTypes.func,
+    createFarmRun: PropTypes.func,
+    editFarmRun: PropTypes.func,
+    clearError: PropTypes.func
 };
 
 const mapStateToProps = state => {
     return {
-        presetReducer: state.presetReducer
+        presetReducer: state.presetReducer,
+        farmRunReducer: state.farmRunReducer
     };
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ getPresets, getPresetSingle, deletePreset, clearPreset }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ getPresets, getPresetSingle, deletePreset, clearPreset, getFarmRun, createFarmRun, editFarmRun, clearError }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(FarmRunBuilder));

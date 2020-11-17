@@ -44,8 +44,6 @@ class FamiliarPreset extends React.Component {
             });
 
             if (this.props.familiarSlotData.length > 0) this.setSelected('slot1');
-        } else {
-            this.props.searchItems(14);
         }
     }
 

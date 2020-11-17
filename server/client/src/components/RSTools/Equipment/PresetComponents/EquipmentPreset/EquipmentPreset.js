@@ -35,10 +35,19 @@ class EquipmentPreset extends React.Component {
         if (this.props.editMode) {
             this.setState({
                 hasEquipment: this.props.equipSlotData.length > 0 ? true : false,
-                slots: this.props.equipSlotData.length > 0 ? this.props.equipSlotData: EQUIPMENT_CONSTS.slotPositions
+                slots: this.props.equipSlotData.length > 0 ? this.props.equipSlotData : EQUIPMENT_CONSTS.slotPositions
             });
 
             if (this.props.equipSlotData.length > 0) this.setSelected(0);
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.currentStep !== prevProps.currentStep) {
+            if (this.props.currentStep === 1) {
+                if (this.state.selectedSlot > -1) this.props.searchItems(this.state.selectedSlot);
+                else this.props.searchItems(0);
+            }
         }
     }
 
@@ -234,7 +243,7 @@ class EquipmentPreset extends React.Component {
         this.setState({ hasEquipment: bool });
         if (!bool) {
             this.props.updateEquipData([]);
-            this.setState({ 
+            this.setState({
                 search: '',
                 slots: EQUIPMENT_CONSTS.slotPositions,
                 selectedSlot: -1

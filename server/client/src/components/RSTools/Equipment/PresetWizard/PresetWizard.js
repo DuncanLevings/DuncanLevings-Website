@@ -316,9 +316,9 @@ class PresetWizard extends React.Component {
         const { editPresetObj } = this.props.presetReducer;
         const { name, equipSlotData, inventorySlotData, familiar, familiarSlotData, abilityBarData, presetAbilityBar, originalBarEdited, prayerData, prayerType } = this.state;
 
-        if (this.checkActivityEmpty() === false && 
-        this.checkActivityEdit() === false && 
-        name === '') return this.setState({ missingName: true });
+        if (this.checkActivityEmpty() === false &&
+            this.checkActivityEdit() === false &&
+            name === '') return this.setState({ missingName: true });
         this.setState({ missingName: false });
 
         const data = {
@@ -336,21 +336,35 @@ class PresetWizard extends React.Component {
 
         if (this.checkEditMode()) {
             if (this.checkActivityEdit()) {
-                this.props.savePreset(data, this.props.location.state.from);
+                this.props.savePreset(
+                    data,
+                    this.props.location.state.from,
+                    this.props.location.state.activityEditMode,
+                    this.props.location.state.activityFrom);
             } else {
                 data.presetId = editPresetObj._id;
                 if (this.checkActivityEditExisting()) {
-                    this.props.editPreset(data, this.props.location.state.from);
+                    this.props.editPreset(
+                        data, 
+                        this.props.location.state.from, 
+                        this.props.location.state.activityEditMode,
+                        this.props.location.state.activityFrom);
                 } else {
                     this.props.editPreset(data);
                 }
             }
         } else {
             if (this.checkActivityEmpty()) {
-                this.props.savePreset(data, this.props.location.state.from);
+                this.props.savePreset(data, 
+                    this.props.location.state.from, 
+                    this.props.location.state.activityEditMode,
+                    this.props.location.state.activityFrom);
             } else {
-                if (this.checkActivityAddPresetMode()) {
-                    this.props.createPreset(data, this.props.location.state.from);
+                if (this.checkActivityAdd()) {
+                    this.props.createPreset(data, 
+                        this.props.location.state.from, 
+                        this.props.location.state.activityEditMode,
+                        this.props.location.state.activityFrom);
                 } else {
                     this.props.createPreset(data);
                 }

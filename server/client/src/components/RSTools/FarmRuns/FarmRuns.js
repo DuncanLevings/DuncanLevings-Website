@@ -21,13 +21,8 @@ class FarmRuns extends React.Component {
 
     }
 
-    navigate = (route, type) => {
-        this.props.history.push({
-            pathname: route,
-            state: {
-                farmType: type
-            }
-        });
+    navigate = (route) => {
+        this.props.history.push(route);
     }
 
     render() {
@@ -35,37 +30,37 @@ class FarmRuns extends React.Component {
             <Container>
                 <div className="FarmRuns">
                     <CardDeck>
-                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.FARMRUN_TYPE, FARM_CONSTS.farmTypes.ALL)}>
+                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.FARMRUN_TYPE_PARAM + FARM_CONSTS.farmTypes.ALL)}>
                             <Card.Body>
                                 <Card.Title>ALL</Card.Title>
                             </Card.Body>
                         </Card>
-                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.FARMRUN_TYPE, FARM_CONSTS.farmTypes.HERB)}>
+                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.FARMRUN_TYPE_PARAM + FARM_CONSTS.farmTypes.HERB)}>
                             <Card.Body>
                                 <Card.Title>HERB</Card.Title>
                             </Card.Body>
                         </Card>
-                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.FARMRUN_TYPE, FARM_CONSTS.farmTypes.TREE)}>
+                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.FARMRUN_TYPE_PARAM + FARM_CONSTS.farmTypes.TREE)}>
                             <Card.Body>
                                 <Card.Title>TREE</Card.Title>
                             </Card.Body>
                         </Card>
-                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.FARMRUN_TYPE, FARM_CONSTS.farmTypes.FRUIT)}>
+                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.FARMRUN_TYPE_PARAM + FARM_CONSTS.farmTypes.FRUIT)}>
                             <Card.Body>
                                 <Card.Title>FRUIT</Card.Title>
                             </Card.Body>
                         </Card>
-                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.FARMRUN_TYPE, FARM_CONSTS.farmTypes.BUSH)}>
+                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.FARMRUN_TYPE_PARAM + FARM_CONSTS.farmTypes.BUSH)}>
                             <Card.Body>
                                 <Card.Title>BUSH</Card.Title>
                             </Card.Body>
                         </Card>
-                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.FARMRUN_TYPE, FARM_CONSTS.farmTypes.CACTUS)}>
+                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.FARMRUN_TYPE_PARAM + FARM_CONSTS.farmTypes.CACTUS)}>
                             <Card.Body>
                                 <Card.Title>CACTUS</Card.Title>
                             </Card.Body>
                         </Card>
-                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.FARMRUN_TYPE, FARM_CONSTS.farmTypes.MUSHROOM)}>
+                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.FARMRUN_TYPE_PARAM + FARM_CONSTS.farmTypes.MUSHROOM)}>
                             <Card.Body>
                                 <Card.Title>MUSHROOM</Card.Title>
                             </Card.Body>

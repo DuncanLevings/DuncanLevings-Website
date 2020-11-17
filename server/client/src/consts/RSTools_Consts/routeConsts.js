@@ -23,7 +23,8 @@ const EDITDAILY_PARAM = DAILYS + "/edit/";
 // FARM RUNS
 
 const FARMRUNS = RSTOOL_ROOT + '/farmruns';
-const FARMRUN_TYPE = FARMRUNS + '/type';
+const FARMRUN_TYPE_PARAM = FARMRUNS + '/type/'
+const FARMRUN_TYPE = FARMRUNS + '/type/:farmType';
 const FARMRUN_BUILDER_PARAM = FARMRUNS + '/type/builder/';
 const FARMRUN_BUILDER = FARMRUNS + '/type/builder/:farmType';
 
@@ -68,6 +69,7 @@ export const RSTOOL_ROUTES = {
     PRESET_VIEWER_PARAM,
     ITEMS,
     ABILITYS,
+    FARMRUN_TYPE_PARAM,
     FARMRUN_TYPE,
     FARMRUN_BUILDER_PARAM,
     FARMRUN_BUILDER

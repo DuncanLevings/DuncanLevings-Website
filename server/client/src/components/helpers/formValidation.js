@@ -118,6 +118,25 @@ export const abilitySchema = yup.object().shape({
         .required("*Must select a main style")
 });
 
+export const farmRunAllSchema = yup.object().shape({
+    webURL: yup.string()
+        .trim()
+        .url("Web guide must be a valid URL"),
+    youtubeURL: yup.string()
+        .trim()
+        .url("Youtube guide must be a valid URL"),
+    steps: yup.array().of(
+        yup.object().shape({
+            title: yup.string()
+                .required("*Title is required"),
+            step: yup.string()
+                .required("*Step is required"),
+            type: yup.string()
+                .required("*Type is required")
+        })
+    )
+});
+
 export const farmRunSchema = yup.object().shape({
     webURL: yup.string()
         .trim()
@@ -125,4 +144,12 @@ export const farmRunSchema = yup.object().shape({
     youtubeURL: yup.string()
         .trim()
         .url("Youtube guide must be a valid URL"),
+    steps: yup.array().of(
+        yup.object().shape({
+            title: yup.string()
+                .required("*Title is required"),
+            step: yup.string()
+                .required("*Step is required")
+        })
+    )
 });

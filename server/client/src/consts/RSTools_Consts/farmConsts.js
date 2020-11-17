@@ -14,6 +14,15 @@ const farmTypeNames = {
     6: "Mushroom Run"
 }
 
+const farmTypeIcons = {
+    1: "/static_images/RSTools/farmRuns/clean_guam.png",
+    2: "/static_images/RSTools/farmRuns/spirit_tree.png",
+    3: "/static_images/RSTools/farmRuns/pineapple.png",
+    4: "/static_images/RSTools/farmRuns/White_berries.png",
+    5: "/static_images/RSTools/farmRuns/Potato_cactus.png",
+    6: "/static_images/RSTools/farmRuns/Bittercap_mushroom.png"
+}
+
 const farmTypes = {
     ALL: 0,
     HERB: 1,
@@ -26,5 +35,6 @@ const farmTypes = {
 
 export default {
     farmTypeNames,
+    farmTypeIcons,
     farmTypes
 }
