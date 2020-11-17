@@ -61,7 +61,7 @@ class AddItem extends React.Component {
     setPreviewImgShow = (bool, img) => {
         this.setState({
             imgPreviewShow: bool,
-            imgPreviewURL: img == undefined ? "" : img
+            imgPreviewURL: img === undefined ? "" : img
         });
     }
 
@@ -232,7 +232,7 @@ class AddItem extends React.Component {
                                                     </InputGroup>
                                                 </Form.Group>
                                                 :
-                                                slot > 5 && slot < 10 || slot === 13 ? // augmentable equipable slots
+                                                slot > 5 && (slot < 10 || slot === 13) ? // augmentable equipable slots
                                                     augment ?
                                                         <Form.Group controlId="formWiki">
                                                             <InputGroup>

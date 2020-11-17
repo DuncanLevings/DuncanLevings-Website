@@ -6,7 +6,6 @@
 
 import React from 'react';
 import { Card, CardDeck, Container } from 'react-bootstrap';
-import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import './Activity.scss';
 
 class Activity extends React.Component {

@@ -47,7 +47,7 @@ class EditItem extends React.Component {
     setPreviewImgShow = (bool, img) => {
         this.setState({
             imgPreviewShow: bool,
-            imgPreviewURL: img == undefined ? "" : img
+            imgPreviewURL: img === undefined ? "" : img
         });
     }
 
@@ -213,7 +213,7 @@ class EditItem extends React.Component {
                                                     </InputGroup>
                                                 </Form.Group>
                                                 :
-                                                editItemObj.slot > 5 && editItemObj.slot < 10 || editItemObj.slot === 13 ? // augmentable equipable slots
+                                                editItemObj.slot > 5 && (editItemObj.slot < 10 || editItemObj.slot === 13) ? // augmentable equipable slots
                                                     values.isAugmented ?
                                                         <Form.Group controlId="formWiki">
                                                             <InputGroup>

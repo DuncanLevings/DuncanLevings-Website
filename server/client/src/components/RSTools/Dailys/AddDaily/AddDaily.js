@@ -36,15 +36,15 @@ class AddDaily extends React.Component {
     setImgCropShow = (bool, i) => {
         this.setState({ 
             imgCropShow: bool, 
-            selectedStep: i == undefined ? this.state.selectedStep : i 
+            selectedStep: i === undefined ? this.state.selectedStep : i 
         });
     }
 
     setPreviewImgShow = (bool, i, img) => {
         this.setState({ 
             imgPreviewShow: bool, 
-            selectedStep: i == undefined ? this.state.selectedStep : i, 
-            imgPreviewURL: img == undefined ? "" : img 
+            selectedStep: i === undefined ? this.state.selectedStep : i, 
+            imgPreviewURL: img === undefined ? "" : img 
         });
     }
 

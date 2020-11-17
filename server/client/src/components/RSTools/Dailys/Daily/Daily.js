@@ -55,7 +55,7 @@ class Daily extends React.Component {
         e.stopPropagation();
         this.setState({
             showDelete: bool,
-            selectedDaily: daily == undefined ? this.state.selectedDaily : daily
+            selectedDaily: daily === undefined ? this.state.selectedDaily : daily
         });
     }
 
@@ -133,7 +133,7 @@ class Daily extends React.Component {
         e.stopPropagation();
         this.setState({
             showEdit: bool,
-            selectedDaily: daily == undefined ? this.state.selectedDaily : daily
+            selectedDaily: daily === undefined ? this.state.selectedDaily : daily
         });
     }
 

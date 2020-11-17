@@ -8,7 +8,6 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Container, CardDeck, Card } from 'react-bootstrap';
 import { FARM_CONSTS, RSTOOL_ROUTES } from 'consts/RSTools_Consts';
-import PropTypes from 'prop-types';
 import './FarmRuns.scss';
 
 class FarmRuns extends React.Component {
@@ -71,9 +70,5 @@ class FarmRuns extends React.Component {
         );
     }
 }
-
-FarmRuns.propTypes = {};
-
-FarmRuns.defaultProps = {};
 
 export default withRouter(FarmRuns);

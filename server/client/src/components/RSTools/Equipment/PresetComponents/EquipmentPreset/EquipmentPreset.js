@@ -68,7 +68,7 @@ class EquipmentPreset extends React.Component {
         const { slots, selectedSlot } = this.state;
         return slots.map((slot, i) => {
             let selected = false;
-            if (selectedSlot == i) {
+            if (selectedSlot === i) {
                 selected = true;
             }
 

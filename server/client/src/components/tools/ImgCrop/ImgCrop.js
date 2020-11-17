@@ -12,9 +12,10 @@ import 'react-image-crop/lib/ReactCrop.scss';
 import './ImgCrop.scss';
 
 function DropZone(props) {
+    const { onFileChange } = props;
     const onDrop = useCallback(acceptedFiles => {
-        props.onFileChange(acceptedFiles);
-    }, [])
+        onFileChange(acceptedFiles);
+    }, [onFileChange])
     const {
         getRootProps,
         getInputProps,

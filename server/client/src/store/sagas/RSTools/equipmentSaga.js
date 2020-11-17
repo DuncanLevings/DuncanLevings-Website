@@ -5,7 +5,6 @@
  */
 
 import { call, takeLatest, put } from 'redux-saga/effects';
-import { push } from 'connected-react-router';
 import {
     createItemAPI,
     createAbilityBarAPI,
@@ -19,7 +18,6 @@ import {
     deleteAbilityBarAPI,
     editAbilityBarAPI
 } from '../../api/RSTools/equipmentAPI';
-import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import * as actionTypes from '../../actionTypes/RSTools/equipmentActionTypes'
 import * as actionCreators from '../../actions/RSTools/equipmentActions';
 

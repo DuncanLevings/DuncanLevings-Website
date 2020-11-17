@@ -50,7 +50,7 @@ class FarmRun extends React.Component {
         return steps.map((step, i) => {
             var cardKey = i.toString();
 
-            if (farmType == 0) {
+            if (farmType === '0') {
                 if (hidden.includes(step.type)) return null;
             }
 

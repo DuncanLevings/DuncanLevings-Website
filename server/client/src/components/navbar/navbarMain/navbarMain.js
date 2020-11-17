@@ -12,7 +12,7 @@ import { Button, Navbar, Nav } from 'react-bootstrap';
 import { withRouter, NavLink } from 'react-router-dom';
 import { NavHashLink } from 'react-router-hash-link';
 import { isMobile } from 'react-device-detect';
-import { RSTOOL_ROOT, NAVBAR_TYPE } from 'consts';
+import { NAVBAR_TYPE } from 'consts';
 import { RESUME_ROUTES } from 'consts/Resume_Consts';
 import { logoutUser } from 'store/actions/userActions';
 import { updateActiveHash } from 'store/actions/navbarActions';

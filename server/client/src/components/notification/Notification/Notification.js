@@ -7,7 +7,7 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Toast } from 'react-bootstrap';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import './Notification.scss';
 
 class Notification extends React.Component {

@@ -20,8 +20,6 @@ import ImgCrop from 'components/tools/ImgCrop/ImgCrop.lazy';
 import ImgPreview from 'components/tools/ImgPreview/ImgPreview.lazy';
 import PropTypes from 'prop-types';
 import './FarmRunBuilder.scss';
-import { json } from 'body-parser';
-
 
 class FarmRunBuilder extends React.Component {
     constructor(props) {
@@ -331,15 +329,15 @@ class FarmRunBuilder extends React.Component {
     setImgCropShow = (bool, i) => {
         this.setState({
             imgCropShow: bool,
-            selectedStep: i == undefined ? this.state.selectedStep : i
+            selectedStep: i === undefined ? this.state.selectedStep : i
         });
     }
 
     setPreviewImgShow = (bool, i, img) => {
         this.setState({
             imgPreviewShow: bool,
-            selectedStep: i == undefined ? this.state.selectedStep : i,
-            imgPreviewURL: img == undefined ? "" : img
+            selectedStep: i === undefined ? this.state.selectedStep : i,
+            imgPreviewURL: img === undefined ? "" : img
         });
     }
 
@@ -347,7 +345,7 @@ class FarmRunBuilder extends React.Component {
         const { farmType } = this.state;
         const steps = [...values.steps];
         const step = { title: '', step: '', img: '', type: '' };
-        if (farmType == 0) step.type = '';
+        if (farmType === '0') step.type = '';
         steps.push(step);
         setValues({ ...values, steps });
         field.onChange(e);
@@ -379,7 +377,7 @@ class FarmRunBuilder extends React.Component {
         const { farmType, farmRunObj } = this.state;
 
         if (this.checkEditMode()) {
-            if (farmType == 0) {
+            if (farmType === '0') {
                 return {
                     webURL: farmRunObj.webURL || '',
                     youtubeURL: farmRunObj.youtubeURL || '',
@@ -395,7 +393,7 @@ class FarmRunBuilder extends React.Component {
                 steps: farmRunObj.steps || [{ title: '', step: '', img: {} }]
             }
         } else {
-            if (farmType == 0) {
+            if (farmType === '0') {
                 return {
                     webURL: '',
                     youtubeURL: '',
@@ -424,7 +422,7 @@ class FarmRunBuilder extends React.Component {
         if (this.checkEditMode()) formData.append('farmRunId', farmRunObj._id);
         formData.append('preset', JSON.stringify(preset));
         formData.append('type', farmType);
-        if (farmType == 0) formData.append('hidden', values.hide);
+        if (farmType === '0') formData.append('hidden', values.hide);
         formData.append('webURL', values.webURL);
         formData.append('youtubeURL', values.youtubeURL);
         formData.append('notes', values.notes);
@@ -495,7 +493,7 @@ class FarmRunBuilder extends React.Component {
                     </div>
                     {farmType > -1 ?
                         <Formik
-                            validationSchema={farmType == 0 ? farmRunAllSchema : farmRunSchema}
+                            validationSchema={farmType === '0' ? farmRunAllSchema : farmRunSchema}
                             onSubmit={this.submit}
                             initialValues={this.getInitalValues()}
                         >
@@ -563,7 +561,7 @@ class FarmRunBuilder extends React.Component {
                                                 />
                                             </InputGroup>
                                         </Form.Group>
-                                        {farmType == 0 ?
+                                        {farmType === '0' ?
                                             <Form.Group controlId="formHide">
                                                 <InputGroup>
                                                     <InputGroup.Prepend>
@@ -603,7 +601,7 @@ class FarmRunBuilder extends React.Component {
                                                                         <InputGroup>
                                                                             <InputGroup.Prepend>
                                                                                 <InputGroup.Text>Step {i + 1}:</InputGroup.Text>
-                                                                                {farmType == 0 ?
+                                                                                {farmType === '0' ?
                                                                                     <Field
                                                                                         as="select"
                                                                                         name={`steps.${i}.type`}
@@ -636,7 +634,7 @@ class FarmRunBuilder extends React.Component {
                                                                                     </Field>
                                                                                 }
                                                                             </InputGroup.Append>
-                                                                            {farmType == 0 ?
+                                                                            {farmType === '0' ?
                                                                                 <ErrorMessage name={`steps.${i}.type`} component="div" className="invalid-feedback" />
                                                                                 : null}
                                                                             <ErrorMessage name={`steps.${i}.title`} component="div" className="invalid-feedback" />

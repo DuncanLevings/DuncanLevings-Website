@@ -7,7 +7,6 @@
 import React from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import { FaTrash } from 'react-icons/fa';
-import PropTypes from 'prop-types';
 import './ImgPreview.scss';
 
 class ImgPreview extends React.Component {
@@ -47,9 +46,5 @@ class ImgPreview extends React.Component {
         );
     }
 }
-
-ImgPreview.propTypes = {};
-
-ImgPreview.defaultProps = {};
 
 export default ImgPreview;

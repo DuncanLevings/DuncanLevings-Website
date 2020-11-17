@@ -8,7 +8,7 @@ import React from 'react';
 import { Container, Button, ListGroup, Row, Col } from 'react-bootstrap';
 import BootstrapSwitchButton from 'bootstrap-switch-button-react'
 import { FaPlusSquare, FaEdit, FaTrash } from 'react-icons/fa';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import './AdminDashIcons.scss';
 
 class AdminDashIcons extends React.Component {
@@ -75,8 +75,8 @@ class AdminDashIcons extends React.Component {
     }
 }
 
-AdminDashIcons.propTypes = {};
+// AdminDashIcons.propTypes = {};
 
-AdminDashIcons.defaultProps = {};
+// AdminDashIcons.defaultProps = {};
 
 export default AdminDashIcons;
