@@ -15,9 +15,9 @@ const farmTypeNames = {
 }
 
 const farmTypeIcons = {
-    1: "/static_images/RSTools/farmRuns/clean_guam.png",
-    2: "/static_images/RSTools/farmRuns/spirit_tree.png",
-    3: "/static_images/RSTools/farmRuns/pineapple.png",
+    1: "/static_images/RSTools/farmRuns/Clean_guam.png",
+    2: "/static_images/RSTools/farmRuns/Spirit_tree.png",
+    3: "/static_images/RSTools/farmRuns/Pineapple.png",
     4: "/static_images/RSTools/farmRuns/White_berries.png",
     5: "/static_images/RSTools/farmRuns/Potato_cactus.png",
     6: "/static_images/RSTools/farmRuns/Bittercap_mushroom.png"
