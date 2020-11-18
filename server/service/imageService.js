@@ -10,7 +10,8 @@ const _config = require('../config/config.json');
 const { Storage } = require('@google-cloud/storage');
 const fs = require("fs");
 
-const CLOUD_BUCKET = _config.gcloud_bucket_name;
+const CLOUD_BUCKET = process.env.NODE_ENV === 'production' ? _config.gcloud_bucket_name : _config.gcloud_bucket_name_testing;
+
 const storage = new Storage({
     projectId: _config.gcloud_project_id,
     keyFilename: _config.keyfile_path

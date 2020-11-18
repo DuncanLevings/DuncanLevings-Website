@@ -10,10 +10,11 @@ import { bindActionCreators } from 'redux';
 import { Button, Col, Container, Form, FormControl, InputGroup, ListGroup, Spinner } from 'react-bootstrap';
 import { ErrorMessage, Field, FieldArray, Formik } from 'formik';
 import { dailySchema } from 'components/helpers/formValidation';
-import { FaImage, FaPlus, FaTrash } from 'react-icons/fa';
+import { FaImage, FaMap, FaPlus, FaTrash } from 'react-icons/fa';
 import { createDaily } from 'store/actions/RSTools/dailyActions';
 import ImgCrop from 'components/tools/ImgCrop/ImgCrop.lazy';
 import ImgPreview from 'components/tools/ImgPreview/ImgPreview.lazy';
+import MapSelection from 'components/RSTools/tools/MapSelection/MapSelection.lazy';
 import FormData from 'form-data';
 import PropTypes from 'prop-types';
 import './AddDaily.scss';
@@ -24,8 +25,10 @@ class AddDaily extends React.Component {
         this.state = {
             imgCropShow: false,
             imgPreviewShow: false,
+            mapSelectShow: false,
             imgPreviewURL: "",
-            selectedStep: 0
+            selectedStep: 0,
+            mapURL: ""
         }
     }
 
@@ -34,18 +37,27 @@ class AddDaily extends React.Component {
     }
 
     setImgCropShow = (bool, i) => {
-        this.setState({ 
-            imgCropShow: bool, 
-            selectedStep: i === undefined ? this.state.selectedStep : i 
+        this.setState({
+            imgCropShow: bool,
+            selectedStep: i === undefined ? this.state.selectedStep : i
         });
     }
 
     setPreviewImgShow = (bool, i, img) => {
-        this.setState({ 
-            imgPreviewShow: bool, 
-            selectedStep: i === undefined ? this.state.selectedStep : i, 
-            imgPreviewURL: img === undefined ? "" : img 
+        this.setState({
+            imgPreviewShow: bool,
+            selectedStep: i === undefined ? this.state.selectedStep : i,
+            imgPreviewURL: img === undefined ? "" : img
         });
+    }
+
+    setMapSelectShow = (bool) => {
+        this.setState({ mapSelectShow: bool });
+    }
+
+    setMapURL = (url) => {
+        this.setState({ mapURL: url });
+        this.setMapSelectShow(false);
     }
 
     addStep = (field, values, setValues) => e => {
@@ -76,12 +88,13 @@ class AddDaily extends React.Component {
         steps[this.state.selectedStep].img = {};
         setValues({ ...values, steps });
     }
-    
+
 
     submitProject = values => {
         let formData = new FormData();
 
         formData.append('title', values.title);
+        formData.append('mapURL', this.state.mapURL);
         formData.append('type', this.props.dailyReducer.dailyType);
 
         values.steps.forEach((step, i) => {
@@ -92,13 +105,13 @@ class AddDaily extends React.Component {
                 window.URL.revokeObjectURL(step.img.url);
             }
         });
-        
+
         this.props.createDaily(formData);
     }
 
     render() {
         const { dailyTypeName, isCreating, error } = this.props.dailyReducer;
-        const { imgCropShow, imgPreviewShow, imgPreviewURL } = this.state;
+        const { imgCropShow, imgPreviewShow, imgPreviewURL, mapSelectShow, mapURL } = this.state;
 
         return (
             <Container>
@@ -140,6 +153,9 @@ class AddDaily extends React.Component {
                                                 isInvalid={touched.title && !!errors.title}
                                                 autoFocus
                                             />
+                                            <InputGroup.Append>
+                                                <Button variant="button-secondary" onClick={() => this.setMapSelectShow(true)}><FaMap /> Set Map</Button>
+                                            </InputGroup.Append>
                                             <Form.Control.Feedback type="invalid">
                                                 {errors.title}
                                             </Form.Control.Feedback>
@@ -210,6 +226,12 @@ class AddDaily extends React.Component {
                                         onHide={() => this.setPreviewImgShow(false)}
                                         croppedImageUrl={imgPreviewURL}
                                         removeImg={() => this.removeImg(values, setValues)}
+                                    />
+                                    <MapSelection
+                                        setMapURL={url => this.setMapURL(url)}
+                                        mapURL={mapURL}
+                                        show={mapSelectShow}
+                                        onHide={() => this.setMapSelectShow(false)}
                                     />
                                 </Form>
                             )}

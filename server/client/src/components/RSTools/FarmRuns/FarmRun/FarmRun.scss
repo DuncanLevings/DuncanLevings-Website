@@ -53,11 +53,11 @@
     .card {
         background-color: $daily-card-background;
 
-        .card-header {
+        .farmStepHeader {
             font-size: calc(8px + 2vmin);
         }
 
-        .card-header:hover {
+        .farmStepHeader.toggle:hover {
             background-color: $daily-card-title-hover;
         }
 
@@ -74,16 +74,8 @@
             width: unset;
         }
     }
-}
 
-.leaflet-control-mapselector.leaflet-control {
-    display: none;
-}
-
-.leaflet-popup-pane, .leaflet-control {
-    display: none;
-}
-
-.leaflet-control-container {
-    display: none;
+    .actions {
+        float: right;
+    }
 }

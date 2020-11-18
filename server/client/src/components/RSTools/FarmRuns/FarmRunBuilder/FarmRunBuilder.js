@@ -11,13 +11,12 @@ import { bindActionCreators } from 'redux';
 import { getPresets, getPresetSingle, deletePreset, clearPreset } from 'store/actions/RSTools/presetActions';
 import { getFarmRun, createFarmRun, editFarmRun, clearError } from 'store/actions/RSTools/farmRunActions';
 import { Button, Col, Container, Form, FormControl, Image, InputGroup, ListGroup, Modal, Row, Spinner } from 'react-bootstrap';
-import { FaCheckSquare, FaEdit, FaImage, FaPlus, FaTrash } from 'react-icons/fa';
+import { FaCheckSquare, FaEdit, FaImage, FaMap, FaPlus, FaTrash } from 'react-icons/fa';
 import { FARM_CONSTS, RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import { farmRunAllSchema, farmRunSchema } from 'components/helpers/formValidation';
 import { ErrorMessage, Field, FieldArray, Formik } from 'formik';
 import PresetOverview from 'components/RSTools/Equipment/PresetComponents/PresetOverview/PresetOverview.lazy';
-import ImgCrop from 'components/tools/ImgCrop/ImgCrop.lazy';
-import ImgPreview from 'components/tools/ImgPreview/ImgPreview.lazy';
+import MapSelection from 'components/RSTools/tools/MapSelection/MapSelection.lazy';
 import PropTypes from 'prop-types';
 import './FarmRunBuilder.scss';
 
@@ -34,11 +33,10 @@ class FarmRunBuilder extends React.Component {
             useExistingPreset: false,
             showConfirm: false,
             selectedPresetId: null,
+            selectedStep: 0,
             preset: null,
-            imgCropShow: false,
-            imgPreviewShow: false,
-            imgPreviewURL: "",
-            selectedStep: 0
+            showMapSelect: false,
+            mapURLs: []
         }
     }
 
@@ -80,9 +78,7 @@ class FarmRunBuilder extends React.Component {
             const stepData = {
                 title: step.title,
                 step: step.step,
-                img: {
-                    url: step.url
-                }
+                mapURL: step.mapURL
             }
 
             if (step.type) stepData.type = step.type;
@@ -326,25 +322,10 @@ class FarmRunBuilder extends React.Component {
         );
     }
 
-    setImgCropShow = (bool, i) => {
-        this.setState({
-            imgCropShow: bool,
-            selectedStep: i === undefined ? this.state.selectedStep : i
-        });
-    }
-
-    setPreviewImgShow = (bool, i, img) => {
-        this.setState({
-            imgPreviewShow: bool,
-            selectedStep: i === undefined ? this.state.selectedStep : i,
-            imgPreviewURL: img === undefined ? "" : img
-        });
-    }
-
     addStep = (field, values, setValues) => e => {
         const { farmType } = this.state;
         const steps = [...values.steps];
-        const step = { title: '', step: '', img: '', type: '' };
+        const step = { title: '', step: '', mapURL: '', type: '' };
         if (farmType === '0') step.type = '';
         steps.push(step);
         setValues({ ...values, steps });
@@ -358,19 +339,18 @@ class FarmRunBuilder extends React.Component {
         field.onChange(e);
     }
 
-    setImage = (img, values, setValues) => {
-        this.setImgCropShow(false);
-        const steps = [...values.steps];
-        steps[this.state.selectedStep].img = img;
-        setValues({ ...values, steps });
+    showMapSelect = (bool, i = null) => {
+        this.setState({
+            showMapSelect: bool,
+            selectedStep: i === null ? this.state.selectedStep : i 
+        });
     }
 
-    removeImg = (values, setValues) => {
-        this.setPreviewImgShow(false);
+    setMapURL = (url, values, setValues) => {
         const steps = [...values.steps];
-        window.URL.revokeObjectURL(this.state.imgPreviewURL);
-        steps[this.state.selectedStep].img = {};
+        steps[this.state.selectedStep].mapURL = url;
         setValues({ ...values, steps });
+        this.showMapSelect(false);
     }
 
     getInitalValues = () => {
@@ -383,14 +363,14 @@ class FarmRunBuilder extends React.Component {
                     youtubeURL: farmRunObj.youtubeURL || '',
                     notes: farmRunObj.notes || '',
                     hide: farmRunObj.hidden || ["0"],
-                    steps: farmRunObj.steps || [{ title: '', step: '', img: {}, type: '' }]
+                    steps: farmRunObj.steps || [{ title: '', step: '', mapURL: '', type: '' }]
                 }
             }
             return {
                 webURL: farmRunObj.webURL || '',
                 youtubeURL: farmRunObj.youtubeURL || '',
                 notes: farmRunObj.notes || '',
-                steps: farmRunObj.steps || [{ title: '', step: '', img: {} }]
+                steps: farmRunObj.steps || [{ title: '', mapURL: '', step: '' }]
             }
         } else {
             if (farmType === '0') {
@@ -399,7 +379,7 @@ class FarmRunBuilder extends React.Component {
                     youtubeURL: '',
                     notes: '',
                     hide: ["0"],
-                    steps: [{ title: '', step: '', img: {}, type: '' }]
+                    steps: [{ title: '', step: '', mapURL: '', type: '' }]
                 }
             }
 
@@ -407,7 +387,7 @@ class FarmRunBuilder extends React.Component {
                 webURL: '',
                 youtubeURL: '',
                 notes: '',
-                steps: [{ title: '', step: '', img: {} }]
+                steps: [{ title: '', mapURL: '', step: '' }]
             }
         }
     }
@@ -432,19 +412,15 @@ class FarmRunBuilder extends React.Component {
                 let stepData = {
                     title: step.title,
                     step: step.step,
-                    url: step.img.url && step.img.url.split(':')[0] !== "blob" ? step.img.url : null
+                    mapURL: step.mapURL
                 };
                 if (step.type) stepData.type = step.type;
                 formData.append('steps', JSON.stringify(stepData));
             } else {
                 formData.append('titles', step.title);
                 formData.append('steps', step.step);
+                formData.append('mapURLs', step.mapURL);
                 if (step.type) formData.append('types', step.type);
-            }
-
-            if (step.img.blob) {
-                formData.append('images', step.img.blob, `step_${i}`);
-                window.URL.revokeObjectURL(step.img.url);
             }
         });
 
@@ -458,7 +434,7 @@ class FarmRunBuilder extends React.Component {
     }
 
     render() {
-        const { farmType, presetSet, pressingMissing, useExistingPreset, imgCropShow, imgPreviewShow, imgPreviewURL } = this.state;
+        const { farmType, presetSet, pressingMissing, useExistingPreset, showMapSelect, selectedStep } = this.state;
         const { isFetching, isCreating, isSaving, error } = this.props.farmRunReducer;
 
         if (isFetching) {
@@ -593,6 +569,7 @@ class FarmRunBuilder extends React.Component {
                                             {() => (values.steps.map((step, i) => {
                                                 const stepErrors = (errors.steps?.length && errors.steps[i]) || {};
                                                 const stepTouched = (touched.steps?.length && touched.steps[i]) || {};
+
                                                 return (
                                                     <ListGroup variant="flush" key={i}>
                                                         <ListGroup.Item className="step-list-item">
@@ -601,7 +578,6 @@ class FarmRunBuilder extends React.Component {
                                                                     <Form.Group>
                                                                         <InputGroup>
                                                                             <InputGroup.Prepend>
-                                                                                <InputGroup.Text>Step {i + 1}:</InputGroup.Text>
                                                                                 {farmType === '0' ?
                                                                                     <Field
                                                                                         as="select"
@@ -619,13 +595,9 @@ class FarmRunBuilder extends React.Component {
                                                                                     : null}
                                                                             </InputGroup.Prepend>
                                                                             <Field name={`steps.${i}.title`} type="text" placeholder="title..." className={'form-control' + (stepErrors.title && stepTouched.title ? ' is-invalid' : '')} />
-                                                                            <Field name={`steps.${i}.step`} type="text" placeholder="step details..." className={'form-control' + (stepErrors.step && stepTouched.step ? ' is-invalid' : '')} />
+                                                                            <Field name={`steps.${i}.step`} type="text" placeholder="details..." className={'form-control' + (stepErrors.step && stepTouched.step ? ' is-invalid' : '')} />
                                                                             <InputGroup.Append>
-                                                                                {step.img.url ?
-                                                                                    <Button variant="button-secondary" onClick={() => this.setPreviewImgShow(true, i, step.img.url)}><FaImage /> Preview Image</Button>
-                                                                                    :
-                                                                                    <Button variant="button-secondary" onClick={() => this.setImgCropShow(true, i)}><FaImage /> Add Image</Button>
-                                                                                }
+                                                                                <Button variant="button-secondary" onClick={() => this.showMapSelect(true, i)}><FaMap /> Set Map</Button>
                                                                                 {i < 1 ?
                                                                                     null :
                                                                                     <Field name="stepTotal">
@@ -665,16 +637,11 @@ class FarmRunBuilder extends React.Component {
                                                 type="submit"
                                                 disabled={isCreating || isSaving}>Submit {isCreating || isSaving ? <Spinner animation="border" variant="light" size="sm" /> : null}</Button>
                                         </div>
-                                        <ImgCrop
-                                            show={imgCropShow}
-                                            onHide={() => this.setImgCropShow(false)}
-                                            onConfirm={img => this.setImage(img, values, setValues)}
-                                        />
-                                        <ImgPreview
-                                            show={imgPreviewShow}
-                                            onHide={() => this.setPreviewImgShow(false)}
-                                            croppedImageUrl={imgPreviewURL}
-                                            removeImg={() => this.removeImg(values, setValues)}
+                                        <MapSelection
+                                            setMapURL={url => this.setMapURL(url, values, setValues)}
+                                            mapURL={values.steps[selectedStep].mapURL}
+                                            show={showMapSelect}
+                                            onHide={() => this.showMapSelect(false)}
                                         />
                                     </Form>
                                 )}

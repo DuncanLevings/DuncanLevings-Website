@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { Accordion, Button, Card, Container, Modal, OverlayTrigger, Spinner, Tooltip } from 'react-bootstrap';
-import { FaCheck, FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
+import { FaCheck, FaEdit, FaTrash, FaPlus, FaMap } from 'react-icons/fa';
 import {
     getDaily,
     setDailyType,
@@ -30,6 +30,7 @@ import _ from "lodash";
 import PropTypes from 'prop-types';
 import './Daily.scss';
 import NemiForest from '../CustomDaily/NemiForest/NemiForest.lazy';
+import IFrameModal from 'components/tools/IFrameModal/IFrameModal.lazy';
 
 class Daily extends React.Component {
     constructor(props) {
@@ -40,7 +41,9 @@ class Daily extends React.Component {
             showEdit: false,
             selectedDaily: null,
             loadedVis: false,
-            loadedNemi: false
+            loadedNemi: false,
+            showMap: false,
+            mapURL: ""
         }
     }
 
@@ -177,6 +180,14 @@ class Daily extends React.Component {
         );
     }
 
+    setShowMap = (bool, mapURL = '') => e => {
+        e.stopPropagation();
+        this.setState({
+            showMap: bool,
+            mapURL: mapURL
+        });
+    }
+
     markComplete = (daily) => e => {
         e.stopPropagation();
         this.setState(prevState => ({
@@ -246,6 +257,7 @@ class Daily extends React.Component {
     }
 
     render() {
+        const { showMap, mapURL } = this.state;
         const { dailyTypeName, dailyType, dailys, weeklys, monthlys, isFetching } = this.props.dailyReducer;
 
         let data = [];
@@ -279,6 +291,7 @@ class Daily extends React.Component {
                                                 </Button>
                                                 {dailyData.title}
                                                 <span className="actions">
+                                                    {dailyData.mapURL ? <FaMap className="action-icon map" onClick={this.setShowMap(true, dailyData.mapURL)} /> : null}
                                                     <FaEdit size="0.75em" className="action-icon edit" onClick={this.setShowEdit(true, daily)} />
                                                     <FaTrash size="0.75em" className="action-icon delete" onClick={this.setShowDelete(true, daily)} />
                                                 </span>
@@ -295,6 +308,11 @@ class Daily extends React.Component {
                         ) :
                             <p>Completed all {dailyTypeName} for this reset!</p>
                     )}
+                    <IFrameModal
+                        show={showMap}
+                        pageSrc={mapURL}
+                        onHide={() => this.setState({ showMap: false })}
+                    />
                 </div>
             </Container>
         );

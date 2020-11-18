@@ -11,19 +11,20 @@ import { bindActionCreators } from 'redux';
 import { getFarmRun } from 'store/actions/RSTools/farmRunActions';
 import { clearPreset } from 'store/actions/RSTools/presetActions';
 import PresetOverview from 'components/RSTools/Equipment/PresetComponents/PresetOverview/PresetOverview.lazy';
+import IFrameModal from 'components/tools/IFrameModal/IFrameModal.lazy';
 import { Accordion, Button, Card, Col, Container, Image, Row, Spinner } from 'react-bootstrap';
 import { FARM_CONSTS, RSTOOL_ROUTES } from 'consts/RSTools_Consts';
-import { FaDesktop, FaEdit, FaPlus, FaYoutube } from 'react-icons/fa';
+import { FaDesktop, FaEdit, FaMap, FaPlus, FaYoutube } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 import './FarmRun.scss';
-import IFrameModal from 'components/tools/IFrameModal/IFrameModal.lazy';
-import MapSelection from 'components/RSTools/tools/MapSelection/MapSelection.lazy';
 
 class FarmRun extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            farmType: -1
+            farmType: -1,
+            showMap: false,
+            mapURL: ''
         }
     }
 
@@ -46,6 +47,14 @@ class FarmRun extends React.Component {
         });
     }
 
+    setShowMap = (bool, mapURL = '') => e => {
+        e.stopPropagation();
+        this.setState({ 
+            showMap: bool,
+            mapURL: mapURL
+        });
+    }
+
     generateFarmRunSteps = (steps, hidden = null) => {
         const { farmType } = this.state;
 
@@ -59,20 +68,27 @@ class FarmRun extends React.Component {
             return (
                 <Accordion key={i}>
                     <Card>
-                        <Accordion.Toggle as={Card.Header} eventKey={cardKey}>
+                        <Accordion.Toggle as={Card.Header} className={`farmStepHeader ${step.step ? 'toggle' : ''}`} eventKey={cardKey}>
                             {step.type ? <Image className="step-icon" src={FARM_CONSTS.farmTypeIcons[step.type]} /> : null}
                             {step.title}
+                            {step.mapURL ?
+                                <div className="actions">
+                                    <Button variant="button-primary" onClick={this.setShowMap(true, step.mapURL)}><FaMap /> Map</Button>
+                                </div>
+                                : null}
                         </Accordion.Toggle>
-                        <Accordion.Collapse eventKey={cardKey}>
-                            <Card.Body>
-                                {step.step}
-                                {step.url ?
-                                    <div className="spacer-h-2">
-                                        <Card.Img src={step.url} />
-                                    </div>
-                                    : null}
-                            </Card.Body>
-                        </Accordion.Collapse>
+                        {step.step ?
+                            <Accordion.Collapse eventKey={cardKey}>
+                                <Card.Body>
+                                    {step.step}
+                                    {step.url ?
+                                        <div className="spacer-h-2">
+                                            <Card.Img src={step.url} />
+                                        </div>
+                                        : null}
+                                </Card.Body>
+                            </Accordion.Collapse>
+                            : null}
                     </Card>
                 </Accordion>
             );
@@ -116,7 +132,7 @@ class FarmRun extends React.Component {
     }
 
     render() {
-        const { farmType } = this.state;
+        const { farmType, showMap, mapURL } = this.state;
         const { farmRun, isFetching } = this.props.farmRunReducer;
 
         if (isFetching) {
@@ -130,8 +146,6 @@ class FarmRun extends React.Component {
         return (
             <Container>
                 <div className="FarmRun">
-                    {/* <IFrameModal show={true} pageSrc={"https://mejrs.github.io/rs3?m=28&z=3&p=0&x=2817&y=3671"} /> */}
-                    <MapSelection mapURL={''} show={true} />
                     <div className="farm-header">
                         {farmRun ?
                             <Button variant="button-primary" className="edit" onClick={() => this.navigate(RSTOOL_ROUTES.FARMRUN_BUILDER_PARAM + farmType, true)}><FaEdit /> Edit</Button>
@@ -141,6 +155,11 @@ class FarmRun extends React.Component {
                     </div>
                     <h3>{FARM_CONSTS.farmTypeNames[farmType]}</h3>
                     {this.generateFarmRun()}
+                    <IFrameModal
+                        show={showMap}
+                        pageSrc={mapURL}
+                        onHide={() => this.setState({ showMap: false })}
+                    />
                 </div>
             </Container>
         );

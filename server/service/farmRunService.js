@@ -21,43 +21,22 @@ const getFarmRun = async (userId, type) => {
     return farmRun;
 }
 
-/**
- * gets image url from uploaded images if index exists for that step
- * @param {*} images 
- * @param {*} index 
- */
-const getURL = (images, index = 0) => {
-    const img = images.find(img => img.stepIndex == index);
-    return img ? img.url : null;
-}
-
-const createFarmRun = async (user, data, images) => {
+const createFarmRun = async (user, data) => {
     const checkType = await FarmRun.countDocuments({ ownerId: user._id, type: data.type });
     if (checkType > 0) throw Error(FARM_RUN_ERRORS.FARM_RUN_EXISTS);
 
-    // if farm run has images, retrieve original name and public url from uploaded images
-    const imageUrls = [];
-    if (images.length > 0) {
-        for (const image of images) {
-            imageUrls.push({
-                stepIndex: image.originalname.split('_').pop(),
-                url: image.cloudStoragePublicUrl
-            });
-        }
-    }
-
     // convert farm run steps into object {step, image url, conditional type}
     const steps = [];
-    if (!Array.isArray(data.steps)) { // non array means farm run only has a single step
-        const step = { title: data.titles, step: data.steps, url: getURL(imageUrls) };
+    if (!Array.isArray(data.titles)) { // non array means farm run only has a single step
+        const step = { title: data.titles, step: data.steps, mapURL: data.mapURLs };
         if (data.type == 0) {
             if (data.types) step.type = data.types;
             else throw Error(FARM_RUN_ERRORS.ALL_FARM_TYPE_MISSING);
         }
         steps.push(step);
     } else {
-        for (let i = 0; i < data.steps.length; i++) {
-            const step = { title: data.titles[i], step: data.steps[i], url: getURL(imageUrls, i) };
+        for (let i = 0; i < data.titles.length; i++) {
+            const step = { title: data.titles[i], step: data.steps[i], mapURL: data.mapURLs[i] };
             if (data.type == 0) {
                 if (data.types[i]) step.type = data.types[i];
                 else throw Error(FARM_RUN_ERRORS.ALL_FARM_TYPE_MISSING);
@@ -82,24 +61,13 @@ const createFarmRun = async (user, data, images) => {
     return await farmRun.save();
 }
 
-const editFarmRun = async (user, data, images) => {
-
-    // if farm run has images, retrieve original name and public url from uploaded images
-    const imageUrls = [];
-    if (images.length > 0) {
-        for (const image of images) {
-            imageUrls.push({
-                stepIndex: image.originalname.split('_').pop(),
-                url: image.cloudStoragePublicUrl
-            });
-        }
-    }
+const editFarmRun = async (user, data) => {
 
     // convert farm run steps into object {step, image url, conditional type}
     const steps = [];
     if (!Array.isArray(data.steps)) { // non array means farm run only has a single step
         const stepData = JSON.parse(data.steps)
-        const stepObj = { title: stepData.title, step: stepData.step, url: stepData.url ? stepData.url : getURL(imageUrls) }
+        const stepObj = { title: stepData.title, step: stepData.step, mapURL: stepData.mapURL }
         if (data.type == 0) {
             if (stepData.type) stepObj.type = stepData.type;
             else throw Error(FARM_RUN_ERRORS.ALL_FARM_TYPE_MISSING);
@@ -108,7 +76,7 @@ const editFarmRun = async (user, data, images) => {
     } else {
         for (let i = 0; i < data.steps.length; i++) {
             const stepData = JSON.parse(data.steps[i]);
-            const stepObj = { title: stepData.title, step: stepData.step, url: stepData.url ? stepData.url : getURL(imageUrls, i) }
+            const stepObj = { title: stepData.title, step: stepData.step, mapURL: stepData.mapURL }
             if (data.type == 0) {
                 if (stepData.type) stepObj.type = stepData.type;
                 else throw Error(FARM_RUN_ERRORS.ALL_FARM_TYPE_MISSING);
@@ -176,7 +144,6 @@ class FarmRunBuilder {
             throw Error(FARM_RUN_ERRORS.STEPS_LENGTH);
         for (const step of steps) {
             if (step.title == '') throw Error(FARM_RUN_ERRORS.TITLE_MISSING);
-            if (step.step == '') throw Error(FARM_RUN_ERRORS.STEP_MISSING);
         }
         this.steps = steps;
         return this;

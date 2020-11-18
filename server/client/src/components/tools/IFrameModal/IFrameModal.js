@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { Modal } from 'react-bootstrap';
+import { Modal, Spinner } from 'react-bootstrap';
 import Iframe from 'react-iframe';
 import PropTypes from 'prop-types';
 import './IFrameModal.scss';
@@ -22,6 +22,7 @@ class IFrameModal extends React.Component {
 
     render() {
         const { pageSrc, ...rest } = this.props;
+
         return (
             <Modal
                 {...rest}
@@ -30,13 +31,17 @@ class IFrameModal extends React.Component {
                 centered
             >
                 <Modal.Body>
-                    <Iframe url={pageSrc}
-                        width="450px"
-                        height="450px"
-                        id="iframeID"
-                        className="iFrameCustom"
-                        display="initial"
-                        position="relative" />
+                    {pageSrc !== '' ?
+                        <Iframe url={pageSrc}
+                            width="450px"
+                            height="450px"
+                            id="iframeID"
+                            className="iFrameCustom"
+                            display="initial"
+                            position="relative" />
+                        :
+                        <Spinner animation="border" variant="dark" />
+                    }
                 </Modal.Body>
             </Modal>
         );

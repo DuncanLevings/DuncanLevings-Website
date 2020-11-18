@@ -129,8 +129,6 @@ export const farmRunAllSchema = yup.object().shape({
         yup.object().shape({
             title: yup.string()
                 .required("*Title is required"),
-            step: yup.string()
-                .required("*Step is required"),
             type: yup.string()
                 .required("*Type is required")
         })
@@ -147,9 +145,7 @@ export const farmRunSchema = yup.object().shape({
     steps: yup.array().of(
         yup.object().shape({
             title: yup.string()
-                .required("*Title is required"),
-            step: yup.string()
-                .required("*Step is required")
+                .required("*Title is required")
         })
     )
 });

@@ -401,6 +401,7 @@ const createDaily = async (user, data, images) => {
         new DailyBuilder()
             .withOwner(user._id)
             .withTitle(data.title)
+            .withMapURL(data.mapURL)
             .withType(data.type)
             .withSteps(steps)
     );
@@ -459,6 +460,7 @@ const editDaily = async (userId, data, images) => {
             throw Error(DAILY_ERRORS.NOT_OWNER);
         }
         daily.title = data.title;
+        if (data.mapURL) daily.mapURL = data.mapURL
         daily.steps = steps;
         return await daily.save();
     } catch (e) {
@@ -572,6 +574,12 @@ class DailyBuilder {
     withTitle(title) {
         if (!title) throw Error(DAILY_ERRORS.TITLE_REQUIRED);
         this.title = title;
+        return this;
+    }
+
+    withMapURL(url) {
+        if (!url) return this;
+        this.mapURL = url;
         return this;
     }
 

@@ -72,8 +72,16 @@
             margin-left: 1rem;
         }
 
-        .action-icon.edit:hover {
+        .map {
+            margin-right: 1rem;
+        }
+
+        .map:hover {
             color: $link-active;
+        }
+
+        .action-icon.edit:hover {
+            color: $link-secondary;
         }
 
         .action-icon.delete:hover {
