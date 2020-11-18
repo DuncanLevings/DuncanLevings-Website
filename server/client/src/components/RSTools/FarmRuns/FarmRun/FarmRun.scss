@@ -16,6 +16,14 @@
     padding-bottom: 5vh;
     font-family: 'Roboto', sans-serif;
 
+    .rsMap {
+        
+
+        .leaflet-control-plane .leaflet-bar .leaflet-control {
+            display: none;
+        }
+    }
+
     h3 {
         text-align: center;
     }
@@ -66,4 +74,16 @@
             width: unset;
         }
     }
+}
+
+.leaflet-control-mapselector.leaflet-control {
+    display: none;
+}
+
+.leaflet-popup-pane, .leaflet-control {
+    display: none;
+}
+
+.leaflet-control-container {
+    display: none;
 }

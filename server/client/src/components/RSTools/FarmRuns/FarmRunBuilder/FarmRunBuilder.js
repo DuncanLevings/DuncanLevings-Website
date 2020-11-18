@@ -440,10 +440,11 @@ class FarmRunBuilder extends React.Component {
                 formData.append('titles', step.title);
                 formData.append('steps', step.step);
                 if (step.type) formData.append('types', step.type);
-                if (step.img.blob) {
-                    formData.append('images', step.img.blob, `step_${i}`);
-                    window.URL.revokeObjectURL(step.img.url);
-                }
+            }
+
+            if (step.img.blob) {
+                formData.append('images', step.img.blob, `step_${i}`);
+                window.URL.revokeObjectURL(step.img.url);
             }
         });
 

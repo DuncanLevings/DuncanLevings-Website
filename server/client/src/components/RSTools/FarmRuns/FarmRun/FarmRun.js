@@ -16,6 +16,8 @@ import { FARM_CONSTS, RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import { FaDesktop, FaEdit, FaPlus, FaYoutube } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 import './FarmRun.scss';
+import IFrameModal from 'components/tools/IFrameModal/IFrameModal.lazy';
+import MapSelection from 'components/RSTools/tools/MapSelection/MapSelection.lazy';
 
 class FarmRun extends React.Component {
     constructor(props) {
@@ -97,8 +99,8 @@ class FarmRun extends React.Component {
                     </div>
                     <div className="spacer-h-2" />
                     <Row>
-                        <Col className="web"><Button variant="button-primary" disabled={!webURL} href={webURL} target="_"><FaDesktop /> Web Guide</Button></Col>
-                        <Col className="youtube"><Button variant="button-warning" disabled={!youtubeURL} href={youtubeURL} target="_"><FaYoutube /> Youtube Guide</Button></Col>
+                        <Col className="web"><Button variant="button-primary" disabled={!webURL} href={webURL} target="_blank"><FaDesktop /> Web Guide</Button></Col>
+                        <Col className="youtube"><Button variant="button-warning" disabled={!youtubeURL} href={youtubeURL} target="_blank"><FaYoutube /> Youtube Guide</Button></Col>
                     </Row>
                     <div className="spacer-h-2" />
                     <Row>
@@ -128,6 +130,8 @@ class FarmRun extends React.Component {
         return (
             <Container>
                 <div className="FarmRun">
+                    {/* <IFrameModal show={true} pageSrc={"https://mejrs.github.io/rs3?m=28&z=3&p=0&x=2817&y=3671"} /> */}
+                    <MapSelection mapURL={''} show={true} />
                     <div className="farm-header">
                         {farmRun ?
                             <Button variant="button-primary" className="edit" onClick={() => this.navigate(RSTOOL_ROUTES.FARMRUN_BUILDER_PARAM + farmType, true)}><FaEdit /> Edit</Button>

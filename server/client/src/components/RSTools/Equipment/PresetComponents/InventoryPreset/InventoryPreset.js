@@ -164,7 +164,7 @@ class InventoryPreset extends React.Component {
                     delay={{ show: 750, hide: 500 }}
                     overlay={<Tooltip id="tooltip-disabled">
                         <span className="item-slot-name">{slot.name}</span>
-                        {slot.wiki ? <a target="_" href={slot.wiki}> Wiki</a> : null}
+                        {slot.wiki ? <a target="_blank" href={slot.wiki}> Wiki</a> : null}
                         <br />
                         {slot.augment && slot.augment.isAugmented ?
                             <div className="item-slot-perks">

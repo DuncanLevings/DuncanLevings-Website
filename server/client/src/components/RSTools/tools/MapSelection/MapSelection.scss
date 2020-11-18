@@ -1,0 +1,16 @@
+@import '../../../../assets/style/colors';
+
+.MapSelection {
+    color: $dark-theme;
+    font-family: 'Roboto', sans-serif;
+
+    .map-error {
+        color: $error;
+        text-align: center;
+    }
+
+    .map-button {
+        text-align: center;
+        margin-top: 1rem;
+    }
+}

@@ -153,3 +153,10 @@ export const farmRunSchema = yup.object().shape({
         })
     )
 });
+
+export const mapSchema = yup.object().shape({
+    mapURL: yup.string()
+        .trim()
+        .url("Map must be a valid URL")
+        .required("*Map URL is required")
+});
