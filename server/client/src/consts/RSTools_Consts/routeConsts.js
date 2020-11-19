@@ -35,7 +35,7 @@ const PVM = RSTOOL_ROOT + '/pvm';
 // ACTIVITIES
 
 const ACTIVITIES = RSTOOL_ROOT + '/activities';
-const VIS_NEMI = ACTIVITIES + '/vis-and-nemi'
+const ACTIVITY = ACTIVITIES + '/activity';
 
 // EQUIPMENT
 
@@ -56,12 +56,12 @@ export const RSTOOL_ROUTES = {
     FARMRUNS,
     PVM,
     ACTIVITIES,
+    ACTIVITY,
     DAILYSEARCH,
     ADDDAILY,
     EDITORDER,
     EDITDAILY,
     EDITDAILY_PARAM,
-    VIS_NEMI,
     EQUIPMENT,
     PRESETS,
     PRESET_BUILDER,

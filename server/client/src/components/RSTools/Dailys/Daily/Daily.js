@@ -26,11 +26,11 @@ import {
 import { getVixWax, getLastestNemi } from 'store/actions/RSTools/activityActions';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import VisWax from '../CustomDaily/VisWax/VisWax.lazy';
+import NemiForest from '../CustomDaily/NemiForest/NemiForest.lazy';
+import IFrameModal from 'components/tools/IFrameModal/IFrameModal.lazy';
 import _ from "lodash";
 import PropTypes from 'prop-types';
 import './Daily.scss';
-import NemiForest from '../CustomDaily/NemiForest/NemiForest.lazy';
-import IFrameModal from 'components/tools/IFrameModal/IFrameModal.lazy';
 
 class Daily extends React.Component {
     constructor(props) {

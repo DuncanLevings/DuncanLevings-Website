@@ -91,7 +91,7 @@ class Abilitys extends React.Component {
         const { searchAbilityBars, isSearching } = this.props.equipmentReducer;
 
         const searchResults = searchAbilityBars
-            .filter(bar => search === '' || bar.name.includes(search))
+            .filter(bar => search === '' || bar.name.toLowerCase().includes(search.toLowerCase()))
             .map((bar, i) =>
                 <ListGroup.Item key={i}>
                     <Row>

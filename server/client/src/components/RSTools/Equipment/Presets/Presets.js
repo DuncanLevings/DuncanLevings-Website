@@ -90,7 +90,7 @@ class Presets extends React.Component {
         const { presets, isFetching } = this.props.presetReducer;
 
         const results = presets
-            .filter(preset => search === '' || preset.name.includes(search))
+            .filter(preset => search === '' || preset.name.toLowerCase().includes(search.toLowerCase()))
             .map((preset, i) =>
                 <ListGroup.Item key={i}>
                     <Row>

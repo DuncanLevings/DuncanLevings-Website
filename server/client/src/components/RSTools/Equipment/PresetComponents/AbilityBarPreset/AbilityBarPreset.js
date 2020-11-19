@@ -181,7 +181,7 @@ class AbilityBarPreset extends React.Component {
         const { searchAbilityBars } = this.props.equipmentReducer;
 
         return searchAbilityBars
-            .filter(bar => search === '' || bar.name.includes(search))
+            .filter(bar => search === '' || bar.name.toLowerCase().includes(search.toLowerCase()))
             .map((bar, i) =>
                 <ListGroup.Item key={i}>
                     <Row>

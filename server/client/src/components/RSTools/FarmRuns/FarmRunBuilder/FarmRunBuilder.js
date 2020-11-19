@@ -187,7 +187,7 @@ class FarmRunBuilder extends React.Component {
 
         if (useExistingPreset) {
             const results = presets
-                .filter(preset => search === '' || preset.name.includes(search))
+                .filter(preset => search === '' || preset.name.toLowerCase().includes(search.toLowerCase()))
                 .map((preset, i) =>
                     <ListGroup.Item key={i} className="preset-list-group-item">
                         <Row>

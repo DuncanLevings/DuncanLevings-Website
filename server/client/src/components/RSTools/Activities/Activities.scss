@@ -2,7 +2,7 @@
 @import '../../../assets/style/vars';
 @import '../../../assets/style/colors';
 
-.Activity {
+.Activities {
     @include respond-to(xs) {
         min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
         min-height: $minHeightMobile;
@@ -20,7 +20,7 @@
     .card {
         color: black;
         background-color: $card-background;
-        padding: calc(3rem + 3vmin);
+        padding: calc(2rem + 2vmin);
         cursor: pointer;
         min-width: unset;
 
@@ -35,7 +35,10 @@
         .card-title.h5{
             text-align: center;
             font-family: 'Krona One', sans-serif;
-            font-size: calc(18px + 2vmin);
+            font-size: calc(12px + 2vmin);
+            margin-bottom: unset;
+            overflow: hidden;
+            white-space: nowrap;
         }
     }
 

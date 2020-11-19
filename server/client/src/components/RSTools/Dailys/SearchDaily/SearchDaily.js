@@ -51,7 +51,7 @@ class SearchDaily extends React.Component {
         const { search } = this.state;
 
         const searchResults = searchDailys
-            .filter(d => search === '' || d.title.includes(search))
+            .filter(d => search === '' || d.title.toLowerCase().includes(search.toLowerCase()))
             .map((d, i) =>
                 <Card key={i}>
                     <Accordion.Toggle as={Card.Header} eventKey={i}>

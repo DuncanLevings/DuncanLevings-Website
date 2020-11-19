@@ -357,7 +357,7 @@ class FamiliarPreset extends React.Component {
         const { searchItems } = this.props.equipmentReducer;
 
         return searchItems
-            .filter(item => search === '' || item.name.includes(search))
+            .filter(item => search === '' || item.name.toLowerCase().includes(search.toLowerCase()))
             .map((item, i) =>
                 <ListGroup.Item key={i}>
                     <Row>

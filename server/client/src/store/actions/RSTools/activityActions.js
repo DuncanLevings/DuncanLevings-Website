@@ -6,6 +6,48 @@
 
 import * as actionTypes from '../../actionTypes/RSTools/activityActionTypes';
 
+// ACTIVITIES
+
+export function getActivities() {
+    return { type: actionTypes.GET_ACTIVITIES };
+}
+
+export function getActivitiesSuccess(activities) {
+    return { type: actionTypes.GET_ACTIVITIES_SUCCESS, payload: activities };
+}
+
+export function getActivitySingle(activityId) {
+    return { type: actionTypes.GET_ACTIVITY_SINGLE, payload: activityId };
+}
+
+export function getActivitySingleSuccess(activity) {
+    return { type: actionTypes.GET_ACTIVITY_SINGLE_SUCCESS, payload: activity };
+}
+
+export function createActivity(data, from) {
+    return { type: actionTypes.CREATE_ACTIVITY, payload: data, redirect: from };
+}
+
+export function createActivitySuccess() {
+    return { type: actionTypes.CREATE_ACTIVITY_SUCCESS };
+}
+
+export function editActivity(data, from) {
+    return { type: actionTypes.EDIT_ACTIVITY, payload: data, redirect: from };
+}
+
+export function editActivitySuccess() {
+    return { type: actionTypes.EDIT_ACTIVITY_SUCCESS };
+}
+
+export function deleteActivity(activityId) {
+    return { type: actionTypes.DELETE_ACTIVITY, payload: activityId };
+}
+
+export function deleteActivitySuccess(activities) {
+    return { type: actionTypes.DELETE_ACTIVITY_SUCCESS, payload: activities };
+}
+
 // GET VIX WAX
 
 export function getVixWax() {

@@ -104,7 +104,7 @@ class Items extends React.Component {
         const { searchItems, isSearching } = this.props.equipmentReducer;
 
         const searchResults = searchItems
-            .filter(item => search === '' || item.name.includes(search))
+            .filter(item => search === '' || item.name.toLowerCase().includes(search.toLowerCase()))
             .map((item, i) =>
                 <ListGroup.Item key={i}>
                     <Row>
