@@ -180,7 +180,7 @@ class FamiliarPreset extends React.Component {
                     delay={{ show: 750, hide: 500 }}
                     overlay={<Tooltip id="tooltip-disabled">
                         <span className="item-slot-name">{familiar.name}</span>
-                        {familiar.wiki ? <a target="_blank" href={familiar.wiki}> Wiki</a> : null}
+                        {familiar.wiki ? <a target="_blank" href={familiar.wiki} rel="noopener noreferrer"> Wiki</a> : null}
                     </Tooltip>}
                 >
                     <div className="familiar-container">
@@ -209,7 +209,7 @@ class FamiliarPreset extends React.Component {
                         delay={{ show: 750, hide: 500 }}
                         overlay={<Tooltip id="tooltip-disabled">
                             <span className="item-slot-name">{slot.name}</span>
-                            {slot.wiki ? <a target="_blank" href={slot.wiki}> Wiki</a> : null}
+                            {slot.wiki ? <a target="_blank" href={slot.wiki} rel="noopener noreferrer"> Wiki</a> : null}
                             <br />
                             {slot.augment && slot.augment.isAugmented ?
                                 <div className="item-slot-perks">

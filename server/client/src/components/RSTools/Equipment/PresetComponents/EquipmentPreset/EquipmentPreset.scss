@@ -30,6 +30,7 @@
                 .slot-image {
                     height: 44px;
                     width: 44px;
+                    object-fit: contain;
                 }
 
                 .slot {
@@ -46,6 +47,7 @@
 
                 .slotSet {
                     background-color: #061821;
+                    text-align: center;
                 }
     
                 .slot:hover {

@@ -30,6 +30,7 @@
                 .slot-image {
                     height: 44px;
                     width: 44px;
+                    object-fit: contain;
                 }
 
                 .slot {
@@ -124,6 +125,7 @@
                         padding: 3px 3px 0 3px;
                         width: 42px;
                         height: 38px;
+                        object-fit: contain;
                     }
             
                     &.selected {
@@ -160,6 +162,7 @@
                     padding: 3px 3px 0 3px;
                     width: 42px;
                     height: 38px;
+                    object-fit: contain;
                 }
             }
         }

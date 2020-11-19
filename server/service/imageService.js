@@ -10,8 +10,7 @@ const _config = require('../config/config.json');
 const { Storage } = require('@google-cloud/storage');
 const fs = require("fs");
 
-const CLOUD_BUCKET = process.env.NODE_ENV === 'production' ? _config.gcloud_bucket_name : _config.gcloud_bucket_name_testing;
-
+const CLOUD_BUCKET = _config.gcloud_bucket_name;
 const storage = new Storage({
     projectId: _config.gcloud_project_id,
     keyFilename: _config.keyfile_path
@@ -30,7 +29,13 @@ const uploadMultipleToBucket = (req, res, next) => {
 
     let promises = [];
     req.files.forEach((image, index) => {
-        const imageName = req.user._id + "_" + Date.now();
+        let imageName = req.user._id + "_" + Date.now();
+
+        // ensure test data folder for local testing
+        if (process.env.NODE_ENV !== 'production') {
+            imageName = "test_data/" + imageName;
+        }
+
         const file = bucket.file(imageName);
 
         const promise = new Promise((resolve, reject) => {
@@ -75,7 +80,13 @@ const uploadSingleToBucket = (req, res, next) => {
         return next()
     }
 
-    const imageName = req.user._id + "_" + Date.now();
+    let imageName = req.user._id + "_" + Date.now();
+
+    // ensure test data folder for local testing
+    if (process.env.NODE_ENV !== 'production') {
+        imageName = "test_data/" + imageName;
+    }
+
     const file = bucket.file(imageName);
 
     const stream = file.createWriteStream({

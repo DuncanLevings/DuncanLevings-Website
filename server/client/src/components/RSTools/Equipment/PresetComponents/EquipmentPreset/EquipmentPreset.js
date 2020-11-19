@@ -99,7 +99,7 @@ class EquipmentPreset extends React.Component {
                     overlay={
                         <Tooltip id="tooltip-disabled">
                             <span className="item-slot-name">{slot.name}</span>
-                            {slot.wiki ? <a target="_blank" href={slot.wiki}> Wiki</a> : null}
+                            {slot.wiki ? <a target="_blank" href={slot.wiki} rel="noopener noreferrer"> Wiki</a> : null}
                             <br />
                             {slot.augment && slot.augment.isAugmented ?
                                 <div className="item-slot-perks">
@@ -111,7 +111,7 @@ class EquipmentPreset extends React.Component {
                         </Tooltip>
                     }
                 >
-                    <Image className="slot-image" src={slot.image} />
+                    <Image className="slot-image" src={slot.image} fluid />
                 </OverlayTrigger>
             );
         }
@@ -121,7 +121,7 @@ class EquipmentPreset extends React.Component {
 
     equipSlot = (item) => {
         const { slots, selectedSlot } = this.state;
-
+ 
         let _slots = [...slots];
         let _slot = {
             ..._slots[selectedSlot],

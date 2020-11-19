@@ -79,7 +79,7 @@ class AddItem extends React.Component {
         setValues({ ...values, image });
     }
 
-    submitItem = values => {
+    submitItem = (values, { resetForm }) => {
         if (!values.image) return this.setState({ imageRequired: true });
 
         let formData = new FormData();
@@ -104,6 +104,7 @@ class AddItem extends React.Component {
 
         this.props.createItem(formData);
         this.setState({ reset: true });
+        resetForm();
     }
 
     render() {

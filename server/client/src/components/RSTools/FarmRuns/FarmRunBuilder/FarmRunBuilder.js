@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux';
 import { getPresets, getPresetSingle, deletePreset, clearPreset } from 'store/actions/RSTools/presetActions';
 import { getFarmRun, createFarmRun, editFarmRun, clearError } from 'store/actions/RSTools/farmRunActions';
 import { Button, Col, Container, Form, FormControl, Image, InputGroup, ListGroup, Modal, Row, Spinner } from 'react-bootstrap';
-import { FaCheckSquare, FaEdit, FaImage, FaMap, FaPlus, FaTrash } from 'react-icons/fa';
+import { FaCheckSquare, FaEdit, FaMap, FaPlus, FaTrash } from 'react-icons/fa';
 import { FARM_CONSTS, RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import { farmRunAllSchema, farmRunSchema } from 'components/helpers/formValidation';
 import { ErrorMessage, Field, FieldArray, Formik } from 'formik';

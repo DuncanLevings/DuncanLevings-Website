@@ -48,7 +48,7 @@ class MapSelection extends React.Component {
                     <p><b>Instructions:</b></p>
                     <p>Begin by opening map url, using map navigate to desired location.</p>
                     <p>Ensure to center desired location in center of window, copy url of window and paste into field below.</p>
-                    <p>For alternative layers of the world, use this page to find desired area: <a href="https://runescape.wiki/w/User:Mejrs/map_zones" target="_blank">Zones</a>.</p>
+                    <p>For alternative layers of the world, use this page to find desired area: <a href="https://runescape.wiki/w/User:Mejrs/map_zones" target="_blank" rel="noopener noreferrer">Zones</a>.</p>
                     <p>Copy mapId of zone. In url of map window, replace <i>mejrs.github.io/rs3?m=<b>#</b>...</i> section of url with mapId.</p>
                     <Formik
                         validationSchema={mapSchema}

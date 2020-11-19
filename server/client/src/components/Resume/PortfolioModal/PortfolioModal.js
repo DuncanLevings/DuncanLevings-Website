@@ -104,10 +104,10 @@ class PortfolioModal extends React.Component {
                 <Modal.Footer>
                     <div className="portfolio-link">
                         {link ? (
-                            <Button className="portfolio-footer-button" variant="button-primary" href={link} target="_blank">View site</Button>
+                            <Button className="portfolio-footer-button" variant="button-primary" href={link} target="_blank" rel="noopener noreferrer">View site</Button>
                         ) : (null)}
                         {github ? (
-                            <Button className="portfolio-footer-button" variant="button-primary" href={github} target="_blank">Github</Button>
+                            <Button className="portfolio-footer-button" variant="button-primary" href={github} target="_blank" rel="noopener noreferrer">Github</Button>
                         ) : (null)}
                     </div>
                     <Button onClick={this.props.onHide}>Close</Button>

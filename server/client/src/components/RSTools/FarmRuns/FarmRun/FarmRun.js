@@ -115,8 +115,8 @@ class FarmRun extends React.Component {
                     </div>
                     <div className="spacer-h-2" />
                     <Row>
-                        <Col className="web"><Button variant="button-primary" disabled={!webURL} href={webURL} target="_blank"><FaDesktop /> Web Guide</Button></Col>
-                        <Col className="youtube"><Button variant="button-warning" disabled={!youtubeURL} href={youtubeURL} target="_blank"><FaYoutube /> Youtube Guide</Button></Col>
+                        <Col className="web"><Button variant="button-primary" disabled={!webURL} href={webURL} target="_blank" rel="noopener noreferrer"><FaDesktop /> Web Guide</Button></Col>
+                        <Col className="youtube"><Button variant="button-warning" disabled={!youtubeURL} href={youtubeURL} target="_blank" rel="noopener noreferrer"><FaYoutube /> Youtube Guide</Button></Col>
                     </Row>
                     <div className="spacer-h-2" />
                     <Row>
