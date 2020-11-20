@@ -155,3 +155,10 @@ export const mapSchema = yup.object().shape({
         .trim()
         .url("Map must be a valid URL")
 });
+
+export const activitySchema = yup.object().shape({
+    title: yup.string()
+        .min(2, "*Title must be at least 2 characters")
+        .max(59, "*Title must be less than 59 characters")
+        .required("*Title is required")
+});

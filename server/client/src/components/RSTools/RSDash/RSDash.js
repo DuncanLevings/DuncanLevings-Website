@@ -27,34 +27,38 @@ class RSDash extends React.Component {
     render() {
         const { isFetching, user } = this.props.userReducer;
         if (isFetching || !user) {
-            return (<Spinner variant="light" />);
+            return (
+                <div className="RSDash">
+                    <Spinner variant="light" />
+                </div>
+            );
         }
 
         return (
             <Container>
                 <div className="RSDash">
                     <CardDeck>
-                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.DAILYS) }>
+                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.DAILYS)}>
                             <Card.Body>
                                 <Card.Title>DAILYS</Card.Title>
                             </Card.Body>
                         </Card>
-                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.FARMRUNS) }>
+                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.FARMRUNS)}>
                             <Card.Body>
                                 <Card.Title>FARM RUNS</Card.Title>
                             </Card.Body>
                         </Card>
-                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.PVM) }>
+                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.PVM)}>
                             <Card.Body>
                                 <Card.Title>PVM</Card.Title>
                             </Card.Body>
                         </Card>
-                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.ACTIVITIES) }>
+                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.ACTIVITIES)}>
                             <Card.Body>
                                 <Card.Title>ACTIVITES</Card.Title>
                             </Card.Body>
                         </Card>
-                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.EQUIPMENT) }>
+                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.EQUIPMENT)}>
                             <Card.Body>
                                 <Card.Title>EQUIPMENT</Card.Title>
                             </Card.Body>

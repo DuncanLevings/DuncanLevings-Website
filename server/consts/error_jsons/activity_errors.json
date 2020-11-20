@@ -1,5 +1,9 @@
 {
     "server_errors": {
+        "USER_REQUIRED": "User ID is required!",
+        "TITLE_MISSING": "Title is required!",
+        "NOT_OWNER": "You are not the owner of that activity!",
+        "ACTIVITY_EXISTS": "A activity with that name already exists!",
         "NO_RUNE_DATA": "No rune data was parsed!"
     }
 }

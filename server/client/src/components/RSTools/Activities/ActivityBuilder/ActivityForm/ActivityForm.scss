@@ -1,0 +1,18 @@
+@import '../../../../../assets/style/breakpoints';
+@import '../../../../../assets/style/vars';
+@import '../../../../../assets/style/colors';
+
+.ActivityForm {
+    font-family: 'Roboto', sans-serif;
+
+    .form-submit {
+        width: 100%;
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+    .activity-error {
+        color: $error;
+        text-align: center;
+    }
+}

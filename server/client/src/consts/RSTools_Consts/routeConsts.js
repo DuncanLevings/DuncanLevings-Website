@@ -36,6 +36,9 @@ const PVM = RSTOOL_ROOT + '/pvm';
 
 const ACTIVITIES = RSTOOL_ROOT + '/activities';
 const ACTIVITY = ACTIVITIES + '/activity';
+const ACTIVITY_BUILDER = ACTIVITIES + '/activity/builder';
+const ACTIVITY_VIEWER = ACTIVITIES + '/view/:activityId'
+const ACTIVITY_VIEWER_PARAM = ACTIVITIES + '/view/'
 
 // EQUIPMENT
 
@@ -57,6 +60,9 @@ export const RSTOOL_ROUTES = {
     PVM,
     ACTIVITIES,
     ACTIVITY,
+    ACTIVITY_BUILDER,
+    ACTIVITY_VIEWER,
+    ACTIVITY_VIEWER_PARAM,
     DAILYSEARCH,
     ADDDAILY,
     EDITORDER,

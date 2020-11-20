@@ -10,9 +10,63 @@
 
 const got = require('got');
 const cheerio = require("cheerio");
+const { Activity } = require('../config/mongo');
 const { ACTIVITY_ERRORS } = require('../consts/error_jsons');
+const mongoose = require('mongoose');
 
 const RUNE_TYPES = ["Air", "Water", "Earth", "Fire", "Dust", "Lava", "Mist", "Mud", "Smoke", "Steam", "Mind", "Body", "Cosmic", "Chaos", "Nature", "Law", "Death", "Astral", "Blood", "Soul"];
+
+const getActivities = async (userId) => {
+    return await Activity.find({ ownerId: userId });
+}
+
+const getActivity = async (userId, activityId) => {
+    return await Activity.findOne({ _id: activityId, ownerId: userId });
+}
+
+const createActivity = async (userId, data) => {
+    const activityNameCheck = await Activity.countDocuments({ ownerId: userId, title: data.title });
+    if (activityNameCheck > 0) throw Error(ACTIVITY_ERRORS.ACTIVITY_EXISTS);
+
+    const activity = new Activity(new ActivityBuilder()
+        .withOwner(userId)
+        .withPreset(JSON.parse(data.preset))
+        .withTitle(data.title)
+        .withWebURL(data.webURL)
+        .withYoutubeURL(data.youtubeURL)
+        .withNotes(data.notes)
+    );
+
+    return await activity.save();
+}
+
+const editActivity = async (userId, data) => {
+    try {
+        const activity = await Activity.findOne({ _id: data.activityId });
+        if (!activity.ownerId.equals(userId)) {
+            throw Error(ACTIVITY_ERRORS.NOT_OWNER);
+        }
+
+        activity.preset = JSON.parse(data.preset)
+        activity.title = data.title;
+        if (data.webURL) activity.webURL = data.webURL;
+        if (data.youtubeURL) activity.youtubeURL = data.youtubeURL;
+        if (data.notes) activity.notes = data.notes;
+
+        return await activity.save();
+    } catch (e) {
+        throw Error(e);
+    }
+}
+
+const deleteActivity = async (userId, activityId) => {
+    const activity = await Activity.findOne({ _id: activityId }, { ownerId: 1 });
+    if (!activity.ownerId.equals(userId)) throw Error(ACTIVITY_ERRORS.NOT_OWNER);
+
+    await activity.deleteOne({ _id: activityId });
+
+    return await getActivities(userId);
+}
 
 const fetchHtmlData = (url) => {
     return (async () => {
@@ -87,7 +141,53 @@ const getLatestNemiForest = async () => {
         .catch(err => { throw Error(err); });
 }
 
+class ActivityBuilder {
+    withOwner(id) {
+        if (!id) throw Error(ACTIVITY_ERRORS.USER_REQUIRED);
+        this.ownerId = id;
+        return this;
+    }
+
+    withPreset(preset) {
+        if (!preset) throw Error(ACTIVITY_ERRORS.PRESET_REQUIRED);
+        if (preset._id) preset._id = mongoose.Types.ObjectId(preset._id);
+        if (preset.id) preset.id = undefined;
+        if (preset.ownerId) preset.ownerId = mongoose.Types.ObjectId(preset.ownerId);
+        this.preset = preset;
+        return this;
+    }
+
+    withTitle(title) {
+        if (!title) throw Error(ACTIVITY_ERRORS.TITLE_MISSING);
+        this.title = title;
+        return this;
+    }
+
+    withWebURL(webURL) {
+        if (!webURL) return this;
+        this.webURL = webURL;
+        return this;
+    }
+
+    withYoutubeURL(youtubeURL) {
+        if (!youtubeURL) return this;
+        this.youtubeURL = youtubeURL;
+        return this;
+    }
+
+    withNotes(notes) {
+        if (!notes) return this;
+        this.notes = notes;
+        return this;
+    }
+}
+
 module.exports = {
+    getActivities,
+    getActivity,
+    createActivity,
+    editActivity,
+    deleteActivity,
     scrapeVisWaxHtmlData,
     getLatestNemiForest
 }

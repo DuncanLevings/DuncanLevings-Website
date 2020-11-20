@@ -1,0 +1,36 @@
+@import '../../../../../assets/style/breakpoints';
+@import '../../../../../assets/style/vars';
+@import '../../../../../assets/style/colors';
+
+.ActivityViewer {
+    @include respond-to(xs) {
+        min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
+        min-height: $minHeightMobile;
+    }
+    
+    @include respond-to(m) {
+        min-height: $minHeightDesktop;
+    }
+
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    font-family: 'Roboto', sans-serif;
+
+    h3 {
+        text-align: center;
+    }
+
+    .web {
+        text-align: end;
+    }
+
+    .notes {
+        text-align: center;
+        font-size: calc(8px + 1.5vmin);
+    }
+
+    .error {
+        text-align: center;
+        color: $error;
+    }
+}

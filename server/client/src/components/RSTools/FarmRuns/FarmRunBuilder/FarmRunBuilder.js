@@ -111,8 +111,10 @@ class FarmRunBuilder extends React.Component {
             state: {
                 activityUseEmpty: true,
                 from: pathname,
-                activityEditMode: this.checkEditMode(),
-                activityFrom: this.props.location.state.from || null
+                routeState: {
+                    editMode: this.checkEditMode(),
+                    from: this.props.location.state.from || null
+                }
             }
         });
     }
@@ -125,8 +127,10 @@ class FarmRunBuilder extends React.Component {
             state: {
                 activityAddPreset: true,
                 from: pathname,
-                activityEditMode: this.checkEditMode(),
-                activityFrom: this.props.location.state.from || null
+                routeState: {
+                    editMode: this.checkEditMode(),
+                    from: this.props.location.state.from || null
+                }
             }
         });
     }
@@ -141,8 +145,10 @@ class FarmRunBuilder extends React.Component {
                 from: pathname,
                 editMode: true,
                 presetId: presetId,
-                activityEditMode: this.checkEditMode(),
-                activityFrom: this.props.location.state.from || null
+                routeState: {
+                    editMode: this.checkEditMode(),
+                    from: this.props.location.state.from || null
+                }
             }
         });
     }
@@ -157,8 +163,10 @@ class FarmRunBuilder extends React.Component {
                 activityEdit: true,
                 from: pathname,
                 editMode: true,
-                activityEditMode: this.checkEditMode(),
-                activityFrom: this.props.location.state.from || null
+                routeState: {
+                    editMode: this.checkEditMode(),
+                    from: this.props.location.state.from || null
+                }
             }
         });
     }

@@ -24,16 +24,16 @@ export function getActivitySingleSuccess(activity) {
     return { type: actionTypes.GET_ACTIVITY_SINGLE_SUCCESS, payload: activity };
 }
 
-export function createActivity(data, from) {
-    return { type: actionTypes.CREATE_ACTIVITY, payload: data, redirect: from };
+export function createActivity(data) {
+    return { type: actionTypes.CREATE_ACTIVITY, payload: data };
 }
 
 export function createActivitySuccess() {
     return { type: actionTypes.CREATE_ACTIVITY_SUCCESS };
 }
 
-export function editActivity(data, from) {
-    return { type: actionTypes.EDIT_ACTIVITY, payload: data, redirect: from };
+export function editActivity(data) {
+    return { type: actionTypes.EDIT_ACTIVITY, payload: data };
 }
 
 export function editActivitySuccess() {

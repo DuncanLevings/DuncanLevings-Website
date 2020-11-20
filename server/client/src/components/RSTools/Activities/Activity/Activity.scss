@@ -45,11 +45,15 @@
             margin-left: 1rem;
         }
 
-        .action-icon.edit:hover {
+        .view:hover {
+            color: $link-active;
+        }
+
+        .edit:hover {
             color: $link-secondary;
         }
 
-        .action-icon.delete:hover {
+        .delete:hover {
             color: $error;
         }
     }

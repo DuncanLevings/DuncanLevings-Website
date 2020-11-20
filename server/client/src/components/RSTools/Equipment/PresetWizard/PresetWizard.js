@@ -339,16 +339,14 @@ class PresetWizard extends React.Component {
                 this.props.savePreset(
                     data,
                     this.props.location.state.from,
-                    this.props.location.state.activityEditMode,
-                    this.props.location.state.activityFrom);
+                    this.props.location.state.routeState);
             } else {
                 data.presetId = editPresetObj._id;
                 if (this.checkActivityEditExisting()) {
                     this.props.editPreset(
-                        data, 
+                        data,
                         this.props.location.state.from, 
-                        this.props.location.state.activityEditMode,
-                        this.props.location.state.activityFrom);
+                        this.props.location.state.routeState);
                 } else {
                     this.props.editPreset(data);
                 }
@@ -357,14 +355,12 @@ class PresetWizard extends React.Component {
             if (this.checkActivityEmpty()) {
                 this.props.savePreset(data, 
                     this.props.location.state.from, 
-                    this.props.location.state.activityEditMode,
-                    this.props.location.state.activityFrom);
+                    this.props.location.state.routeState);
             } else {
                 if (this.checkActivityAdd()) {
                     this.props.createPreset(data, 
                         this.props.location.state.from, 
-                        this.props.location.state.activityEditMode,
-                        this.props.location.state.activityFrom);
+                        this.props.location.state.routeState);
                 } else {
                     this.props.createPreset(data);
                 }

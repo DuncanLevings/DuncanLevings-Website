@@ -39,7 +39,7 @@ function* createPreset(presetAction) {
     try {
         yield call(createPresetAPI, presetAction.payload);
         yield put(actionCreators.createPresetSuccess());
-        if (presetAction.redirect) yield put(push(presetAction.redirect, { editMode: presetAction.activityEditMode, from: presetAction.activityFrom }));
+        if (presetAction.redirect) yield put(push(presetAction.redirect, presetAction.routeState));
         else yield put(push(RSTOOL_ROUTES.EQUIPMENT));
     } catch (error) {
         yield put(actionCreators.presetError(error.response.data));
@@ -50,7 +50,7 @@ function* editPreset(presetAction) {
     try {
         yield call(editPresetAPI, presetAction.payload);
         yield put(actionCreators.editPresetSuccess());
-        if (presetAction.redirect) yield put(push(presetAction.redirect, { editMode: presetAction.activityEditMode, from: presetAction.activityFrom }));
+        if (presetAction.redirect) yield put(push(presetAction.redirect, presetAction.routeState));
         else yield put(push(RSTOOL_ROUTES.EQUIPMENT));
     } catch (error) {
         yield put(actionCreators.presetError(error.response.data));
@@ -67,7 +67,7 @@ function* deletePreset(presetAction) {
 }
 
 function* savePreset(presetAction) {
-    yield put(push(presetAction.redirect, { editMode: presetAction.activityEditMode, from: presetAction.activityFrom }));
+    yield put(push(presetAction.redirect, presetAction.routeState));
 }
 
 export const presetSagas = [

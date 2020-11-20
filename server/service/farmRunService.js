@@ -113,9 +113,9 @@ class FarmRunBuilder {
 
     withPreset(preset) {
         if (!preset) throw Error(FARM_RUN_ERRORS.PRESET_REQUIRED);
-        preset._id = mongoose.Types.ObjectId(preset._id);
-        preset.id = undefined;
-        preset.ownerId = mongoose.Types.ObjectId(preset.ownerId);
+        if (preset._id) preset._id = mongoose.Types.ObjectId(preset._id);
+        if (preset.id) preset.id = undefined;
+        if (preset.ownerId) preset.ownerId = mongoose.Types.ObjectId(preset.ownerId);
         this.preset = preset;
         return this;
     }

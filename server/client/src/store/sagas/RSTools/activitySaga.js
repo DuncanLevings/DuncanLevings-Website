@@ -16,6 +16,7 @@ import {
     vixWaxAPI } from '../../api/RSTools/activityAPI';
 import * as actionTypes from '../../actionTypes/RSTools/activityActionTypes'
 import * as actionCreators from '../../actions/RSTools/activityActions';
+import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 
 function* getActivities() {
     try {
@@ -39,7 +40,7 @@ function* createActivity(activityAction) {
     try {
         yield call(createActivityAPI, activityAction.payload);
         yield put(actionCreators.createActivitySuccess());
-        if (activityAction.redirect) yield put(push(activityAction.redirect));
+        yield put(push(RSTOOL_ROUTES.ACTIVITY));
     } catch (error) {
         yield put(actionCreators.activityError(error.response.data));
     }
@@ -49,7 +50,7 @@ function* editActivity(activityAction) {
     try {
         yield call(editActivityAPI, activityAction.payload);
         yield put(actionCreators.editActivitySuccess());
-        if (activityAction.redirect) yield put(push(activityAction.redirect));
+        yield put(push(RSTOOL_ROUTES.ACTIVITY));
     } catch (error) {
         yield put(actionCreators.activityError(error.response.data));
     }

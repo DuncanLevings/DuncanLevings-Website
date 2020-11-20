@@ -28,6 +28,8 @@ import FarmRun from 'components/RSTools/FarmRuns/FarmRun/FarmRun.lazy';
 import FarmRunBuilder from 'components/RSTools/FarmRuns/FarmRunBuilder/FarmRunBuilder.lazy';
 import Activities from 'components/RSTools/Activities/Activities.lazy';
 import Activity from 'components/RSTools/Activities/Activity/Activity.lazy';
+import ActivityBuilder from 'components/RSTools/Activities/ActivityBuilder/ActivityBuilder.lazy';
+import ActivityViewer from 'components/RSTools/Activities/Activity/ActivityViewer/ActivityViewer.lazy';
 import Equipment from 'components/RSTools/Equipment/Equipment.lazy';
 import Presets from 'components/RSTools/Equipment/Presets/Presets.lazy';
 import Items from 'components/RSTools/Equipment/Item/Items/Items.lazy';
@@ -72,6 +74,8 @@ class RSRouter extends React.Component {
                     {/* ACTIVITIES */}
                     <PrivateRoute exact path={RSTOOL_ROUTES.ACTIVITIES} redirect={RSTOOL_ROUTES.LOGIN} component={Activities} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.ACTIVITY} redirect={RSTOOL_ROUTES.LOGIN} component={Activity} />
+                    <PrivateRoute exact path={RSTOOL_ROUTES.ACTIVITY_BUILDER} redirect={RSTOOL_ROUTES.LOGIN} component={ActivityBuilder} />
+                    <PrivateRoute exact path={RSTOOL_ROUTES.ACTIVITY_VIEWER} redirect={RSTOOL_ROUTES.LOGIN} component={ActivityViewer} />
                     {/* EQUIPMENT */}
                     <PrivateRoute exact path={RSTOOL_ROUTES.EQUIPMENT} redirect={RSTOOL_ROUTES.LOGIN} component={Equipment} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.PRESETS} redirect={RSTOOL_ROUTES.LOGIN} component={Presets} />

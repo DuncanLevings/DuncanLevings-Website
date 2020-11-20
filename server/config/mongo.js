@@ -34,6 +34,7 @@ const { Item } = require('../models/itemModel');
 const { AbilityBar } = require('../models/abilityBarModel');
 const { Preset } = require('../models/presetModel');
 const { FarmRun } = require('../models/farmRunModel');
+const { Activity } = require('../models/activityModel');
 
 module.exports = {
     User,
@@ -43,5 +44,6 @@ module.exports = {
     Item,
     AbilityBar,
     Preset,
-    FarmRun
+    FarmRun,
+    Activity
 }
