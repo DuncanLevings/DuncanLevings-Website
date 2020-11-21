@@ -31,6 +31,12 @@ const FARMRUN_BUILDER = FARMRUNS + '/type/builder/:farmType';
 // PVM
 
 const PVM = RSTOOL_ROOT + '/pvm';
+const PVM_ENEMY = PVM + '/enemy/:type';
+const PVM_ENEMY_PARAM = PVM + '/enemy/';
+const PVM_BUILDER = PVM + '/builder';
+const PVM_TASK_BUILDER = PVM + '/task/builder';
+const PVM_TASK_VIEWER = PVM + '/view/:pvmTaskId'
+const PVM_TASK_VIEWER_PARAM = PVM + '/view/'
 
 // ACTIVITIES
 
@@ -58,6 +64,12 @@ export const RSTOOL_ROUTES = {
     DAILYS,
     FARMRUNS,
     PVM,
+    PVM_ENEMY,
+    PVM_ENEMY_PARAM,
+    PVM_BUILDER,
+    PVM_TASK_BUILDER,
+    PVM_TASK_VIEWER,
+    PVM_TASK_VIEWER_PARAM,
     ACTIVITIES,
     ACTIVITY,
     ACTIVITY_BUILDER,

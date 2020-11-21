@@ -26,6 +26,10 @@ import EditDaily from 'components/RSTools/Dailys/EditDaily/EditDaily.lazy';
 import FarmRuns from 'components/RSTools/FarmRuns/FarmRuns.lazy';
 import FarmRun from 'components/RSTools/FarmRuns/FarmRun/FarmRun.lazy';
 import FarmRunBuilder from 'components/RSTools/FarmRuns/FarmRunBuilder/FarmRunBuilder.lazy';
+import PvM from 'components/RSTools/PvM/PvM.lazy';
+import PvmEnemy from 'components/RSTools/PvM/PvmEnemy/PvmEnemy.lazy';
+import PvmBuilder from 'components/RSTools/PvM/PvmEnemy/PvmBuilder/PvmBuilder.lazy';
+import PvmTaskBuilder from 'components/RSTools/PvM/PvmTasks/PvmTaskBuilder/PvmTaskBuilder.lazy';
 import Activities from 'components/RSTools/Activities/Activities.lazy';
 import Activity from 'components/RSTools/Activities/Activity/Activity.lazy';
 import ActivityBuilder from 'components/RSTools/Activities/ActivityBuilder/ActivityBuilder.lazy';
@@ -39,7 +43,6 @@ import PresetViewer from 'components/RSTools/Equipment/PresetComponents/PresetVi
 import Footer from 'components/navbar/Footer/Footer.lazy';
 import NotFound from 'errors/NotFound';
 import PropTypes from 'prop-types';
-
 
 class RSRouter extends React.Component {
     constructor(props) {
@@ -71,6 +74,11 @@ class RSRouter extends React.Component {
                     <PrivateRoute exact path={RSTOOL_ROUTES.FARMRUNS} redirect={RSTOOL_ROUTES.LOGIN} component={FarmRuns} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.FARMRUN_TYPE} redirect={RSTOOL_ROUTES.LOGIN} component={FarmRun} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.FARMRUN_BUILDER} redirect={RSTOOL_ROUTES.LOGIN} component={FarmRunBuilder} />
+                    {/* PVM */}
+                    <PrivateRoute exact path={RSTOOL_ROUTES.PVM} redirect={RSTOOL_ROUTES.LOGIN} component={PvM} />
+                    <PrivateRoute exact path={RSTOOL_ROUTES.PVM_ENEMY} redirect={RSTOOL_ROUTES.LOGIN} component={PvmEnemy} />
+                    <PrivateRoute exact path={RSTOOL_ROUTES.PVM_BUILDER} redirect={RSTOOL_ROUTES.LOGIN} component={PvmBuilder} />
+                    <PrivateRoute exact path={RSTOOL_ROUTES.PVM_TASK_BUILDER} redirect={RSTOOL_ROUTES.LOGIN} component={PvmTaskBuilder} />
                     {/* ACTIVITIES */}
                     <PrivateRoute exact path={RSTOOL_ROUTES.ACTIVITIES} redirect={RSTOOL_ROUTES.LOGIN} component={Activities} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.ACTIVITY} redirect={RSTOOL_ROUTES.LOGIN} component={Activity} />

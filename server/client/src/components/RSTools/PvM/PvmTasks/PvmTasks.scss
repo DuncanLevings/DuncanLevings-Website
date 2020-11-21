@@ -1,0 +1,70 @@
+@import '../../../../assets/style/breakpoints';
+@import '../../../../assets/style/vars';
+@import '../../../../assets/style/colors';
+
+.PvmTasks {
+    @include respond-to(xs) {
+        min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
+        min-height: $minHeightMobile;
+    }
+    
+    @include respond-to(m) {
+        min-height: $minHeightDesktop;
+    }
+
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    font-family: 'Roboto', sans-serif;
+    
+    .button-header {
+        display: flow-root;
+        margin-bottom: 2rem;
+
+        .add-task {
+            float: right;
+        }
+    }
+
+    .card {
+        background-color: $daily-card-background;
+
+        .card-header {
+            font-size: calc(8px + 2vmin);
+        }
+
+        .card-text {
+            font-size: calc(8px + 1.5vmin);
+        }
+
+        .card-img {
+            width: unset;
+        }
+    }
+
+    .actions {
+        float: right;
+
+        .action-icon {
+            margin-left: 1rem;
+        }
+
+        .action-icon.edit:hover {
+            color: $link-secondary;
+        }
+
+        .action-icon.delete:hover {
+            color: $error;
+        }
+    }
+
+    
+}
+
+.confirm-modal {
+    font-family: 'Roboto', sans-serif;
+    color: $dark-theme;
+
+    .modal-title {
+        font-size: calc(12px + 2vmin);
+    }
+}

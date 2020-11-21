@@ -35,6 +35,8 @@ const { AbilityBar } = require('../models/abilityBarModel');
 const { Preset } = require('../models/presetModel');
 const { FarmRun } = require('../models/farmRunModel');
 const { Activity } = require('../models/activityModel');
+const { PvM } = require('../models/pvmModel');
+const { PvmTask } = require('../models/pvmTaskModel');
 
 module.exports = {
     User,
@@ -45,5 +47,7 @@ module.exports = {
     AbilityBar,
     Preset,
     FarmRun,
-    Activity
+    Activity,
+    PvM,
+    PvmTask
 }

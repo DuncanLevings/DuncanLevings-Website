@@ -26,7 +26,7 @@ const uploadMultipleToBucket = (req, res, next) => {
     if (!req.files) {
         return next()
     }
-
+    
     let promises = [];
     req.files.forEach((image, index) => {
         let imageName = req.user._id + "_" + Date.now();

@@ -1,0 +1,13 @@
+{
+    "server_errors": {
+        "USER_REQUIRED": "User ID is required!",
+        "NAME_REQUIRED": "Name is required!",
+        "WIKI_REQUIRED": "Wiki URL is missing!",
+        "IMAGE_REQUIRED": "Image is missing!",
+        "THUMBNAIL_REQUIRED": "Thumbnail is missing!",
+        "TYPE_REQUIRED": "Type is missing!",
+        "TYPE_REGEX_FAIL": "Type is invalid!",
+        "NOT_OWNER": "You are not the owner!",
+        "PVM_EXISTS": "A pvm enemy with that name already exists!"
+    }
+}

@@ -45,7 +45,7 @@ class EditOrder extends React.Component {
     }
 
     componentDidMount() {
-        const type = parseInt(localStorage.getItem("type"));
+        const type = parseInt(localStorage.getItem("dailyType"));
         this.props.setDailyType(type);
         this.props.getDailyReOrder(type);
     }

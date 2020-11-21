@@ -7,6 +7,7 @@ const _activityService = require('./activityService');
 const _equipmentService = require('./equipmentService');
 const _presetService = require('./presetService');
 const _farmRunService = require('./farmRunService');
+const _pvmService = require('./pvmService');
 
 module.exports = {
     _utils,
@@ -17,5 +18,6 @@ module.exports = {
     _activityService,
     _equipmentService,
     _presetService,
-    _farmRunService
+    _farmRunService,
+    _pvmService
 }

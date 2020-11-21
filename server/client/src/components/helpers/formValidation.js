@@ -162,3 +162,14 @@ export const activitySchema = yup.object().shape({
         .max(59, "*Title must be less than 59 characters")
         .required("*Title is required")
 });
+
+export const pvmSchema = yup.object().shape({
+    name: yup.string()
+        .min(2, "*Name must be at least 2 characters")
+        .max(59, "*Name must be less than 59 characters")
+        .required("*Name is required"),
+    wikiURL: yup.string()
+        .trim()
+        .url("Wiki must be a valid URL")
+        .required("*Wiki is required")
+});

@@ -1,0 +1,42 @@
+@import '../../../../assets/style/breakpoints';
+@import '../../../../assets/style/vars';
+@import '../../../../assets/style/colors';
+
+.PvmEnemy {
+    @include respond-to(xs) {
+        min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
+        min-height: $minHeightMobile;
+    }
+    
+    @include respond-to(m) {
+        min-height: $minHeightDesktop;
+    }
+
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    font-family: 'Roboto', sans-serif;
+
+    .card {
+        background-color: $daily-card-background;
+
+        .card-header {
+            font-size: calc(8px + 2vmin);
+        }
+    }
+
+    .add-enemy {
+        margin-right: 1rem;
+    }
+
+    .actions {
+        float: right;
+
+        .action-icon {
+            margin-left: 1rem;
+        }
+
+        .action-icon.add:hover {
+            color: $link-active;
+        }
+    }
+}

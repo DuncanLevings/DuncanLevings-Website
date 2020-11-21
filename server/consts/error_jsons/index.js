@@ -8,6 +8,7 @@ const ACTIVITY_ERRORS = require('./activity_errors.json').server_errors;
 const EQUIPMENT_ERRORS = require('./equipment_errors.json').server_errors;
 const PRESET_ERRORS = require('./preset_errors.json').server_errors;
 const FARM_RUN_ERRORS = require('./farm_run_errors.json').server_errors;
+const PVM_ERRORS = require('./pvm_errors.json').server_errors;
 
 module.exports = {
     AUTH_ERROR,
@@ -18,5 +19,6 @@ module.exports = {
     ACTIVITY_ERRORS,
     EQUIPMENT_ERRORS,
     PRESET_ERRORS,
-    FARM_RUN_ERRORS
+    FARM_RUN_ERRORS,
+    PVM_ERRORS
 }

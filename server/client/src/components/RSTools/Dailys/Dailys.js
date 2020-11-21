@@ -60,7 +60,7 @@ class Dailys extends React.Component {
 
     setDataType = (type) => {
         this.props.setDailyType(type);
-        localStorage.setItem("type", type);
+        localStorage.setItem("dailyType", type);
     }
 
     render() {
