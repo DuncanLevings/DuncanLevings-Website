@@ -13,7 +13,7 @@ export function searchPvmAPI(type, filter) {
     }).then(res => res.data);
 }
 
-export function getPvmSingleAPI(pvmId, type) {
+export function getPvmSingleAPI(type, pvmId) {
     return api.request({
         method: 'get',
         url: `/api/pvm/get_pvm/single/${type}/${pvmId}`,

@@ -1,0 +1,22 @@
+@import '../../../../../../assets/style/breakpoints';
+@import '../../../../../../assets/style/vars';
+@import '../../../../../../assets/style/colors';
+
+.PvmTaskForm {
+    font-family: 'Roboto', sans-serif;
+
+    h3 {
+        text-align: center;
+    }
+
+    .form-submit {
+        width: 100%;
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+    .submit-error {
+        color: $error;
+        text-align: center;
+    }
+}

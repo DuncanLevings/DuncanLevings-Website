@@ -9,11 +9,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import { searchPvm } from 'store/actions/RSTools/pvmActions';
-import { Button, Card, Container, Form, FormControl, InputGroup, Spinner } from 'react-bootstrap';
-import { FaPlus, FaEdit, FaTrash } from 'react-icons/fa';
+import { Button, Col, Container, Form, FormControl, Image, InputGroup, ListGroup, OverlayTrigger, Row, Spinner, Tooltip } from 'react-bootstrap';
+import { FaEdit, FaTrash, FaPlus } from 'react-icons/fa';
+import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import PropTypes from 'prop-types';
 import './PvmEnemy.scss';
-import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 
 class PvmEnemy extends React.Component {
     constructor(props) {
@@ -28,8 +28,14 @@ class PvmEnemy extends React.Component {
         this.props.searchPvm(this.props.pvmReducer.pvmType, this.state.filter);
     }
 
-    navigate = (route) => {
-        this.props.history.push(route);
+    navigate = (route, bool = false, pvmId = null) => {
+        this.props.history.push({
+            pathname: route,
+            state: {
+                newTask: bool,
+                pvmId: pvmId
+            }
+        });
     }
 
     setSearch = e => {
@@ -41,8 +47,48 @@ class PvmEnemy extends React.Component {
         this.props.searchPvm(this.props.pvmReducer.pvmType, e.target.value);
     }
 
+    getData = () => {
+        const { search } = this.state;
+        const { searchPvm } = this.props.pvmReducer;
+
+        return searchPvm
+            .filter(pvm => search === '' || pvm.name.toLowerCase().includes(search.toLowerCase()))
+            .map((pvm, i) =>
+                <ListGroup.Item key={i}>
+                    <Row>
+                        <Col xs={1}><FaPlus size="1.25em" className="action-icon add" onClick={() => this.navigate(RSTOOL_ROUTES.PVM_TASK_BUILDER, true, pvm._id)} /></Col>
+                        <Col xs={1}><Image src={pvm.thumbnailURL} /></Col>
+                        <Col xs={6}>{pvm.name}</Col>
+                        <Col><span className="actions">
+                            {pvm.isOwner ?
+                                <>
+                                    <FaEdit className="action-icon edit" />
+                                    <FaTrash className="action-icon delete" />
+                                </>
+                                :
+                                <>
+                                    <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Can only edit pvm enemies YOU made.</Tooltip>}>
+                                        <span className="d-inline-block disabled-action">
+                                            <FaEdit disabled style={{ pointerEvents: 'none' }} />
+                                        </span>
+                                    </OverlayTrigger>
+                                    <OverlayTrigger overlay={<Tooltip id="tooltip-disabled">Can only delete pvm enemies YOU made.</Tooltip>}>
+                                        <span className="d-inline-block disabled-action">
+                                            <FaTrash disabled style={{ pointerEvents: 'none' }} />
+                                        </span>
+                                    </OverlayTrigger>
+                                </>
+                            }
+                        </span></Col>
+                    </Row>
+                </ListGroup.Item>
+            );
+    }
+
     render() {
-        const { pvmTypeName, isFetching } = this.props.pvmReducer;
+        const { pvmTypeName, isSearching } = this.props.pvmReducer;
+
+        const searchResults = this.getData();
 
         return (
             <Container>
@@ -97,6 +143,15 @@ class PvmEnemy extends React.Component {
                             />
                         </Form.Group>
                     </Form>
+                    <div className="spacer-h-3" />
+                    {isSearching ?
+                        <Spinner animation="border" variant="light" /> :
+                        searchResults.length > 0 ?
+                            <ListGroup variant="flush" className="scrollable-list">
+                                {searchResults}
+                            </ListGroup> :
+                            <p>No pvm enemies found...</p>
+                    }
                 </div>
             </Container>
         );

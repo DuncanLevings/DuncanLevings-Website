@@ -16,12 +16,35 @@
     padding-bottom: 5vh;
     font-family: 'Roboto', sans-serif;
 
-    .card {
-        background-color: $daily-card-background;
+    .scrollable-list {
+        max-height: 25vh;
+        overflow-y: auto;
+    }
 
-        .card-header {
+    .list-group-item {
+        background-color: $body-background;
+        border-color: $hr-divider;
+
+        @include respond-to(xs) {
             font-size: calc(8px + 2vmin);
         }
+        
+        @include respond-to(m) {
+            font-size: calc(8px + 1vmin);
+        }
+    }
+
+    .list-group-item:hover {
+        background-color: $contact-background;
+    }
+
+    .action-icon.add {
+        color: $link-active;
+    }
+
+    .action-icon.add:hover {
+        color: white;
+        cursor: pointer;
     }
 
     .add-enemy {
@@ -35,8 +58,26 @@
             margin-left: 1rem;
         }
 
-        .action-icon.add:hover {
-            color: $link-active;
+        .action-icon.edit:hover {
+            color: $link-secondary;
         }
+
+        .action-icon.delete:hover {
+            color: $error;
+        }
+
+        .disabled-action {
+            color: $hr-divider;
+            margin-left: 1rem;
+        }
+    }
+}
+
+.confirm-modal {
+    font-family: 'Roboto', sans-serif;
+    color: $dark-theme;
+
+    .modal-title {
+        font-size: calc(12px + 2vmin);
     }
 }

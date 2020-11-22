@@ -25,123 +25,78 @@ const getType = (type) => {
     }
 }
 
-/**
- * retrieve users daily list based on daily type
- * @param {*} userId 
- * @param {*} type 
- */
-const getDailys = async (userId, type) => {
-    const typeObj = getType(type);
+const searchPvm = async (userId, type, filter) => {
     const userIdc = mongoose.Types.ObjectId(userId);
+    const n_type = parseInt(type);
+    const n_filter = parseInt(filter);
 
-    const listData = await RSToolsUser.aggregate([
+    const matchFilter = {
+        type: n_type
+    };
+
+    switch (n_filter) {
+        case 1:
+            matchFilter.ownerId = { $ne: userIdc };
+            break;
+        case 2:
+            matchFilter.ownerId = userIdc;
+            break;
+        default:
+            break;
+    }
+
+    const aggregateQuery = [
         {
-            $match: { userId: userIdc }
+            $match: matchFilter
         },
         {
-            $project: { [`${typeObj.fieldName}`]: 1 }
-        },
-        {
-            $unwind: `$${typeObj.fieldName}`
-        },
-        {
-            $match: { [`${typeObj.fieldName}.completed`]: false }
-        },
-        {
-            $sort: { [`${typeObj.fieldName}.position`]: 1 }
-        },
-        {
-            $group: {
-                _id: '$_id',
-                [typeObj.fieldName]: {
-                    $push: `$${typeObj.fieldName}`
+            $addFields: {
+                isOwner: {
+                    $cond: {
+                        if: { $eq: ["$ownerId", userIdc] }, then: true, else: false
+                    }
                 }
             }
         },
         {
-            $lookup: {
-                from: Daily.collection.name,
-                let: { dailyId: `$${typeObj.fieldName}.dailyId` },
-                pipeline: [
-                    {
-                        $match: {
-                            $expr: { $in: ["$_id", "$$dailyId"] }
-                        }
-                    }
-                ],
-                as: "listData"
+            $sort: {
+                name: 1
             }
         }
-    ]);
+    ];
 
-    if (listData.length === 0) return [];
-
-    // rematching populated dailyId schema with correct dailyId list object to maintain sorting
-    for (const data of listData[0][typeObj.fieldName]) {
-        data.dailyId = listData[0].listData.filter(d => d._id.equals(data.dailyId))[0];
+    // filters out if user already has a pvm created with given name from retrieved pvms
+    if (n_filter === 3) {
+        aggregateQuery.push(
+            {
+                $lookup: {
+                    from: PvmTask.collection.name,
+                    let: { name: '$name', type: '$type' },
+                    pipeline: [
+                        {
+                            $match: {
+                                $and: [
+                                    { $expr: { $eq: ["$ownerId", userIdc] } },
+                                    { $expr: { $eq: ["$pvmName", "$$name"] } },
+                                    { $expr: { $eq: ["$type", "$$type"] } }
+                                ]
+                            },
+                        }
+                    ],
+                    as: "pvmTasks"
+                }
+            },
+            {
+                $match: { "pvmTasks.0": { $exists: false } }
+            }
+        )
     }
 
-    return listData[0][typeObj.fieldName];
+    return await PvM.aggregate(aggregateQuery);
 }
 
-/**
- * Retrieve a single Daily checking ownership
- * @param {*} userId 
- * @param {*} dailyId 
- */
-const getDaily = async (userId, dailyId) => {
-    const daily = await Daily.findOne({ _id: dailyId });
-
-    if (!daily.ownerId.equals(userId)) throw Error(DAILY_ERRORS.NOT_OWNER);
-
-    return daily;
-}
-
-/**
- * retrieve dailys based on filter and type
- * @param {*} userId 
- * @param {*} type 
- * @param {*} filter 
- */
-const searchDailys = async (userId, type, filter) => {
-    const typeObj = getType(type);
-    const userIdc = mongoose.Types.ObjectId(userId);
-    const n_type = parseInt(type);
-
-    const user = await RSToolsUser.findOne({ userId: userIdc }, { [typeObj.fieldName]: 1 });
-    const userDailyList = user[typeObj.fieldName].map(daily => daily.dailyId);
-
-    if (filter == 0) { // filter for public and user owned dailys, of type, that are not already in their list
-        return await Daily.find({
-            _id: { $nin: userDailyList },
-            $or: [
-                { publicDaily: true, type: n_type },
-                { ownerId: userIdc, type: n_type }
-            ]
-        });
-    } else if (filter == 1) { // filter for public, of type, that are not already in their list
-        return await Daily.find({
-            _id: { $nin: userDailyList },
-            publicDaily: true,
-            type: n_type
-        });
-    } else { // filter for user owned dailys, of type, that are not already in their list
-        return await Daily.find({
-            _id: { $nin: userDailyList },
-            ownerId: userIdc,
-            type: n_type
-        });
-    }
-}
-
-/**
- * gets image url from uploaded images if index exists for that step
- * @param {*} images 
- * @param {*} index 
- */
-const getURL = (images, index = 0) => {
-    const img = images.find(img => img.stepIndex == index);
-    return img ? img.url : null;
+const getPvm = async (type, pvmId) => {
+    return await PvM.findOne({ _id: pvmId, type: type });
 }
 
 const createPvm = async (user, data, images) => {
@@ -168,6 +123,26 @@ const createPvm = async (user, data, images) => {
     );
 
     return await pvm.save();
+}
+
+const createPvmTask = async (userId, data) => {
+    const taskNameCheck = await PvmTask.countDocuments({ ownerId: userId, taskName: data.taskName });
+    if (taskNameCheck > 0) throw Error(PVM_ERRORS.PVM_TASK_EXISTS);
+
+    // construct daily model object
+    const pvmTask = new PvmTask(
+        new PvmTaskBuilder()
+            .withOwner(userId)
+            .withPvM(JSON.parse(data.pvm))
+            .withPreset(JSON.parse(data.preset))
+            .withTaskName(data.taskName)
+            .withWebURL(data.webURL)
+            .withYoutubeURL(data.youtubeURL)
+            .withNotes(data.notes)
+            .withType(data.type)
+    );
+
+    return await pvmTask.save();
 }
 
 const editPvm = async (userId, data, images) => {
@@ -267,6 +242,67 @@ class PvmBuilder {
     }
 }
 
+class PvmTaskBuilder {
+    withOwner(id) {
+        if (!id) throw Error(PVM_ERRORS.USER_REQUIRED);
+        this.ownerId = id;
+        return this;
+    }
+
+    withPvM(pvm) {
+        if (!pvm) return this;
+        this.pvmName = pvm.name;
+        if (pvm.mapURL) this.mapURL = pvm.mapURL;
+        this.wikiURL = pvm.wikiURL;
+        this.imageUrl = pvm.imageUrl;
+        this.thumbnailURL = pvm.thumbnailURL;
+        return this;
+    }
+
+    withPreset(preset) {
+        if (!preset) throw Error(PVM_ERRORS.PRESET_REQUIRED);
+        if (preset._id) preset._id = mongoose.Types.ObjectId(preset._id);
+        if (preset.id) preset.id = undefined;
+        if (preset.ownerId) preset.ownerId = mongoose.Types.ObjectId(preset.ownerId);
+        this.preset = preset;
+        return this;
+    }
+
+    withTaskName(taskName) {
+        if (!taskName) throw Error(PVM_ERRORS.TASK_NAME_REQUIRED);
+        this.taskName = taskName;
+        return this;
+    }
+
+    withWebURL(url) {
+        if (!url) return this;
+        this.webURL = url;
+        return this;
+    }
+
+    withYoutubeURL(url) {
+        if (!url) return this;
+        this.youtubeURL = url;
+        return this;
+    }
+
+    withNotes(notes) {
+        if (!notes) return this;
+        this.notes = notes;
+        return this;
+    }
+
+    withType(type) {
+        if (!type) throw Error(PVM_ERRORS.TYPE_REQUIRED);
+        if (!TYPE_REGEX.test(type)) throw Error(PVM_ERRORS.TYPE_REGEX_FAIL);
+        this.type = type;
+        return this;
+    }
+}
+
 module.exports = {
-    createPvm
+    searchPvm,
+    getPvm,
+    createPvm,
+    createPvmTask
 }

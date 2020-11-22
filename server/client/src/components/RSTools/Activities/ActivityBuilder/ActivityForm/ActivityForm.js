@@ -18,7 +18,7 @@ class ActivityForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            pressingMissing: false
+            presetMissing: false
         }
     }
 
@@ -49,8 +49,8 @@ class ActivityForm extends React.Component {
     }
 
     submit = values => {
-        if (!this.props.preset) return this.setState({ pressingMissing: true });
-        this.setState({ pressingMissing: false });
+        if (!this.props.preset) return this.setState({ presetMissing: true });
+        this.setState({ presetMissing: false });
 
         let formData = new FormData();
 
@@ -69,7 +69,8 @@ class ActivityForm extends React.Component {
     }
 
     render() {
-        const { isCreating, isSaving, pressingMissing, error } = this.props.activityReducer;
+        const { presetMissing } = this.state;
+        const { isCreating, isSaving, error } = this.props.activityReducer;
 
         return (
             <Container>
@@ -79,7 +80,7 @@ class ActivityForm extends React.Component {
                     </div>
                     <div className="activity-error">
                         <p>{error}</p>
-                        {pressingMissing ?
+                        {presetMissing ?
                             <p>Must setup a preset!</p>
                             : null}
                     </div>

@@ -173,3 +173,10 @@ export const pvmSchema = yup.object().shape({
         .url("Wiki must be a valid URL")
         .required("*Wiki is required")
 });
+
+export const pvmTaskSchema = yup.object().shape({
+    taskName: yup.string()
+        .min(2, "*Task name must be at least 2 characters")
+        .max(59, "*Task name must be less than 59 characters")
+        .required("*Task name is required")
+});
