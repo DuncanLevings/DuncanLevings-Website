@@ -171,7 +171,7 @@ class EquipmentPreset extends React.Component {
             .map((item, i) =>
                 <ListGroup.Item key={i}>
                     <Row>
-                        <Col xs={2}><FaCheckSquare className="action-icon add" onClick={() => this.equipSlot(item)} /></Col>
+                        <Col xs={1}><FaCheckSquare className="action-icon add" onClick={() => this.equipSlot(item)} /></Col>
                         <Col xs={1}><Image src={item.imageUrl} /></Col>
                         <Col xs={6}>{item.name}</Col>
                         <Col><span className="actions">

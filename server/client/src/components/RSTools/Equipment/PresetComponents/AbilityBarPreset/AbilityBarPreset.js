@@ -185,7 +185,7 @@ class AbilityBarPreset extends React.Component {
             .map((bar, i) =>
                 <ListGroup.Item key={i}>
                     <Row>
-                        <Col xs={2}><FaCheckSquare className="action-icon add" onClick={() => this.setAbilityBar(bar)} /></Col>
+                        <Col xs={1}><FaCheckSquare className="action-icon add" onClick={() => this.setAbilityBar(bar)} /></Col>
                         <Col xs={2}>{bar.name}</Col>
                         <Col>
                             {bar.abilityBar.map((ability, i) =>

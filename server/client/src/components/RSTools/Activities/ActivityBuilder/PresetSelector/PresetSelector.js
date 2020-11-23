@@ -213,7 +213,7 @@ class PresetSelector extends React.Component {
                         <Button variant="button-secondary" onClick={() => this.navigate(RSTOOL_ROUTES.PRESET_BUILDER, {
                             preset: preset,
                             activityEdit: true,
-                            editMode: this.props.editMode || false,
+                            editMode: true,
                             routeState: this.props.routeState
                         })}>Edit</Button>
                     </div>

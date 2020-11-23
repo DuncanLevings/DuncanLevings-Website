@@ -109,7 +109,7 @@ class Items extends React.Component {
                 <ListGroup.Item key={i}>
                     <Row>
                         <Col xs={1}><Image src={item.slot === 14 ? item.thumbnailUrl : item.imageUrl} /></Col>
-                        <Col xs={3}>{item.name}</Col>
+                        <Col xs={5}>{item.name}</Col>
                         <Col xs={2}><Image src={EQUIPMENT_CONSTS.slotTypes[item.slot]} /></Col>
                         <Col>
                             <span className="actions">

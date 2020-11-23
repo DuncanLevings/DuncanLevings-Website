@@ -94,17 +94,13 @@ class PvmTaskBuilder extends React.Component {
             if (isFetching || !pvmTask) {
                 return null;
             } else {
-                const routeState = {
-                    editMode: this.props.location.state.editMode || false,
-                    pvmTaskId: this.props.location.state.pvmTaskId || null
-                }
 
                 return (
                     <StepWizard initialStep={step}>
                         <PresetSelector
                             editMode={true}
                             preset={preset}
-                            routeState={routeState}
+                            routeState={this.props.location.state}
                             updatePreset={preset => this.updatePreset(preset)}
                             setCurrentStep={step => this.setCurrentStep(step)}
                         />
@@ -124,6 +120,7 @@ class PvmTaskBuilder extends React.Component {
         return (
             <StepWizard initialStep={step}>
                 <PresetSelector
+                    routeState={this.props.location.state}
                     updatePreset={preset => this.updatePreset(preset)}
                     setCurrentStep={step => this.setCurrentStep(step)}
                 />
