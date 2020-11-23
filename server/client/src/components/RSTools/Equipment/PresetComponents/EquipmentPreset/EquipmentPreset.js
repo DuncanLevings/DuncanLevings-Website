@@ -29,6 +29,8 @@ class EquipmentPreset extends React.Component {
             showConfirm: false,
             hasEquipment: false
         }
+
+        this.searchInput = React.createRef();
     }
 
     componentDidMount() {
@@ -54,6 +56,11 @@ class EquipmentPreset extends React.Component {
     setSelected = (slot) => {
         this.setState({ selectedSlot: slot });
         this.searchItems(slot);
+
+        if (this.searchInput.current) {
+            this.searchInput.current.focus();
+            this.searchInput.current.select();
+        }
     }
 
     searchItems = _.debounce((slot) => {
@@ -302,6 +309,8 @@ class EquipmentPreset extends React.Component {
                                             aria-label="search"
                                             aria-describedby="search"
                                             onChange={this.setSearch}
+                                            ref={this.searchInput}
+                                            autoFocus
                                         />
                                         <InputGroup.Append>
                                             <Button variant="button-primary" onClick={() => this.setAddItemShow(true)}>Add Item</Button>

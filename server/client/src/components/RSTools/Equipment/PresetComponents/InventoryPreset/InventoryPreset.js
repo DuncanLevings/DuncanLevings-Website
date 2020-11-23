@@ -28,6 +28,8 @@ class InventoryPreset extends React.Component {
             showConfirm: false,
             hasInventory: false
         }
+        
+        this.searchInput = React.createRef();
     }
 
     componentDidMount() {
@@ -85,6 +87,11 @@ class InventoryPreset extends React.Component {
             this.setState({ selectedSlots: slots });
         } else {
             this.setState({ selectedSlots: [slot] });
+        }
+
+        if (this.searchInput.current) {
+            this.searchInput.current.focus();
+            this.searchInput.current.select();
         }
     }
 
@@ -375,6 +382,8 @@ class InventoryPreset extends React.Component {
                                             aria-label="search"
                                             aria-describedby="search"
                                             onChange={this.setSearch}
+                                            ref={this.searchInput}
+                                            autoFocus
                                         />
                                         <InputGroup.Append>
                                             <Button variant="button-primary" onClick={() => this.setAddItemShow(true)}>Add Item</Button>

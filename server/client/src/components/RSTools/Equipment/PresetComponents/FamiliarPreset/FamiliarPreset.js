@@ -32,6 +32,8 @@ class FamiliarPreset extends React.Component {
             familiarSet: false,
             hasFamiliar: false
         }
+
+        this.searchInput = React.createRef();
     }
 
     componentDidMount() {
@@ -96,12 +98,17 @@ class FamiliarPreset extends React.Component {
         } else if (event && event.shiftKey) {
             let startIndex = 0;
             if (selectedSlots.length > 0) startIndex = familiarSlotData.findIndex(s => s.id === selectedSlots[0]);
-            
+
             const endIndex = familiarSlotData.findIndex(s => s.id === slot);
             const slots = this.setSelectedMultiple(startIndex, endIndex);
             this.setState({ selectedSlots: slots });
         } else {
             this.setState({ selectedSlots: [slot] });
+        }
+
+        if (this.searchInput.current) {
+            this.searchInput.current.focus();
+            this.searchInput.current.select();
         }
     }
 
@@ -530,6 +537,8 @@ class FamiliarPreset extends React.Component {
                                                     aria-label="search"
                                                     aria-describedby="search"
                                                     onChange={this.setSearch}
+                                                    ref={this.searchInput}
+                                                    autoFocus
                                                 />
                                                 <InputGroup.Append>
                                                     <Button variant="button-primary" onClick={() => this.setAddItemShow(true, 13)}>Add Item</Button>

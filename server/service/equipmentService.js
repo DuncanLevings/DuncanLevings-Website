@@ -90,7 +90,7 @@ const searchItems = async (userId, slots) => {
         },
         {
             $sort: {
-                slot: 1
+                name: 1
             }
         }
     ]);
