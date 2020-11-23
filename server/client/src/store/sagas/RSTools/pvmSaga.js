@@ -4,9 +4,10 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-import { call, takeLatest, put } from 'redux-saga/effects';
+import { call, takeLatest, put, takeEvery } from 'redux-saga/effects';
 import { push } from 'connected-react-router';
-import { 
+import {
+    checkPvmNameAPI,
     createPvmAPI,
     createPvmTaskAPI,
     deletePvmAPI,
@@ -16,7 +17,8 @@ import {
     getPvmSingleAPI,
     getPvmTasksAPI,
     getPvmTaskSingleAPI,
-    searchPvmAPI } from '../../api/RSTools/pvmAPI';
+    searchPvmAPI
+} from '../../api/RSTools/pvmAPI';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import * as actionTypes from '../../actionTypes/RSTools/pvmActionTypes'
 import * as actionCreators from '../../actions/RSTools/pvmActions';
@@ -33,7 +35,19 @@ function* searchPvm(pvmAction) {
 function* getPvmTasks(pvmAction) {
     try {
         const pvmTasks = yield call(getPvmTasksAPI, pvmAction.payload);
-        yield put(actionCreators.getPvmTasksSuccess(pvmTasks));
+        switch (pvmAction.payload) {
+            case 0:
+                yield put(actionCreators.getPvmTasksSlayerSuccess(pvmTasks));
+                break;
+            case 1:
+                yield put(actionCreators.getPvmTasksBossSuccess(pvmTasks));
+                break;
+            case 2:
+                yield put(actionCreators.getPvmTasksRaidSuccess(pvmTasks));
+                break;
+            default:
+                break;
+        }
     } catch (error) {
         yield put(actionCreators.pvmError(error.response.data));
     }
@@ -41,7 +55,7 @@ function* getPvmTasks(pvmAction) {
 
 function* getPvmSingle(pvmAction) {
     try {
-        const pvm = yield call(getPvmSingleAPI, pvmAction.payload.type, pvmAction.payload.pvmId);
+        const pvm = yield call(getPvmSingleAPI, pvmAction.payload);
         yield put(actionCreators.getPvmSingleSuccess(pvm));
     } catch (error) {
         yield put(actionCreators.pvmError(error.response.data));
@@ -50,7 +64,7 @@ function* getPvmSingle(pvmAction) {
 
 function* getPvmTaskSingle(pvmAction) {
     try {
-        const pvmTask = yield call(getPvmTaskSingleAPI, pvmAction.payload.type, pvmAction.payload.pvmId);
+        const pvmTask = yield call(getPvmTaskSingleAPI, pvmAction.payload);
         yield put(actionCreators.getPvmTaskSingleSuccess(pvmTask));
     } catch (error) {
         yield put(actionCreators.pvmError(error.response.data));
@@ -59,9 +73,11 @@ function* getPvmTaskSingle(pvmAction) {
 
 function* createPvm(pvmAction) {
     try {
+        yield call(checkPvmNameAPI, pvmAction.payload);
         yield call(createPvmAPI, pvmAction.payload);
         yield put(actionCreators.createPvmSuccess());
-        yield put(push(RSTOOL_ROUTES.PVM));
+        if (pvmAction.redirect) yield put(push(pvmAction.redirect));
+        else yield put(push(RSTOOL_ROUTES.PVM));
     } catch (error) {
         if (error.response.status === 500) {
             yield put(actionCreators.pvmError("Image upload failed!"));
@@ -87,9 +103,11 @@ function* createPvmTask(pvmAction) {
 
 function* editPvm(pvmAction) {
     try {
+        yield call(checkPvmNameAPI, pvmAction.payload);
         yield call(editPvmAPI, pvmAction.payload);
         yield put(actionCreators.editPvmSuccess());
-        yield put(push(RSTOOL_ROUTES.PVM));
+        if (pvmAction.redirect) yield put(push(pvmAction.redirect));
+        else yield put(push(RSTOOL_ROUTES.PVM));
     } catch (error) {
         if (error.response.status === 500) {
             yield put(actionCreators.pvmError("Image upload failed!"));
@@ -115,7 +133,7 @@ function* editPvmTask(pvmAction) {
 
 function* deletePvm(pvmAction) {
     try {
-        const pvms = yield call(deletePvmAPI, pvmAction.payload);
+        const pvms = yield call(deletePvmAPI, pvmAction.payload.pvmId, pvmAction.payload.filter);
         yield put(actionCreators.deletePvmSuccess(pvms));
     } catch (error) {
         yield put(actionCreators.pvmError(error.response.data));
@@ -124,8 +142,20 @@ function* deletePvm(pvmAction) {
 
 function* deletePvmTask(pvmAction) {
     try {
-        const pvmTask = yield call(deletePvmTaskAPI, pvmAction.payload);
-        yield put(actionCreators.deletePvmSuccess(pvmTask));
+        const pvmTasks = yield call(deletePvmTaskAPI, pvmAction.payload);
+        switch (pvmAction.pvmType) {
+            case 0:
+                yield put(actionCreators.deletePvmSlayerTaskSuccess(pvmTasks));
+                break;
+            case 1:
+                yield put(actionCreators.deletePvmBossTaskSuccess(pvmTasks));
+                break;
+            case 2:
+                yield put(actionCreators.deletePvmRaidTaskSuccess(pvmTasks));
+                break;
+            default:
+                break;
+        }
     } catch (error) {
         yield put(actionCreators.pvmError(error.response.data));
     }
@@ -133,7 +163,7 @@ function* deletePvmTask(pvmAction) {
 
 export const pvmSagas = [
     takeLatest(actionTypes.SEARCH_PVM, searchPvm),
-    takeLatest(actionTypes.GET_PVM_TASKS, getPvmTasks),
+    takeEvery(actionTypes.GET_PVM_TASKS, getPvmTasks),
     takeLatest(actionTypes.GET_PVM_SINGLE, getPvmSingle),
     takeLatest(actionTypes.GET_PVM_TASK_SINGLE, getPvmTaskSingle),
     takeLatest(actionTypes.CREATE_PVM, createPvm),

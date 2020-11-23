@@ -1,0 +1,67 @@
+@import '../../../../../assets/style/breakpoints';
+@import '../../../../../assets/style/vars';
+@import '../../../../../assets/style/colors';
+
+.PvmTaskViewer {
+    @include respond-to(xs) {
+        min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
+        min-height: $minHeightMobile;
+    }
+    
+    @include respond-to(m) {
+        min-height: $minHeightDesktop;
+    }
+
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    font-family: 'Roboto', sans-serif;
+
+    .accordion {
+        display: flex;
+        justify-content: center;
+    }
+
+    .card {
+        background-color: $daily-card-background;
+        width: 50vw;
+
+        .card-header {
+            font-size: calc(8px + 2vmin);
+            text-align: center;
+        }
+
+        .card-header:hover {
+            background-color: $daily-card-title-hover;
+        }
+
+        .card-text {
+            font-size: calc(8px + 1.5vmin);
+        }
+    }
+
+    h3 {
+        text-align: center;
+    }
+
+    .task-img-col {
+        text-align: center;
+
+        .img {
+            max-height: 360px;
+        }
+    }
+
+    .web {
+        text-align: end;
+    }
+
+    .notes {
+        text-align: center;
+        font-size: calc(8px + 1.5vmin);
+    }
+
+    .error {
+        text-align: center;
+        color: $error;
+    }
+}

@@ -22,20 +22,28 @@ export function getPvmTasks(type) {
     return { type: actionTypes.GET_PVM_TASKS, payload: type };
 }
 
-export function getPvmTasksSuccess(tasks) {
-    return { type: actionTypes.GET_PVM_TASKS_SUCCESS, payload: tasks };
+export function getPvmTasksSlayerSuccess(tasks) {
+    return { type: actionTypes.GET_PVM_TASKS_SLAYER_SUCCESS, payload: tasks };
 }
 
-export function getPvmSingle(type, pvmId) {
-    return { type: actionTypes.GET_PVM_SINGLE, payload: { type: type, pvmId: pvmId } };
+export function getPvmTasksBossSuccess(tasks) {
+    return { type: actionTypes.GET_PVM_TASKS_BOSS_SUCCESS, payload: tasks };
+}
+
+export function getPvmTasksRaidSuccess(tasks) {
+    return { type: actionTypes.GET_PVM_TASKS_RAID_SUCCESS, payload: tasks };
+}
+
+export function getPvmSingle(pvmId) {
+    return { type: actionTypes.GET_PVM_SINGLE, payload: pvmId };
 }
 
 export function getPvmSingleSuccess(pvm) {
     return { type: actionTypes.GET_PVM_SINGLE_SUCCESS, payload: pvm };
 }
 
-export function getPvmTaskSingle(type, pvmTaskId) {
-    return { type: actionTypes.GET_PVM_TASK_SINGLE, payload: { type: type, pvmTaskId: pvmTaskId } };
+export function getPvmTaskSingle(pvmTaskId) {
+    return { type: actionTypes.GET_PVM_TASK_SINGLE, payload: pvmTaskId };
 }
 
 export function getPvmTaskSingleSuccess(pvmTask) {
@@ -44,8 +52,12 @@ export function getPvmTaskSingleSuccess(pvmTask) {
 
 // CREATE
 
-export function createPvm(formData) {
-    return { type: actionTypes.CREATE_PVM, payload: formData };
+export function checkPvmName(formData) {
+    return { type: actionTypes.CHECK_PVM_NAME, payload: formData };
+}
+
+export function createPvm(formData, from = null) {
+    return { type: actionTypes.CREATE_PVM, payload: formData, redirect: from };
 }
 
 export function createPvmSuccess() {
@@ -62,8 +74,8 @@ export function createPvmTaskSuccess() {
 
 // EDIT
 
-export function editPvm(formData) {
-    return { type: actionTypes.EDIT_PVM, payload: formData };
+export function editPvm(formData, from = null) {
+    return { type: actionTypes.EDIT_PVM, payload: formData, redirect: from };
 }
 
 export function editPvmSuccess() {
@@ -80,20 +92,28 @@ export function editPvmTaskSuccess() {
 
 // DELETE
 
-export function deletePvm(pvmId) {
-    return { type: actionTypes.DELETE_PVM, payload: pvmId };
+export function deletePvm(pvmId, filter) {
+    return { type: actionTypes.DELETE_PVM, payload: { pvmId: pvmId, filter: filter } };
 }
 
 export function deletePvmSuccess(pvms) {
     return { type: actionTypes.DELETE_PVM_SUCCESS, payload: pvms };
 }
 
-export function deletePvmTask(pvmTaskId) {
-    return { type: actionTypes.DELETE_PVM_TASK, payload: pvmTaskId };
+export function deletePvmTask(pvmTaskId, type) {
+    return { type: actionTypes.DELETE_PVM_TASK, payload: pvmTaskId, pvmType: type};
 }
 
-export function deletePvmTaskSuccess(pvmTasks) {
-    return { type: actionTypes.DELETE_PVM_TASK_SUCCESS, payload: pvmTasks };
+export function deletePvmSlayerTaskSuccess(pvmTasks) {
+    return { type: actionTypes.DELETE_PVM_SLAYER_TASK_SUCCESS, payload: pvmTasks };
+}
+
+export function deletePvmBossTaskSuccess(pvmTasks) {
+    return { type: actionTypes.DELETE_PVM_BOSS_TASK_SUCCESS, payload: pvmTasks };
+}
+
+export function deletePvmRaidTaskSuccess(pvmTasks) {
+    return { type: actionTypes.DELETE_PVM_RAID_TASK_SUCCESS, payload: pvmTasks };
 }
 
 // type

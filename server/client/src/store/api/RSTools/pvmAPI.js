@@ -13,10 +13,10 @@ export function searchPvmAPI(type, filter) {
     }).then(res => res.data);
 }
 
-export function getPvmSingleAPI(type, pvmId) {
+export function getPvmSingleAPI(pvmId) {
     return api.request({
         method: 'get',
-        url: `/api/pvm/get_pvm/single/${type}/${pvmId}`,
+        url: `/api/pvm/get_pvm/single/${pvmId}`,
     }).then(res => res.data);
 }
 
@@ -27,11 +27,19 @@ export function getPvmTasksAPI(type) {
     }).then(res => res.data);
 }
 
-export function getPvmTaskSingleAPI(type, pvmTaskId) {
+export function getPvmTaskSingleAPI(pvmTaskId) {
     return api.request({
         method: 'get',
-        url: `/api/pvm/get_pvm_tasks/single/${type}/${pvmTaskId}`,
+        url: `/api/pvm/get_pvm_tasks/single/${pvmTaskId}`,
     }).then(res => res.data);
+}
+
+export function checkPvmNameAPI(formData) {
+    return api.request({
+        method: 'post',
+        url: '/api/pvm/check_pvm_name',
+        data: formData
+    });
 }
 
 export function createPvmAPI(formData) {
@@ -66,10 +74,10 @@ export function editPvmTaskAPI(formData) {
     });
 }
 
-export function deletePvmAPI(pvmId) {
+export function deletePvmAPI(pvmId, filter) {
     return api.request({
         method: 'delete',
-        url: `/api/pvm/delete_pvm/${pvmId}`
+        url: `/api/pvm/delete_pvm/${pvmId}/${filter}`
     }).then(res => res.data);
 }
 

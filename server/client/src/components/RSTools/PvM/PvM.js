@@ -7,7 +7,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setPvmType } from 'store/actions/RSTools/pvmActions';
+import { setPvmType, getPvmTasks } from 'store/actions/RSTools/pvmActions';
+import { clearPreset } from 'store/actions/RSTools/presetActions';
 import { Tab, Tabs } from 'react-bootstrap';
 import { PVM_CONSTS } from 'consts/RSTools_Consts';
 import PvmTasks from './PvmTasks/PvmTasks.lazy';
@@ -21,12 +22,14 @@ class PvM extends React.Component {
     }
 
     componentDidMount() {
-        // this.props.getDaily(DAILY_CONSTS.DAILY);
-        // this.props.getWeekly(DAILY_CONSTS.WEEKLY);
-        // this.props.getMonthly(DAILY_CONSTS.MONTHLY);
+        this.props.getPvmTasks(PVM_CONSTS.SLAYER);
+        this.props.getPvmTasks(PVM_CONSTS.BOSS);
+        this.props.getPvmTasks(PVM_CONSTS.RAID);
 
         // default
         this.setDataType(PVM_CONSTS.SLAYER);
+
+        if (this.props.presetReducer.savedPreset) this.props.clearPreset();
     }
 
     handleSelect = key => {
@@ -70,9 +73,18 @@ class PvM extends React.Component {
 }
 
 PvM.propTypes = {
-    setPvmType: PropTypes.func
+    setPvmType: PropTypes.func,
+    getPvmTasks: PropTypes.func,
+    presetReducer: PropTypes.object,
+    clearPreset: PropTypes.func
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators({ setPvmType }, dispatch);
+const mapStateToProps = state => {
+    return {
+        presetReducer: state.presetReducer
+    };
+}
 
-export default connect(null, mapDispatchToProps)(PvM);
+const mapDispatchToProps = dispatch => bindActionCreators({ setPvmType, getPvmTasks, clearPreset }, dispatch);
+
+export default connect(mapStateToProps, mapDispatchToProps)(PvM);

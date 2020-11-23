@@ -11,7 +11,9 @@ const intialState = {
     pvmType: 0,
     pvmTypeName: "Slayer",
     searchPvm: [],
-    pvmTasks: [],
+    pvmTasksSlayer: [],
+    pvmTasksBoss: [],
+    pvmTasksRaid: [],
     pvmSingle: null,
     pvmTaskSingle: null,
     isSaving: false, // loading state
@@ -41,6 +43,11 @@ export default (state = intialState, action) => {
             return {
                 ...state,
                 isFetching: true
+            };
+        case actionTypes.CHECK_PVM_NAME:
+            return {
+                ...state,
+                isCreating: true
             };
         case actionTypes.CREATE_PVM:
             return {
@@ -85,10 +92,24 @@ export default (state = intialState, action) => {
                 error: "",
                 isSearching: false
             };
-        case actionTypes.GET_PVM_TASKS_SUCCESS:
+        case actionTypes.GET_PVM_TASKS_SLAYER_SUCCESS:
             return {
                 ...state,
-                pvmTasks: action.payload,
+                pvmTasksSlayer: action.payload,
+                error: "",
+                isFetching: false
+            };
+        case actionTypes.GET_PVM_TASKS_BOSS_SUCCESS:
+            return {
+                ...state,
+                pvmTasksBoss: action.payload,
+                error: "",
+                isFetching: false
+            };
+        case actionTypes.GET_PVM_TASKS_RAID_SUCCESS:
+            return {
+                ...state,
+                pvmTasksRaid: action.payload,
                 error: "",
                 isFetching: false
             };
@@ -130,17 +151,31 @@ export default (state = intialState, action) => {
                 error: "",
                 isSaving: false
             };
-        case actionTypes.DELETE_PVM:
+        case actionTypes.DELETE_PVM_SUCCESS:
             return {
                 ...state,
                 searchPvm: action.payload,
                 error: "",
                 isSaving: false
             };
-        case actionTypes.DELETE_PVM_TASK_SUCCESS:
+        case actionTypes.DELETE_PVM_SLAYER_TASK_SUCCESS:
             return {
                 ...state,
-                pvmTasks: action.payload,
+                pvmTasksSlayer: action.payload,
+                error: "",
+                isSaving: false
+            };
+        case actionTypes.DELETE_PVM_BOSS_TASK_SUCCESS:
+            return {
+                ...state,
+                pvmTasksBoss: action.payload,
+                error: "",
+                isSaving: false
+            };
+        case actionTypes.DELETE_PVM_RAID_TASK_SUCCESS:
+            return {
+                ...state,
+                pvmTasksRaid: action.payload,
                 error: "",
                 isSaving: false
             };

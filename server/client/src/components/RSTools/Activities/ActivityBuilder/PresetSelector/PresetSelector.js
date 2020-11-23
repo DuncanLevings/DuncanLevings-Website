@@ -82,10 +82,7 @@ class PresetSelector extends React.Component {
                     <div className="spacer-h-2" />
                     <Button variant="button-primary" onClick={() => this.navigate(RSTOOL_ROUTES.PRESET_BUILDER, {
                         activityUseEmpty: true,
-                        routeState: {
-                            editMode: this.props.editMode || false,
-                            activityId: this.props.activityId || null
-                        }
+                        routeState: this.props.routeState
                     })}>Use Empty Preset</Button>
                 </div>
             )
@@ -130,10 +127,7 @@ class PresetSelector extends React.Component {
                                     activityEditExisting: true,
                                     editMode: true,
                                     presetId: preset._id,
-                                    routeState: {
-                                        editMode: this.props.editMode || false,
-                                        activityId: this.props.activityId || null
-                                    }
+                                    routeState: this.props.routeState
                                 })} />
                                 <FaTrash className="action-icon delete" onClick={() => this.setShowConfirm(true, preset._id)} />
                             </span>
@@ -165,10 +159,7 @@ class PresetSelector extends React.Component {
                                 <InputGroup.Append>
                                     <Button variant="button-primary" onClick={() => this.navigate(RSTOOL_ROUTES.PRESET_BUILDER, {
                                         activityAddPreset: true,
-                                        routeState: {
-                                            editMode: this.props.editMode || false,
-                                            activityId: this.props.activityId || null
-                                        }
+                                        routeState: this.props.routeState
                                     })}>Add Preset</Button>
                                 </InputGroup.Append>
                             </InputGroup>
@@ -223,10 +214,7 @@ class PresetSelector extends React.Component {
                             preset: preset,
                             activityEdit: true,
                             editMode: this.props.editMode || false,
-                            routeState: {
-                                editMode: this.props.editMode || false,
-                                activityId: this.props.activityId || null
-                            }
+                            routeState: this.props.routeState
                         })}>Edit</Button>
                     </div>
                 </div>

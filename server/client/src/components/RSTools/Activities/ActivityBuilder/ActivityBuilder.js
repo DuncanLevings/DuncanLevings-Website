@@ -37,7 +37,7 @@ class ActivityBuilder extends React.Component {
     componentDidUpdate(prevProps) {
         if (this.props.activityReducer.activitySingle !== prevProps.activityReducer.activitySingle) {
             if (this.checkEditMode()) {
-                this.setState({ 
+                this.setState({
                     activity: this.props.activityReducer.activitySingle,
                     preset: this.props.activityReducer.activitySingle.preset
                 });
@@ -77,12 +77,17 @@ class ActivityBuilder extends React.Component {
             if (isFetchingSingle || !activity) {
                 return null;
             } else {
+                const routeState = {
+                    editMode: this.props.location.state.editMode || false,
+                    activityId: this.props.location.state.activityId || null
+                }
+
                 return (
                     <StepWizard initialStep={step}>
                         <PresetSelector
                             editMode={true}
                             preset={preset}
-                            activityId={activity._id}
+                            routeState={routeState}
                             updatePreset={preset => this.updatePreset(preset)}
                             setCurrentStep={step => this.setCurrentStep(step)}
                         />

@@ -25,20 +25,30 @@
         }
     }
 
-    .card {
-        background-color: $daily-card-background;
+    .scrollable-list {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
 
-        .card-header {
+    .list-group-item {
+        background-color: $body-background;
+        border-color: $hr-divider;
+
+        @include respond-to(xs) {
             font-size: calc(8px + 2vmin);
         }
-
-        .card-text {
-            font-size: calc(8px + 1.5vmin);
+        
+        @include respond-to(m) {
+            font-size: calc(8px + 1vmin);
         }
+    }
 
-        .card-img {
-            width: unset;
-        }
+    .list-group-item:hover {
+        background-color: $contact-background;
+    }
+
+    .view:hover {
+        color: $link-active;
     }
 
     .actions {
@@ -48,16 +58,14 @@
             margin-left: 1rem;
         }
 
-        .action-icon.edit:hover {
+        .edit:hover {
             color: $link-secondary;
         }
 
-        .action-icon.delete:hover {
+        .delete:hover {
             color: $error;
         }
     }
-
-    
 }
 
 .confirm-modal {

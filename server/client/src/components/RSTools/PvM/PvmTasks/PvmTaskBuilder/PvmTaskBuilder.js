@@ -30,19 +30,29 @@ class PvmTaskBuilder extends React.Component {
     }
 
     componentDidMount() {
-        const type = parseInt(localStorage.getItem("pvmType"));
-        this.props.setPvmType(type);
-
         if (this.checkNewTask()) {
-            this.props.getPvmSingle(type, this.props.location.state.pvmId);
+            this.props.getPvmSingle(this.props.location.state.pvmId);
+        }
+
+        if (this.checkEditMode()) {
+            this.props.getPvmTaskSingle(this.props.location.state.pvmTaskId);
         }
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.pvmReducer.pvmSingle !== prevProps.pvmReducer.pvmSingle) {
             if (this.checkNewTask()) {
-                this.setState({ 
+                this.setState({
                     pvm: this.props.pvmReducer.pvmSingle
+                });
+            }
+        }
+
+        if (this.props.pvmReducer.pvmTaskSingle !== prevProps.pvmReducer.pvmTaskSingle) {
+            if (this.checkEditMode()) {
+                this.setState({
+                    pvmTask: this.props.pvmReducer.pvmTaskSingle,
+                    preset: this.props.pvmReducer.pvmTaskSingle.preset
                 });
             }
         }
@@ -53,7 +63,7 @@ class PvmTaskBuilder extends React.Component {
     }
 
     checkEditMode = () => {
-        return this.props.location.state && this.props.location.state.editTaskMode;
+        return this.props.location.state && this.props.location.state.editMode;
     }
 
     updatePreset = (preset) => {
@@ -80,29 +90,34 @@ class PvmTaskBuilder extends React.Component {
         const { pvmTask, pvm, preset, step } = this.state;
         const { isFetching } = this.props.pvmReducer;
 
-        // if (this.checkEditMode()) {
-        //     if (isFetching || !pvm) {
-        //         return null;
-        //     } else {
-        //         return (
-        //             <StepWizard initialStep={step}>
-        //                 <PresetSelector
-        //                     editMode={true}
-        //                     preset={preset}
-        //                     activityId={activity._id}
-        //                     updatePreset={preset => this.updatePreset(preset)}
-        //                     setCurrentStep={step => this.setCurrentStep(step)}
-        //                 />
-        //                 <ActivityForm
-        //                     editMode={true}
-        //                     activity={activity}
-        //                     preset={preset}
-        //                     setCurrentStep={step => this.setCurrentStep(step)}
-        //                 />
-        //             </StepWizard>
-        //         );
-        //     }
-        // }
+        if (this.checkEditMode()) {
+            if (isFetching || !pvmTask) {
+                return null;
+            } else {
+                const routeState = {
+                    editMode: this.props.location.state.editMode || false,
+                    pvmTaskId: this.props.location.state.pvmTaskId || null
+                }
+
+                return (
+                    <StepWizard initialStep={step}>
+                        <PresetSelector
+                            editMode={true}
+                            preset={preset}
+                            routeState={routeState}
+                            updatePreset={preset => this.updatePreset(preset)}
+                            setCurrentStep={step => this.setCurrentStep(step)}
+                        />
+                        <PvmTaskForm
+                            editMode={true}
+                            pvmTask={pvmTask}
+                            preset={preset}
+                            setCurrentStep={step => this.setCurrentStep(step)}
+                        />
+                    </StepWizard>
+                );
+            }
+        }
 
         if (isFetching) return null;
 
@@ -126,14 +141,14 @@ class PvmTaskBuilder extends React.Component {
 
         return (
             <Container>
-            <div className="PvmTaskBuilder">
-                <div className='step-progress'>
-                    <Stepper progress={progress} stepData={stepData} />
-                    <div className="spacer-h-3" />
-                    {this.generateStepWizard()}
+                <div className="PvmTaskBuilder">
+                    <div className='step-progress'>
+                        <Stepper progress={progress} stepData={stepData} />
+                        <div className="spacer-h-3" />
+                        {this.generateStepWizard()}
+                    </div>
                 </div>
-            </div>
-        </Container>
+            </Container>
         );
     }
 }

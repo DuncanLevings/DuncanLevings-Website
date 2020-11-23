@@ -33,10 +33,10 @@ class PvmTaskForm extends React.Component {
     getInitalValues = () => {
         if (this.props.editMode) {
             return {
-                title: this.props.activity.title || '',
-                webURL: this.props.activity.webURL || '',
-                youtubeURL: this.props.activity.youtubeURL || '',
-                notes: this.props.activity.notes || '',
+                taskName: this.props.pvmTask.taskName || '',
+                webURL: this.props.pvmTask.webURL || '',
+                youtubeURL: this.props.pvmTask.youtubeURL || '',
+                notes: this.props.pvmTask.notes || '',
             }
         }
 
@@ -54,9 +54,9 @@ class PvmTaskForm extends React.Component {
 
         let formData = new FormData();
 
-        // if (this.props.editMode) formData.append('pvmTaskId', this.props.activity._id);
+        if (this.props.editMode) formData.append('pvmTaskId', this.props.pvmTask._id);
+        else formData.append('pvm', JSON.stringify(this.props.pvm))
         formData.append('preset', JSON.stringify(this.props.preset));
-        if (!this.props.editMode) formData.append('pvm', JSON.stringify(this.props.pvm))
         formData.append('taskName', values.taskName);
         formData.append('webURL', values.webURL);
         formData.append('youtubeURL', values.youtubeURL);
@@ -86,9 +86,9 @@ class PvmTaskForm extends React.Component {
                             <p>Must setup a preset!</p>
                             : null}
                     </div>
-                    {this.props.pvm ?
+                    {this.props.pvm || this.props.pvmTask ?
                         <div>
-                            <h3>{this.props.pvm.name}</h3>
+                            <h3>{this.props.pvm ? this.props.pvm.name : this.props.pvmTask.pvmName}</h3>
                             <div className="spacer-h-2" />
                             <Formik
                                 validationSchema={pvmTaskSchema}

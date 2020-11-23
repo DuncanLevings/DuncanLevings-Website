@@ -7,7 +7,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setPvmType, createPvm, editPvm } from 'store/actions/RSTools/pvmActions';
+import { setPvmType, getPvmSingle, createPvm, editPvm } from 'store/actions/RSTools/pvmActions';
 import { Button, Container, Form, FormControl, InputGroup, Spinner } from 'react-bootstrap';
 import { compressAccurately } from 'image-conversion';
 import { pvmSchema } from 'components/helpers/formValidation';
@@ -24,6 +24,7 @@ class PvmBuilder extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            pvm: null,
             imgCropShow: false,
             imgPreviewShow: false,
             mapSelectShow: false,
@@ -38,6 +39,26 @@ class PvmBuilder extends React.Component {
     componentDidMount() {
         const type = parseInt(localStorage.getItem("pvmType"));
         this.props.setPvmType(type);
+
+        if (this.checkEditMode()) {
+            this.props.getPvmSingle(this.props.location.state.pvmId);
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.pvmReducer.pvmSingle !== prevProps.pvmReducer.pvmSingle) {
+            if (this.checkEditMode()) {
+                const pvm = this.props.pvmReducer.pvmSingle;
+                this.setState({
+                    pvm: pvm,
+                    mapURL: pvm.mapURL ? pvm.mapURL : ''
+                });
+            }
+        }
+    }
+
+    checkEditMode = () => {
+        return this.props.location.state && this.props.location.state.editMode;
     }
 
     setImgCropShow = (bool) => {
@@ -71,7 +92,7 @@ class PvmBuilder extends React.Component {
     removeImg = (values, setValues) => {
         this.setPreviewImgShow(false);
         window.URL.revokeObjectURL(this.state.imgPreviewURL);
-        const img = {};
+        const img = null;
         setValues({ ...values, img });
         this.setState({ thumbnail: null });
     }
@@ -85,11 +106,30 @@ class PvmBuilder extends React.Component {
         this.setMapSelectShow(false);
     }
 
+    getInitalValues = () => {
+        if (this.checkEditMode()) {
+            const { pvm } = this.state;
+
+            return {
+                name: pvm.name || '',
+                img: { url: pvm.imageUrl } || null,
+                wikiURL: pvm.wikiURL || ''
+            }
+        }
+
+        return {
+            name: '',
+            img: null,
+            wikiURL: ''
+        }
+    }
+
     submit = values => {
         if (!values.img) return this.setState({ imgMissing: true });
 
         let formData = new FormData();
 
+        if (this.checkEditMode()) formData.append('pvmId', this.state.pvm._id);
         formData.append('name', values.name);
         formData.append('mapURL', this.state.mapURL);
         formData.append('wikiURL', values.wikiURL);
@@ -101,12 +141,26 @@ class PvmBuilder extends React.Component {
             window.URL.revokeObjectURL(values.img.url);
         }
 
-        this.props.createPvm(formData);
+        if (this.checkEditMode()) {
+            this.props.editPvm(formData, this.props.location.state.from);
+        } else {
+            this.props.createPvm(formData, this.props.location.state.from);
+        }
     }
 
     render() {
-        const { isCreating, pvmTypeName, error } = this.props.pvmReducer;
-        const { imgCropShow, imgPreviewShow, imgMissing, imgCompressing, imgPreviewURL, mapSelectShow, mapURL } = this.state;
+        const { isCreating, isSaving, isFetching, pvmTypeName, error } = this.props.pvmReducer;
+        const { pvm, imgCropShow, imgPreviewShow, imgMissing, imgCompressing, imgPreviewURL, mapSelectShow, mapURL } = this.state;
+
+        if (this.checkEditMode()) {
+            if (isFetching || !pvm) {
+                return (
+                    <div className="PvmBuilder">
+                        <Spinner animation="border" variant="light" />
+                    </div>
+                );
+            }
+        }
 
         return (
             <Container>
@@ -119,12 +173,7 @@ class PvmBuilder extends React.Component {
                     <Formik
                         validationSchema={pvmSchema}
                         onSubmit={this.submit}
-                        initialValues={{
-                            name: '',
-                            mapURL: '',
-                            img: null,
-                            wikiURL: ''
-                        }}
+                        initialValues={this.getInitalValues()}
                     >
                         {({
                             handleSubmit,
@@ -193,7 +242,7 @@ class PvmBuilder extends React.Component {
                                         <Button
                                             variant="button-primary"
                                             type="submit"
-                                            disabled={isCreating || imgCompressing}>Submit {isCreating || imgCompressing ? <Spinner animation="border" variant="light" size="sm" /> : null}</Button>
+                                            disabled={isCreating || isSaving || imgCompressing}>Submit {isCreating || isSaving || imgCompressing ? <Spinner animation="border" variant="light" size="sm" /> : null}</Button>
                                     </div>
                                     <ImgCrop
                                         show={imgCropShow}
@@ -224,6 +273,7 @@ class PvmBuilder extends React.Component {
 PvmBuilder.propTypes = {
     pvmReducer: PropTypes.object,
     setPvmType: PropTypes.func,
+    getPvmSingle: PropTypes.func,
     createPvm: PropTypes.func,
     editPvm: PropTypes.func
 };
@@ -234,6 +284,6 @@ const mapStateToProps = state => {
     };
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ setPvmType, createPvm, editPvm }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ setPvmType, getPvmSingle, createPvm, editPvm }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(PvmBuilder);

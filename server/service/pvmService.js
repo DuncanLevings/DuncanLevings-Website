@@ -12,19 +12,6 @@ const mongoose = require('mongoose');
 /* Regular expressions for parameter validation. */
 const TYPE_REGEX = new RegExp(/^[0-2]+$/);
 
-const getType = (type) => {
-    switch (parseInt(type)) {
-        case 0:
-            return { fieldName: 'dailys' }
-        case 1:
-            return { fieldName: 'weeklys' }
-        case 2:
-            return { fieldName: 'monthlys' }
-        default:
-            break;
-    }
-}
-
 const searchPvm = async (userId, type, filter) => {
     const userIdc = mongoose.Types.ObjectId(userId);
     const n_type = parseInt(type);
@@ -95,8 +82,34 @@ const searchPvm = async (userId, type, filter) => {
     return await PvM.aggregate(aggregateQuery);
 }
 
-const getPvm = async (type, pvmId) => {
-    return await PvM.findOne({ _id: pvmId, type: type });
+const getPvmTasks = async (userId, type) => {
+    return await PvmTask.find({ ownerId: userId, type: type }).sort({ taskName: 1 });
+}
+
+const getPvm = async (pvmId) => {
+    return await PvM.findOne({ _id: pvmId });
+}
+
+const getPvmTask = async (userId, pvmTaskId) => {
+    const pvmTask = await PvmTask.findOne({ _id: pvmTaskId });
+    if (!pvmTask.ownerId.equals(userId)) {
+        throw Error(PVM_ERRORS.NOT_OWNER);
+    }
+
+    return pvmTask;
+}
+
+const checkPvmName = async (data) => {
+    if (data.pvmId) { // coming from edit pvm
+        const pvm = await PvM.findOne({ _id: data.pvmId }, { name: 1 });
+        if (pvm.name !== data.name) {
+            const pvmNameCheck = await PvM.countDocuments({ name: data.name });
+            if (pvmNameCheck > 0) throw Error(PVM_ERRORS.PVM_EXISTS);
+        }
+    } else {
+        const pvmNameCheck = await PvM.countDocuments({ name: data.name });
+        if (pvmNameCheck > 0) throw Error(PVM_ERRORS.PVM_EXISTS);
+    }
 }
 
 const createPvm = async (user, data, images) => {
@@ -147,54 +160,84 @@ const createPvmTask = async (userId, data) => {
 
 const editPvm = async (userId, data, images) => {
 
-    // if daily has new images, retrieve original name and public url from uploaded images
-    const imageUrls = [];
+    // retrieve original name and public url from uploaded images
+    let imgUrl, thumbnailUrl = null;
     if (images.length > 0) {
         for (const image of images) {
-            imageUrls.push({
-                stepIndex: image.originalname.split('_').pop(),
-                url: image.cloudStoragePublicUrl
-            });
-        }
-    }
-
-    // convert daily steps into object {step, image url}
-    const steps = [];
-    if (!Array.isArray(data.steps)) { // non array means daily only has a single step
-        const stepData = JSON.parse(data.steps)
-        steps.push({ step: stepData.step, url: stepData.url ? stepData.url : getURL(imageUrls) });
-    } else {
-        for (let i = 0; i < data.steps.length; i++) {
-            const stepData = JSON.parse(data.steps[i]);
-            steps.push({ step: stepData.step, url: stepData.url ? stepData.url : getURL(imageUrls, i) });
+            if (image.originalname.includes('thumbnail')) thumbnailUrl = image.cloudStoragePublicUrl;
+            else imgUrl = image.cloudStoragePublicUrl;
         }
     }
 
     try {
-        const daily = await Daily.findOne({ _id: data.dailyId });
-        if (!daily.ownerId.equals(userId)) {
-            throw Error(DAILY_ERRORS.NOT_OWNER);
+        const pvm = await PvM.findOne({ _id: data.pvmId });
+        if (!pvm.ownerId.equals(userId)) {
+            throw Error(PVM_ERRORS.NOT_OWNER);
         }
-        daily.title = data.title;
-        if (data.mapURL) daily.mapURL = data.mapURL
-        daily.steps = steps;
-        return await daily.save();
+
+        pvm.name = data.name;
+        if (data.mapURL) pvm.mapURL = data.mapURL;
+        pvm.wikiURL = data.wikiURL;
+        if (imgUrl) pvm.imageUrl = imgUrl;
+        if (thumbnailUrl) pvm.thumbnailURL = thumbnailUrl;
+
+        return await pvm.save();
     } catch (e) {
         throw Error(e);
     }
 }
 
-const deletePvm = async (userId, dailyId) => {
-    const daily = await Daily.findOne({ _id: dailyId });
-    if (!daily.ownerId.equals(userId)) {
-        throw Error(DAILY_ERRORS.NOT_OWNER);
+const editPvmTask = async (userId, data) => {
+    try {
+        const pvmTask = await PvmTask.findOne({ _id: data.pvmTaskId });
+        if (!pvmTask.ownerId.equals(userId)) {
+            throw Error(PVM_ERRORS.NOT_OWNER);
+        }
+
+        if (pvmTask.taskName !== data.taskName) {
+            const taskNameCheck = await PvmTask.countDocuments({ ownerId: userId, taskName: data.taskName });
+            if (taskNameCheck > 0) throw Error(PVM_ERRORS.PVM_TASK_EXISTS);
+        }
+
+        pvmTask.preset = JSON.parse(data.preset);
+        pvmTask.taskName = data.taskName;
+        if (data.webURL) pvmTask.webURL = data.webURL;
+        else pvmTask.webURL = undefined;
+        if (data.youtubeURL) pvmTask.youtubeURL = data.youtubeURL;
+        else pvmTask.youtubeURL = undefined;
+        if (data.notes) pvmTask.notes = data.notes;
+        else pvmTask.notes = undefined;
+
+        return await pvmTask.save();
+    } catch (e) {
+        throw Error(e);
     }
-    // to retrieve updated set of dailys assuming type from selected deletion one
-    const type = daily.type;
+}
 
-    await Daily.deleteOne({ _id: dailyId });
+const deletePvm = async (userId, pvmId, filter) => {
+    const pvm = await PvM.findOne({ _id: pvmId });
+    if (!pvm.ownerId.equals(userId)) {
+        throw Error(PVM_ERRORS.NOT_OWNER);
+    }
 
-    return await getDailys(userId, type);
+    const type = pvm.type;
+
+    await PvM.deleteOne({ _id: pvmId });
+
+    return await searchPvm(userId, type, filter);
+}
+
+const deletePvmTask = async (userId, pvmTaskId) => {
+    const pvmTask = await PvmTask.findOne({ _id: pvmTaskId });
+    if (!pvmTask.ownerId.equals(userId)) {
+        throw Error(PVM_ERRORS.NOT_OWNER);
+    }
+
+    const type = pvmTask.type;
+
+    await PvmTask.deleteOne({ _id: pvmTaskId });
+
+    return await getPvmTasks(userId, type);
 }
 
 class PvmBuilder {
@@ -302,7 +345,14 @@ class PvmTaskBuilder {
 
 module.exports = {
     searchPvm,
+    getPvmTasks,
     getPvm,
+    getPvmTask,
+    checkPvmName,
     createPvm,
-    createPvmTask
+    createPvmTask,
+    editPvm,
+    editPvmTask,
+    deletePvm,
+    deletePvmTask
 }

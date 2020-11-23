@@ -9,10 +9,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getActivitySingle } from 'store/actions/RSTools/activityActions';
 import { Button, Col, Container, Row, Spinner } from 'react-bootstrap';
+import { FaDesktop, FaYoutube } from 'react-icons/fa';
 import PresetOverview from 'components/RSTools/Equipment/PresetComponents/PresetOverview/PresetOverview.lazy';
 import PropTypes from 'prop-types';
 import './ActivityViewer.scss';
-import { FaDesktop, FaYoutube } from 'react-icons/fa';
 
 class ActivityViewer extends React.Component {
     constructor(props) {

@@ -30,6 +30,7 @@ import PvM from 'components/RSTools/PvM/PvM.lazy';
 import PvmEnemy from 'components/RSTools/PvM/PvmEnemy/PvmEnemy.lazy';
 import PvmBuilder from 'components/RSTools/PvM/PvmEnemy/PvmBuilder/PvmBuilder.lazy';
 import PvmTaskBuilder from 'components/RSTools/PvM/PvmTasks/PvmTaskBuilder/PvmTaskBuilder.lazy';
+import PvmTaskViewer from 'components/RSTools/PvM/PvmTasks/PvmTaskViewer/PvmTaskViewer.lazy';
 import Activities from 'components/RSTools/Activities/Activities.lazy';
 import Activity from 'components/RSTools/Activities/Activity/Activity.lazy';
 import ActivityBuilder from 'components/RSTools/Activities/ActivityBuilder/ActivityBuilder.lazy';
@@ -79,6 +80,7 @@ class RSRouter extends React.Component {
                     <PrivateRoute exact path={RSTOOL_ROUTES.PVM_ENEMY} redirect={RSTOOL_ROUTES.LOGIN} component={PvmEnemy} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.PVM_BUILDER} redirect={RSTOOL_ROUTES.LOGIN} component={PvmBuilder} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.PVM_TASK_BUILDER} redirect={RSTOOL_ROUTES.LOGIN} component={PvmTaskBuilder} />
+                    <PrivateRoute exact path={RSTOOL_ROUTES.PVM_TASK_VIEWER} redirect={RSTOOL_ROUTES.LOGIN} component={PvmTaskViewer} />
                     {/* ACTIVITIES */}
                     <PrivateRoute exact path={RSTOOL_ROUTES.ACTIVITIES} redirect={RSTOOL_ROUTES.LOGIN} component={Activities} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.ACTIVITY} redirect={RSTOOL_ROUTES.LOGIN} component={Activity} />
