@@ -171,9 +171,7 @@ const editPvm = async (userId, data, images) => {
 
     try {
         const pvm = await PvM.findOne({ _id: data.pvmId });
-        if (!pvm.ownerId.equals(userId)) {
-            throw Error(PVM_ERRORS.NOT_OWNER);
-        }
+        if (!pvm.ownerId.equals(userId)) throw Error(PVM_ERRORS.NOT_OWNER);
 
         pvm.name = data.name;
         if (data.mapURL) pvm.mapURL = data.mapURL;

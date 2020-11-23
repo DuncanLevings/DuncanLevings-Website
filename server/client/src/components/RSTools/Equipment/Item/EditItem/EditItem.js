@@ -5,9 +5,10 @@
  */
 
 import React from 'react';
-import { Button, Form, FormControl, InputGroup, Modal, Spinner } from 'react-bootstrap';
+import { Button, Form, FormControl, Image, InputGroup, Modal, Spinner } from 'react-bootstrap';
 import ImgPreview from 'components/tools/ImgPreview/ImgPreview.lazy';
 import ImgCrop from 'components/tools/ImgCrop/ImgCrop.lazy';
+import { compressAccurately } from 'image-conversion';
 import { EQUIPMENT_CONSTS } from 'consts/RSTools_Consts';
 import { ItemSchema } from 'components/helpers/formValidation';
 import { Formik } from 'formik';
@@ -22,7 +23,9 @@ class EditItem extends React.Component {
             imgCropShow: false,
             imgPreviewShow: false,
             imgPreviewURL: "",
-            imageRequired: false
+            imageRequired: false,
+            imgCompressing: false,
+            thumbnail: null
         }
     }
 
@@ -56,6 +59,16 @@ class EditItem extends React.Component {
         this.setImgCropShow(false);
         const image = img;
         setValues({ ...values, image });
+
+        if (this.props.equipmentReducer.editItemObj.slot === 14) {
+            compressAccurately(img.blob, {
+                size: 10,
+                type: "image/png",
+                width: 32
+            }).then(res => {
+                this.setState({ thumbnail: res, imgCompressing: false });
+            });
+        }
     }
 
     removeImg = (values, setValues) => {
@@ -63,6 +76,7 @@ class EditItem extends React.Component {
         const image = null;
         window.URL.revokeObjectURL(this.state.imgPreviewURL);
         setValues({ ...values, image });
+        this.setState({ thumbnail: null });
     }
 
     submitItem = values => {
@@ -76,7 +90,7 @@ class EditItem extends React.Component {
         formData.append('wikiUrl', values.wikiURL);
 
         if (values.image.blob) {
-            formData.append('image', values.image.blob, `${values.name}-image`);
+            formData.append('images', values.image.blob, `${values.name}-image`);
         }
 
         if (values.isAugmented) {
@@ -88,6 +102,9 @@ class EditItem extends React.Component {
         // familiar type item only
         if (editItemObj.slot === 14) {
             formData.append('familiarSize', values.familiarSize);
+            if (this.state.thumbnail) {
+                formData.append('images', this.state.thumbnail, `${values.name}-thumbnail-image`);
+            }
         }
 
         window.URL.revokeObjectURL(values.image.url);
@@ -97,7 +114,7 @@ class EditItem extends React.Component {
 
     render() {
         const { editItem, clearErrors, equipmentReducer, ...rest } = this.props;
-        const { imgCropShow, imgPreviewShow, imgPreviewURL, imageRequired } = this.state;
+        const { imgCropShow, imgPreviewShow, imgPreviewURL, imageRequired, imgCompressing } = this.state;
         const { editItemObj, isSaving, isFetching, error } = equipmentReducer;
 
         return (
@@ -112,7 +129,7 @@ class EditItem extends React.Component {
                     <Modal.Title>Edit Item</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <p>Editing: <b>{editItemObj ? EQUIPMENT_CONSTS.slotTypes[editItemObj.slot] : null}</b></p>
+                    <p>Editing: {editItemObj ? <Image src={EQUIPMENT_CONSTS.slotTypes[editItemObj.slot]} /> : null}</p>
                     <div className="item-error">
                         <p>{error}</p>
                         <p>{imageRequired ? "Image missing!" : ''}</p>
@@ -258,7 +275,7 @@ class EditItem extends React.Component {
                                                 <Button
                                                     variant="button-primary"
                                                     type="submit"
-                                                    disabled={isSaving}>Submit {isSaving ? <Spinner animation="border" variant="light" size="sm" /> : null}</Button>
+                                                    disabled={isSaving || imgCompressing}>Submit {isSaving || imgCompressing ? <Spinner animation="border" variant="light" size="sm" /> : null}</Button>
                                             </div>
                                             <ImgCrop
                                                 show={imgCropShow}

@@ -103,11 +103,29 @@ const searchAbilityBars = async (userId, style) => {
     else return await AbilityBar.find({ ownerId: userIdc, styleType: style_n });
 }
 
-const createItem = async (userId, data, image, slots) => {
-    const itemCheck = await Item.countDocuments({ name: data.name });
-    if (itemCheck > 0) throw Error(EQUIPMENT_ERRORS.ITEM_EXISTS);
+const checkItemName = async (data) => {
+    if (data.itemId) { // coming from edit
+        const item = await Item.findOne({ _id: data.itemId });
+        if (item.name !== data.name) {
+            const itemCheck = await Item.countDocuments({ name: data.name });
+            if (itemCheck > 0) throw Error(EQUIPMENT_ERRORS.ITEM_EXISTS);
+        }
+    } else {
+        const itemCheck = await Item.countDocuments({ name: data.name });
+        if (itemCheck > 0) throw Error(EQUIPMENT_ERRORS.ITEM_EXISTS);
+    }
+}
 
-    if (!image) throw Error(EQUIPMENT_ERRORS.MISSING_IMAGE);
+const createItem = async (userId, data, images, slots) => {
+
+    let imgUrl, thumbnailUrl = null;
+    if (images.length < 1) throw Error(EQUIPMENT_ERRORS.MISSING_IMAGE);
+    else {
+        for (const image of images) {
+            if (image.originalname.includes('thumbnail')) thumbnailUrl = image.cloudStoragePublicUrl;
+            else imgUrl = image.cloudStoragePublicUrl;
+        }
+    }
 
     const item = new Item(new ItemBuilder()
         .withOwner(userId)
@@ -116,9 +134,9 @@ const createItem = async (userId, data, image, slots) => {
         .withWiki(data.wikiUrl)
         .withAugmented(data.isAugmented, data.gizmo1, data.gizmo2)
         .withFamiliarSize(data.familiarSize)
+        .withImage(imgUrl)
+        .withThumbnail(data.slot, thumbnailUrl)
     );
-
-    item.imageUrl = image.cloudStoragePublicUrl;
 
     await item.save();
 
@@ -141,14 +159,19 @@ const createAbilityBar = async (userId, data, style) => {
     return await searchAbilityBars(userId, style);
 }
 
-const editItem = async (userId, data, image, slots) => {
+const editItem = async (userId, data, images, slots) => {
+    // retrieve original name and public url from uploaded images
+    let imgUrl, thumbnailUrl = null;
+    if (images.length > 0) {
+        for (const image of images) {
+            if (image.originalname.includes('thumbnail')) thumbnailUrl = image.cloudStoragePublicUrl;
+            else imgUrl = image.cloudStoragePublicUrl;
+        }
+    }
+
     try {
         const item = await Item.findOne({ _id: data.itemId });
         if (!item.ownerId.equals(userId)) throw Error(EQUIPMENT_ERRORS.NOT_OWNER_ITEM);
-        if (item.name !== data.name) {
-            const itemCheck = await Item.countDocuments({ name: data.name });
-            if (itemCheck > 0) throw Error(EQUIPMENT_ERRORS.ITEM_EXISTS);
-        }
 
         item.name = data.name;
 
@@ -156,7 +179,8 @@ const editItem = async (userId, data, image, slots) => {
             item.wiki = data.wikiUrl;
         }
 
-        if (image) item.imageUrl = image.cloudStoragePublicUrl;
+        if (imgUrl) item.imageUrl = imgUrl;
+        if (item.slot === 14 && thumbnailUrl) item.thumbnailUrl = thumbnailUrl;
 
         // check if edited item is still augmented
         if (data.isAugmented) {
@@ -211,7 +235,7 @@ const editAbilityBar = async (userId, data, style) => {
 }
 
 const updateAllPresetAbilityBars = async (abilityBarId, abilityBar) => {
-    const presets = await Preset.find({"presetAbilityBar._id": abilityBarId});
+    const presets = await Preset.find({ "presetAbilityBar._id": abilityBarId });
 
     for (const preset of presets) {
         preset.presetAbilityBar = abilityBar;
@@ -242,7 +266,7 @@ const deleteAbilityBar = async (userId, abilityBarId, style) => {
 }
 
 const deleteAllPresetAbilityBars = async (abilityBarId) => {
-    const presets = await Preset.find({"presetAbilityBar._id": mongoose.Types.ObjectId(abilityBarId) });
+    const presets = await Preset.find({ "presetAbilityBar._id": mongoose.Types.ObjectId(abilityBarId) });
 
     for (const preset of presets) {
         preset.presetAbilityBar = undefined;
@@ -294,6 +318,19 @@ class ItemBuilder {
         this.familiarSize = size;
         return this;
     }
+
+    withImage(url) {
+        if (!url) throw Error(EQUIPMENT_ERRORS.MISSING_IMAGE);
+        this.imageUrl = url;
+        return this;
+    }
+
+    withThumbnail(slot, url) {
+        if (slot !== '14') return this;
+        if (!url) throw Error(EQUIPMENT_ERRORS.MISSING_IMAGE);
+        this.thumbnailUrl = url;
+        return this;
+    }
 }
 
 class AbilityBarBuilder {
@@ -327,6 +364,7 @@ module.exports = {
     getAbilityBar,
     searchItems,
     searchAbilityBars,
+    checkItemName,
     createItem,
     createAbilityBar,
     editItem,

@@ -331,7 +331,7 @@ class FamiliarPreset extends React.Component {
                 <ListGroup.Item key={i}>
                     <Row>
                         <Col xs={1}><FaCheckSquare className="action-icon add" onClick={() => this.setFamiliar(item)} /></Col>
-                        <Col xs={4}><Image src={item.imageUrl} /></Col>
+                        <Col xs={1}><Image src={item.thumbnailUrl} /></Col>
                         <Col xs={4}>{item.name}</Col>
                         <Col><span className="actions">
                             {item.isOwner ?

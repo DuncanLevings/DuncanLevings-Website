@@ -29,6 +29,14 @@ export function searchItemsAPI(slots) {
   }).then(res => res.data);
 }
 
+export function checkItemNameAPI(formData) {
+  return api.request({
+      method: 'post',
+      url: '/api/equipment/check_item_name',
+      data: formData
+  });
+}
+
 export function createItemAPI(formData, slots) {
   if (slots.length === 0) slots = -1; // default is no filter selected
   return api.request({

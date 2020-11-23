@@ -11,6 +11,7 @@ const GET_ITEM_SINGLE = '/item/:itemId';
 const GET_ABILITY_BAR_SINGLE = '/abilityBar/:abilityBarId';
 const SEARCH_ITEMS = '/search/items/:slots';
 const SEARCH_ABILITY_BARS = '/search/abilityBar/:style';
+const CHECK_ITEM_NAME = '/check_item_name';
 const CREATE_ITEM = '/create/item/:slots';
 const CREATE_ABILITY_BAR = '/create/abilityBar/:style';
 const EDIT_ITEM = '/edit/item/:slots';
@@ -26,6 +27,7 @@ module.exports = {
     SEARCH_ITEMS,
     SEARCH_ABILITY_BARS,
     CREATE_ABILITY_BAR,
+    CHECK_ITEM_NAME,
     CREATE_ITEM,
     EDIT_ITEM,
     EDIT_ABILITY_BAR,

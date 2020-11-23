@@ -16,7 +16,8 @@ import {
     searchItemsAPI,
     searchAbilityBarsAPI,
     deleteAbilityBarAPI,
-    editAbilityBarAPI
+    editAbilityBarAPI,
+    checkItemNameAPI
 } from '../../api/RSTools/equipmentAPI';
 import * as actionTypes from '../../actionTypes/RSTools/equipmentActionTypes'
 import * as actionCreators from '../../actions/RSTools/equipmentActions';
@@ -52,6 +53,7 @@ function* searchItems(equipmentAction) {
 
 function* createItem(equipmentAction) {
     try {
+        yield call(checkItemNameAPI, equipmentAction.payload.formData);
         const items = yield call(createItemAPI, equipmentAction.payload.formData, equipmentAction.payload.slots);
         yield put(actionCreators.createItemSuccess(items));
     } catch (error) {
@@ -65,6 +67,7 @@ function* createItem(equipmentAction) {
 
 function* editItem(equipmentAction) {
     try {
+        yield call(checkItemNameAPI, equipmentAction.payload.formData);
         const items = yield call(editItemAPI, equipmentAction.payload.formData, equipmentAction.payload.slots);
         yield put(actionCreators.editItemSuccess(items));
     } catch (error) {

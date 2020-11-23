@@ -13,6 +13,7 @@ const itemSchema = new mongoose.Schema({
     name: { type: String, required: true },
     slot: { type: Number, required: true },
     imageUrl: { type: String, required: true },
+    thumbnailUrl: { type: String },
     wiki: { type: String },
     augment: {
         isAugmented: { type: Boolean },

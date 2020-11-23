@@ -5,10 +5,11 @@
  */
 
 import React from 'react';
-import { Button, Form, FormControl, InputGroup, Modal, Spinner } from 'react-bootstrap';
+import { Button, Form, FormControl, Image, InputGroup, Modal, Spinner } from 'react-bootstrap';
 import SlotSelector from '../../SlotSelector/SlotSelector.lazy';
 import ImgPreview from 'components/tools/ImgPreview/ImgPreview.lazy';
 import ImgCrop from 'components/tools/ImgCrop/ImgCrop.lazy';
+import { compressAccurately } from 'image-conversion';
 import { EQUIPMENT_CONSTS } from 'consts/RSTools_Consts';
 import { ItemSchema } from 'components/helpers/formValidation';
 import { Formik } from 'formik';
@@ -24,6 +25,8 @@ class AddItem extends React.Component {
             imgPreviewShow: false,
             imgPreviewURL: "",
             imageRequired: false,
+            imgCompressing: false,
+            thumbnail: null,
             augment: false,
             slot: null,
             reset: false
@@ -70,6 +73,16 @@ class AddItem extends React.Component {
         this.setImgCropShow(false);
         const image = img;
         setValues({ ...values, image });
+
+        if (this.state.slot === 14) {
+            compressAccurately(img.blob, {
+                size: 10,
+                type: "image/png",
+                width: 32
+            }).then(res => {
+                this.setState({ thumbnail: res, imgCompressing: false });
+            });
+        }
     }
 
     removeImg = (values, setValues) => {
@@ -77,6 +90,7 @@ class AddItem extends React.Component {
         const image = null;
         window.URL.revokeObjectURL(this.state.imgPreviewURL);
         setValues({ ...values, image });
+        this.setState({ thumbnail: null });
     }
 
     submitItem = (values, { resetForm }) => {
@@ -87,7 +101,7 @@ class AddItem extends React.Component {
         formData.append('slot', this.state.slot);
         formData.append('name', values.name);
         formData.append('wikiUrl', values.wikiURL);
-        formData.append('image', values.image.blob, `${values.name}-image`);
+        formData.append('images', values.image.blob, `${values.name}-image`);
 
         if (this.state.augment) {
             formData.append('isAugmented', this.state.augment);
@@ -98,6 +112,7 @@ class AddItem extends React.Component {
         // familiar type item only
         if (this.state.slot === 14) {
             formData.append('familiarSize', values.familiarSize);
+            formData.append('images', this.state.thumbnail, `${values.name}-thumbnail-image`);
         }
 
         window.URL.revokeObjectURL(values.image.url);
@@ -109,7 +124,7 @@ class AddItem extends React.Component {
 
     render() {
         const { createItem, clearErrors, equipmentReducer, selectedSlot, ...rest } = this.props;
-        const { imgCropShow, imgPreviewShow, imgPreviewURL, slot, imageRequired, reset, augment } = this.state;
+        const { imgCropShow, imgPreviewShow, imgPreviewURL, slot, imageRequired, imgCompressing, reset, augment } = this.state;
         const { isCreating, error } = equipmentReducer;
 
         return (
@@ -135,7 +150,7 @@ class AddItem extends React.Component {
                         <div>
                             <Button variant="button-secondary" onClick={() => this.clearSelected()}>Change Selection</Button>
                             <div className="spacer-h-2" />
-                            <p>Creating: <b>{EQUIPMENT_CONSTS.slotTypes[slot]}</b></p>
+                            <p>Creating: <Image src={EQUIPMENT_CONSTS.slotTypes[slot]} /></p>
                             <div className="item-error">
                                 <p>{error}</p>
                                 <p>{imageRequired ? "Image missing!" : ''}</p>
@@ -278,7 +293,7 @@ class AddItem extends React.Component {
                                                 <Button
                                                     variant="button-primary"
                                                     type="submit"
-                                                    disabled={isCreating}>Submit {isCreating ? <Spinner animation="border" variant="light" size="sm" /> : null}</Button>
+                                                    disabled={isCreating || imgCompressing}>Submit {isCreating || imgCompressing ? <Spinner animation="border" variant="light" size="sm" /> : null}</Button>
                                             </div>
                                             <ImgCrop
                                                 show={imgCropShow}

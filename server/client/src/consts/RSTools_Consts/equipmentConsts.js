@@ -5,21 +5,21 @@
  */
 
 const slotTypes = {
-    0: "Aura",
-    1: "Head",
-    2: "Pocket",
-    3: "Cape",
-    4: "Amulet",
-    5: "Ammunition",
-    6: "Weapon",
-    7: "Chest",
-    8: "Offhand",
-    9: "Legs",
-    10: "Hands",
-    11: "Boots",
-    12: "Ring",
-    13: "Item",
-    14: "Familiar",
+    0: "/static_images/RSTools/slots/Aura_slot.png",
+    1: "/static_images/RSTools/slots/Head_slot.png",
+    2: "/static_images/RSTools/slots/Pocket_slot.png",
+    3: "/static_images/RSTools/slots/Back_slot.png",
+    4: "/static_images/RSTools/slots/Neck_slot.png",
+    5: "/static_images/RSTools/slots/Ammo_slot.png",
+    6: "/static_images/RSTools/slots/Main_hand_slot.png",
+    7: "/static_images/RSTools/slots/Torso_slot.png",
+    8: "/static_images/RSTools/slots/Off_hand_slot.png",
+    9: "/static_images/RSTools/slots/Legs_slot.png",
+    10: "/static_images/RSTools/slots/Gloves_slot.png",
+    11: "/static_images/RSTools/slots/Feet_slot.png",
+    12: "/static_images/RSTools/slots/Ring_slot.png",
+    13: "/static_images/RSTools/slots/Backpack_inventory.png",
+    14: "/static_images/RSTools/slots/Summoning_icon.png"
 }
 
 const slotPositions = [
