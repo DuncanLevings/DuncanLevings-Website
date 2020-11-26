@@ -58,12 +58,10 @@ class PvmTaskViewer extends React.Component {
         return (
             <Container>
                 <div className="PvmTaskViewer">
-                    <h3>{pvmTaskSingle.taskName}</h3>
-                    <div className="spacer-h-2" />
                     <Accordion>
                         <Card>
                             <Accordion.Toggle as={Card.Header} eventKey={0}>
-                                {pvmTaskSingle.pvmName}
+                                {pvmTaskSingle.taskName}
                             </Accordion.Toggle>
                             <Accordion.Collapse eventKey={0}>
                                 <Card.Body>
