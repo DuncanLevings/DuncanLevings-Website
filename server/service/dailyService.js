@@ -106,6 +106,7 @@ const checkReset = async (userId) => {
 
     // if previous reset month is different month to runescapes server month, reset monthlys
     if (lastResetlocalTime.month < rsTime.month) {
+        resetDailys(userId, 0); // reset dailys too to set new last day reset time to new month
         resetDailys(userId, 2);
         refreshData = true;
     }
