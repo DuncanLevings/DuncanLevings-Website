@@ -17,8 +17,13 @@
     font-family: 'Roboto', sans-serif;
 
     .scrollable-list {
-        max-height: 25vh;
+        max-height: 60vh;
         overflow-y: auto;
+    }
+
+    .thumbnail {
+        max-height: 32px; 
+        width: auto;
     }
 
     .list-group-item {

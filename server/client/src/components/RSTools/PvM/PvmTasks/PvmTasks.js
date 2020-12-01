@@ -102,7 +102,7 @@ class PvmTasks extends React.Component {
                         <Col xs={1}>
                             <FaEye className="action-icon view" size="1.5em" onClick={() => this.navigate(RSTOOL_ROUTES.PVM_TASK_VIEWER_PARAM + task._id)} />
                         </Col>
-                        <Col xs={1}><Image src={task.thumbnailURL} /></Col>
+                        <Col xs={1}><Image className="thumbnail" src={task.thumbnailURL} /></Col>
                         <Col xs={6}>{task.taskName}</Col>
                         <Col><span className="actions">
                             <FaEdit className="action-icon edit" onClick={() => this.navigate(RSTOOL_ROUTES.PVM_TASK_BUILDER, {

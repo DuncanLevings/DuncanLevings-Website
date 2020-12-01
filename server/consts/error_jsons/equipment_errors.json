@@ -12,6 +12,6 @@
         "NOT_OWNER_ITEM": "You are not the owner of that item!",
         "NOT_OWNER_ABILITY_BAR": "You are not the owner of that ability bar!",
         "ITEM_EXISTS": "An item with that name already exists!",
-        "ABILITY_BAR_EXISTS": "An ability bar with that name already exists!"
+        "ABILITY_BAR_EXISTS": "An ability bar of that style with that name already exists!"
     }
 }

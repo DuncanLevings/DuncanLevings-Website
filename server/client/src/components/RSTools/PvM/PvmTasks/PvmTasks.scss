@@ -30,6 +30,11 @@
         overflow-y: auto;
     }
 
+    .thumbnail {
+        max-height: 32px; 
+        width: auto;
+    }
+
     .list-group-item {
         background-color: $body-background;
         border-color: $hr-divider;

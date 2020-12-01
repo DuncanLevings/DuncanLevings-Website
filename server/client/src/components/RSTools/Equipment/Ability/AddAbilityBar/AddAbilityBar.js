@@ -91,6 +91,10 @@ class AddAbilityBar extends React.Component {
 
     componentDidUpdate(prevProps) {
         if (this.props.equipmentReducer.searchAbilityBars !== prevProps.equipmentReducer.searchAbilityBars) {
+            this.setState({
+                style: null,
+                abilityBar: []
+            })
             this.props.onHide();
         }
     }

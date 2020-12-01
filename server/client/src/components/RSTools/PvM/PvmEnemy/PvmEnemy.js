@@ -97,7 +97,7 @@ class PvmEnemy extends React.Component {
                                 newTask: true,
                                 pvmId: pvm._id
                             })} /></Col>
-                        <Col xs={1}><Image src={pvm.thumbnailURL} /></Col>
+                        <Col xs={1}><Image className="thumbnail" src={pvm.thumbnailURL} /></Col>
                         <Col xs={6}>{pvm.name}</Col>
                         <Col><span className="actions">
                             {pvm.isOwner ?

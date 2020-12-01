@@ -144,7 +144,7 @@ const createItem = async (userId, data, images, slots) => {
 }
 
 const createAbilityBar = async (userId, data, style) => {
-    const abilityBarCheck = await AbilityBar.countDocuments({ ownerId: userId, name: data.name });
+    const abilityBarCheck = await AbilityBar.countDocuments({ ownerId: userId, name: data.name, styleType: data.styleType });
     if (abilityBarCheck > 0) throw Error(EQUIPMENT_ERRORS.ABILITY_BAR_EXISTS);
 
     const abilityBar = new AbilityBar(new AbilityBarBuilder()
@@ -215,7 +215,7 @@ const editAbilityBar = async (userId, data, style) => {
         const abilityBar = await AbilityBar.findOne({ _id: data.abilityBarId });
         if (!abilityBar.ownerId.equals(userId)) throw Error(EQUIPMENT_ERRORS.NOT_OWNER_ABILITY_BAR);
         if (abilityBar.name !== data.name) {
-            const abilityBarCheck = await AbilityBar.countDocuments({ ownerId: userId, name: data.name });
+            const abilityBarCheck = await AbilityBar.countDocuments({ ownerId: userId, name: data.name, styleType: data.styleType });
             if (abilityBarCheck > 0) throw Error(EQUIPMENT_ERRORS.ABILITY_BAR_EXISTS);
         }
 
