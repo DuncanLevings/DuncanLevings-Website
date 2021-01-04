@@ -453,9 +453,6 @@ class ResumeHome extends React.Component {
                         })}
                         <div className="timeline-circle bottom" />
                     </VerticalTimeline>
-                    {isMobileOnly ? (null) : (
-                        <RenderInViewSection hashLocation={RESUME_ROUTES.HASH_EXPERIENCE} /> // small size of mobile screen would mess with this id if present
-                    )}
                 </Container>
             </div>
         );
@@ -490,7 +487,7 @@ class ResumeHome extends React.Component {
                                 return (
                                     <Row key={i}>
                                         <Col className={`portfolio-image-container ${imgStyle[i]}`}>
-                                            <Link to={RESUME_ROUTES.PORTFOLIO} className="portfolio-link">{project.title}</Link>
+                                            <Link to={{ pathname: RESUME_ROUTES.PORTFOLIO, state: { fromDashboard: true }}} className="portfolio-link">{project.title}</Link>
                                         </Col>
                                     </Row>
                                 );
@@ -522,7 +519,7 @@ class ResumeHome extends React.Component {
                         {projects.map((project, i) => {
                             return (
                                 <Col className={`portfolio-image-container ${imgStyle[i]}`} key={i}>
-                                    <Link to={RESUME_ROUTES.PORTFOLIO} className="portfolio-link">{project.title}</Link>
+                                    <Link to={RESUME_ROUTES.PORTFOLIO_PARAM + i} className="portfolio-link">{project.title}</Link>
                                 </Col>
                             );
                         })}
@@ -577,7 +574,7 @@ class ResumeHome extends React.Component {
                         </span>
                         <hr className="divider" />
                         <div className="centered-button-container">
-                            <Button variant="button-primary" href="https://storage.cloud.google.com/duncanlevings.appspot.com/resume/Resume_Feb2020_DuncanLevings.pdf" target="_blank" rel="noopener noreferrer"><FaDownload /> Resume</Button>
+                            <Button variant="button-primary" href="https://storage.cloud.google.com/duncanlevings.appspot.com/resume/Resume.pdf" target="_blank" rel="noopener noreferrer"><FaDownload /> Resume</Button>
                         </div>
                     </div>
                     <div id="professional" />

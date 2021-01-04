@@ -64,6 +64,10 @@
             transition: opacity 600ms 0ms, color 400ms 0ms;
         }
 
+        .selected {
+            color: $link-active;
+        }
+
         .portfolio-divider {
             color: $hr-divider;
             border: 0;
