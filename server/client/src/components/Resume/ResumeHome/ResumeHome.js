@@ -85,7 +85,7 @@ class ResumeHome extends React.Component {
             modalWrapper: createRef(),
             // BELOW WILL COME FROM DB
             profile_img: "/static_images/cropped.png",
-            job_title: "SOFTWARE ENGINEER",
+            job_title: "FULL STACK DEVELOPER",
             home_blurb: 
             `I am a motivated and challenge-seeking person who has been programming since 2010.
 
@@ -129,6 +129,24 @@ class ResumeHome extends React.Component {
                 }
             ],
             experience: [
+                {
+                    type: 1, // 1 for job, 0 for education
+                    dateStart: "2021, May",
+                    dateEnd: "2021, Aug",
+                    date: "", // for mongo retreival,
+                    title: "Full Stack Developer",
+                    subtitle: "OMERS",
+                    details: [
+                        "Worked with framework team focusing on backend of in house system, designated to designing and implementing a workflow automation system.",
+                        "Utilized tools such as: Gitlab, Jira, IntelliJ, PgAdmin, Postman, Docker and Kubernetes.",
+                        "Using Java and Spring, implemented end points for retrieving data from JpaRepositories as well as creating a filtering end point using Specifications and Pageable parameters.",
+                        "Used Mockito to create unit tests for various services including end to end testing for end points for successful and failed paths.",
+                        "Assisted in transitioning existing database from Google Cloud firebase to PostgreSQL database, created SQL queries for updating nested jsonb columns and created Entities for Spring hibernate.",
+                        "Worked with Spring EventScheduler to create cron jobs for retrying system processes utilizing properties defined in the database schema.",
+                        "Contributed to the design and implementation of an workflow automation/scheduler service along with an state machine service to monitor on going processes."
+                    ],
+                    hasReference: false // if true, show button, get selected experince on click, pass object _id to populate reference modal
+                },
                 {
                     type: 1, // 1 for job, 0 for education
                     dateStart: "2020, Jan",

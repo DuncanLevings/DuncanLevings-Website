@@ -18,6 +18,7 @@ import { logoutUser } from 'store/actions/userActions';
 import { updateActiveHash } from 'store/actions/navbarActions';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import './navbarMain.scss';
+import { FaGithub, FaLinkedin } from 'react-icons/fa';
 
 class navbarMain extends React.Component {
     constructor(props) {
@@ -56,7 +57,7 @@ class navbarMain extends React.Component {
         }
         if (isMobile) this.setExpanded(false);
 
-        window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' }); 
+        window.scrollTo({ top: yCoordinate + yOffset, behavior: 'smooth' });
     }
 
     renderNav = () => {
@@ -72,7 +73,7 @@ class navbarMain extends React.Component {
                 const { hash } = this.props.navbarReducer;
                 return (
                     <Navbar.Collapse id="responsive-navbar-nav">
-                        <NavHashLink 
+                        <NavHashLink
                             to={RESUME_ROUTES.HASH_HOME}
                             activeClassName={this.isActiveClass(RESUME_ROUTES.HASH_HOME, hash)}
                             scroll={this.scrollWidthOffset}
@@ -80,42 +81,46 @@ class navbarMain extends React.Component {
                         >
                             HOME
                         </NavHashLink>
-                        <div className="ml-3 mr-3"/>
-                        <NavHashLink 
+                        <div className="ml-3 mr-3" />
+                        <NavHashLink
                             to={RESUME_ROUTES.HASH_PROFESSIONAL}
                             activeClassName={this.isActiveClass(RESUME_ROUTES.HASH_PROFESSIONAL, hash)}
                             scroll={this.scrollWidthOffset}
                         >
                             PROFESSIONAL
                         </NavHashLink>
-                        <div className="ml-3 mr-3"/>
-                        <NavHashLink 
+                        <div className="ml-3 mr-3" />
+                        <NavHashLink
                             to={RESUME_ROUTES.HASH_EXPERIENCE}
                             activeClassName={this.isActiveClass(RESUME_ROUTES.HASH_EXPERIENCE, hash)}
                             scroll={this.scrollWidthOffset}
                         >
                             EXPERIENCE
                         </NavHashLink>
-                        <div className="ml-3 mr-3"/>
-                        <NavHashLink 
+                        <div className="ml-3 mr-3" />
+                        <NavHashLink
                             to={RESUME_ROUTES.HASH_PORTFOLIO}
                             activeClassName={this.isActiveClass(RESUME_ROUTES.HASH_PORTFOLIO, hash)}
                             scroll={this.scrollWidthOffset}
                         >
                             PORTFOLIO
                         </NavHashLink>
-                        <div className="ml-3 mr-3"/>
-                        <NavHashLink 
+                        <div className="ml-3 mr-3" />
+                        <NavHashLink
                             to={RESUME_ROUTES.HASH_CONTACT}
                             activeClassName={this.isActiveClass(RESUME_ROUTES.HASH_CONTACT, hash)}
                             scroll={this.scrollWidthOffset}
                         >
                             CONTACT
                         </NavHashLink>
+                        <div className="ml-3 mr-3" />
+                        <a className="custom-icon-link" href="https://www.linkedin.com/in/duncan-levings/" target="_blank" rel="noopener noreferrer"><FaLinkedin size={30}/></a>
+                        <div className="ml-3 mr-3" />
+                        <a className="custom-icon-link" href="https://github.com/DuncanLevings/PersonalWork" target="_blank" rel="noopener noreferrer"><FaGithub size={30}/></a>
                         {isAdmin ? (
                             <>
-                                <div className="ml-3 mr-3"/>
-                                <NavLink 
+                                <div className="ml-3 mr-3" />
+                                <NavLink
                                     to={RESUME_ROUTES.ADMIN_DASH}
                                     activeClassName={this.isActiveClass(RESUME_ROUTES.ADMIN_DASH, hash)}
                                 >
@@ -135,21 +140,21 @@ class navbarMain extends React.Component {
                         <Nav>
                             <NavLink activeClassName={this.isActiveClass(RSTOOL_ROUTES.DAILYS, pathname)} to={RSTOOL_ROUTES.DAILYS} hidden={!isAuthenticated}>DAILYS</NavLink >
                         </Nav>
-                        <div className="ml-3 mr-3"/>
+                        <div className="ml-3 mr-3" />
                         <Nav>
-                            <NavLink activeClassName={this.isActiveClass(RSTOOL_ROUTES.FARMRUNS, pathname)}  to={RSTOOL_ROUTES.FARMRUNS} hidden={!isAuthenticated}>FARM RUNS</NavLink>
+                            <NavLink activeClassName={this.isActiveClass(RSTOOL_ROUTES.FARMRUNS, pathname)} to={RSTOOL_ROUTES.FARMRUNS} hidden={!isAuthenticated}>FARM RUNS</NavLink>
                         </Nav>
-                        <div className="ml-3 mr-3"/>
+                        <div className="ml-3 mr-3" />
                         <Nav>
-                            <NavLink activeClassName={this.isActiveClass(RSTOOL_ROUTES.PVM, pathname)}  to={RSTOOL_ROUTES.PVM} hidden={!isAuthenticated}>PVM</NavLink>
+                            <NavLink activeClassName={this.isActiveClass(RSTOOL_ROUTES.PVM, pathname)} to={RSTOOL_ROUTES.PVM} hidden={!isAuthenticated}>PVM</NavLink>
                         </Nav>
-                        <div className="ml-3 mr-3"/>
+                        <div className="ml-3 mr-3" />
                         <Nav>
-                            <NavLink activeClassName={this.isActiveClass(RSTOOL_ROUTES.ACTIVITIES, pathname)}  to={RSTOOL_ROUTES.ACTIVITIES} hidden={!isAuthenticated}>ACTIVITIES</NavLink>
+                            <NavLink activeClassName={this.isActiveClass(RSTOOL_ROUTES.ACTIVITIES, pathname)} to={RSTOOL_ROUTES.ACTIVITIES} hidden={!isAuthenticated}>ACTIVITIES</NavLink>
                         </Nav>
-                        <div className="ml-3 mr-3"/>
+                        <div className="ml-3 mr-3" />
                         <Nav>
-                            <NavLink activeClassName={this.isActiveClass(RSTOOL_ROUTES.EQUIPMENT, pathname)}  to={RSTOOL_ROUTES.EQUIPMENT} hidden={!isAuthenticated}>EQUIPMENT</NavLink>
+                            <NavLink activeClassName={this.isActiveClass(RSTOOL_ROUTES.EQUIPMENT, pathname)} to={RSTOOL_ROUTES.EQUIPMENT} hidden={!isAuthenticated}>EQUIPMENT</NavLink>
                         </Nav>
                         <Nav className="ml-auto">
                             <Button variant="button-primary" onClick={() => this.logout(RSTOOL_ROUTES.LOGIN)} hidden={!isAuthenticated}>Logout</Button>
@@ -166,8 +171,8 @@ class navbarMain extends React.Component {
         return (
             <Navbar expanded={expanded} bg="dark" variant="light" sticky="top" expand="lg">
                 <Navbar.Brand className="main-logo">
-                    <NavHashLink 
-                        to={RESUME_ROUTES.HASH_HOME} 
+                    <NavHashLink
+                        to={RESUME_ROUTES.HASH_HOME}
                         scroll={this.scrollWidthOffset}
                     >
                         <img
@@ -179,7 +184,7 @@ class navbarMain extends React.Component {
                         />
                     </NavHashLink>
                 </Navbar.Brand>
-                <div className="ml-4 mr-4"/>
+                <div className="ml-4 mr-4" />
                 <Navbar.Toggle onClick={() => this.setExpanded(expanded ? false : "expanded")} aria-controls="responsive-navbar-nav" />
                 {this.renderNav()}
             </Navbar>

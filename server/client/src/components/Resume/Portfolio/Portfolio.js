@@ -609,7 +609,12 @@ class Portfolio extends React.Component {
 
     showModal = (bool, index = -1) => {
         this.setState({ showModal: bool });
-        if (index > -1) this.setState({ selectedProject: this.state.projects[index] });
+        if (index > -1) {
+            if (this.state.filter.length > 0) {
+                const filtered = this.state.projects.filter(project => this.state.filter.includes(project.icon));
+                this.setState({ selectedProject: filtered[index] });
+            } else this.setState({ selectedProject: this.state.projects[index] });
+        }
     }
 
     filterSlot = i => {

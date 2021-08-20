@@ -44,7 +44,8 @@ const getLocalTime = (time) => {
         day: Moment(time.lastDayReset).utc().date(),
         week: Moment(time.lastWeekReset).utc().week(),
         weekDay: Moment(time.lastWeekReset).utc().weekday(),
-        month: Moment(time.lastMonthReset).utc().month()
+        month: Moment(time.lastMonthReset).utc().month(),
+        year: Moment(time.lastMonthReset).utc().year()
     }
 }
 
@@ -53,7 +54,8 @@ const getRSTime = () => {
         day: Moment().utc().date(),
         week: Moment().utc().week(),
         weekDay: Moment().utc().weekday(),
-        month: Moment().utc().month()
+        month: Moment().utc().month(),
+        year: Moment().utc().year()
     }
 }
 
@@ -85,7 +87,7 @@ const checkReset = async (userId) => {
     // if previous reset time for week is different week to runescapes server reset week, reset weeklys
     const weekDiff = rsTime.week - lastResetlocalTime.week;
 
-    if (weekDiff > 1) { // been more than a week since last weekly reset, ignore tuesday reset only
+    if (weekDiff > 1 || weekDiff < -1) { // been more than a week since last weekly reset, ignore tuesday reset only
         resetDailys(userId, 1);
         refreshData = true;
     } else if (weekDiff === 1) { // last weekly reset was previous week, must check if day is tuesday to reset weekly
@@ -105,7 +107,7 @@ const checkReset = async (userId) => {
     // MONTH
 
     // if previous reset month is different month to runescapes server month, reset monthlys
-    if (lastResetlocalTime.month < rsTime.month) {
+    if (lastResetlocalTime.month < rsTime.month || lastResetlocalTime.year < rsTime.year) {
         resetDailys(userId, 0); // reset dailys too to set new last day reset time to new month
         resetDailys(userId, 2);
         refreshData = true;

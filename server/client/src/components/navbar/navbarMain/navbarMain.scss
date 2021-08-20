@@ -17,4 +17,12 @@
     .navbar-logout {
         margin-left: auto;
     }
+
+    .custom-icon-link {
+        color: $button-primary;
+    }
+
+    .custom-icon-link:hover {
+        color: $button-primary-hover;
+    }
 }
