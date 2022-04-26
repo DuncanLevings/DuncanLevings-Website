@@ -28,15 +28,18 @@ db.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
 const { User } = require('../models/userModel');
 const { Token } = require('../models/tokenModel');
-const { Daily } = require('../models/dailyModel');
-const { RSToolsUser } = require('../models/rsToolsUserModel');
-const { Item } = require('../models/itemModel');
-const { AbilityBar } = require('../models/abilityBarModel');
-const { Preset } = require('../models/presetModel');
-const { FarmRun } = require('../models/farmRunModel');
-const { Activity } = require('../models/activityModel');
-const { PvM } = require('../models/pvmModel');
-const { PvmTask } = require('../models/pvmTaskModel');
+const { Daily } = require('../models/RSTools/dailyModel');
+const { RSToolsUser } = require('../models/RSTools/rsToolsUserModel');
+const { Item } = require('../models/RSTools/itemModel');
+const { AbilityBar } = require('../models/RSTools/abilityBarModel');
+const { Preset } = require('../models/RSTools/presetModel');
+const { FarmRun } = require('../models/RSTools/farmRunModel');
+const { Activity } = require('../models/RSTools/activityModel');
+const { PvM } = require('../models/RSTools/pvmModel');
+const { PvmTask } = require('../models/RSTools/pvmTaskModel');
+const { Salary } = require('../models/Budget/salary');
+const { CombinedTransaction } = require('../models/Budget/combined');
+const { Transaction } = require('../models/Budget/transaction');
 
 module.exports = {
     User,
@@ -49,5 +52,8 @@ module.exports = {
     FarmRun,
     Activity,
     PvM,
-    PvmTask
+    PvmTask,
+    Salary,
+    CombinedTransaction,
+    Transaction
 }
