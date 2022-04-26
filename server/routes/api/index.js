@@ -13,12 +13,12 @@ const {
 
 router.use(USER_ROUTES._ROOT, require('./userRoute'));
 router.use(EMAIL_ROUTES._ROOT, require('./emailRoute'));
-router.use(IMAGE_ROUTES._ROOT, require('./imageRoute'));
-router.use(DAILY_ROUTES._ROOT, require('./dailyRoute'));
-router.use(ACTIVITY_ROUTES._ROOT, require('./activityRoute'));
-router.use(EQUIPMENT_ROUTES._ROOT, require('./equipmentRoute'));
-router.use(PRESET_ROUTES._ROOT, require('./presetRoute'));
-router.use(FARM_RUN_ROUTES._ROOT, require('./farmRunRoute'));
-router.use(PVM_ROUTES._ROOT, require('./pvmRoute'));
+router.use(IMAGE_ROUTES._ROOT, require('./RSTools/imageRoute'));
+router.use(DAILY_ROUTES._ROOT, require('./RSTools/dailyRoute'));
+router.use(ACTIVITY_ROUTES._ROOT, require('./RSTools/activityRoute'));
+router.use(EQUIPMENT_ROUTES._ROOT, require('./RSTools/equipmentRoute'));
+router.use(PRESET_ROUTES._ROOT, require('./RSTools/presetRoute'));
+router.use(FARM_RUN_ROUTES._ROOT, require('./RSTools/farmRunRoute'));
+router.use(PVM_ROUTES._ROOT, require('./RSTools/pvmRoute'));
 
 module.exports = router;

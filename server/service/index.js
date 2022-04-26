@@ -1,13 +1,13 @@
 const _utils = require('./utils');
 const _userService = require('./userService');
 const _emailService = require('./emailService');
-const _imageService = require('./imageService');
-const _dailyService = require('./dailyService');
-const _activityService = require('./activityService');
-const _equipmentService = require('./equipmentService');
-const _presetService = require('./presetService');
-const _farmRunService = require('./farmRunService');
-const _pvmService = require('./pvmService');
+const _imageService = require('./RSTools/imageService');
+const _dailyService = require('./RSTools/dailyService');
+const _activityService = require('./RSTools/activityService');
+const _equipmentService = require('./RSTools/equipmentService');
+const _presetService = require('./RSTools/presetService');
+const _farmRunService = require('./RSTools/farmRunService');
+const _pvmService = require('./RSTools/pvmService');
 
 module.exports = {
     _utils,

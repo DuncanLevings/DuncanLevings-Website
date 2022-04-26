@@ -85,7 +85,7 @@ class ResumeHome extends React.Component {
             modalWrapper: createRef(),
             // BELOW WILL COME FROM DB
             profile_img: "/static_images/cropped.png",
-            job_title: "FULL STACK DEVELOPER",
+            job_title: "ASSOCIATE SOFTWARE ENGINEER",
             home_blurb: 
             `I am a motivated and challenge-seeking person who has been programming since 2010.
 
@@ -131,10 +131,21 @@ class ResumeHome extends React.Component {
             experience: [
                 {
                     type: 1, // 1 for job, 0 for education
+                    dateStart: "2022, Jan",
+                    date: "", // for mongo retreival,
+                    title: "Associate Software Engineer",
+                    subtitle: "OMERS",
+                    details: [
+                        "..."
+                    ],
+                    hasReference: false // if true, show button, get selected experince on click, pass object _id to populate reference modal
+                },
+                {
+                    type: 1, // 1 for job, 0 for education
                     dateStart: "2021, May",
                     dateEnd: "2021, Aug",
                     date: "", // for mongo retreival,
-                    title: "Full Stack Developer",
+                    title: "Full Stack Developer (Co-op)",
                     subtitle: "OMERS",
                     details: [
                         "Worked with framework team focusing on backend of in house system, designated to designing and implementing a workflow automation system.",
@@ -152,7 +163,7 @@ class ResumeHome extends React.Component {
                     dateStart: "2020, Jan",
                     dateEnd: "2020, June",
                     date: "", // for mongo retreival,
-                    title: "Software Engineer",
+                    title: "Software Engineer (Co-op)",
                     subtitle: "ZHY Interactive",
                     details: [
                         "Worked with React to design, develop, test and deploy new features to Royaltymine.",
@@ -169,7 +180,7 @@ class ResumeHome extends React.Component {
                     dateStart: "2019, Apr",
                     dateEnd: "2019, Aug",
                     date: "", // for mongo retreival,
-                    title: "Associate Information Technology Technician",
+                    title: "Associate Information Technology Technician (Co-op)",
                     subtitle: "Genworth Canada",
                     details: [
                         "Worked with AngularJS to develop, maintain and produce front-end applications.",
@@ -184,6 +195,7 @@ class ResumeHome extends React.Component {
                 {
                     type: 0, // 1 for job, 0 for education
                     dateStart: "2018, Jan",
+                    dateEnd: "2021, Dec",
                     date: "", // for mongo retreival,
                     title: "Bachelor's degree of Computer Science",
                     subtitle: "Sheridan College",
@@ -592,7 +604,7 @@ class ResumeHome extends React.Component {
                         </span>
                         <hr className="divider" />
                         <div className="centered-button-container">
-                            <Button variant="button-primary" href="https://storage.cloud.google.com/duncanlevings.appspot.com/resume/Resume.pdf" target="_blank" rel="noopener noreferrer"><FaDownload /> Resume</Button>
+                            <Button variant="button-primary" href="https://storage.cloud.google.com/duncanlevings.appspot.com/resume/Resume_2021.pdf" target="_blank" rel="noopener noreferrer"><FaDownload /> Resume</Button>
                         </div>
                     </div>
                     <div id="professional" />
