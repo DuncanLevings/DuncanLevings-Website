@@ -8,6 +8,9 @@ const EQUIPMENT_ROUTES = require('./equipment_route_consts');
 const PRESET_ROUTES = require('./preset_route_consts');
 const FARM_RUN_ROUTES = require('./farm_run_route_consts');
 const PVM_ROUTES = require('./pvm_route_consts');
+const SALARY_ROUTES = require('./salary_route_consts');
+const TRANSACTION_ROUTES = require('./transaction_route_consts');
+const COMBINED_TRANSACTION_ROUTES = require('./combined_transaction_route_consts');
 
 module.exports = {
     USER_ROUTES,
@@ -18,5 +21,8 @@ module.exports = {
     EQUIPMENT_ROUTES,
     PRESET_ROUTES,
     FARM_RUN_ROUTES,
-    PVM_ROUTES
+    PVM_ROUTES,
+    SALARY_ROUTES,
+    TRANSACTION_ROUTES,
+    COMBINED_TRANSACTION_ROUTES
 }

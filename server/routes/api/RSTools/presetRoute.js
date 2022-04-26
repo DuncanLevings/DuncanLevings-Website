@@ -7,9 +7,9 @@
 'use strict';
 
 var express = require('express');
-const auth = require('../auth');
-const { PRESET_ROUTES } = require('../../consts/route_consts');
-const { _presetService } = require('../../service');
+const auth = require('../../auth');
+const { PRESET_ROUTES } = require('../../../consts/route_consts');
+const { _presetService } = require('../../../service');
 const router = express.Router();
 
 router.get(PRESET_ROUTES.GET_PRESETS, auth.user, (req, res) => {

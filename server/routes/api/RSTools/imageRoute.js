@@ -7,9 +7,9 @@
 'use strict';
 
 var express = require('express');
-const auth = require('../auth');
-const { IMAGE_ROUTES } = require('../../consts/route_consts');
-const { _imageService } = require('../../service');
+const auth = require('../../auth');
+const { IMAGE_ROUTES } = require('../../../consts/route_consts');
+const { _imageService } = require('../../../service');
 const multer = require('multer');
 const router = express.Router();
 

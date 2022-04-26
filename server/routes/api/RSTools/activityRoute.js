@@ -7,10 +7,10 @@
 'use strict';
 
 var express = require('express');
-const { ACTIVITY_ROUTES } = require('../../consts/route_consts');
-const { _activityService } = require('../../service');
+const { ACTIVITY_ROUTES } = require('../../../consts/route_consts');
+const { _activityService } = require('../../../service');
 const multer = require('multer');
-const auth = require('../auth');
+const auth = require('../../auth');
 const router = express.Router();
 
 const Multer = multer({

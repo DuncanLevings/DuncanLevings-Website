@@ -7,9 +7,9 @@
 'use strict';
 
 var express = require('express');
-const auth = require('../auth');
-const { EQUIPMENT_ROUTES } = require('../../consts/route_consts');
-const { _imageService, _equipmentService } = require('../../service');
+const auth = require('../../auth');
+const { EQUIPMENT_ROUTES } = require('../../../consts/route_consts');
+const { _imageService, _equipmentService } = require('../../../service');
 const multer = require('multer');
 const router = express.Router();
 
