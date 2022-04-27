@@ -1,0 +1,9 @@
+{
+    "server_errors": {
+        "MISSING_USER": "Missing userId!",
+        "MISSING_NAME": "Missing name!",
+        "MISSING_AMOUNT": "Missing amount!",
+        "INVALID_AMOUNT": "Amount must be > 0!",
+        "INVALID_TYPE": "Type is invalid!"
+    }
+}

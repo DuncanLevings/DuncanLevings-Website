@@ -1,15 +1,12 @@
 /*
- * Filename: c:\Users\Tatsu\Documents\personal_website\server\service\equipmentService.js
- * Path: c:\Users\Tatsu\Documents\personal_website\server
- * Created Date: Thursday, November 5th 2020, 6:17:23 pm
  * Author: Duncan Levings
  * 
  * Copyright (c) 2020 DuncanLevings
  */
 
 'use strict';
-const { PRESET_ERRORS } = require("../consts/error_jsons");
-const { Preset } = require("../config/mongo");
+const { PRESET_ERRORS } = require("../../consts/error_jsons");
+const { Preset } = require("../../config/mongo");
 const mongoose = require('mongoose');
 
 const getPresets = async (userId) => {

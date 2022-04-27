@@ -1,0 +1,6 @@
+{
+    "server_errors": {
+        "MISSING_USER": "Missing userId!",
+        "INVALID_TYPE": "Type is not valid!"
+    }
+}

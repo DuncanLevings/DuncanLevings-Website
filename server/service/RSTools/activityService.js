@@ -10,8 +10,8 @@
 
 const got = require('got');
 const cheerio = require("cheerio");
-const { Activity } = require('../config/mongo');
-const { ACTIVITY_ERRORS } = require('../consts/error_jsons');
+const { Activity } = require('../../config/mongo');
+const { ACTIVITY_ERRORS } = require('../../consts/error_jsons');
 const mongoose = require('mongoose');
 
 const RUNE_TYPES = ["Air", "Water", "Earth", "Fire", "Dust", "Lava", "Mist", "Mud", "Smoke", "Steam", "Mind", "Body", "Cosmic", "Chaos", "Nature", "Law", "Death", "Astral", "Blood", "Soul"];

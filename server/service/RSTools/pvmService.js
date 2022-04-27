@@ -5,8 +5,8 @@
  */
 
 'use strict';
-const { PvM, PvmTask } = require('../config/mongo');
-const { PVM_ERRORS } = require('../consts/error_jsons');
+const { PvM, PvmTask } = require('../../config/mongo');
+const { PVM_ERRORS } = require('../../consts/error_jsons');
 const mongoose = require('mongoose');
 
 /* Regular expressions for parameter validation. */

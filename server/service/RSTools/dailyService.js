@@ -5,8 +5,8 @@
  */
 
 'use strict';
-const { Daily, RSToolsUser } = require('../config/mongo');
-const { DAILY_ERRORS } = require('../consts/error_jsons');
+const { Daily, RSToolsUser } = require('../../config/mongo');
+const { DAILY_ERRORS } = require('../../consts/error_jsons');
 const mongoose = require('mongoose');
 const Moment = require('moment-timezone');
 

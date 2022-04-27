@@ -1,0 +1,12 @@
+{
+    "server_errors": {
+        "NOT_OWNER": "You do not own this salary!",
+        "ALREADY_EXISTS": "User already has salary!",
+        "MISSING_USER": "Missing userId!",
+        "MISSING_YEARLY": "Missing yearly!",
+        "MISSING_PAYCHECK": "Missing paycheck!",
+        "INVALID_YEARLY": "Yearly amount must be > 0!",
+        "INVALID_PAYCHECK": "Paycheck amount must be > 0!",
+        "INVALID_AMOUNT": "Paycheck cannot be more than Yearly Salary!"
+    }
+}

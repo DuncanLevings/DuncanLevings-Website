@@ -8,13 +8,31 @@
 
 const mongoose = require('mongoose');
 
+const transactionSchema = new mongoose.Schema({
+    transactionId: { type: mongoose.Types.ObjectId, ref: "Transaction", required: true }
+}, { _id : false });
+
 const combinedTransactionSchema = new mongoose.Schema({
-    transactionId: { type: mongoose.Types.ObjectId, ref: "Transaction", required: true },
     name: { type: String, required: true },
     type: { type: Number, required: true },
-    totalAmount: { type: Number, required: true },
-    note: { type: String }
+    totalAmount: { type: Number, default: 0 },
+    note: { type: String },
+    transactions: {
+        type: [transactionSchema],
+        default: []
+    },
 });
+
+combinedTransactionSchema.methods.toJSON = function () {
+    return {
+        _id: this._id,
+        name: this.name,
+        type: this.type,
+        totalAmount: this.totalAmount,
+        note: this.note,
+        transactions: this.transactions
+    };
+};
 
 combinedTransactionSchema.set('toJSON', { virtuals: true });
 const CombinedTransaction = mongoose.model('CombinedTransaction', combinedTransactionSchema, 'combined_transaction');

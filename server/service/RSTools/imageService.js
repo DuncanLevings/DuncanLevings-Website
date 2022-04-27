@@ -6,7 +6,7 @@
 
 'use strict';
 
-const _config = require('../config/config.json');
+const _config = require('../../config/config.json');
 const { Storage } = require('@google-cloud/storage');
 const fs = require("fs");
 

@@ -6,6 +6,9 @@
 
 const _ROOT = '/combined-transaction';
 
+const COMBINED_ROOT = '/';
+
 module.exports = {
-    _ROOT
+    _ROOT,
+    COMBINED_ROOT
 }

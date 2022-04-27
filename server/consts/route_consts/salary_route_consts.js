@@ -6,6 +6,11 @@
 
 const _ROOT = '/salary';
 
+const SALARY_ROOT = '/';
+const SALARY_FOR_USER = '/my-salary';
+
 module.exports = {
-    _ROOT
+    _ROOT,
+    SALARY_ROOT,
+    SALARY_FOR_USER
 }

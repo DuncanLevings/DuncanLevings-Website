@@ -1,15 +1,12 @@
 /*
- * Filename: c:\Users\Tatsu\Documents\personal_website\server\service\equipmentService.js
- * Path: c:\Users\Tatsu\Documents\personal_website\server
- * Created Date: Thursday, November 5th 2020, 6:17:23 pm
  * Author: Duncan Levings
  * 
  * Copyright (c) 2020 DuncanLevings
  */
 
 'use strict';
-const { EQUIPMENT_ERRORS } = require("../consts/error_jsons");
-const { Item, AbilityBar, Preset } = require("../config/mongo");
+const { EQUIPMENT_ERRORS } = require("../../consts/error_jsons");
+const { Item, AbilityBar, Preset } = require("../../config/mongo");
 const mongoose = require('mongoose');
 
 /* Regular expressions for parameter validation. */

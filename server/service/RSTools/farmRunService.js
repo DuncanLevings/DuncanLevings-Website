@@ -5,8 +5,8 @@
  */
 
 'use strict';
-const { FarmRun } = require('../config/mongo');
-const { FARM_RUN_ERRORS } = require('../consts/error_jsons');
+const { FarmRun } = require('../../config/mongo');
+const { FARM_RUN_ERRORS } = require('../../consts/error_jsons');
 const mongoose = require('mongoose');
 
 /* Regular expressions for parameter validation. */

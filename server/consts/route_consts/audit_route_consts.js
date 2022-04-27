@@ -4,11 +4,8 @@
  * Copyright (c) 2020 DuncanLevings
  */
 
-const _ROOT = '/transaction';
-
-const TRANSACTION_ROOT = '/';
+const _ROOT = '/audit';
 
 module.exports = {
-    _ROOT,
-    TRANSACTION_ROOT
+    _ROOT
 }

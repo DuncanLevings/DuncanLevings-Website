@@ -14,6 +14,15 @@ const salarySchema = new mongoose.Schema({
     payCheck: { type: Number, required: true }
 });
 
+salarySchema.methods.toJSON = function () {
+    return {
+        _id: this._id,
+        userId: this.userId,
+        yearly: this.yearly,
+        payCheck: this.payCheck
+    };
+};
+
 salarySchema.set('toJSON', { virtuals: true });
 const Salary = mongoose.model('Salary', salarySchema, 'salary');
 

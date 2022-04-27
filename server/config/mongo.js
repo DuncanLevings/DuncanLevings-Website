@@ -37,9 +37,11 @@ const { FarmRun } = require('../models/RSTools/farmRunModel');
 const { Activity } = require('../models/RSTools/activityModel');
 const { PvM } = require('../models/RSTools/pvmModel');
 const { PvmTask } = require('../models/RSTools/pvmTaskModel');
+const { Budget } = require('../models/Budget/budget');
 const { Salary } = require('../models/Budget/salary');
 const { CombinedTransaction } = require('../models/Budget/combined');
 const { Transaction } = require('../models/Budget/transaction');
+const { Audit } = require('../models/Budget/audit');
 
 module.exports = {
     User,
@@ -53,7 +55,9 @@ module.exports = {
     Activity,
     PvM,
     PvmTask,
+    Budget,
     Salary,
     CombinedTransaction,
-    Transaction
+    Transaction,
+    Audit
 }
