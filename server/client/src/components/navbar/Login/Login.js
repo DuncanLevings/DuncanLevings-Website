@@ -12,6 +12,7 @@ import { loginUser } from 'store/actions/userActions';
 import { RSTOOL_ROUTES } from 'consts/RSTools_Consts';
 import { LOGIN_TYPE } from 'consts';
 import { RESUME_ROUTES } from 'consts/Resume_Consts';
+import { BUDGET_ROUTES } from 'consts/Budget_Consts';
 import { Form, InputGroup, FormControl, Button, Container, Card, Spinner } from 'react-bootstrap'
 import { FaUser, FaKey } from 'react-icons/fa';
 import { loginSchema } from 'components/helpers/formValidation';
@@ -41,6 +42,11 @@ class Login extends React.Component {
                 from = RSTOOL_ROUTES.DASH;
                 signup = RSTOOL_ROUTES.SIGNUP;
                 forgot = RSTOOL_ROUTES.FORGOTPASS;
+                break;
+            case LOGIN_TYPE.BUDGET:
+                from = BUDGET_ROUTES.DASH;
+                signup = BUDGET_ROUTES.SIGNUP;
+                forgot = BUDGET_ROUTES.FORGOTPASS;
                 break;
             default:
                 break;
