@@ -6,5 +6,6 @@
 
 export default {
     RESUME: 1,
-    RS_TOOLS: 2
+    RS_TOOLS: 2,
+    BUDGET: 3
 }
