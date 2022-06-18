@@ -63,6 +63,11 @@ class RSDash extends React.Component {
                                 <Card.Title>EQUIPMENT</Card.Title>
                             </Card.Body>
                         </Card>
+                        <Card onClick={() => this.navigate(RSTOOL_ROUTES.BRONZE_MAN)}>
+                            <Card.Body>
+                                <Card.Title>BRONZE MAN</Card.Title>
+                            </Card.Body>
+                        </Card>
                     </CardDeck>
                 </div>
             </Container>

@@ -1,0 +1,16 @@
+@import '../../../../assets/style/colors';
+
+.AddBronzeManItem {
+    color: $dark-theme;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+
+    .item-error {
+        color: $error;
+        text-align: center;
+    }
+
+    .item-button {
+        margin-top: 1rem;
+    }
+}

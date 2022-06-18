@@ -56,6 +56,10 @@ const PRESET_VIEWER_PARAM = PRESETS + '/view/'
 const ITEMS = EQUIPMENT + '/items'
 const ABILITYS = EQUIPMENT + '/abilitys'
 
+// BRONZE MAN MODE
+
+const BRONZE_MAN = RSTOOL_ROOT + '/bronze_man'
+
 export const RSTOOL_ROUTES = {
     DASH,
     LOGIN,
@@ -90,5 +94,6 @@ export const RSTOOL_ROUTES = {
     FARMRUN_TYPE_PARAM,
     FARMRUN_TYPE,
     FARMRUN_BUILDER_PARAM,
-    FARMRUN_BUILDER
+    FARMRUN_BUILDER,
+    BRONZE_MAN
 }

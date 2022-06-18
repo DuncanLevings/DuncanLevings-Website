@@ -156,6 +156,10 @@ class navbarMain extends React.Component {
                         <Nav>
                             <NavLink activeClassName={this.isActiveClass(RSTOOL_ROUTES.EQUIPMENT, pathname)} to={RSTOOL_ROUTES.EQUIPMENT} hidden={!isAuthenticated}>EQUIPMENT</NavLink>
                         </Nav>
+                        <div className="ml-3 mr-3" />
+                        <Nav>
+                            <NavLink activeClassName={this.isActiveClass(RSTOOL_ROUTES.BRONZE_MAN, pathname)} to={RSTOOL_ROUTES.BRONZE_MAN} hidden={!isAuthenticated}>BRONZE MAN</NavLink>
+                        </Nav>
                         <Nav className="ml-auto">
                             <Button variant="button-primary" onClick={() => this.logout(RSTOOL_ROUTES.LOGIN)} hidden={!isAuthenticated}>Logout</Button>
                         </Nav>

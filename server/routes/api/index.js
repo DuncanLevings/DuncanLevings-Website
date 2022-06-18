@@ -10,6 +10,7 @@ const {
     PRESET_ROUTES,
     FARM_RUN_ROUTES,
     PVM_ROUTES,
+    BRONZE_MAN_ITEM_ROUTES,
     BUDGET_ROUTES,
     SALARY_ROUTES,
     TRANSACTION_ROUTES,
@@ -25,6 +26,7 @@ router.use(EQUIPMENT_ROUTES._ROOT, require('./RSTools/equipmentRoute'));
 router.use(PRESET_ROUTES._ROOT, require('./RSTools/presetRoute'));
 router.use(FARM_RUN_ROUTES._ROOT, require('./RSTools/farmRunRoute'));
 router.use(PVM_ROUTES._ROOT, require('./RSTools/pvmRoute'));
+router.use(BRONZE_MAN_ITEM_ROUTES._ROOT, require('./RSTools/bronzeManRoute'));
 router.use(BUDGET_ROUTES._ROOT, require('./Budget/budgetRoute'));
 router.use(SALARY_ROUTES._ROOT, require('./Budget/salaryRoute'));
 router.use(TRANSACTION_ROUTES._ROOT, require('./Budget/transactionRoute'));

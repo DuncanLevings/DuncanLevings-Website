@@ -9,6 +9,7 @@ const EQUIPMENT_ERRORS = require('./equipment_errors.json').server_errors;
 const PRESET_ERRORS = require('./preset_errors.json').server_errors;
 const FARM_RUN_ERRORS = require('./farm_run_errors.json').server_errors;
 const PVM_ERRORS = require('./pvm_errors.json').server_errors;
+const BRONZE_MAN_ERRORS = require('./bronze_man_item_errors.json').server_errors;
 const BUDGET_ERRORS = require('./budget_errors.json').server_errors;
 const SALARY_ERRORS = require('./salary_errors.json').server_errors;
 const TRANSACTION_ERRORS = require('./transaction_errors.json').server_errors;
@@ -26,6 +27,7 @@ module.exports = {
     PRESET_ERRORS,
     FARM_RUN_ERRORS,
     PVM_ERRORS,
+    BRONZE_MAN_ERRORS,
     BUDGET_ERRORS,
     SALARY_ERRORS,
     TRANSACTION_ERRORS,

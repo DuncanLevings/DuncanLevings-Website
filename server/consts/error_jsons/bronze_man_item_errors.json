@@ -1,0 +1,8 @@
+{
+    "server_errors": {
+        "USER_REQUIRED": "User ID is required!",
+        "NAME_REQUIRED": "Name is required!",
+        "NOT_OWNER_ITEM": "You are not the owner of that item!",
+        "ITEM_EXISTS": "An item with that name already exists!"
+    }
+}

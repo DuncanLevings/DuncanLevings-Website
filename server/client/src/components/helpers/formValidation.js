@@ -180,3 +180,8 @@ export const pvmTaskSchema = yup.object().shape({
         .max(59, "*Task name must be less than 59 characters")
         .required("*Task name is required")
 });
+
+export const BronzeManItemSchema = yup.object().shape({
+    name: yup.string()
+        .required("*Name is required")
+});

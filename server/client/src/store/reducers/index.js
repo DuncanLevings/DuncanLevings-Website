@@ -17,6 +17,7 @@ import equipmentReducer from './RSTools/equipmentReducer';
 import presetReducer from './RSTools/presetReducer';
 import farmRunReducer from './RSTools/farmRunReducer';
 import pvmReducer from './RSTools/pvmReducer';
+import bronzeManReducer from './RSTools/bronzeManReducer';
 
 const createRootReducer = (history) => combineReducers({
     router: connectRouter(history),
@@ -30,7 +31,8 @@ const createRootReducer = (history) => combineReducers({
     equipmentReducer: equipmentReducer,
     presetReducer: presetReducer,
     farmRunReducer: farmRunReducer,
-    pvmReducer: pvmReducer
+    pvmReducer: pvmReducer,
+    bronzeManReducer: bronzeManReducer
 });
 
 export default createRootReducer;
