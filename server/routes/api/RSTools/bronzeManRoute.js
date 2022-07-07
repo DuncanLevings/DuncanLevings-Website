@@ -46,4 +46,32 @@ router.delete(BRONZE_MAN_ITEM_ROUTES.DELETE_ITEM, auth.user, (req, res) => {
         .catch(err => res.status(400).send(err.message));
 });
 
+router.get(BRONZE_MAN_ITEM_ROUTES.GET_ENEMY, auth.user, (req, res) => {
+    _bronzeManService
+        .getEnemies(req.user._id, req.params.name)
+        .then(enemy => res.status(200).send(enemy))
+        .catch(err => res.status(400).send(err.message));
+});
+
+router.get(BRONZE_MAN_ITEM_ROUTES.GET_ENEMY_DATA, auth.user, (req, res) => {
+    _bronzeManService
+        .getEnemyData(req.user._id, req.params.name)
+        .then(enemy => res.status(200).send(enemy))
+        .catch(err => res.status(400).send(err.message));
+});
+
+router.post(BRONZE_MAN_ITEM_ROUTES.CREATE_ENEMY, Multer.any(), auth.user, (req, res) => {
+    _bronzeManService
+        .createEnemy(req.user._id, req.body)
+        .then(enemy => res.status(200).send(enemy))
+        .catch(err => res.status(400).send(err.message));
+});
+
+router.delete(BRONZE_MAN_ITEM_ROUTES.DELETE_ENEMY, auth.user, (req, res) => {
+    _bronzeManService
+        .deleteEnemy(req.user._id, req.params.enemyId)
+        .then(() => res.sendStatus(200))
+        .catch(err => res.status(400).send(err.message));
+});
+
 module.exports = router;

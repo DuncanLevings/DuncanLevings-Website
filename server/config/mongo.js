@@ -38,6 +38,7 @@ const { Activity } = require('../models/RSTools/activityModel');
 const { PvM } = require('../models/RSTools/pvmModel');
 const { PvmTask } = require('../models/RSTools/pvmTaskModel');
 const { BronzeManItem } = require('../models/RSTools/bronzeManItem');
+const { BronzeManEnemy } = require('../models/RSTools/bronzeManEnemy');
 const { Budget } = require('../models/Budget/budget');
 const { Salary } = require('../models/Budget/salary');
 const { CombinedTransaction } = require('../models/Budget/combined');
@@ -57,6 +58,7 @@ module.exports = {
     PvM,
     PvmTask,
     BronzeManItem,
+    BronzeManEnemy,
     Budget,
     Salary,
     CombinedTransaction,

@@ -3,6 +3,9 @@
         "USER_REQUIRED": "User ID is required!",
         "NAME_REQUIRED": "Name is required!",
         "NOT_OWNER_ITEM": "You are not the owner of that item!",
-        "ITEM_EXISTS": "An item with that name already exists!"
+        "ITEM_EXISTS": "An item with that name already exists!",
+        "URL_REQUIRED": "Wiki URL is required!",
+        "ENEMY_EXISTS": "That URL has already been inserted!",
+        "NOT_OWNER_ENEMY": "You are not the owner of that enemy!"
     }
 }
