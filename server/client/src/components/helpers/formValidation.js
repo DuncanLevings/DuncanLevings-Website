@@ -185,3 +185,10 @@ export const BronzeManItemSchema = yup.object().shape({
     name: yup.string()
         .required("*Name is required")
 });
+
+export const BronzeManEnemySchema = yup.object().shape({
+    url: yup.string()
+        .trim()
+        .url("Must be a valid URL")
+        .required("*URL is required")
+});

@@ -59,6 +59,7 @@ const ABILITYS = EQUIPMENT + '/abilitys'
 // BRONZE MAN MODE
 
 const BRONZE_MAN = RSTOOL_ROOT + '/bronze_man'
+const BRONZE_MAN_ENEMY = BRONZE_MAN + '/enemy'
 
 export const RSTOOL_ROUTES = {
     DASH,
@@ -95,5 +96,6 @@ export const RSTOOL_ROUTES = {
     FARMRUN_TYPE,
     FARMRUN_BUILDER_PARAM,
     FARMRUN_BUILDER,
-    BRONZE_MAN
+    BRONZE_MAN,
+    BRONZE_MAN_ENEMY
 }

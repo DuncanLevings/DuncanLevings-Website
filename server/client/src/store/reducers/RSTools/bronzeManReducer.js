@@ -9,6 +9,8 @@ import * as actionTypes from '../../actionTypes/RSTools/bronzeManActionTypes';
 const intialState = {
     error: "",
     items: [],
+    enemies: [],
+    enemyData: {},
     isFetching: false, // loading state
     isCreating: false, // loading state
 };
@@ -54,6 +56,52 @@ export default (state = intialState, action) => {
                 isCreating: false
             };
         case actionTypes.DELETE_BRONZE_MAN_ITEM_SUCCESS:
+            return {
+                ...state,
+                error: ""
+            };
+        // ENEMIES
+        case actionTypes.GET_BRONZE_MAN_ENEMIES:
+            return {
+                ...state,
+                isFetching: true
+            };
+        case actionTypes.GET_BRONZE_MAN_ENEMY_DATA:
+            return {
+                ...state,
+                isFetching: true
+            };
+        case actionTypes.CREATE_BRONZE_MAN_ENEMY:
+            return {
+                ...state,
+                isCreating: true
+            };
+        case actionTypes.DELETE_BRONZE_MAN_ENEMY:
+            return {
+                ...state
+            };
+        // ENEMIES
+        case actionTypes.GET_BRONZE_MAN_ENEMIES_SUCCESS:
+            return {
+                ...state,
+                enemies: action.payload,
+                error: "",
+                isFetching: false
+            };
+        case actionTypes.GET_BRONZE_MAN_ENEMY_DATA_SUCCESS:
+            return {
+                ...state,
+                enemyData: action.payload,
+                error: "",
+                isFetching: false
+            };
+        case actionTypes.CREATE_BRONZE_MAN_ENEMY_SUCCESS:
+            return {
+                ...state,
+                error: "",
+                isCreating: false
+            };
+        case actionTypes.DELETE_BRONZE_MAN_ENEMY_SUCCESS:
             return {
                 ...state,
                 error: ""

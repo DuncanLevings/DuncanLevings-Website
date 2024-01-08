@@ -41,7 +41,8 @@ import Items from 'components/RSTools/Equipment/Item/Items/Items.lazy';
 import Abilitys from 'components/RSTools/Equipment/Ability/Abilitys/Abilitys.lazy';
 import PresetWizard from 'components/RSTools/Equipment/PresetWizard/PresetWizard.lazy';
 import PresetViewer from 'components/RSTools/Equipment/PresetComponents/PresetViewer/PresetViewer.lazy';
-import BronzeManMode from 'components/RSTools/BronzeManMode/BronzeManMode/BronzeManMode.lazy';
+import BronzeMan from 'components/RSTools/BronzeManMode/BronzeMan.lazy';
+import BronzeManEnemyData from 'components/RSTools/BronzeManMode/BronzeManEnemyData/BronzeManEnemyData.lazy';
 import Footer from 'components/navbar/Footer/Footer.lazy';
 import NotFound from 'errors/NotFound';
 import PropTypes from 'prop-types';
@@ -95,7 +96,8 @@ class RSRouter extends React.Component {
                     <PrivateRoute exact path={RSTOOL_ROUTES.ITEMS} redirect={RSTOOL_ROUTES.LOGIN} component={Items} />
                     <PrivateRoute exact path={RSTOOL_ROUTES.ABILITYS} redirect={RSTOOL_ROUTES.LOGIN} component={Abilitys} />
                     {/* BRONZE MAN MODE */}
-                    <PrivateRoute exact path={RSTOOL_ROUTES.BRONZE_MAN} redirect={RSTOOL_ROUTES.LOGIN} component={BronzeManMode} />
+                    <PrivateRoute exact path={RSTOOL_ROUTES.BRONZE_MAN} redirect={RSTOOL_ROUTES.LOGIN} component={BronzeMan} />
+                    <PrivateRoute exact path={RSTOOL_ROUTES.BRONZE_MAN_ENEMY} redirect={RSTOOL_ROUTES.LOGIN} component={BronzeManEnemyData} />
                     <Route component={NotFound} />
                 </Switch>
                 <Footer type={LOGIN_TYPE.RS_TOOLS} />

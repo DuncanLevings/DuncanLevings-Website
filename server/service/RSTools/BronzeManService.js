@@ -77,6 +77,7 @@ const getEnemyData = async(userId, name) => {
             }
         }
     ]);
+    if (enemyData.length > 0) return enemyData[0];
     return enemyData;
 }
 

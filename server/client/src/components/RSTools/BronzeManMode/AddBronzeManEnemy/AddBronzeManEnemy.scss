@@ -1,0 +1,16 @@
+@import '../../../../assets/style/colors';
+
+.AddBronzeManEnemy {
+    color: $dark-theme;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+
+    .enemy-error {
+        color: $error;
+        text-align: center;
+    }
+
+    .enemy-button {
+        margin-top: 1rem;
+    }
+}

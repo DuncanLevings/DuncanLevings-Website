@@ -1,0 +1,65 @@
+@import '../../../../assets/style/breakpoints';
+@import '../../../../assets/style/vars';
+@import '../../../../assets/style/colors';
+
+.BronzeManEnemy {
+    @include respond-to(xs) {
+        min-height: $minHeightDesktop; /* Fallback for browsers that do not support Custom Properties */
+        min-height: $minHeightMobile;
+    }
+    
+    @include respond-to(m) {
+        min-height: $minHeightDesktop;
+    }
+
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+    font-family: 'Roboto', sans-serif;
+
+    .scrollable-list {
+        max-height: 60vh;
+        overflow-y: auto;
+    }
+
+    .list-group-item {
+        background-color: $body-background;
+        border-color: $hr-divider;
+
+        @include respond-to(xs) {
+            font-size: calc(8px + 2vmin);
+        }
+        
+        @include respond-to(m) {
+            font-size: calc(8px + 1vmin);
+        }
+    }
+
+    .list-group-item:hover {
+        background-color: $contact-background;
+    }
+
+    .actions {
+        float: right;
+
+        .action-icon {
+            margin-left: 1rem;
+        }
+
+        .view:hover {
+            color: $link-active;
+        }
+
+        .delete:hover {
+            color: $error;
+        }
+    }
+}
+
+.confirm-modal {
+    font-family: 'Roboto', sans-serif;
+    color: $dark-theme;
+
+    .modal-title {
+        font-size: calc(12px + 2vmin);
+    }
+}

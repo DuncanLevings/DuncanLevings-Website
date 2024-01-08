@@ -40,12 +40,46 @@ export function deleteItemSuccess() {
     return { type: actionTypes.DELETE_BRONZE_MAN_ITEM_SUCCESS };
 }
 
+// ENEMIES
+
+export function getEnemies(name) {
+    return { type: actionTypes.GET_BRONZE_MAN_ENEMIES, payload: { name: name} };
+}
+
+export function getEnemiesSuccess(enemies) {
+    return { type: actionTypes.GET_BRONZE_MAN_ENEMIES_SUCCESS, payload: enemies };
+}
+
+export function getEnemyData(name) {
+    return { type: actionTypes.GET_BRONZE_MAN_ENEMY_DATA, payload: { name: name} };
+}
+
+export function getEnemyDataSuccess(enemy) {
+    return { type: actionTypes.GET_BRONZE_MAN_ENEMY_DATA_SUCCESS, payload: enemy };
+}
+
+export function createEnemy(formData) {
+    return { type: actionTypes.CREATE_BRONZE_MAN_ENEMY, payload: { formData: formData } };
+}
+
+export function createEnemySuccess(enemy) {
+    return { type: actionTypes.CREATE_BRONZE_MAN_ENEMY_SUCCESS, payload: enemy };
+}
+
+export function deleteEnemy(enemyId) {
+    return { type: actionTypes.DELETE_BRONZE_MAN_ENEMY, payload: { enemyId: enemyId } };
+}
+
+export function deleteEnemySuccess() {
+    return { type: actionTypes.DELETE_BRONZE_MAN_ENEMY_SUCCESS };
+}
+
 // ERROR
 
 export function clearErrors() {
     return { type: actionTypes.CLEAR_ERRORS };
 }
 
-export function itemError(error) {
+export function bronzManError(error) {
     return { type: actionTypes.ERROR, payload: error };
 }

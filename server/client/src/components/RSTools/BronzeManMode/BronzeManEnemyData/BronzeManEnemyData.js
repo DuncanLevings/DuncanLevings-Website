@@ -8,42 +8,31 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { getItems, setAcquired, createItem, deleteItem, clearErrors } from 'store/actions/RSTools/bronzeManActions';
+import { getEnemyData, setAcquired, deleteItem } from 'store/actions/RSTools/bronzeManActions';
 import { Button, Col, Container, Form, FormControl, InputGroup, ListGroup, Modal, Row, Spinner } from 'react-bootstrap';
 import { FaCheck, FaTrash, FaTimes } from 'react-icons/fa';
-import AddBronzeManItem from '../AddBronzeManItem/AddBronzeManItem';
 import _ from "lodash";
 import PropTypes from 'prop-types';
-import './BronzeManMode.scss';
+import './BronzeManEnemyData.scss';
 
-class BronzeManMode extends React.Component {
+class BronzeManEnemyData extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             acquiredIds: [],
             deletedIds: [],
-            search: '',
-            addItemShow: false,
             showConfirm: false
         }
     }
 
     componentDidMount() {
+        this.props.getEnemyData(this.props.location.state.enemyName);
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.bronzeManReducer.items !== this.props.bronzeManReducer.items) {
+        if (prevProps.bronzeManReducer.enemyData.items !== this.props.bronzeManReducer.enemyData.items) {
             this.setAcquiredItems();
         }
-    }
-
-    setSearch = _.debounce((e) => {
-        this.setState({ search: e });
-        this.props.getItems(e);
-    }, 500)
-
-    setAddItemShow = (bool) => {
-        this.setState({ addItemShow: bool });
     }
 
     setShowConfirm = (bool, itemId = null) => {
@@ -58,7 +47,7 @@ class BronzeManMode extends React.Component {
         this.props.deleteItem(this.state.selectedItemId);
         this.setState({ showConfirm: false });
     }
-
+    
     confirmModal = () => {
         const { showConfirm } = this.state;
 
@@ -85,13 +74,13 @@ class BronzeManMode extends React.Component {
     }
 
     setAcquiredItems = () => {
-        const { items } = this.props.bronzeManReducer;
+        const { enemyData } = this.props.bronzeManReducer;
 
         this.setState({ acquiredIds: [], deletedIds: [] });
     
-        if (!Array.isArray(items)) return;
+        if (!Array.isArray(enemyData.items)) return;
 
-        items.forEach(item => {
+        enemyData.items.forEach(item => {
             if (item.acquired) {
                 this.markAcquired(item._id);
             }
@@ -131,14 +120,12 @@ class BronzeManMode extends React.Component {
         return false;
     }
 
-    generateSearchResults = () => {
-        const { search } = this.state;
-        const { items } = this.props.bronzeManReducer;
+    generateResults = () => {
+        const { enemyData } = this.props.bronzeManReducer;
 
-        if (search === '') return [];
-        if (!Array.isArray(items)) return [];
+        if (!enemyData.items) return [];
 
-        return items
+        return enemyData.items
             .map((item, i) =>
                 <ListGroup.Item key={i} hidden={this.checkDeleted(item._id)} className={this.checkAquired(item._id) ? "acquired" : "not-acquired"}>
                     <Row>
@@ -163,57 +150,34 @@ class BronzeManMode extends React.Component {
     }
 
     render() {
-        const { addItemShow } = this.state;
-        const { isFetching } = this.props.bronzeManReducer;
+        const { isFetching, enemyData } = this.props.bronzeManReducer;
 
-        const searchResults = this.generateSearchResults();
+        const data = this.generateResults();
 
         return (
             <Container>
-                <div className="BronzeManMode">
+                <div className="BronzeManEnemyData">
                     {this.confirmModal()}
-                    <Form>
-                        <Form.Group controlId="formSearch">
-                            <InputGroup>
-                                <FormControl
-                                    placeholder="Search..."
-                                    aria-label="search"
-                                    aria-describedby="search"
-                                    onChange={(e) => this.setSearch(e.target.value)}
-                                />
-                                <InputGroup.Append>
-                                    <Button variant="button-primary" onClick={() => this.setAddItemShow(true)}>Add Item</Button>
-                                </InputGroup.Append>
-                            </InputGroup>
-                        </Form.Group>
-                    </Form>
+                    <h3>{enemyData.name}</h3>
                     <div className="spacer-h-3" />
                     {isFetching ?
                         <Spinner animation="border" variant="light" /> :
-                        searchResults.length > 0 ?
+                        data.length > 0 ?
                             <ListGroup variant="flush" className="scrollable-list">
-                                {searchResults}
+                                {data}
                             </ListGroup> :
-                            <p>No items found...</p>
+                            <p>No enemy data found...</p>
                     }
-                    <AddBronzeManItem
-                        show={addItemShow}
-                        bronzeManReducer={this.props.bronzeManReducer}
-                        createItem={data => this.props.createItem(data)}
-                        clearErrors={() => this.props.clearErrors()}
-                        onHide={() => this.setAddItemShow(false)}
-                    />
                 </div>
             </Container>
         );
     }
 }
 
-BronzeManMode.propTypes = {
+BronzeManEnemyData.propTypes = {
     bronzeManReducer: PropTypes.object,
-    getItems: PropTypes.func,
+    getEnemyData: PropTypes.func,
     setAcquired: PropTypes.func,
-    createItem: PropTypes.func,
     deleteItem: PropTypes.func,
     clearErrors: PropTypes.func
 };
@@ -224,6 +188,6 @@ const mapStateToProps = state => {
     };
 }
 
-const mapDispatchToProps = dispatch => bindActionCreators({ getItems, setAcquired, createItem, deleteItem, clearErrors }, dispatch);
+const mapDispatchToProps = dispatch => bindActionCreators({ getEnemyData, setAcquired, deleteItem }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BronzeManMode));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(BronzeManEnemyData));
